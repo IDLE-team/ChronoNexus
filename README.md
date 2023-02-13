@@ -1,5 +1,5 @@
 # ChronoNexus
-
+![2](https://user-images.githubusercontent.com/38473135/218583142-826b67a5-3cea-4dc8-ac37-c17ecd05cb36.png)
 - Игровой движок: Unity
 - Платформы: Android
 - Аудитория: 12+
