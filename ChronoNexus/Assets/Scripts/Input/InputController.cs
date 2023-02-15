@@ -7,27 +7,17 @@ public class InputController : MonoBehaviour
 {
     public event Action OnAttack;
 
-    public event Action OnDash;
-
-    public event Action OnSkill;
-
-    public event Action OnTurnOffTargetLock;
-
-    public event Action OnSetTarget;
+    public event Action OnFire;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            SetTarget();
+            Attack();
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
-            TurnOffTargetLock();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Attack();
+            Fire();
         }
     }
 
@@ -36,24 +26,9 @@ public class InputController : MonoBehaviour
         OnAttack?.Invoke();
     }
 
-    public void Dash()
+    public void Fire()
     {
-        OnDash?.Invoke();
-    }
-
-    public void Skill()
-    {
-        OnSkill?.Invoke();
-    }
-
-    public void SetTarget()
-    {
-        OnSetTarget?.Invoke();
-    }
-
-    public void TurnOffTargetLock()
-    {
-        OnTurnOffTargetLock?.Invoke();
+        OnFire?.Invoke();
     }
 
     public void Restart()

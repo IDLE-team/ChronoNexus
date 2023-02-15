@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamagable, ITargetable
 {
-    [SerializeField] private float _health;
     [SerializeField] private AudioClip _hitClip;
+    [SerializeField] private float _health;
+
     private ParticleSystem _hitEffect;
 
     private AudioSource _audioSource;
 
     private Animator _animator;
 
-    private bool _isAlive = true;
+    private bool _isAlive;
     private bool _targeted;
 
     private void Start()
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         _hitEffect = gameObject.transform.GetChild(1).GetComponent<ParticleSystem>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+        _isAlive = true;
     }
 
     public void TakeDamage(int damage)
@@ -29,14 +31,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
             _health -= damage;
             DamageEffect();
             _animator.SetTrigger("TakeHit");
+
             if (_health < 0)
             {
                 Death();
             }
-        }
-        else
-        {
-            Debug.Log("Цель мертва");
         }
     }
 
@@ -44,7 +43,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     {
         _health = 0;
         _isAlive = false;
-        Debug.Log("Умер");
         Destroy(gameObject);
     }
 

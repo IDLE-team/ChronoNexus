@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public InputController inputController;
-    public PlayerController playerController;
+    public CharacterController characterController;
 
     private void Awake()
     {
@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public enum GameState
