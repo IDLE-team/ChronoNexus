@@ -5,6 +5,7 @@ using UnityEngine;
 public class CharacterTargetLock : MonoBehaviour
 {
     [SerializeField] private LayerMask _lookLayer;
+    [SerializeField] private CharacterController _characterController;
     [HideInInspector] public Transform _nearestTarget { get; private set; }
     [HideInInspector] public bool isLookAt { get; private set; }
 
@@ -32,6 +33,10 @@ public class CharacterTargetLock : MonoBehaviour
             _closestDistance = enemyDetectRadius;
             foreach (Collider collider in _colliders)
             {
+                if (collider == null)
+                {
+                    continue;
+                }
                 _targetDistance = Vector3.Distance(transform.position, collider.transform.position);
                 if (_targetDistance < _closestDistance)
                 {
@@ -44,16 +49,28 @@ public class CharacterTargetLock : MonoBehaviour
             if (_previousTarget != _nearestTarget || _previousTarget == null)
             {
                 if (_previousTarget != null)
-                    _previousTarget?.gameObject.GetComponent<ITargetable>()?.ToggleSelfTarget();
-                _nearestTarget?.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+                    _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+                if (_nearestTarget != null)
+                {
+                    _nearestTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+                }
                 _previousTarget = _nearestTarget;
             }
             isLookAt = true;
         }
         else
         {
-            isLookAt = false;
+            if (_previousTarget != null)
+            {
+                _previousTarget?.gameObject.GetComponent<ITargetable>()?.ToggleSelfTarget();
+            }
+            _previousTarget = null;
             _nearestTarget = null;
+            if (isLookAt)
+            {
+                _characterController._characterMovement.ResetAnimationValues();
+                isLookAt = false;
+            }
         }
     }
 

@@ -175,4 +175,10 @@ public class CharacterMovement : MonoBehaviour
     }
 
     #endregion TargetLock
+
+    public void ResetAnimationValues()
+    {
+        _characterController._animator.SetFloat(_characterController._characterAnimation.animIDStrafeX, 0);
+        _characterController._animator.SetFloat(_characterController._characterAnimation.animIDStrafeZ, 0);
+    }
 }
