@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
-/*
 [CustomEditor(typeof(Enemy))]
 public class FieldOfViewEditor : Editor
 {
@@ -24,4 +23,4 @@ public class FieldOfViewEditor : Editor
             Handles.DrawLine(fow.transform.position, fow.player.position);
         }
     }
-}*/
+}

@@ -14,21 +14,22 @@ public class CharacterAttack : MonoBehaviour
     [SerializeField] private GameObject _bullet;
 
     [SerializeField] private AttackZone _attackZone;
-    [SerializeField] private VisualEffect visualHitEffect;
+    [SerializeField] private VisualEffect _visualHitEffect;
 
-    [SerializeField] private int damage;
+    [SerializeField] private int _damage;
 
     private GameObject _bulletInstance;
+
     private Vector3 _shootDir;
 
     public void StartAttack()
     {
-        _characterController._animator.SetTrigger(_characterController._characterAnimation.animIDAttack);
+        _characterController.Animator.SetTrigger(_characterController.CharacterAnimation.animIDAttack);
     }
 
     public void Fire()
     {
-        _characterController._animator.SetTrigger(_characterController._characterAnimation.animIDShoot);
+        _characterController.Animator.SetTrigger(_characterController.CharacterAnimation.animIDShoot);
     }
 
     public void Hit()
@@ -36,15 +37,15 @@ public class CharacterAttack : MonoBehaviour
         Collider[] hitEnemies = Physics.OverlapSphere(_attackZone.transform.position, _attackZone.attackRadius, enemyLayer);
         foreach (Collider collider in hitEnemies)
         {
-            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(damage);
+            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_damage);
         }
     }
 
     public void Shoot()
     {
-        if (_characterController._characterTargetLock._nearestTarget != null)
+        if (_characterController.CharacterTargetLock._nearestTarget != null)
         {
-            _shootDir = (_characterController._characterTargetLock._nearestTarget.position - _rangeWeapon.transform.position).normalized;
+            _shootDir = (_characterController.CharacterTargetLock._nearestTarget.position - _rangeWeapon.transform.position).normalized;
         }
         else
         {
@@ -56,8 +57,8 @@ public class CharacterAttack : MonoBehaviour
 
     public void PlayEffect()
     {
-        visualHitEffect.gameObject.SetActive(true);
-        visualHitEffect.Play();
-        _characterController._audioController.PlayHitSound();
+        _visualHitEffect.gameObject.SetActive(true);
+        _visualHitEffect.Play();
+        _characterController.AudioController.PlayHitSound();
     }
 }

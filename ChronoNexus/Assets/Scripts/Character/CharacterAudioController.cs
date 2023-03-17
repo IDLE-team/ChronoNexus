@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class CharacterAudioController : MonoBehaviour
 {
     [Header("Player SFX")]
@@ -13,7 +13,7 @@ public class CharacterAudioController : MonoBehaviour
 
     private AudioSource _audioSource;
 
-    private void Start()
+    private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
     }

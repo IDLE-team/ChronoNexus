@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class CharacterTargetLock : MonoBehaviour
 {
-    [SerializeField] private LayerMask _lookLayer;
-    [SerializeField] private CharacterController _characterController;
     [HideInInspector] public Transform _nearestTarget { get; private set; }
     [HideInInspector] public bool isLookAt { get; private set; }
+
+    [SerializeField] private LayerMask _lookLayer;
+    [SerializeField] private CharacterController _characterController;
 
     [Tooltip("Enemy detect radius")]
     public float enemyDetectRadius;
 
     private Collider[] _colliders;
+
     private Transform _previousTarget;
     private Transform _closestTarget;
 
@@ -68,7 +70,7 @@ public class CharacterTargetLock : MonoBehaviour
             _nearestTarget = null;
             if (isLookAt)
             {
-                _characterController._characterMovement.ResetAnimationValues();
+                _characterController.CharacterMovement.ResetAnimationValues();
                 isLookAt = false;
             }
         }

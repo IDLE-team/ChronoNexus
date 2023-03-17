@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float _moveSpeed;
 
     private Vector3 _shootDir;
 
@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position += _shootDir * moveSpeed * Time.deltaTime;
+        transform.position += _shootDir * _moveSpeed * Time.deltaTime;
     }
 
     private void OnTriggerEnter(Collider other)

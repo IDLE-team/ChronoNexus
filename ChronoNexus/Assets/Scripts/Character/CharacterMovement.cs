@@ -7,23 +7,22 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Character")]
     [Tooltip("Move speed of the character")]
-    public float MoveSpeed = 2.0f;
+    [SerializeField] private float MoveSpeed = 2.0f;
 
     [Tooltip("Sprint speed of the character")]
-    public float SprintSpeed = 5.335f;
+    [SerializeField] private float SprintSpeed = 5.335f;
 
     [Tooltip("How fast the character turns to face movement _direction")]
-    [Range(0.0f, 0.3f)]
-    public float RotationSmoothTime = 0.12f;
+    [SerializeField][Range(0.0f, 0.3f)] private float RotationSmoothTime = 0.12f;
 
     [Tooltip("Acceleration and deceleration")]
-    public float SpeedChangeRate = 10.0f;
+    [SerializeField] private float SpeedChangeRate = 10.0f;
 
     [Tooltip("SmoothTargetAnimation")]
-    public float TargetSmoothAnimation = 2;
+    [SerializeField] private float TargetSmoothAnimation = 2;
 
     [Tooltip("Enemy detect radius")]
-    public float enemyDetectRadius;
+    [SerializeField] private float enemyDetectRadius;
 
     //------------------------------------------------------------------------------------//
 
@@ -57,10 +56,10 @@ public class CharacterMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        if (_characterController._characterTargetLock.isLookAt)
+        if (_characterController.CharacterTargetLock.isLookAt)
         {
-            if (_characterController._characterTargetLock._nearestTarget == null) return;
-            transform.LookAt(new Vector3(_characterController._characterTargetLock._nearestTarget.position.x, 0, _characterController._characterTargetLock._nearestTarget.position.z));
+            if (_characterController.CharacterTargetLock._nearestTarget == null) return;
+            transform.LookAt(new Vector3(_characterController.CharacterTargetLock._nearestTarget.position.x, 0, _characterController.CharacterTargetLock._nearestTarget.position.z));
             TargetLockSetAnimations();
         }
     }
@@ -73,7 +72,7 @@ public class CharacterMovement : MonoBehaviour
         if (_joystick.Direction == Vector2.zero) _targetSpeed = 0.0f;
 
         _speedOffset = 0.1f;
-        _currentHorizontalSpeed = new Vector3(_characterController._rigidbody.velocity.x, 0.0f, _characterController._rigidbody.velocity.z).magnitude;
+        _currentHorizontalSpeed = new Vector3(_characterController.Rigidbody.velocity.x, 0.0f, _characterController.Rigidbody.velocity.z).magnitude;
         _inputMagnitude = _joystick.Direction.magnitude;
         _inputDirection = new Vector3(_joystick.Direction.x, 0.0f, _joystick.Direction.y).normalized;
 
@@ -104,26 +103,26 @@ public class CharacterMovement : MonoBehaviour
 
         _targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-        _characterController._rigidbody.velocity = _targetDirection.normalized * _speed;
+        _characterController.Rigidbody.velocity = _targetDirection.normalized * _speed;
 
         #region AnimationValues
 
-        if (_characterController._characterTargetLock.isLookAt)
+        if (_characterController.CharacterTargetLock.isLookAt)
         {
-            _characterController._animator.SetFloat(_characterController._characterAnimation.animIDStrafeX, _animationStrafeX);
-            _characterController._animator.SetFloat(_characterController._characterAnimation.animIDStrafeZ, _animationStrafeZ);
+            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeX, _animationStrafeX);
+            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeZ, _animationStrafeZ);
         }
         else
         {
-            _characterController._animator.SetFloat(_characterController._characterAnimation.animIDStrafeZ, _animationBlend);
+            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeZ, _animationBlend);
         }
         if (_inputMagnitude > 0.1f)
         {
-            _characterController._animator.SetFloat(_characterController._characterAnimation.animIDMotionSpeed, _inputMagnitude);
+            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDMotionSpeed, _inputMagnitude);
         }
         else
         {
-            _characterController._animator.SetFloat(_characterController._characterAnimation.animIDMotionSpeed, 1);
+            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDMotionSpeed, 1);
         }
 
         #endregion AnimationValues
@@ -138,7 +137,7 @@ public class CharacterMovement : MonoBehaviour
         _vertical = _targetSpeed * _joystick.Direction.y;
         _horizontal = _targetSpeed * _joystick.Direction.x;
 
-        _direction = transform.position - _characterController._characterTargetLock._nearestTarget.position;
+        _direction = transform.position - _characterController.CharacterTargetLock._nearestTarget.position;
         _angle = Vector3.Angle(_direction, transform.forward);
 
         if (_direction.x > 0)
@@ -178,7 +177,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void ResetAnimationValues()
     {
-        _characterController._animator.SetFloat(_characterController._characterAnimation.animIDStrafeX, 0);
-        _characterController._animator.SetFloat(_characterController._characterAnimation.animIDStrafeZ, 0);
+        _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeX, 0);
+        _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeZ, 0);
     }
 }

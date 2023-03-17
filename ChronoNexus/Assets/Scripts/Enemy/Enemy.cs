@@ -1,85 +1,91 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator), typeof(AudioSource))]
 public class Enemy : MonoBehaviour, IDamagable, ITargetable
 {
     #region States
 
-    public StateMachine enemySM;
-    public EnemyIdleState IdleState;
-    public EnemyPatrolState PatrolState;
-    public EnemyChaseState ChaseState;
+    public StateMachine StateMachine { get; private set; }
+    public EnemyIdleState IdleState { get; private set; }
+    public EnemyPatrolState PatrolState { get; private set; }
+    public EnemyChaseState ChaseState { get; private set; }
 
     #endregion States
 
     #region FieldOfView
 
+    [Range(0, 360)] public float viewAngle;
     public float viewRadius;
 
-    [Range(0, 360)]
-    public float viewAngle;
-
-    public LayerMask targetMask;
-    public LayerMask obstacleMask;
+    [SerializeField] private LayerMask targetMask;
+    [SerializeField] private LayerMask obstacleMask;
 
     #endregion FieldOfView
 
-    [SerializeField] private AudioClip _hitClip;
-    public float health { get; private set; }
-
-    private ParticleSystem _hitEffect;
-    private AudioSource _audioSource;
-    private Animator _animator;
-    public NavMeshAgent _navMeshAgent;
-    public Transform target;
+    public NavMeshAgent navMeshAgent;
     public Transform player;
 
+    public float Health { get; private set; }
     public bool canSeePlayer = false;
 
+    [SerializeField] private AudioClip _hitClip;
+    [SerializeField] private ParticleSystem _hitEffect;
+    [SerializeField] private GameObject _targetIndicator;
+
+    private AudioSource _audioSource;
+    private Animator _animator;
+    private Transform _target;
+
+    private static string Player => "Player";
+
     private bool _isAlive;
-    private bool _targeted;
+    private bool _isTarget;
+
+    private void Awake()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+
+        StateMachine = new StateMachine();
+
+        IdleState = new EnemyIdleState(this, StateMachine);
+        PatrolState = new EnemyPatrolState(this, StateMachine);
+        ChaseState = new EnemyChaseState(this, StateMachine);
+    }
 
     private void Start()
     {
-        enemySM = new StateMachine();
+        StateMachine.Initialize(PatrolState);
 
-        IdleState = new EnemyIdleState(this, enemySM);
-        PatrolState = new EnemyPatrolState(this, enemySM);
-        ChaseState = new EnemyChaseState(this, enemySM);
+        StartCoroutine(nameof(FindTargetsWithDelay), .2f);
 
-        enemySM.Initialize(PatrolState);
-
-        StartCoroutine("FindTargetsWithDelay", .2f);
-
-        _hitEffect = gameObject.transform.GetChild(1).GetComponent<ParticleSystem>();
-        _animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
         _isAlive = true;
     }
 
     private void Update()
     {
-        Debug.Log(enemySM.CurrentState);
-        enemySM.CurrentState.LogicUpdate();
+        Debug.Log(StateMachine.CurrentState);
+        StateMachine.CurrentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
-        enemySM.CurrentState.PhysicsUpdate();
+        StateMachine.CurrentState.PhysicsUpdate();
     }
 
     public void TakeDamage(int damage)
     {
         if (_isAlive)
         {
-            health -= damage;
+            Health -= damage;
             DamageEffect();
             _animator.SetTrigger("TakeHit");
 
-            if (health < 0)
+            if (Health < 0)
             {
                 Death();
             }
@@ -88,22 +94,22 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
     public void Death()
     {
-        health = 0;
+        Health = 0;
         _isAlive = false;
         _animator.SetBool("Dead", true);
         Destroy(gameObject, 0.8f);
+    }
+
+    public void ToggleSelfTarget()
+    {
+        _isTarget = !_isTarget;
+        _targetIndicator.SetActive(_isTarget);
     }
 
     private void DamageEffect()
     {
         _audioSource.PlayOneShot(_hitClip);
         _hitEffect.Play();
-    }
-
-    public void ToggleSelfTarget()
-    {
-        _targeted = !_targeted;
-        transform.GetChild(0).gameObject.SetActive(_targeted);
     }
 
     #region FieldOfView
@@ -123,16 +129,16 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
-            target = targetsInViewRadius[i].transform;
-            Vector3 dirToTarget = (target.position - transform.position).normalized;
+            _target = targetsInViewRadius[i].transform;
+            Vector3 dirToTarget = (_target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
-                float dstToTarget = Vector3.Distance(transform.position, target.position);
+                float dstToTarget = Vector3.Distance(transform.position, _target.position);
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
-                    if (target.CompareTag("Player"))
+                    if (_target.CompareTag(Player))
                     {
-                        player = target;
+                        player = _target;
                         canSeePlayer = true;
                     }
                 }

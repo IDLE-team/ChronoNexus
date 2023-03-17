@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyChaseState : EnemyState
 {
-    private Vector3 playerPosition;
+    private Vector3 _playerPosition;
 
     public EnemyChaseState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
     {
@@ -17,20 +14,20 @@ public class EnemyChaseState : EnemyState
 
     public override void Exit()
     {
-        enemy.canSeePlayer = false;
+        _enemy.canSeePlayer = false;
     }
 
     public override void LogicUpdate()
     {
-        if (Vector3.Distance(enemy.transform.position, playerPosition) > 10f)
+        if (Vector3.Distance(_enemy.transform.position, _playerPosition) > 10f)
         {
-            enemy.enemySM.ChangeState(enemy.PatrolState);
+            _enemy.StateMachine.ChangeState(_enemy.PatrolState);
         }
     }
 
     public override void PhysicsUpdate()
     {
-        playerPosition = enemy.player.position;
-        enemy._navMeshAgent.SetDestination(playerPosition);
+        _playerPosition = _enemy.player.position;
+        _enemy.navMeshAgent.SetDestination(_playerPosition);
     }
 }
