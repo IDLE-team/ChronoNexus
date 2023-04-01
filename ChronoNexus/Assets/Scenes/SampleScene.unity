@@ -154,8 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e39fdc4c87d61554597bca213f8b6f88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputController: {fileID: 859768691}
-  characterController: {fileID: 1827629865287769525}
+  _inputController: {fileID: 859768691}
 --- !u!4 &10771259
 Transform:
   m_ObjectHideFlags: 0
@@ -349,7 +348,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -458,7 +457,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -572,7 +571,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -784,7 +783,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -913,7 +912,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -1267,7 +1266,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -1593,7 +1592,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -1672,7 +1671,7 @@ GameObject:
   - component: {fileID: 303662585}
   - component: {fileID: 303662584}
   m_Layer: 0
-  m_Name: FPS
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1807,12 +1806,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7122517751116074737, guid: 279b93e05ae0efb42a09ae412a05a6b2,
     type: 3}
   m_PrefabInstance: {fileID: 7122517751309517969}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &371779376 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9131697651019852562, guid: 3c31498842d764242b6a889d6a8dc8ef,
-    type: 3}
-  m_PrefabInstance: {fileID: 7487028824846527313}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &392383840 stripped
 Transform:
@@ -1970,7 +1963,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -2618,50 +2611,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 68629146}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &576304110 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7122517751116074699, guid: 279b93e05ae0efb42a09ae412a05a6b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 85782110}
-  m_PrefabAsset: {fileID: 0}
---- !u!195 &576304117
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576304110}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 1.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 1
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 1
-  m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
---- !u!54 &576304118
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576304110}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!1001 &583739741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2703,7 +2652,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -2920,7 +2869,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -3040,7 +2989,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -3853,7 +3802,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &748981824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4153,7 +4102,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -4262,7 +4211,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -4726,7 +4675,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &963194228
@@ -4758,11 +4707,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
+  m_ShowDebugText: 1
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 0
+  m_UpdateMethod: 1
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
@@ -5234,7 +5183,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -5552,7 +5501,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -5667,7 +5616,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -6565,7 +6514,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -6967,7 +6916,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -7094,7 +7043,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -7531,7 +7480,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -7836,7 +7785,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -8189,7 +8138,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -8353,7 +8302,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -8462,7 +8411,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -8795,7 +8744,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -9102,37 +9051,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d880824205d96ee4da44f9515ae19867, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredHoldTime: 0.3
-  onClick:
+  _requiredHoldTime: 0
+  onClicked:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 859768691}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: SetTarget
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onLongClick:
+      m_Calls: []
+  onLongClicked:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 859768691}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: TurnOffTargetLock
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1903490367 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7122517751116074699, guid: 279b93e05ae0efb42a09ae412a05a6b2,
@@ -9472,7 +9397,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -9949,7 +9874,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -10107,7 +10032,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -10445,7 +10370,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -10603,7 +10528,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -10915,7 +10840,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -11350,51 +11275,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7487028824846527313}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1827629865287769516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371779376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 813896d471c37774693db1b69dbb459e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lookLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  _characterController: {fileID: 1827629865287769525}
-  enemyDetectRadius: 10
 --- !u!114 &1827629865287769525 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7487028825248208872, guid: 3c31498842d764242b6a889d6a8dc8ef,
     type: 3}
   m_PrefabInstance: {fileID: 7487028824846527313}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371779376}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c2be1ab10767aa4c9983ec6ec52dbc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1827629865287769534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 371779376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b79015d97d045342983d99f5d4c0837, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _footStepClips:
-  - {fileID: 0}
-  _hitClips:
-  - {fileID: 8300000, guid: 28ec476d6cb7ad94993060404eb4d086, type: 3}
 --- !u!4 &2003288204416003827 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4460311680087963445, guid: d653452ced08b9a428f8999566de7b50,
@@ -11476,12 +11368,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 100059057}
   m_PrefabAsset: {fileID: 0}
---- !u!195 &7122517751025289537 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 4541618884466652609, guid: 279b93e05ae0efb42a09ae412a05a6b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 100059057}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7122517751309517969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11528,7 +11414,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _navMeshAgent
       value: 
-      objectReference: {fileID: 7122517751025289537}
+      objectReference: {fileID: 0}
     - target: {fileID: 7122517751116074701, guid: 279b93e05ae0efb42a09ae412a05a6b2,
         type: 3}
       propertyPath: targetMask.m_Bits
@@ -11740,12 +11626,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7487028825248208877, guid: 3c31498842d764242b6a889d6a8dc8ef,
         type: 3}
-      propertyPath: _bullet
-      value: 
-      objectReference: {fileID: 6995691736350787518, guid: 1e023cc35898b0446bf7649c9248ac98,
-        type: 3}
-    - target: {fileID: 7487028825248208877, guid: 3c31498842d764242b6a889d6a8dc8ef,
-        type: 3}
       propertyPath: _target
       value: 
       objectReference: {fileID: 7122517751025289536}
@@ -11757,11 +11637,6 @@ PrefabInstance:
     - target: {fileID: 7487028825248208877, guid: 3c31498842d764242b6a889d6a8dc8ef,
         type: 3}
       propertyPath: _playerController
-      value: 
-      objectReference: {fileID: 1827629865287769525}
-    - target: {fileID: 7487028825248208877, guid: 3c31498842d764242b6a889d6a8dc8ef,
-        type: 3}
-      propertyPath: _characterController
       value: 
       objectReference: {fileID: 1827629865287769525}
     - target: {fileID: 7487028825248208879, guid: 3c31498842d764242b6a889d6a8dc8ef,

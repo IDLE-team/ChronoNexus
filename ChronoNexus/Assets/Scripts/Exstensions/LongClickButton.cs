@@ -1,68 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using System;
 
 public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private bool pointerDown;
-    private bool pointerUp;
-
-    private float pointerDownTimer;
-
-    [SerializeField]
-    private float requiredHoldTime;
-
-    public UnityEvent onClick;
-    public UnityEvent onLongClick;
+    [SerializeField] private float _requiredHoldTime;
+    private bool _pointerDown;
+    private bool _pointerUp;
+    private float _pointerDownTimer;
+    
+    public UnityEvent onClicked;
+    public UnityEvent onLongClicked;
 
     // [SerializeField]
     // private Image fillImage;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        pointerDown = true;
+        _pointerDown = true;
         Debug.Log("OnPointerDown");
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        pointerUp = true;
+        _pointerUp = true;
         Debug.Log("OnPointerUp");
     }
 
     private void Update()
     {
-        if (pointerDown)
+        if (_pointerDown)
         {
-            pointerDownTimer += Time.deltaTime;
-            if (pointerDownTimer >= requiredHoldTime)
+            _pointerDownTimer += Time.deltaTime;
+            if (_pointerDownTimer >= _requiredHoldTime)
             {
-                if (onLongClick != null)
-                    onLongClick.Invoke();
+                onLongClicked?.Invoke();
             }
         }
-        if (pointerUp && pointerDownTimer <= requiredHoldTime)
+        if (_pointerUp && _pointerDownTimer <= _requiredHoldTime)
         {
-            if (onClick != null)
-                onClick.Invoke();
-            Reset();
+            onClicked?.Invoke();
         }
-        else if (pointerUp && pointerDownTimer >= requiredHoldTime)
-        {
-            Reset();
-        }
+        Reset();
         //    fillImage.fillAmount = pointerDownTimer / requiredHoldTime;
     }
 
+    [Fix]
     private void Reset()
     {
-        pointerDown = false;
-        pointerUp = false;
-        pointerDownTimer = 0;
+        _pointerDown = false;
+        _pointerUp = false;
+        _pointerDownTimer = 0;
         //  fillImage.fillAmount = pointerDownTimer / requiredHoldTime;
     }
 }

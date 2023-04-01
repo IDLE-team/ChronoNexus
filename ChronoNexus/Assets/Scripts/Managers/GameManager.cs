@@ -1,31 +1,16 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
-    public static GameManager instance;
+    [SerializeField] private InputProvider inputProvider;
 
-    public InputController inputController;
-    public CharacterController characterController;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
+    public InputProvider InputProvider => inputProvider;
 
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public enum GameState
-    {
-        Play,
-        Pause,
-        Lose,
-        Victory
     }
 }

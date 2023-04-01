@@ -2,41 +2,39 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
-[RequireComponent(typeof(Animator), typeof(AudioSource))]
+[RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
 public class Enemy : MonoBehaviour, IDamagable, ITargetable
 {
-    #region States
+    [SerializeField] private LayerMask _targetMask;
+    [SerializeField] private Selection _selection;
+    [SerializeField] private LayerMask _obstacleMask;
+    
+    [SerializeField] private AudioClip _hitClip;
+    [SerializeField] private ParticleSystem _hitEffect;
 
-    public StateMachine StateMachine { get; private set; }
+    [SerializeField] [Range(0, 360)] private float _viewAngle;
+    [SerializeField] [Min(0)] private float _viewRadius;
+    private NavMeshAgent _navMeshAgent;
+
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
+    public float ViewAngle => _viewAngle;
+    public float ViewRadius => _viewRadius;
+
+    public float Health { get; private set; }
+    
+    private StateMachine _stateMachine;
     public EnemyIdleState IdleState { get; private set; }
     public EnemyPatrolState PatrolState { get; private set; }
     public EnemyChaseState ChaseState { get; private set; }
+    
 
-    #endregion States
-
-    #region FieldOfView
-
-    [Range(0, 360)] public float viewAngle;
-    public float viewRadius;
-
-    [SerializeField] private LayerMask targetMask;
-    [SerializeField] private LayerMask obstacleMask;
-
-    #endregion FieldOfView
-
-    public NavMeshAgent navMeshAgent;
     public Transform player;
 
-    public float Health { get; private set; }
-    public bool canSeePlayer = false;
+    public bool canSeeTarget = false;
 
-    [SerializeField] private AudioClip _hitClip;
-    [SerializeField] private ParticleSystem _hitEffect;
-    [SerializeField] private GameObject _targetIndicator;
 
     private AudioSource _audioSource;
-    private Animator _animator;
+    private EnemyAnimator _animator;
     private Transform _target;
 
     private static string Player => "Player";
@@ -46,64 +44,61 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
     private void Awake()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<EnemyAnimator>();
         _audioSource = GetComponent<AudioSource>();
 
-        StateMachine = new StateMachine();
-
-        IdleState = new EnemyIdleState(this, StateMachine);
-        PatrolState = new EnemyPatrolState(this, StateMachine);
-        ChaseState = new EnemyChaseState(this, StateMachine);
+        _stateMachine = new StateMachine();
+        IdleState = new EnemyIdleState(this, _stateMachine);
+        PatrolState = new EnemyPatrolState(this, _stateMachine);
+        ChaseState = new EnemyChaseState(this, _stateMachine);
     }
 
     private void Start()
     {
-        StateMachine.Initialize(PatrolState);
-
-        StartCoroutine(nameof(FindTargetsWithDelay), .2f);
-
+        _stateMachine.Initialize(PatrolState);
+        StartCoroutine(nameof(FindTargetsWithDelay), 0.2f);
         _isAlive = true;
     }
 
     private void Update()
     {
-        Debug.Log(StateMachine.CurrentState);
-        StateMachine.CurrentState.LogicUpdate();
+        //Debug.Log(_stateMachine.CurrentState);
+        _stateMachine.CurrentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
-        StateMachine.CurrentState.PhysicsUpdate();
+        _stateMachine.CurrentState.PhysicsUpdate();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        if (_isAlive)
+        if (!_isAlive)
+            return;
+        Health -= damage;
+        DamageEffect();
+        _animator.TakeDamage();
+        if (Health < 0)
         {
-            Health -= damage;
-            DamageEffect();
-            _animator.SetTrigger("TakeHit");
-
-            if (Health < 0)
-            {
-                Death();
-            }
+            Death();
         }
     }
 
-    public void Death()
+    private void Death()
     {
         Health = 0;
         _isAlive = false;
-        _animator.SetBool("Dead", true);
+        _animator.Death();
         Destroy(gameObject, 0.8f);
     }
 
     public void ToggleSelfTarget()
     {
         _isTarget = !_isTarget;
-        _targetIndicator.SetActive(_isTarget);
+        if (_isTarget)
+            _selection.Select();
+        else _selection.Deselect();
     }
 
     private void DamageEffect()
@@ -111,9 +106,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         _audioSource.PlayOneShot(_hitClip);
         _hitEffect.Play();
     }
-
-    #region FieldOfView
-
+    
     private IEnumerator FindTargetsWithDelay(float delay)
     {
         while (true)
@@ -125,27 +118,27 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
     private void FindVisibleTargets()
     {
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, ViewRadius, _targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             _target = targetsInViewRadius[i].transform;
             Vector3 dirToTarget = (_target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+            if (Vector3.Angle(transform.forward, dirToTarget) < ViewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, _target.position);
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
+                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 {
                     if (_target.CompareTag(Player))
                     {
                         player = _target;
-                        canSeePlayer = true;
+                        canSeeTarget = true;
                     }
                 }
             }
         }
     }
-
+    
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
@@ -154,6 +147,5 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         }
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
-
-    #endregion FieldOfView
+    
 }

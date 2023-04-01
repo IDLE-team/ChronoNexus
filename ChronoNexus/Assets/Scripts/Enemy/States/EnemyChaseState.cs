@@ -14,20 +14,20 @@ public class EnemyChaseState : EnemyState
 
     public override void Exit()
     {
-        _enemy.canSeePlayer = false;
+        _enemy.canSeeTarget = false;
     }
 
     public override void LogicUpdate()
     {
         if (Vector3.Distance(_enemy.transform.position, _playerPosition) > 10f)
         {
-            _enemy.StateMachine.ChangeState(_enemy.PatrolState);
+            _stateMachine.ChangeState(_enemy.PatrolState);
         }
     }
 
     public override void PhysicsUpdate()
     {
         _playerPosition = _enemy.player.position;
-        _enemy.navMeshAgent.SetDestination(_playerPosition);
+        _enemy.NavMeshAgent.SetDestination(_playerPosition);
     }
 }

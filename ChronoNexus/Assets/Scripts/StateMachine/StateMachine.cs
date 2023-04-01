@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 public class StateMachine
 {
     public IState CurrentState { get; private set; }
@@ -13,7 +11,6 @@ public class StateMachine
     public void ChangeState(IState newState)
     {
         CurrentState.Exit();
-
         CurrentState = newState;
         newState.Enter();
     }

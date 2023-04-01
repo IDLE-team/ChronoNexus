@@ -6,29 +6,28 @@ public class EnemyPatrolState : EnemyState
 {
     private Vector3 _destination;
 
-    public EnemyPatrolState(Enemy _enemy, StateMachine StateMachine) : base(_enemy, StateMachine)
+    public EnemyPatrolState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
     {
     }
 
     public override void Enter()
     {
         _destination = GetRandomDirection();
-        _enemy.navMeshAgent.SetDestination(_destination);
+        _enemy.NavMeshAgent.SetDestination(_destination);
     }
 
     public override void LogicUpdate()
     {
-        if (_enemy.canSeePlayer)
+        if (_enemy.canSeeTarget)
         {
-            _enemy.StateMachine.ChangeState(_enemy.ChaseState);
+            _stateMachine.ChangeState(_enemy.ChaseState);
             return;
         }
 
-        if (_enemy.navMeshAgent.remainingDistance <= 1f)
-        {
-            _destination = GetRandomDirection();
-            _enemy.navMeshAgent.SetDestination(_destination);
-        }
+        if (!(_enemy.NavMeshAgent.remainingDistance <= 1f))
+            return;
+        _destination = GetRandomDirection();
+        _enemy.NavMeshAgent.SetDestination(_destination);
     }
 
     private Vector3 GetRandomDirection()

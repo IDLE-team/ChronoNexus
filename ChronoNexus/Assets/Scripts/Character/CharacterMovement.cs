@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float SprintSpeed = 5.335f;
 
     [Tooltip("How fast the character turns to face movement _direction")]
-    [SerializeField][Range(0.0f, 0.3f)] private float RotationSmoothTime = 0.12f;
+    [SerializeField] [Range(0.0f, 0.3f)] private float RotationSmoothTime = 0.12f;
 
     [Tooltip("Acceleration and deceleration")]
     [SerializeField] private float SpeedChangeRate = 10.0f;
@@ -28,8 +29,7 @@ public class CharacterMovement : MonoBehaviour
 
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private FloatingJoystick _joystick;
-    [SerializeField] private GameObject _mainCamera;
-    [SerializeField] private LayerMask _lookLayer;
+    private Camera _camera;
 
     private Vector3 _inputDirection;
     private Vector3 _targetDirection;
@@ -53,26 +53,32 @@ public class CharacterMovement : MonoBehaviour
     private float _animationStrafeX;
     private float _animationStrafeZ;
 
+    private void Awake()
+    {
+        _camera = Camera.main;
+    }
+
+
     private void FixedUpdate()
     {
         Move();
-        if (_characterController.CharacterTargetLock.isLookAt)
+        if (_characterController.TargetLock.IsLookAt)
         {
-            if (_characterController.CharacterTargetLock._nearestTarget == null) return;
-            transform.LookAt(new Vector3(_characterController.CharacterTargetLock._nearestTarget.position.x, 0, _characterController.CharacterTargetLock._nearestTarget.position.z));
+            if (_characterController.TargetLock.NearestTarget == null)
+                return;
+            transform.LookAt(new Vector3(_characterController.TargetLock.NearestTarget.position.x, 0, _characterController.TargetLock.NearestTarget.position.z));
             TargetLockSetAnimations();
         }
     }
-
-    #region Move
-
+    
     private void Move()
     {
         _targetSpeed = MoveSpeed;
         if (_joystick.Direction == Vector2.zero) _targetSpeed = 0.0f;
 
         _speedOffset = 0.1f;
-        _currentHorizontalSpeed = new Vector3(_characterController.Rigidbody.velocity.x, 0.0f, _characterController.Rigidbody.velocity.z).magnitude;
+        var velocity = _characterController.Rigidbody.velocity;
+        _currentHorizontalSpeed = new Vector3(velocity.x, 0.0f, velocity.z).magnitude;
         _inputMagnitude = _joystick.Direction.magnitude;
         _inputDirection = new Vector3(_joystick.Direction.x, 0.0f, _joystick.Direction.y).normalized;
 
@@ -94,7 +100,7 @@ public class CharacterMovement : MonoBehaviour
 
         if (_joystick.Direction != Vector2.zero)
         {
-            _targetRotation = Mathf.Atan2(_inputDirection.x, _inputDirection.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
+            _targetRotation = Mathf.Atan2(_inputDirection.x, _inputDirection.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
             _rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
                 RotationSmoothTime);
 
@@ -104,80 +110,75 @@ public class CharacterMovement : MonoBehaviour
         _targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         _characterController.Rigidbody.velocity = _targetDirection.normalized * _speed;
-
-        #region AnimationValues
-
-        if (_characterController.CharacterTargetLock.isLookAt)
+        
+        if (_characterController.TargetLock.IsLookAt)
         {
-            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeX, _animationStrafeX);
-            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeZ, _animationStrafeZ);
+            _characterController.Animator.StrafeX(_animationStrafeX);
+            _characterController.Animator.StrafeZ(_animationStrafeZ);
         }
         else
         {
-            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeZ, _animationBlend);
+            _characterController.Animator.StrafeZ(_animationBlend);
         }
         if (_inputMagnitude > 0.1f)
         {
-            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDMotionSpeed, _inputMagnitude);
+            _characterController.Animator.MotionSpeed(_inputMagnitude);
         }
         else
         {
-            _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDMotionSpeed, 1);
+            _characterController.Animator.MotionSpeed(1);
         }
-
-        #endregion AnimationValues
+        
     }
+    
 
-    #endregion Move
-
-    #region TargetLock
-
+    [Delete] //Не подходит по ответственности
+    public void ResetAnimationValues()
+    {
+        print("Reset Animations Values");
+        _characterController.Animator.StrafeX(0);
+        _characterController.Animator.StrafeZ(0);
+    }
+    
     private void TargetLockSetAnimations()
     {
         _vertical = _targetSpeed * _joystick.Direction.y;
         _horizontal = _targetSpeed * _joystick.Direction.x;
 
-        _direction = transform.position - _characterController.CharacterTargetLock._nearestTarget.position;
+        _direction = transform.position - _characterController.TargetLock.NearestTarget.position;
         _angle = Vector3.Angle(_direction, transform.forward);
-
+        
         if (_direction.x > 0)
         {
             _angle = -_angle;
         }
         _angle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
 
-        if (_angle >= 45f && _angle <= 90f)
+        if (_angle is >= 45f and <= 90f)
         {
             _animationStrafeZ = Mathf.Lerp(_animationStrafeZ, -_horizontal, Time.deltaTime * TargetSmoothAnimation);
             _animationStrafeX = Mathf.Lerp(_animationStrafeX, _vertical, Time.deltaTime * TargetSmoothAnimation);
         }
-        else if (_angle >= 90f && _angle <= 135f)
+        else if (_angle is >= 90f and <= 135f)
         {
             _animationStrafeZ = Mathf.Lerp(_animationStrafeZ, -_horizontal, Time.deltaTime * TargetSmoothAnimation);
             _animationStrafeX = Mathf.Lerp(_animationStrafeX, _vertical, Time.deltaTime * TargetSmoothAnimation); ;
         }
-        else if (_angle >= 135f || _angle <= -135f)
+        else if (_angle is >= 135f or <= -135f)
         {
             _animationStrafeZ = Mathf.Lerp(_animationStrafeZ, _vertical, Time.deltaTime * TargetSmoothAnimation);
             _animationStrafeX = Mathf.Lerp(_animationStrafeX, _horizontal, Time.deltaTime * TargetSmoothAnimation);
         }
-        else if (_angle >= -135f && _angle <= -45f)
+        else if (_angle is >= -135f and <= -45f)
         {
             _animationStrafeZ = Mathf.Lerp(_animationStrafeZ, _horizontal, Time.deltaTime * TargetSmoothAnimation);
             _animationStrafeX = Mathf.Lerp(_animationStrafeX, -_vertical, Time.deltaTime * TargetSmoothAnimation);
         }
-        else if (_angle >= -45f && _angle <= 45f)
+        else if (_angle is >= -45f and <= 45f)
         {
             _animationStrafeZ = Mathf.Lerp(_animationStrafeZ, -_vertical, Time.deltaTime * TargetSmoothAnimation);
             _animationStrafeX = Mathf.Lerp(_animationStrafeX, -_horizontal, Time.deltaTime * TargetSmoothAnimation);
         }
     }
-
-    #endregion TargetLock
-
-    public void ResetAnimationValues()
-    {
-        _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeX, 0);
-        _characterController.Animator.SetFloat(_characterController.CharacterAnimation.animIDStrafeZ, 0);
-    }
+    
 }

@@ -6,10 +6,12 @@ using UnityEngine.TextCore.Text;
 public abstract class EnemyState : IState
 {
     protected Enemy _enemy;
+    protected StateMachine _stateMachine;
 
     protected EnemyState(Enemy enemy, StateMachine stateMachine)
     {
-        this._enemy = enemy;
+        _enemy = enemy;
+        _stateMachine = stateMachine;
     }
 
     public abstract void Enter();

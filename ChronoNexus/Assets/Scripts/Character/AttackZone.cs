@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class AttackZone : MonoBehaviour
 {
-    public float attackRadius;
-
+    [SerializeField] private float _radius;
+    public float Radius => _radius;
+    
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.DrawWireSphere(transform.position, _radius);
     }
 }
