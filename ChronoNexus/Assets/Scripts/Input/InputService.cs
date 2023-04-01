@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 
-public class InputProvider : MonoBehaviour, IInputProvider
+[Fix]
+public class InputService : MonoBehaviour, IInputService
 {
     public event Action Attacked;
-    public event Action Fired;
+    public event Action Shot;
 
     private void Update()
     {
@@ -20,5 +21,5 @@ public class InputProvider : MonoBehaviour, IInputProvider
 
     public void Attack() => Attacked?.Invoke();
 
-    public void Fire() => Fired?.Invoke();
+    public void Fire() => Shot?.Invoke();
 }

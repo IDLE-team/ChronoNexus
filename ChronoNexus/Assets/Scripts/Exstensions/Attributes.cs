@@ -2,6 +2,13 @@ using System;
 
 internal class FixAttribute : Attribute
 {
+    public FixAttribute()
+    {
+        
+    }
+    public FixAttribute(string comment)
+    {
+    }
 }
 
 internal class BadPerformanceAttribute : Attribute

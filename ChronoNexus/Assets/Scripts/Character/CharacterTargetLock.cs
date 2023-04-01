@@ -5,7 +5,7 @@ public class CharacterTargetLock : MonoBehaviour
 {
     [SerializeField] private LayerMask _lookLayer;
 
-    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private Character _character;
 
     [Tooltip("Enemy detect radius")]
     [SerializeField] private float _radius = 10f;
@@ -75,7 +75,7 @@ public class CharacterTargetLock : MonoBehaviour
             NearestTarget = null;
             if (IsLookAt)
             {
-                _characterController.Movement.ResetAnimationValues();
+                _character.Movement.ResetAnimationValues();
                 IsLookAt = false;
             }
         }

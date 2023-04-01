@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
 [RequireComponent(typeof(Health))]
+
+//TODO переделать, очень много ответсвенностей
 public class Enemy : MonoBehaviour, IDamagable, ITargetable
 {
     [SerializeField] private LayerMask _targetMask;
@@ -61,7 +63,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     {
         _health.Died += OnDied;
     }
-
     
     private void Start()
     {
@@ -111,6 +112,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         _hitEffect.Play();
     }
     
+    [Fix("Заменить на UniTask/UniRx")]
     private IEnumerator FindTargetsWithDelay(float delay)
     {
         while (true)
@@ -119,30 +121,37 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
             FindVisibleTargets();
         }
     }
-
+    
+    [Fix("Делигировать задачу поиска другому скрипту")]
     private void FindVisibleTargets()
     {
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, ViewRadius, _targetMask);
-
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        var results = new Collider[30];
+        var size = Physics.OverlapSphereNonAlloc(transform.position, ViewRadius, results, _targetMask);
+        for (var i = 0; i < size; i++)
         {
-            _target = targetsInViewRadius[i].transform;
-            Vector3 dirToTarget = (_target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < ViewAngle / 2)
-            {
-                float dstToTarget = Vector3.Distance(transform.position, _target.position);
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
-                {
-                    if (_target.CompareTag(Player))
-                    {
-                        player = _target;
-                        canSeeTarget = true;
-                    }
-                }
-            }
+            _target = results[i].transform;
+            var dirToTarget = (_target.position - transform.position).normalized;
+            if (Vector3.Angle(transform.forward, dirToTarget) >= ViewAngle / 2) 
+                continue;
+            var dstToTarget = Vector3.Distance(transform.position, _target.position);
+            if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask)) 
+                continue;
+            
+            if (!_target.CompareTag(Player))
+                continue;
+            player = _target;
+            canSeeTarget = true;
         }
     }
     
+    
+    private void OnDisable()
+    {
+        _health.Died -= OnDied;
+    }
+    
+    
+#if UNITY_EDITOR
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
@@ -151,9 +160,5 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         }
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
-    
-    private void OnDisable()
-    {
-        _health.Died -= OnDied;
-    }
+#endif
 }

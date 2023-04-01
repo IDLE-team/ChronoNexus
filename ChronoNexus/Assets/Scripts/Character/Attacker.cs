@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.VFX;
 using Zenject;
@@ -10,24 +11,28 @@ public class Attacker : MonoBehaviour
     [SerializeField] private AttackZone _attackZone;
     [SerializeField] private VisualEffect _visualHitEffect;
     [SerializeField] private int _damage;
-    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private Character _character;
     
     
     private Vector3 _shootDir;
-    private IInputProvider _inputProvider;
+    private IInputService _inputService;
     private CharacterAnimator _animator;
 
     [Inject]
-    private void Constuct(IInputProvider inputProvider, CharacterAnimator animator)
+    private void Constuct(IInputService inputService, CharacterAnimator animator)
     {
-        _inputProvider = inputProvider;
+        _inputService = inputService;
         _animator = animator;
     }
 
-    public void StartAttack() => _animator.Attack();
-
-    public void Fire() => _animator.Shoot();
-
+    private void OnEnable()
+    {
+        _inputService.Attacked += _animator.Attack;
+        _inputService.Shot += _animator.Shoot;
+    }
+    
+    
+    [UsedInAnimator]
     public void Hit()
     {
         Collider[] hitEnemies = Physics.OverlapSphere(_attackZone.transform.position, _attackZone.Radius, _enemyLayer);
@@ -37,11 +42,12 @@ public class Attacker : MonoBehaviour
         }
     }
 
+    [UsedInAnimator]
     public void Shoot()
     {
-        if (_characterController.TargetLock.NearestTarget != null)
+        if (_character.TargetLock.NearestTarget != null)
         {
-            _shootDir = (_characterController.TargetLock.NearestTarget.position - _rangeWeapon.transform.position)
+            _shootDir = (_character.TargetLock.NearestTarget.position - _rangeWeapon.transform.position)
                 .normalized;
         }
         else
@@ -53,10 +59,18 @@ public class Attacker : MonoBehaviour
         bullet.SetTarget(_shootDir);
     }
 
+    [UsedInAnimator]
     public void PlayEffect()
     {
         _visualHitEffect.gameObject.SetActive(true);
         _visualHitEffect.Play();
-        _characterController.AudioController.PlayHitSound();
+        _character.AudioController.PlayHitSound();
+    }
+    
+    
+    private void OnDisable()
+    {
+        _inputService.Attacked -= _animator.Attack;
+        _inputService.Shot -= _animator.Shoot;
     }
 }

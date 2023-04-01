@@ -27,7 +27,7 @@ public class CharacterMovement : MonoBehaviour
 
     //------------------------------------------------------------------------------------//
 
-    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private Character _character;
     [SerializeField] private FloatingJoystick _joystick;
     private Camera _camera;
 
@@ -62,11 +62,11 @@ public class CharacterMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        if (_characterController.TargetLock.IsLookAt)
+        if (_character.TargetLock.IsLookAt)
         {
-            if (_characterController.TargetLock.NearestTarget == null)
+            if (_character.TargetLock.NearestTarget == null)
                 return;
-            transform.LookAt(new Vector3(_characterController.TargetLock.NearestTarget.position.x, 0, _characterController.TargetLock.NearestTarget.position.z));
+            transform.LookAt(new Vector3(_character.TargetLock.NearestTarget.position.x, 0, _character.TargetLock.NearestTarget.position.z));
             TargetLockSetAnimations();
         }
     }
@@ -77,7 +77,7 @@ public class CharacterMovement : MonoBehaviour
         if (_joystick.Direction == Vector2.zero) _targetSpeed = 0.0f;
 
         _speedOffset = 0.1f;
-        var velocity = _characterController.Rigidbody.velocity;
+        var velocity = _character.Rigidbody.velocity;
         _currentHorizontalSpeed = new Vector3(velocity.x, 0.0f, velocity.z).magnitude;
         _inputMagnitude = _joystick.Direction.magnitude;
         _inputDirection = new Vector3(_joystick.Direction.x, 0.0f, _joystick.Direction.y).normalized;
@@ -109,24 +109,24 @@ public class CharacterMovement : MonoBehaviour
 
         _targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
-        _characterController.Rigidbody.velocity = _targetDirection.normalized * _speed;
+        _character.Rigidbody.velocity = _targetDirection.normalized * _speed;
         
-        if (_characterController.TargetLock.IsLookAt)
+        if (_character.TargetLock.IsLookAt)
         {
-            _characterController.Animator.StrafeX(_animationStrafeX);
-            _characterController.Animator.StrafeZ(_animationStrafeZ);
+            _character.Animator.StrafeX(_animationStrafeX);
+            _character.Animator.StrafeZ(_animationStrafeZ);
         }
         else
         {
-            _characterController.Animator.StrafeZ(_animationBlend);
+            _character.Animator.StrafeZ(_animationBlend);
         }
         if (_inputMagnitude > 0.1f)
         {
-            _characterController.Animator.MotionSpeed(_inputMagnitude);
+            _character.Animator.MotionSpeed(_inputMagnitude);
         }
         else
         {
-            _characterController.Animator.MotionSpeed(1);
+            _character.Animator.MotionSpeed(1);
         }
         
     }
@@ -136,8 +136,8 @@ public class CharacterMovement : MonoBehaviour
     public void ResetAnimationValues()
     {
         print("Reset Animations Values");
-        _characterController.Animator.StrafeX(0);
-        _characterController.Animator.StrafeZ(0);
+        _character.Animator.StrafeX(0);
+        _character.Animator.StrafeZ(0);
     }
     
     private void TargetLockSetAnimations()
@@ -145,7 +145,7 @@ public class CharacterMovement : MonoBehaviour
         _vertical = _targetSpeed * _joystick.Direction.y;
         _horizontal = _targetSpeed * _joystick.Direction.x;
 
-        _direction = transform.position - _characterController.TargetLock.NearestTarget.position;
+        _direction = transform.position - _character.TargetLock.NearestTarget.position;
         _angle = Vector3.Angle(_direction, transform.forward);
         
         if (_direction.x > 0)

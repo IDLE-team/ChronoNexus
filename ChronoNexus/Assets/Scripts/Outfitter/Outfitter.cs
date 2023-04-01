@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Outfitter : MonoBehaviour, IOutfitter
 {
-    public IWeapon Sword { get; }
-    public IWeapon Gun { get; }
+    [SerializeField] private Weapon _sword;
+    [SerializeField] private Weapon _gun;
+
+    public IWeapon Sword => _sword;
+    public IWeapon Gun => _gun;
 }
