@@ -10,7 +10,9 @@ public class Attacker : MonoBehaviour
     [SerializeField] private AttackZone _attackZone;
     [SerializeField] private VisualEffect _visualHitEffect;
     [SerializeField] private int _damage;
-
+    [SerializeField] private CharacterController _characterController;
+    
+    
     private Vector3 _shootDir;
     private IInputProvider _inputProvider;
     private CharacterAnimator _animator;

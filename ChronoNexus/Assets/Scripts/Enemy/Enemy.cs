@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
+[RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour, IDamagable, ITargetable
 {
     [SerializeField] private LayerMask _targetMask;
@@ -15,12 +17,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     [SerializeField] [Range(0, 360)] private float _viewAngle;
     [SerializeField] [Min(0)] private float _viewRadius;
     private NavMeshAgent _navMeshAgent;
-
+    private IHealth _health;
+    
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public float ViewAngle => _viewAngle;
     public float ViewRadius => _viewRadius;
-
-    public float Health { get; private set; }
     
     private StateMachine _stateMachine;
     public EnemyIdleState IdleState { get; private set; }
@@ -44,6 +45,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
     private void Awake()
     {
+        _health = GetComponent<Health>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<EnemyAnimator>();
         _audioSource = GetComponent<AudioSource>();
@@ -54,6 +56,13 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         ChaseState = new EnemyChaseState(this, _stateMachine);
     }
 
+
+    private void OnEnable()
+    {
+        _health.Died += OnDied;
+    }
+
+    
     private void Start()
     {
         _stateMachine.Initialize(PatrolState);
@@ -76,23 +85,18 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     {
         if (!_isAlive)
             return;
-        Health -= damage;
+        _health.Decrease(damage);
         DamageEffect();
         _animator.TakeDamage();
-        if (Health < 0)
-        {
-            Death();
-        }
     }
-
-    private void Death()
+    
+    private void OnDied()
     {
-        Health = 0;
         _isAlive = false;
         _animator.Death();
         Destroy(gameObject, 0.8f);
     }
-
+    
     public void ToggleSelfTarget()
     {
         _isTarget = !_isTarget;
@@ -148,4 +152,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
     
+    private void OnDisable()
+    {
+        _health.Died -= OnDied;
+    }
 }
