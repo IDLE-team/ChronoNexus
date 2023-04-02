@@ -8,10 +8,8 @@ public class Selection : MonoBehaviour
     private void Awake()
     {
         _meshRender = GetComponent<MeshRenderer>();
+        Deselect();
     }
-
-    private void Start() => Deselect();
-
 
     public void Select()
     {

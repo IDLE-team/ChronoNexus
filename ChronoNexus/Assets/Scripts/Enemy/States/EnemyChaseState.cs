@@ -23,6 +23,10 @@ public class EnemyChaseState : EnemyState
         {
             _stateMachine.ChangeState(_enemy.PatrolState);
         }
+        if (Vector3.Distance(_enemy.transform.position, _playerPosition) < 8f)
+        {
+            _stateMachine.ChangeState(_enemy.RangeAttackState);
+        }
     }
 
     public override void PhysicsUpdate()

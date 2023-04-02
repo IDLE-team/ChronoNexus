@@ -5067,6 +5067,7 @@ GameObject:
   - component: {fileID: 4661730005822013677}
   - component: {fileID: 7122517751116074701}
   - component: {fileID: 4243074117077584763}
+  - component: {fileID: 36467320137496867}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -5327,13 +5328,16 @@ MonoBehaviour:
   _selection: {fileID: 261506918810334976}
   _obstacleMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 183
   _hitClip: {fileID: 8300000, guid: c5e26bca5b0eaa34392a150f1a2684c5, type: 3}
   _hitEffect: {fileID: 3993092177790635361}
   _viewAngle: 180
   _viewRadius: 1.23
+  _bulletPrefab: {fileID: 3669826307443937433, guid: 30e57ac830bd64949ae2a79063ba921b,
+    type: 3}
   player: {fileID: 0}
   canSeeTarget: 0
+  _isTarget: 0
 --- !u!114 &4243074117077584763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5346,6 +5350,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82345380668c4008b1ef9bfc73f7c347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &36467320137496867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7122517751116074699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899f3863515d4dec96d8e94c066a41e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _value: 50
 --- !u!1 &7579386215693359969
 GameObject:
   m_ObjectHideFlags: 0

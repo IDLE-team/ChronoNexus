@@ -14,6 +14,11 @@ public class EnemyIdleState : EnemyState
 
     public override void LogicUpdate()
     {
+        if (_enemy.canSeeTarget)
+        {
+            _stateMachine.ChangeState(_enemy.ChaseState);
+            return;
+        }
     }
 
     public override void Exit()

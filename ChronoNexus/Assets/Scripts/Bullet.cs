@@ -1,16 +1,14 @@
 using UnityEngine;
 
-
 //TODO подумать насчет временем полёта пули / время уничтожения
 //TODO изменить setTarget
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] [Min(1)] int _damage = 10;
+    [SerializeField][Min(1)] private int _damage = 10;
     [SerializeField] private float _moveSpeed;
 
     private Vector3 _shootDir;
-    
-    
+
     public void SetTarget(Vector3 shootDirection)
     {
         _shootDir = shootDirection;
@@ -28,7 +26,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.TryGetComponent<IDamagable>(out var target)) 
+        if (!other.TryGetComponent<IDamagable>(out var target))
             return;
         target.TakeDamage(_damage);
         Destroy(gameObject);
