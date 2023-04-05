@@ -12,26 +12,24 @@ public class Attacker : MonoBehaviour
     [SerializeField] private VisualEffect _visualHitEffect;
     [SerializeField] private int _damage;
     [SerializeField] private Character _character;
-    
-    
+    [SerializeField] private InputService _inputService;
+
     private Vector3 _shootDir;
-    private IInputService _inputService;
-    private CharacterAnimator _animator;
+    [SerializeField] private CharacterAnimator _animator;
 
     [Inject]
     private void Constuct(IInputService inputService, CharacterAnimator animator)
     {
-        _inputService = inputService;
-        _animator = animator;
+        //_inputService = inputService;
+        //_animator = animator;
     }
 
     private void OnEnable()
     {
         _inputService.Attacked += _animator.Attack;
-        _inputService.Shot += _animator.Shoot;
+        _inputService.Shot += _animator.Fire;
     }
-    
-    
+
     [UsedInAnimator]
     public void Hit()
     {
@@ -45,9 +43,9 @@ public class Attacker : MonoBehaviour
     [UsedInAnimator]
     public void Shoot()
     {
-        if (_character.TargetLock.NearestTarget != null)
+        if (_character.TargetLock.LookTarget != null)
         {
-            _shootDir = (_character.TargetLock.NearestTarget.position - _rangeWeapon.transform.position)
+            _shootDir = (_character.TargetLock.LookTarget.position - _rangeWeapon.transform.position)
                 .normalized;
         }
         else
@@ -66,11 +64,10 @@ public class Attacker : MonoBehaviour
         _visualHitEffect.Play();
         _character.AudioController.PlayHitSound();
     }
-    
-    
+
     private void OnDisable()
     {
         _inputService.Attacked -= _animator.Attack;
-        _inputService.Shot -= _animator.Shoot;
+        _inputService.Shot -= _animator.Fire;
     }
 }

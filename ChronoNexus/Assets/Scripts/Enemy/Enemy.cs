@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-
 [RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
 [RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour, IDamagable, ITargetable
@@ -19,6 +18,9 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     [SerializeField][Min(0)] private float _viewRadius;
 
     [SerializeField] private Bullet _bulletPrefab;
+
+    public DebugEnemySpawner enemySpawner;
+
     private NavMeshAgent _navMeshAgent;
     private IHealth _health;
 
@@ -40,6 +42,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     private AudioSource _audioSource;
     private EnemyAnimator _animator;
     private Transform _target;
+
+    private EnemyState _startState;
 
     private static string Player => "Player";
 
@@ -67,14 +71,21 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
     private void Start()
     {
-        _stateMachine.Initialize(IdleState);
+        //_stateMachine.Initialize(IdleState);
         StartCoroutine(nameof(FindTargetsWithDelay), 0.2f);
         _isAlive = true;
     }
 
+    public void InitializeSpawner(DebugEnemySpawner spawner, EnemyState startState)
+    {
+        enemySpawner = spawner;
+        _startState = startState;
+        _stateMachine.Initialize(_startState);
+    }
+
     private void Update()
     {
-        Debug.Log(_stateMachine.CurrentState);
+        //Debug.Log(_stateMachine.CurrentState);
         _stateMachine.CurrentState.LogicUpdate();
     }
 
@@ -159,6 +170,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     private void OnDisable()
     {
         _health.Died -= OnDied;
+    }
+
+    private void OnDestroy()
+    {
+        enemySpawner.DestroyEnemy(gameObject);
     }
 
 #if UNITY_EDITOR

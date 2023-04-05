@@ -1,4 +1,6 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterTargetLock : MonoBehaviour
@@ -10,77 +12,90 @@ public class CharacterTargetLock : MonoBehaviour
     [Tooltip("Enemy detect radius")]
     [SerializeField] private float _radius = 10f;
 
-    private Collider[] _targets;
+    [SerializeField][Min(0.1f)] private float _targetRefreshDelay;
+
+    [SerializeField] private DebugEnemySpawner _enemySpawner;
+    public Transform LookTarget { get; private set; }
+    public bool IsLookAt { get; private set; }
+
+    private List<GameObject> _targets = new List<GameObject>();
+
     private Transform _previousTarget;
     private Transform _closestTarget;
+
     private float _closestDistance;
     private float _targetDistance;
-    
-    public Transform NearestTarget { get; private set; }
-    public bool IsLookAt { get; private set; }
 
     private void Start()
     {
-        StartCoroutine(RefreshTarget());
+        RefreshTargetAsync().Forget();
+        _targets = _enemySpawner.enemyList;
     }
 
-    //TODO заменить на что-то более производительнее. например UniRx/UniTask
-    [Fix]
-    private IEnumerator RefreshTarget()
+    private async UniTaskVoid RefreshTargetAsync()
     {
         while (true)
         {
-            LookAtTarget();
-            yield return new WaitForSeconds(0.5f);
+            FindTarget();
+            await UniTask.Delay(TimeSpan.FromSeconds(_targetRefreshDelay), cancellationToken: this.GetCancellationTokenOnDestroy());
         }
     }
-    
-    [Fix] [BadPerformance]
-    private void LookAtTarget()
+
+    private void FindTarget()
     {
-        _targets = Physics.OverlapSphere(new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), _radius, _lookLayer);
-        if (_targets.Length > 0)
+        if (_targets.Count > 0)
         {
             _closestDistance = _radius;
-            NearestTarget = null;
+            _closestTarget = null;
+
             foreach (var target in _targets)
             {
                 _targetDistance = Vector3.Distance(transform.position, target.transform.position);
+
+                if (_targetDistance > _radius)
+                    continue;
+
                 if (_targetDistance < _closestDistance)
                 {
                     _closestDistance = _targetDistance;
                     _closestTarget = target.transform;
                 }
             }
-            NearestTarget = _closestTarget;
-            if (_previousTarget != NearestTarget || _previousTarget == null)
+
+            if (_closestTarget == null && IsLookAt)
             {
                 if (_previousTarget != null)
-                    _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
-                if (NearestTarget != null)
                 {
-                    NearestTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+                    _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
                 }
-                _previousTarget = NearestTarget;
+                SetEmptyTarget();
+                return;
             }
+
+            if (_closestTarget == _previousTarget)
+                return;
+
+            if (_previousTarget != null)
+                _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+
+            LookTarget = _closestTarget;
+            _previousTarget = _closestTarget;
+
+            LookTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
             IsLookAt = true;
         }
-        else
-        {
-            if (_previousTarget != null)
-            {
-                _previousTarget?.gameObject.GetComponent<ITargetable>()?.ToggleSelfTarget();
-            }
-            _previousTarget = null;
-            NearestTarget = null;
-            if (IsLookAt)
-            {
-                _character.Movement.ResetAnimationValues();
-                IsLookAt = false;
-            }
-        }
+        else if (IsLookAt)
+            SetEmptyTarget();
     }
 
+    private void SetEmptyTarget()
+    {
+        _previousTarget = null;
+        LookTarget = null;
+
+        IsLookAt = false;
+        _character.Movement.ResetAnimationValues();
+    }
 
     private void OnDrawGizmosSelected()
     {

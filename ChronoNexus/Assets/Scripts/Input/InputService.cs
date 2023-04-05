@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Fix]
 public class InputService : MonoBehaviour, IInputService
 {
     public event Action Attacked;
+
     public event Action Shot;
 
     private void Update()
@@ -22,4 +24,6 @@ public class InputService : MonoBehaviour, IInputService
     public void Attack() => Attacked?.Invoke();
 
     public void Fire() => Shot?.Invoke();
+
+    public void Restart() => SceneManager.LoadScene(0);
 }

@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -14,7 +18,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float SprintSpeed = 5.335f;
 
     [Tooltip("How fast the character turns to face movement _direction")]
-    [SerializeField] [Range(0.0f, 0.3f)] private float RotationSmoothTime = 0.12f;
+    [SerializeField][Range(0.0f, 0.3f)] private float RotationSmoothTime = 0.12f;
 
     [Tooltip("Acceleration and deceleration")]
     [SerializeField] private float SpeedChangeRate = 10.0f;
@@ -27,8 +31,12 @@ public class CharacterMovement : MonoBehaviour
 
     //------------------------------------------------------------------------------------//
 
+    public Slider slider;
+    public TextMeshProUGUI speedText;
+
     [SerializeField] private Character _character;
     [SerializeField] private FloatingJoystick _joystick;
+
     private Camera _camera;
 
     private Vector3 _inputDirection;
@@ -58,19 +66,26 @@ public class CharacterMovement : MonoBehaviour
         _camera = Camera.main;
     }
 
+    private void Start()
+    {
+        slider.value = MoveSpeed;
+        speedText.text = slider.value.ToString();
+        slider.onValueChanged.AddListener(OnSliderValueChanged);
+    }
 
     private void FixedUpdate()
     {
         Move();
-        if (_character.TargetLock.IsLookAt)
-        {
-            if (_character.TargetLock.NearestTarget == null)
-                return;
-            transform.LookAt(new Vector3(_character.TargetLock.NearestTarget.position.x, 0, _character.TargetLock.NearestTarget.position.z));
-            TargetLockSetAnimations();
-        }
+
+        if (!_character.TargetLock.IsLookAt)
+            return;
+        if (_character.TargetLock.LookTarget == null)
+            return;
+        Vector3 targetPosition = new Vector3(_character.TargetLock.LookTarget.position.x, transform.position.y, _character.TargetLock.LookTarget.position.z);
+        transform.LookAt(targetPosition);
+        TargetLockSetAnimations();
     }
-    
+
     private void Move()
     {
         _targetSpeed = MoveSpeed;
@@ -110,7 +125,6 @@ public class CharacterMovement : MonoBehaviour
         _targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         _character.Rigidbody.velocity = _targetDirection.normalized * _speed;
-        
         if (_character.TargetLock.IsLookAt)
         {
             _character.Animator.StrafeX(_animationStrafeX);
@@ -128,26 +142,27 @@ public class CharacterMovement : MonoBehaviour
         {
             _character.Animator.MotionSpeed(1);
         }
-        
     }
-    
 
     [Delete] //Не подходит по ответственности
     public void ResetAnimationValues()
     {
         print("Reset Animations Values");
+        _animationStrafeX = 0;
+        _animationStrafeZ = 0;
         _character.Animator.StrafeX(0);
         _character.Animator.StrafeZ(0);
     }
-    
+
     private void TargetLockSetAnimations()
     {
+        Debug.Log("Работает");
         _vertical = _targetSpeed * _joystick.Direction.y;
         _horizontal = _targetSpeed * _joystick.Direction.x;
 
-        _direction = transform.position - _character.TargetLock.NearestTarget.position;
+        _direction = transform.position - _character.TargetLock.LookTarget.position;
         _angle = Vector3.Angle(_direction, transform.forward);
-        
+
         if (_direction.x > 0)
         {
             _angle = -_angle;
@@ -180,5 +195,10 @@ public class CharacterMovement : MonoBehaviour
             _animationStrafeX = Mathf.Lerp(_animationStrafeX, -_horizontal, Time.deltaTime * TargetSmoothAnimation);
         }
     }
-    
+
+    private void OnSliderValueChanged(float value)
+    {
+        MoveSpeed = value;
+        speedText.text = value.ToString();
+    }
 }

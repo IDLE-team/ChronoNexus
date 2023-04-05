@@ -7,6 +7,7 @@ public class CharacterAnimator : MonoBehaviour
 {
     //TODO подумать насчёт суффикса "Hash"
     private Animator _animator;
+
     private static readonly int StrafeHash = Animator.StringToHash("Strafe");
     private static readonly int StrafeXHash = Animator.StringToHash("StrafeX");
     private static readonly int StrafeZHash = Animator.StringToHash("StrafeZ");
@@ -22,12 +23,12 @@ public class CharacterAnimator : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
     }
-    
+
     public void StrafeX(float value)
     {
         _animator.SetFloat(StrafeXHash, value);
     }
-    
+
     public void StrafeZ(float value)
     {
         _animator.SetFloat(StrafeZHash, value);
@@ -43,7 +44,7 @@ public class CharacterAnimator : MonoBehaviour
         _animator.SetTrigger(AttackHash);
     }
 
-    public void Shoot()
+    public void Fire()
     {
         _animator.SetTrigger(ShootHash);
     }

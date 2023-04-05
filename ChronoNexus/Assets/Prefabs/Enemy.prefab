@@ -5121,7 +5121,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 0bb3948c6d4d79d4fb201503a6a57f93, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5226,7 +5226,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -5328,13 +5328,14 @@ MonoBehaviour:
   _selection: {fileID: 261506918810334976}
   _obstacleMask:
     serializedVersion: 2
-    m_Bits: 183
+    m_Bits: 439
   _hitClip: {fileID: 8300000, guid: c5e26bca5b0eaa34392a150f1a2684c5, type: 3}
   _hitEffect: {fileID: 3993092177790635361}
-  _viewAngle: 180
-  _viewRadius: 1.23
+  _viewAngle: 120
+  _viewRadius: 8.81
   _bulletPrefab: {fileID: 3669826307443937433, guid: 30e57ac830bd64949ae2a79063ba921b,
     type: 3}
+  enemySpawner: {fileID: 0}
   player: {fileID: 0}
   canSeeTarget: 0
   _isTarget: 0

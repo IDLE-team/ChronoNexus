@@ -1,4 +1,7 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody), typeof(Outfitter))]
 [RequireComponent(typeof(CharacterMovement), typeof(Attacker), typeof(CharacterAnimator))]
@@ -21,6 +24,16 @@ public class Character : MonoBehaviour, IDamagable
 
     private Attacker Attacker { get; set; }
 
+    private void OnEnable()
+    {
+        _health.Died += Die;
+    }
+
+    private void OnDisable()
+    {
+        _health.Died -= Die;
+    }
+
     private void Awake()
     {
         //TODO прокинуть через Zenject
@@ -37,5 +50,17 @@ public class Character : MonoBehaviour, IDamagable
     public void TakeDamage(float damage)
     {
         _health.Decrease(damage);
+    }
+
+    public void Die()
+    {
+        Death().Forget();
+    }
+
+    private async UniTaskVoid Death()
+    {
+        Destroy(gameObject, 1);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+        SceneManager.LoadScene(0);
     }
 }

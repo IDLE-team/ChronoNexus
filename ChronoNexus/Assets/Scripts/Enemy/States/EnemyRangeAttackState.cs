@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -15,16 +16,19 @@ public class EnemyRangeAttackState : EnemyState
     private float maxDelay = 4f;
     private bool _isAttack = false;
 
+    private CancellationTokenSource cancellationTokenSource;
+
     public EnemyRangeAttackState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
     {
     }
 
     public override void Enter()
     {
+        cancellationTokenSource = new CancellationTokenSource();
         _target = _enemy.player.transform;
         _enemy.NavMeshAgent.speed = 2.5f;
         _isAttack = true;
-        ShootAndRetreat().Forget();
+        ShootAndRetreat(cancellationTokenSource.Token).Forget();
     }
 
     public override void Exit()
@@ -59,26 +63,32 @@ public class EnemyRangeAttackState : EnemyState
         _target = _enemy.player.transform;
     }
 
-    private async UniTask ShootAndRetreat()
+    private async UniTask ShootAndRetreat(CancellationToken cancellationToken)
     {
-        while (_isAttack)
+        while (_isAttack && !cancellationToken.IsCancellationRequested)
         {
             await UniTask.Delay((int)(Random.Range(minDelay, maxDelay) * 1000));
 
-            Vector3 randomDirection = Random.insideUnitSphere.normalized;
-            Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
-            retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
+            if (_enemy == null)
+                cancellationTokenSource.Cancel();
 
-            float distanceToTarget = Vector3.Distance(retreatPosition, _target.position);
-            Debug.Log(distanceToTarget);
-            if (distanceToTarget < 5f)
+            if (!cancellationToken.IsCancellationRequested)
             {
-                retreatPosition += randomDirection * (5f - distanceToTarget);
-            }
-            if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
-            {
-                _enemy.NavMeshAgent.SetDestination(retreatPosition);
-                await UniTask.Yield();
+                Vector3 randomDirection = Random.insideUnitSphere.normalized;
+                Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
+                retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
+
+                float distanceToTarget = Vector3.Distance(retreatPosition, _target.position);
+
+                if (distanceToTarget < 5f)
+                {
+                    retreatPosition += randomDirection * (5f - distanceToTarget);
+                }
+                if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
+                {
+                    _enemy.NavMeshAgent.SetDestination(retreatPosition);
+                    await UniTask.Yield();
+                }
             }
         }
     }
