@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
     private StateMachine _stateMachine;
     public EnemyIdleState IdleState { get; private set; }
+    public EnemyDummyState DummyState { get; private set; }
+
     public EnemyPatrolState PatrolState { get; private set; }
     public EnemyChaseState ChaseState { get; private set; }
 
@@ -59,9 +61,13 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
         _stateMachine = new StateMachine();
         IdleState = new EnemyIdleState(this, _stateMachine);
+        DummyState = new EnemyDummyState(this, _stateMachine);
+
         PatrolState = new EnemyPatrolState(this, _stateMachine);
         ChaseState = new EnemyChaseState(this, _stateMachine);
         RangeAttackState = new EnemyRangeAttackState(this, _stateMachine);
+
+        _stateMachine.Initialize(DummyState);
     }
 
     private void OnEnable()
@@ -71,7 +77,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
     private void Start()
     {
-        //_stateMachine.Initialize(IdleState);
         StartCoroutine(nameof(FindTargetsWithDelay), 0.2f);
         _isAlive = true;
     }
@@ -79,13 +84,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     public void InitializeSpawner(DebugEnemySpawner spawner, EnemyState startState)
     {
         enemySpawner = spawner;
-        _startState = startState;
-        _stateMachine.Initialize(_startState);
+        _stateMachine.ChangeState(startState);
     }
 
     private void Update()
     {
-        //Debug.Log(_stateMachine.CurrentState);
+        //   Debug.Log(_stateMachine.CurrentState);
         _stateMachine.CurrentState.LogicUpdate();
     }
 
@@ -174,7 +178,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
 
     private void OnDestroy()
     {
-        enemySpawner.DestroyEnemy(gameObject);
+        if (enemySpawner != null)
+            enemySpawner.DestroyEnemy(gameObject);
     }
 
 #if UNITY_EDITOR

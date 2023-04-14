@@ -1,7 +1,9 @@
 using Cysharp.Threading.Tasks;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody), typeof(Outfitter))]
 [RequireComponent(typeof(CharacterMovement), typeof(Attacker), typeof(CharacterAnimator))]
@@ -11,6 +13,8 @@ public class Character : MonoBehaviour, IDamagable
 {
     //Я не знаю как лучше сделать, поэтому просто через префаб пока прокидываем точку.
     [SerializeField] private Transform _aimTarget;
+
+    [SerializeField] private Slider _hpBar;
 
     private IOutfitter _outfitter;
     private IHealth _health;
@@ -59,8 +63,9 @@ public class Character : MonoBehaviour, IDamagable
 
     private async UniTaskVoid Death()
     {
-        Destroy(gameObject, 1);
+        Destroy(gameObject);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
         SceneManager.LoadScene(0);
+        await UniTask.Yield();
     }
 }

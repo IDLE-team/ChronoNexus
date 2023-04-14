@@ -62,15 +62,23 @@ public class DebugEnemySpawner : MonoBehaviour
             }
 
             var enemy = Instantiate(enemyPrefab, _spawnPosition, Quaternion.identity);
+            enemy.name = "Enemy " + i;
             var enemyScript = enemy.GetComponent<Enemy>();
-            if (enemyDropdown.value == 0)
+            switch (enemyDropdown.value)
             {
-                enemyScript.InitializeSpawner(this, enemyScript.IdleState);
+                case 0:
+                    enemyScript.InitializeSpawner(this, enemyScript.DummyState);
+                    break;
+
+                case 1:
+                    enemyScript.InitializeSpawner(this, enemyScript.IdleState);
+                    break;
+
+                case 2:
+                    enemyScript.InitializeSpawner(this, enemyScript.PatrolState);
+                    break;
             }
-            else if (enemyDropdown.value == 1)
-            {
-                enemyScript.InitializeSpawner(this, enemyScript.PatrolState);
-            }
+
             enemyList.Add(enemy);
         }
     }

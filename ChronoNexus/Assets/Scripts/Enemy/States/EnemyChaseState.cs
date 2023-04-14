@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 public class EnemyChaseState : EnemyState
@@ -19,6 +20,11 @@ public class EnemyChaseState : EnemyState
 
     public override void LogicUpdate()
     {
+        if (_enemy.player == null)
+        {
+            _stateMachine.ChangeState(_enemy.DummyState);
+            return;
+        }
         if (Vector3.Distance(_enemy.transform.position, _playerPosition) > 10f)
         {
             _stateMachine.ChangeState(_enemy.PatrolState);
@@ -31,6 +37,11 @@ public class EnemyChaseState : EnemyState
 
     public override void PhysicsUpdate()
     {
+        if (_enemy.player == null)
+        {
+            _stateMachine.ChangeState(_enemy.DummyState);
+            return;
+        }
         _playerPosition = _enemy.player.position;
         _enemy.NavMeshAgent.SetDestination(_playerPosition);
     }

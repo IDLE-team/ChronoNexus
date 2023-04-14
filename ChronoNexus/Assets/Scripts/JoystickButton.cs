@@ -2,73 +2,36 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JoystickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class JoystickButton : MonoBehaviour //, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
-    [SerializeField] private Image joystickBG; // фон стика
-    [SerializeField] private Image joystickHandle; // ручка стика
-    [SerializeField] private bool isButton; // является ли стик кнопкой
-    [SerializeField] private float handleRange = 1; // радиус ручки стика
+    [SerializeField] private GameObject _button;
+    [SerializeField] private GameObject _joystick;
+    [SerializeField] private CharacterTargetLock _targetLock;
 
-    private Vector3 inputVector = Vector3.zero; // значение стика
-    private Vector3 defaultPos; // стандартная позиция ручки стика
+    // [SerializeField] private Image joystickBG; // фон стика
+    // [SerializeField] private Image joystickHandle; // ручка стика
+    [SerializeField] private bool _isButton; // является ли стик кнопкой
 
     private void Start()
     {
-        defaultPos = joystickHandle.transform.position; // запоминаем стандартную позицию ручки стика
+        //defaultPos = joystickHandle.transform.position; // запоминаем стандартную позицию ручки стика
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void ActivateJoystick()
     {
-        if (isButton) // если это кнопка, то просто вызываем соответствующее событие
-        {
-            // здесь вызываем событие зажатия кнопки
-            // например, SendMessage("OnButtonPress", SendMessageOptions.DontRequireReceiver);
-            return;
-        }
-
-        // если это стик, то делаем его активным и ставим в позицию касания
-        joystickBG.gameObject.SetActive(true);
-        joystickBG.transform.position = eventData.position;
-
-        // ставим ручку стика в позицию касания и запоминаем эту позицию
-        joystickHandle.transform.position = eventData.position;
-        inputVector = Vector3.zero;
+        _joystick.SetActive(true);
+        _joystick.GetComponent<HoverJoystick>().Initialize(_button.GetComponent<LongClickButton>().PointerEventData);
+        _button.SetActive(false);
+        _isButton = false;
+        _targetLock.TurnOnStickSearch();
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public void ActivateButton()
     {
-        // если это кнопка, то ничего не делаем
-        if (isButton) return;
-
-        // вычисляем вектор от стандартной позиции до позиции касания
-        Vector3 direction = (eventData.position - new Vector2(joystickBG.transform.position.x, joystickBG.transform.position.y).normalized);
-
-        // ограничиваем радиус ручки стика, чтобы он не выходил за фон
-        float distance = Vector3.Distance(eventData.position, joystickBG.transform.position);
-        inputVector = distance > handleRange ? direction * handleRange : direction;
-
-        // перемещаем ручку стика на расстояние, пропорциональное радиусу ограничения
-        joystickHandle.transform.position = joystickBG.transform.position + inputVector * handleRange;
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        // если это кнопка, то вызываем соответствующее событие
-        if (isButton)
-        {
-            // здесь вызываем событие отпускания кнопки
-            // например, SendMessage("OnButtonRelease", SendMessageOptions.DontRequireReceiver);
-            return;
-        }
-
-        // если это стик, то делаем его неактивным и возвращаем ручку стика в стандартную позицию
-        joystickBG.gameObject.SetActive(false);
-        joystickHandle.transform.position = defaultPos;
-        inputVector = Vector3.zero;
-    }
-
-    public Vector3 GetInputVector()
-    {
-        return inputVector; // возвращаем значение стика
+        Debug.Log("Должна быть кнопка");
+        _joystick.SetActive(false);
+        _button.SetActive(true);
+        _isButton = true;
+        _targetLock.TurnOffStickSearch();
     }
 }

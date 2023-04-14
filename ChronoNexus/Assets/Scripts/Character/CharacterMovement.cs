@@ -29,10 +29,14 @@ public class CharacterMovement : MonoBehaviour
     [Tooltip("Enemy detect radius")]
     [SerializeField] private float enemyDetectRadius;
 
+    [SerializeField] private float _rotationSpeed;
     //------------------------------------------------------------------------------------//
 
-    public Slider slider;
+    public Slider speedSlider;
+    public Slider rotationSlider;
+
     public TextMeshProUGUI speedText;
+    public TextMeshProUGUI rotationSpeedText;
 
     [SerializeField] private Character _character;
     [SerializeField] private FloatingJoystick _joystick;
@@ -68,22 +72,34 @@ public class CharacterMovement : MonoBehaviour
 
     private void Start()
     {
-        slider.value = MoveSpeed;
-        speedText.text = slider.value.ToString();
-        slider.onValueChanged.AddListener(OnSliderValueChanged);
+        speedSlider.value = MoveSpeed;
+        speedText.text = speedSlider.value.ToString();
+        speedSlider.onValueChanged.AddListener(OnSpeedSliderValueChanged);
+
+        rotationSlider.value = _rotationSpeed;
+        rotationSpeedText.text = rotationSlider.value.ToString();
+        rotationSlider.onValueChanged.AddListener(OnRotationSliderValueChanged);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        Move();
-
         if (!_character.TargetLock.IsLookAt)
             return;
         if (_character.TargetLock.LookTarget == null)
             return;
         Vector3 targetPosition = new Vector3(_character.TargetLock.LookTarget.position.x, transform.position.y, _character.TargetLock.LookTarget.position.z);
-        transform.LookAt(targetPosition);
+        Vector3 direction = targetPosition - transform.position;
+        direction.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        Debug.Log("Пытается");
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * 50 * Time.deltaTime);
+
         TargetLockSetAnimations();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     private void Move()
@@ -156,7 +172,6 @@ public class CharacterMovement : MonoBehaviour
 
     private void TargetLockSetAnimations()
     {
-        Debug.Log("Работает");
         _vertical = _targetSpeed * _joystick.Direction.y;
         _horizontal = _targetSpeed * _joystick.Direction.x;
 
@@ -196,9 +211,15 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    private void OnSliderValueChanged(float value)
+    private void OnSpeedSliderValueChanged(float value)
     {
         MoveSpeed = value;
         speedText.text = value.ToString();
+    }
+
+    private void OnRotationSliderValueChanged(float value)
+    {
+        _rotationSpeed = value;
+        rotationSpeedText.text = value.ToString();
     }
 }

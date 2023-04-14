@@ -40,9 +40,15 @@ public class EnemyRangeAttackState : EnemyState
 
     public override void LogicUpdate()
     {
+        if (_enemy.player == null)
+        {
+            cancellationTokenSource.Cancel();
+            _stateMachine.ChangeState(_enemy.DummyState);
+            return;
+        }
+
         Vector3 targetPosition = new Vector3(_playerPosition.x, _enemy.transform.position.y, _playerPosition.z);
         _enemy.transform.LookAt(targetPosition);
-
         if (Vector3.Distance(_enemy.transform.position, _playerPosition) > 8f)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
@@ -59,6 +65,12 @@ public class EnemyRangeAttackState : EnemyState
 
     public override void PhysicsUpdate()
     {
+        if (_enemy.player == null)
+        {
+            cancellationTokenSource.Cancel();
+
+            return;
+        }
         _playerPosition = _enemy.player.position;
         _target = _enemy.player.transform;
     }
@@ -70,6 +82,8 @@ public class EnemyRangeAttackState : EnemyState
             await UniTask.Delay((int)(Random.Range(minDelay, maxDelay) * 1000));
 
             if (_enemy == null)
+                cancellationTokenSource.Cancel();
+            if (_enemy.player == null)
                 cancellationTokenSource.Cancel();
 
             if (!cancellationToken.IsCancellationRequested)
@@ -91,5 +105,6 @@ public class EnemyRangeAttackState : EnemyState
                 }
             }
         }
+        await UniTask.Yield();
     }
 }
