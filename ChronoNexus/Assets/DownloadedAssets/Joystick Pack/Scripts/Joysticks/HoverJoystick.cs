@@ -7,6 +7,12 @@ public class HoverJoystick : Joystick
     public UnityEvent onPointerUp;
     private PointerEventData pointerEventData;
 
+    protected override void Start()
+    {
+        base.Start();
+        background.gameObject.SetActive(false);
+    }
+    
     public void Initialize(PointerEventData eventData)
     {
         eventData.pointerDrag = gameObject;

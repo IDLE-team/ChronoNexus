@@ -3354,10 +3354,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e87dbc7f20ba9b4988f503b70abe68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 5626162607928704317}
-  _joystick: {fileID: 7400239353914717409}
+  _button: {fileID: 5626162607928704288}
+  _joystick: {fileID: 5626162608179439250}
   _targetLock: {fileID: 0}
-  _isButton: 1
 --- !u!1 &5626162607591382720
 GameObject:
   m_ObjectHideFlags: 0
@@ -4687,36 +4686,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _requiredHoldTime: 0.3
-  onClicked:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InputService, Assembly-CSharp
-        m_MethodName: Fire
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onLongClicked:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5626162607557294466}
-        m_TargetAssemblyTypeName: JoystickButton, Assembly-CSharp
-        m_MethodName: ActivateJoystick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &5626162607930992225
 GameObject:
   m_ObjectHideFlags: 0
@@ -9132,7 +9101,7 @@ PrefabInstance:
     - target: {fileID: 2929252283123773939, guid: aaa2c939c0359ac4dbce3f49e8b90252,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2929252285020697096, guid: aaa2c939c0359ac4dbce3f49e8b90252,
         type: 3}

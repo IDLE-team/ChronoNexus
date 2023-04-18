@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
@@ -9,8 +10,8 @@ public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
     private bool _pointerUp;
     private float _pointerDownTimer;
 
-    public UnityEvent onClicked;
-    public UnityEvent onLongClicked;
+    public event Action OnClicked;
+    public event Action OnLongClicked;
 
     public PointerEventData PointerEventData { get; private set; }
 
@@ -32,15 +33,14 @@ public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
             _pointerDownTimer += Time.deltaTime;
             if (_pointerDownTimer >= _requiredHoldTime)
             {
-                onLongClicked?.Invoke();
+                OnLongClicked?.Invoke();
                 Reset();
             }
         }
-        if (_pointerUp && _pointerDownTimer <= _requiredHoldTime)
-        {
-            onClicked?.Invoke();
-            Reset();
-        }
+        if (!_pointerUp || !(_pointerDownTimer <= _requiredHoldTime))
+            return;
+        OnClicked?.Invoke();
+        Reset();
     }
 
     [Fix]
