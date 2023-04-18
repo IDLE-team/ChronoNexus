@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     [SerializeField] private AudioClip _hitClip;
     [SerializeField] private ParticleSystem _hitEffect;
     [SerializeField] private Bullet _bulletPrefab;
+    [SerializeField] private DebugEnemySpawner enemySpawner;
 
     [SerializeField] private bool _isTarget;
 
@@ -33,7 +34,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     private AudioSource _audioSource;
     private EnemyAnimator _animator;
     private EnemyState _startState;
-    private DebugEnemySpawner enemySpawner;
 
     private bool _isAlive;
 
