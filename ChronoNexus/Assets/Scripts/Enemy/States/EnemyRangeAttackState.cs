@@ -8,9 +8,9 @@ public class EnemyRangeAttackState : EnemyState
     //ToDo Улучшить систему
 
     private Transform _target;
-    private Vector3 _playerPosition;
+    private Vector3 _targetPosition;
     private float shootingTimer = 0;
-    private float shootingInterval = 1f;
+    private float shootingInterval = 2f;
     private float retreatDistance = 5f;
     private float minDelay = 3f;
     private float maxDelay = 4f;
@@ -25,7 +25,7 @@ public class EnemyRangeAttackState : EnemyState
     public override void Enter()
     {
         cancellationTokenSource = new CancellationTokenSource();
-        _target = _enemy.player.transform;
+        _target = _enemy.Target.transform;
         _enemy.NavMeshAgent.speed = 2.5f;
         _isAttack = true;
         ShootAndRetreat(cancellationTokenSource.Token).Forget();
@@ -34,22 +34,22 @@ public class EnemyRangeAttackState : EnemyState
     public override void Exit()
     {
         _isAttack = false;
-        _enemy.canSeeTarget = false;
+        _enemy.IsTargetFound = false;
         _enemy.NavMeshAgent.speed = 1.5f;
     }
 
     public override void LogicUpdate()
     {
-        if (_enemy.player == null)
+        if (_enemy.Target == null)
         {
             cancellationTokenSource.Cancel();
-            _stateMachine.ChangeState(_enemy.DummyState);
+            _stateMachine.ChangeState(_enemy.PatrolState);
             return;
         }
 
-        Vector3 targetPosition = new Vector3(_playerPosition.x, _enemy.transform.position.y, _playerPosition.z);
+        Vector3 targetPosition = new Vector3(_targetPosition.x, _enemy.transform.position.y, _targetPosition.z);
         _enemy.transform.LookAt(targetPosition);
-        if (Vector3.Distance(_enemy.transform.position, _playerPosition) > 8f)
+        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 8f)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
             return;
@@ -58,21 +58,21 @@ public class EnemyRangeAttackState : EnemyState
         shootingTimer -= Time.deltaTime;
         if (shootingTimer <= 0f)
         {
-            _enemy.Shoot(_playerPosition);
+            _enemy.Shoot(_targetPosition);
             shootingTimer = shootingInterval;
         }
     }
 
     public override void PhysicsUpdate()
     {
-        if (_enemy.player == null)
+        if (_enemy.Target == null)
         {
             cancellationTokenSource.Cancel();
 
             return;
         }
-        _playerPosition = _enemy.player.position;
-        _target = _enemy.player.transform;
+        _targetPosition = _enemy.Target.position;
+        _target = _enemy.Target.transform;
     }
 
     private async UniTask ShootAndRetreat(CancellationToken cancellationToken)
@@ -83,7 +83,7 @@ public class EnemyRangeAttackState : EnemyState
 
             if (_enemy == null)
                 cancellationTokenSource.Cancel();
-            if (_enemy.player == null)
+            if (_enemy.Target == null)
                 cancellationTokenSource.Cancel();
 
             if (!cancellationToken.IsCancellationRequested)

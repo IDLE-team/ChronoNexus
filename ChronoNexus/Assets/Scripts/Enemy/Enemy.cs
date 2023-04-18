@@ -1,56 +1,41 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
 [RequireComponent(typeof(Health))]
-public class Enemy : MonoBehaviour, IDamagable, ITargetable
+public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 {
-    [SerializeField] private LayerMask _targetMask;
     [SerializeField] private Selection _selection;
-    [SerializeField] private LayerMask _obstacleMask;
-
     [SerializeField] private AudioClip _hitClip;
     [SerializeField] private ParticleSystem _hitEffect;
-
-    [SerializeField][Range(0, 360)] private float _viewAngle;
-    [SerializeField][Min(0)] private float _viewRadius;
-
     [SerializeField] private Bullet _bulletPrefab;
 
-    public DebugEnemySpawner enemySpawner;
+    [SerializeField] private bool _isTarget;
 
-    private NavMeshAgent _navMeshAgent;
-    private IHealth _health;
+    public event Action OnSeekStart;
+
+    public event Action OnSeekEnd;
 
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
-    public float ViewAngle => _viewAngle;
-    public float ViewRadius => _viewRadius;
 
     private StateMachine _stateMachine;
     public EnemyIdleState IdleState { get; private set; }
     public EnemyDummyState DummyState { get; private set; }
-
     public EnemyPatrolState PatrolState { get; private set; }
     public EnemyChaseState ChaseState { get; private set; }
-
     public EnemyRangeAttackState RangeAttackState { get; private set; }
+    public Transform Target { get; set; }
+    public bool IsTargetFound { get; set; }
 
-    public Transform player;
-
-    public bool canSeeTarget = false;
-
+    private IHealth _health;
+    private NavMeshAgent _navMeshAgent;
     private AudioSource _audioSource;
     private EnemyAnimator _animator;
-    private Transform _target;
-
     private EnemyState _startState;
-
-    private static string Player => "Player";
+    private DebugEnemySpawner enemySpawner;
 
     private bool _isAlive;
-    [SerializeField] private bool _isTarget;
 
     private void Awake()
     {
@@ -68,16 +53,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         RangeAttackState = new EnemyRangeAttackState(this, _stateMachine);
 
         _stateMachine.Initialize(DummyState);
-    }
 
-    private void OnEnable()
-    {
-        _health.Died += OnDied;
+        IsTargetFound = false;
     }
 
     private void Start()
     {
-        StartCoroutine(nameof(FindTargetsWithDelay), 0.2f);
         _isAlive = true;
     }
 
@@ -111,6 +92,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     {
         _isAlive = false;
         _animator.Death();
+        StopSeek();
         Destroy(gameObject, 0.8f);
     }
 
@@ -132,47 +114,31 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
     {
         Vector3 position = transform.position;
         Vector3 forward = transform.forward;
-        Vector3 spawnPosition = position + forward * 1.2f;
+        Vector3 spawnPosition = position + forward * 1;
         Vector3 direction = (target - transform.position).normalized;
+        //direction.y = direction.y + 0.1f;
         var bullet = Instantiate(_bulletPrefab, spawnPosition, Quaternion.LookRotation(direction));
         bullet.SetTarget(direction);
     }
 
-    [Fix("Заменить на UniTask/UniRx")]
-    private IEnumerator FindTargetsWithDelay(float delay)
+    public void StartSeek()
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
-        }
+        OnSeekStart?.Invoke();
     }
 
-    [Fix("Делигировать задачу поиска другому скрипту")]
-    private void FindVisibleTargets()
+    public void StopSeek()
     {
-        var results = new Collider[30];
-        var size = Physics.OverlapSphereNonAlloc(transform.position, ViewRadius, results, _targetMask);
-        for (var i = 0; i < size; i++)
-        {
-            _target = results[i].transform;
-            var dirToTarget = (_target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) >= ViewAngle / 2)
-                continue;
+        OnSeekEnd?.Invoke();
+    }
 
-            var dstToTarget = Vector3.Distance(transform.position, _target.position);
-            if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
-                continue;
-
-            if (!_target.CompareTag(Player))
-                continue;
-            player = _target.GetComponent<Character>().AimTarget;
-            canSeeTarget = true;
-        }
+    private void OnEnable()
+    {
+        _health.Died += OnDied;
     }
 
     private void OnDisable()
     {
+        StopSeek();
         _health.Died -= OnDied;
     }
 
@@ -181,17 +147,4 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         if (enemySpawner != null)
             enemySpawner.DestroyEnemy(gameObject);
     }
-
-#if UNITY_EDITOR
-
-    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
-    {
-        if (!angleIsGlobal)
-        {
-            angleInDegrees += transform.eulerAngles.y;
-        }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
-    }
-
-#endif
 }

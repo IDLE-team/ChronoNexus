@@ -1,14 +1,14 @@
+/*
 using UnityEngine;
 using System.Collections;
 using UnityEditor;
 
-/*
-[CustomEditor(typeof(Enemy))]
+[CustomEditor(typeof(TargetFinder))]
 public class FieldOfViewEditor : Editor
 {
     private void OnSceneGUI()
     {
-        Enemy fow = (Enemy)target;
+        TargetFinder fow = (TargetFinder)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(fow.transform.position, Vector3.up, Vector3.forward, 360, fow.ViewRadius);
         Vector3 viewAngleA = fow.DirFromAngle(-fow.ViewAngle / 2, false);
@@ -19,10 +19,11 @@ public class FieldOfViewEditor : Editor
 
         Handles.color = Color.red;
 
+        /*
         if (fow.player != null && fow.canSeeTarget)
         {
             Handles.DrawLine(fow.transform.position, fow.player.position);
         }
-    }
-}
-*/
+        */
+//  }
+//}

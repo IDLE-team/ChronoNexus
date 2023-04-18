@@ -24,6 +24,4 @@ public class InputService : MonoBehaviour, IInputService
     public void Attack() => Attacked?.Invoke();
 
     public void Fire() => Shot?.Invoke();
-
-    public void Restart() => SceneManager.LoadScene(0);
 }

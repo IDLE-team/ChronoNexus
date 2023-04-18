@@ -7,12 +7,11 @@ public class DebugEnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private TextMeshProUGUI _enemyCounter;
+    [SerializeField] private Slider enemySlider;
+    [SerializeField] private TMP_Dropdown enemyDropdown;
+    [SerializeField] private int maxEnemies = 20;
 
     public List<GameObject> enemyList = new List<GameObject>();
-
-    public Slider enemySlider;
-    public TMP_Dropdown enemyDropdown;
-    public int maxEnemies = 20;
 
     private Vector3 _spawnPosition;
     private int currentEnemies => enemyList.Count;

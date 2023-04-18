@@ -15,12 +15,12 @@ public class EnemyChaseState : EnemyState
 
     public override void Exit()
     {
-        _enemy.canSeeTarget = false;
+        _enemy.IsTargetFound = false;
     }
 
     public override void LogicUpdate()
     {
-        if (_enemy.player == null)
+        if (_enemy.Target == null)
         {
             _stateMachine.ChangeState(_enemy.DummyState);
             return;
@@ -37,12 +37,12 @@ public class EnemyChaseState : EnemyState
 
     public override void PhysicsUpdate()
     {
-        if (_enemy.player == null)
+        if (_enemy.Target == null)
         {
             _stateMachine.ChangeState(_enemy.DummyState);
             return;
         }
-        _playerPosition = _enemy.player.position;
+        _playerPosition = _enemy.Target.position;
         _enemy.NavMeshAgent.SetDestination(_playerPosition);
     }
 }

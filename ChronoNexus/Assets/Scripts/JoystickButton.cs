@@ -2,20 +2,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class JoystickButton : MonoBehaviour //, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class JoystickButton : MonoBehaviour
 {
     [SerializeField] private GameObject _button;
     [SerializeField] private GameObject _joystick;
     [SerializeField] private CharacterTargetLock _targetLock;
-
-    // [SerializeField] private Image joystickBG; // фон стика
-    // [SerializeField] private Image joystickHandle; // ручка стика
-    [SerializeField] private bool _isButton; // €вл€етс€ ли стик кнопкой
-
-    private void Start()
-    {
-        //defaultPos = joystickHandle.transform.position; // запоминаем стандартную позицию ручки стика
-    }
+    [SerializeField] private bool _isButton;
 
     public void ActivateJoystick()
     {
@@ -28,7 +20,6 @@ public class JoystickButton : MonoBehaviour //, IPointerDownHandler, IPointerUpH
 
     public void ActivateButton()
     {
-        Debug.Log("ƒолжна быть кнопка");
         _joystick.SetActive(false);
         _button.SetActive(true);
         _isButton = true;

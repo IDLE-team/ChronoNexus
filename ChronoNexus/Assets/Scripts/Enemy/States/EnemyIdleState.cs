@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class EnemyIdleState : EnemyState
 {
     public EnemyIdleState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
@@ -10,11 +6,12 @@ public class EnemyIdleState : EnemyState
 
     public override void Enter()
     {
+        _enemy.StartSeek();
     }
 
     public override void LogicUpdate()
     {
-        if (_enemy.canSeeTarget)
+        if (_enemy.IsTargetFound)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
             return;
@@ -23,6 +20,7 @@ public class EnemyIdleState : EnemyState
 
     public override void Exit()
     {
+        _enemy.StopSeek();
     }
 
     public override void PhysicsUpdate()

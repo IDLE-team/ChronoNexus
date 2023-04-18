@@ -9,6 +9,8 @@ public class CharacterTargetLock : MonoBehaviour
     [SerializeField] private LayerMask _lookLayer;
 
     [SerializeField] private Character _character;
+    [SerializeField] private Joystick _targetJoystick;
+    [SerializeField] private DebugEnemySpawner _enemySpawner;
 
     [Tooltip("Enemy detect radius")]
     [SerializeField] private float _radius = 10f;
@@ -17,16 +19,17 @@ public class CharacterTargetLock : MonoBehaviour
     [SerializeField][Min(0.1f)] private float _manualTargetRefreshDelay;
 
     [SerializeField] private float _angleThreshold;
-    [SerializeField] private Joystick _targetJoystick;
-    [SerializeField] private DebugEnemySpawner _enemySpawner;
+
     public Transform LookTarget { get; private set; }
-    public bool IsLookAt { get; private set; }
+    public Transform PreviousTarget => _previousTarget;
+
     public float DebugTestUniTask;
+    public bool IsLookAt { get; private set; }
+
     private List<GameObject> _targets = new List<GameObject>();
 
     private Transform _previousTarget;
 
-    public Transform PreviousTarget => _previousTarget;
     private Transform _closestTarget;
 
     private float _previousAngle;
@@ -91,16 +94,6 @@ public class CharacterTargetLock : MonoBehaviour
         }
         else if (IsLookAt)
             SetEmptyTarget();
-    }
-
-    public void TurnOnStickSearch()
-    {
-        _isStickSearch = true;
-    }
-
-    public void TurnOffStickSearch()
-    {
-        _isStickSearch = false;
     }
 
     public void ChooseTarget()
@@ -204,6 +197,16 @@ public class CharacterTargetLock : MonoBehaviour
             }
             await UniTask.Delay(TimeSpan.FromSeconds(_manualTargetRefreshDelay), cancellationToken: this.GetCancellationTokenOnDestroy());
         }
+    }
+
+    public void TurnOnStickSearch()
+    {
+        _isStickSearch = true;
+    }
+
+    public void TurnOffStickSearch()
+    {
+        _isStickSearch = false;
     }
 
     private void OnDrawGizmosSelected()

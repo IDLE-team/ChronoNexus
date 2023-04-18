@@ -13,6 +13,7 @@ public class Health : MonoBehaviour, IHealth
 
     public event Action<float> Changed;
 
+    // healthSetter - дебаг штука, по-хорошему бы куда-то ещё закинуть её, но пока так
     private void OnEnable()
     {
         if (_healthSetter != null)

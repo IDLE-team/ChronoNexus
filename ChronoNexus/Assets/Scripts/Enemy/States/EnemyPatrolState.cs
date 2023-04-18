@@ -10,13 +10,14 @@ public class EnemyPatrolState : EnemyState
 
     public override void Enter()
     {
+        _enemy.StartSeek();
         _destination = GetRandomDirection();
         _enemy.NavMeshAgent.SetDestination(_destination);
     }
 
     public override void LogicUpdate()
     {
-        if (_enemy.canSeeTarget)
+        if (_enemy.IsTargetFound)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
             return;
@@ -35,6 +36,7 @@ public class EnemyPatrolState : EnemyState
 
     public override void Exit()
     {
+        _enemy.StopSeek();
     }
 
     public override void PhysicsUpdate()

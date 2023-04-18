@@ -16,6 +16,8 @@ public class Character : MonoBehaviour, IDamagable
 
     [SerializeField] private Slider _hpBar;
 
+    [SerializeField] private LevelController _levelController;
+
     private IOutfitter _outfitter;
     private IHealth _health;
 
@@ -65,7 +67,7 @@ public class Character : MonoBehaviour, IDamagable
     {
         Destroy(gameObject);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
-        SceneManager.LoadScene(0);
+        _levelController.Restart();
         await UniTask.Yield();
     }
 }
