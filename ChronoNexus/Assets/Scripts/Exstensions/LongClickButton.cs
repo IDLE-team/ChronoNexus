@@ -6,11 +6,13 @@ using UnityEngine.Events;
 public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private float _requiredHoldTime;
+
     private bool _pointerDown;
     private bool _pointerUp;
     private float _pointerDownTimer;
 
     public event Action OnClicked;
+
     public event Action OnLongClicked;
 
     public PointerEventData PointerEventData { get; private set; }
