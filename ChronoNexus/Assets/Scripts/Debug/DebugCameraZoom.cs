@@ -10,8 +10,9 @@ public class DebugCameraZoom : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _yText;
     [SerializeField] private TextMeshProUGUI _zText;
 
-    private float _yOffset = 6.59f;
-    private float _zOffset = -7.16f;
+    private float _xOffset = 4.14f;
+    private float _yOffset = 7.66f;
+    private float _zOffset = -4.34f;
     private Vector3 _baseOffset;
     private Vector3 _followOffset;
 
@@ -25,7 +26,7 @@ public class DebugCameraZoom : MonoBehaviour
     private void Start()
     {
         _followOffset = _virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset;
-        _baseOffset = new Vector3(0, _yOffset, _zOffset);
+        _baseOffset = new Vector3(_xOffset, _yOffset, _zOffset);
     }
 
     private void SetCameraZoom(float value)
