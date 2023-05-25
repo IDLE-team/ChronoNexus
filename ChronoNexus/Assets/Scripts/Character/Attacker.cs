@@ -18,7 +18,7 @@ public class Attacker : MonoBehaviour
     [SerializeField] private CharacterAnimator _animator;
 
     [Inject]
-    private void Constuct(IInputService inputService, CharacterAnimator animator)
+    private void Construct(IInputService inputService, CharacterAnimator animator)
     {
         //_inputService = inputService;
         //_animator = animator;
