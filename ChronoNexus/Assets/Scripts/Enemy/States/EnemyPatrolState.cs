@@ -13,6 +13,7 @@ public class EnemyPatrolState : EnemyState
         _enemy.StartSeek();
         _destination = GetRandomDirection();
         _enemy.NavMeshAgent.SetDestination(_destination);
+        _enemy.StartMoveAnimation();
     }
 
     public override void LogicUpdate()
@@ -24,9 +25,13 @@ public class EnemyPatrolState : EnemyState
         }
 
         if (!(_enemy.NavMeshAgent.remainingDistance <= 1f))
+        {
             return;
+        }
+        _enemy.EndMoveAnimation();
         _destination = GetRandomDirection();
         _enemy.NavMeshAgent.SetDestination(_destination);
+        _enemy.StartMoveAnimation();
     }
 
     private Vector3 GetRandomDirection()
@@ -36,6 +41,7 @@ public class EnemyPatrolState : EnemyState
 
     public override void Exit()
     {
+        _enemy.EndMoveAnimation();
         _enemy.StopSeek();
     }
 

@@ -6,6 +6,7 @@ public class EnemyIdleState : EnemyState
 
     public override void Enter()
     {
+        _enemy.EndMoveAnimation();
         _enemy.StartSeek();
     }
 

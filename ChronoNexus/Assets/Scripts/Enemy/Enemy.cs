@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +14,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     [SerializeField] private DebugEnemySpawner enemySpawner;
 
     [SerializeField] private bool _isTarget;
+
+    public State state = new State();
+
+    public static List<GameObject> enemyList = new List<GameObject>();
 
     public event Action OnSeekStart;
 
@@ -52,7 +57,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
         ChaseState = new EnemyChaseState(this, _stateMachine);
         RangeAttackState = new EnemyRangeAttackState(this, _stateMachine);
 
-        _stateMachine.Initialize(DummyState);
+        //  _stateMachine.Initialize(DummyState);
 
         IsTargetFound = false;
     }
@@ -60,12 +65,41 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     private void Start()
     {
         _isAlive = true;
+        enemyList.Add(gameObject);
+        Debug.Log(state);
+        switch (state)
+        {
+            case State.Dummy:
+                _stateMachine.Initialize(DummyState);
+                break;
+
+            case State.Idle:
+                _stateMachine.Initialize(IdleState);
+                break;
+
+            case State.Patrol:
+                _stateMachine.Initialize(PatrolState);
+                break;
+
+            case State.Chase:
+                _stateMachine.Initialize(ChaseState);
+                break;
+
+            case State.Attack:
+                _stateMachine.Initialize(RangeAttackState);
+                break;
+
+            default:
+                _stateMachine.Initialize(DummyState);
+                break;
+        }
+        Debug.Log(enemyList.Count);
     }
 
     public void InitializeSpawner(DebugEnemySpawner spawner, EnemyState startState)
     {
         enemySpawner = spawner;
-        _stateMachine.ChangeState(startState);
+        //_stateMachine.ChangeState(startState);
     }
 
     private void Update()
@@ -85,15 +119,19 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
             return;
         _health.Decrease(damage);
         DamageEffect();
-        _animator.TakeDamage();
+        _animator.PlayTakeDamageAnimation();
     }
 
     private void OnDied()
     {
         _isAlive = false;
-        _animator.Death();
+        _animator.PlayDeathAnimation();
         StopSeek();
-        Destroy(gameObject, 0.8f);
+        if (enemySpawner != null)
+        {
+            enemySpawner.UpdateSliderValue();
+        }
+        Destroy(gameObject, 1f);
     }
 
     public void ToggleSelfTarget()
@@ -114,11 +152,21 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     {
         Vector3 position = transform.position;
         Vector3 forward = transform.forward;
-        Vector3 spawnPosition = position + forward * 1;
+        Vector3 spawnPosition = position + forward * 0.5f;
         Vector3 direction = (target - transform.position).normalized;
-        //direction.y = direction.y + 0.1f;
+        spawnPosition.y = spawnPosition.y + 1.5f;
         var bullet = Instantiate(_bulletPrefab, spawnPosition, Quaternion.LookRotation(direction));
         bullet.SetTarget(direction);
+    }
+
+    public void StartMoveAnimation()
+    {
+        _animator.StartMoveAnimation();
+    }
+
+    public void EndMoveAnimation()
+    {
+        _animator.EndMoveAnimation();
     }
 
     public void StartSeek()
@@ -144,7 +192,20 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 
     private void OnDestroy()
     {
-        if (enemySpawner != null)
+        enemyList.Remove(gameObject);
+        // enemyList.Remove(gameObject);
+        /*if (enemySpawner != null)
+
             enemySpawner.DestroyEnemy(gameObject);
+        */
     }
+
+    public enum State
+    {
+        Dummy,
+        Idle,
+        Patrol,
+        Chase,
+        Attack
+    };
 }

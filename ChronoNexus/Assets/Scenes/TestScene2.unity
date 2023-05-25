@@ -5523,7 +5523,6 @@ MonoBehaviour:
   _button: {fileID: 1505080140}
   _joystick: {fileID: 1250404574}
   _targetLock: {fileID: 1827629865287769545}
-  _isButton: 1
 --- !u!1 &804340855
 GameObject:
   m_ObjectHideFlags: 0
@@ -5971,6 +5970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cfa4465725b7a45b51ea76fc47729b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  longClickButton: {fileID: 0}
 --- !u!4 &859768692
 Transform:
   m_ObjectHideFlags: 0
@@ -6163,7 +6163,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.001
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -9532,36 +9532,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _requiredHoldTime: 0.3
-  onClicked:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 859768691}
-        m_TargetAssemblyTypeName: InputService, Assembly-CSharp
-        m_MethodName: Fire
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onLongClicked:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 798029811}
-        m_TargetAssemblyTypeName: JoystickButton, Assembly-CSharp
-        m_MethodName: ActivateJoystick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1505978274
 GameObject:
   m_ObjectHideFlags: 0
@@ -9821,7 +9791,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: eca1d018f8746144f816ca9713af0300, type: 2}
   m_sharedMaterial: {fileID: -5916326383110367403, guid: eca1d018f8746144f816ca9713af0300,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -5916326383110367403, guid: eca1d018f8746144f816ca9713af0300, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -10243,7 +10214,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: eca1d018f8746144f816ca9713af0300, type: 2}
   m_sharedMaterial: {fileID: -5916326383110367403, guid: eca1d018f8746144f816ca9713af0300,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -5916326383110367403, guid: eca1d018f8746144f816ca9713af0300, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -14952,7 +14924,8 @@ MonoBehaviour:
   m_fontAsset: {fileID: 11400000, guid: eca1d018f8746144f816ca9713af0300, type: 2}
   m_sharedMaterial: {fileID: -5916326383110367403, guid: eca1d018f8746144f816ca9713af0300,
     type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -5916326383110367403, guid: eca1d018f8746144f816ca9713af0300, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -15198,7 +15171,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:

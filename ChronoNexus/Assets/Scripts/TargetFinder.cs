@@ -101,6 +101,11 @@ public class TargetFinder : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        cancellationTokenSource.Cancel();
+    }
+
 #if UNITY_EDITOR
 
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)

@@ -36,6 +36,7 @@ public class EnemyRangeAttackState : EnemyState
         _isAttack = false;
         _enemy.IsTargetFound = false;
         _enemy.NavMeshAgent.speed = 1.5f;
+        _enemy.EndMoveAnimation();
     }
 
     public override void LogicUpdate()
@@ -101,6 +102,8 @@ public class EnemyRangeAttackState : EnemyState
                 if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
                 {
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
+                    _enemy.StartMoveAnimation();
+
                     await UniTask.Yield();
                 }
             }

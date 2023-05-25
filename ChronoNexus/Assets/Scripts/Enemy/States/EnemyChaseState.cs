@@ -11,6 +11,7 @@ public class EnemyChaseState : EnemyState
 
     public override void Enter()
     {
+        _enemy.StartMoveAnimation();
     }
 
     public override void Exit()

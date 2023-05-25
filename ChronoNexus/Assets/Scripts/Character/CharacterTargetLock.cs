@@ -10,7 +10,7 @@ public class CharacterTargetLock : MonoBehaviour
 
     [SerializeField] private Character _character;
     [SerializeField] private Joystick _targetJoystick;
-    [SerializeField] private DebugEnemySpawner _enemySpawner;
+    //  [SerializeField] private DebugEnemySpawner _enemySpawner;
 
     [Tooltip("Enemy detect radius")]
     [SerializeField] private float _radius = 10f;
@@ -26,7 +26,7 @@ public class CharacterTargetLock : MonoBehaviour
     public float DebugTestUniTask;
     public bool IsLookAt { get; private set; }
 
-    private List<GameObject> _targets = new List<GameObject>();
+    private List<GameObject> _targets => Enemy.enemyList;
 
     private Transform _previousTarget;
 
@@ -45,7 +45,6 @@ public class CharacterTargetLock : MonoBehaviour
     private void Start()
     {
         RefreshTargetAsync().Forget();
-        _targets = _enemySpawner.enemyList;
     }
 
     private void FindTarget()
@@ -98,32 +97,32 @@ public class CharacterTargetLock : MonoBehaviour
 
     public void ChooseTarget()
     {
-        if (_enemySpawner.enemyList.Count <= 0 && IsLookAt)
+        if (_targets.Count <= 0 && IsLookAt)
         {
             SetEmptyTarget();
             return;
         }
         _previousAngle = _angleThreshold;
-        for (int i = 0; i < _enemySpawner.enemyList.Count; i++)
+        for (int i = 0; i < _targets.Count; i++)
         {
-            if (!_enemySpawner.enemyList[i].gameObject.activeInHierarchy)
+            if (!_targets[i].gameObject.activeInHierarchy)
                 continue;
-            if (Vector3.Distance(_enemySpawner.enemyList[i].transform.position, transform.position) > _radius)
+            if (Vector3.Distance(_targets[i].transform.position, transform.position) > _radius)
                 continue;
 
-            float angle = GetAngle(_enemySpawner.enemyList[i]);
+            float angle = GetAngle(_targets[i]);
 
             if (angle > _angleThreshold)
                 continue;
 
-            if (_enemySpawner.enemyList[i] == _previousTarget)
+            if (_targets[i] == _previousTarget)
                 continue;
             if (i != 0)
             {
                 if (Mathf.Abs(_previousAngle - angle) <= 5)
                 {
-                    var current = Vector3.Distance(_enemySpawner.enemyList[i].transform.position, transform.position);
-                    var previous = Vector3.Distance(_enemySpawner.enemyList[i - 1].transform.position, transform.position);
+                    var current = Vector3.Distance(_targets[i].transform.position, transform.position);
+                    var previous = Vector3.Distance(_targets[i - 1].transform.position, transform.position);
                     if (current > previous)
                     {
                         _previousAngle = angle;
@@ -134,16 +133,16 @@ public class CharacterTargetLock : MonoBehaviour
 
             _previousAngle = angle;
 
-            _enemySpawner.enemyList[i].gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+            _targets[i].gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
             if (_previousTarget != null)
             {
                 _previousTarget.GetComponent<ITargetable>().ToggleSelfTarget();
             }
             IsLookAt = true;
 
-            LookTarget = _enemySpawner.enemyList[i].transform;
+            LookTarget = _targets[i].transform;
 
-            _previousTarget = _enemySpawner.enemyList[i].transform;
+            _previousTarget = _targets[i].transform;
             _previousAngle = angle;
 
             _isEnemyTargeted = true;

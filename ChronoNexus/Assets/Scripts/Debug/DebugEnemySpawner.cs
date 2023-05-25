@@ -11,7 +11,7 @@ public class DebugEnemySpawner : MonoBehaviour
     [SerializeField] private TMP_Dropdown enemyDropdown;
     [SerializeField] private int maxEnemies = 20;
 
-    public List<GameObject> enemyList = new List<GameObject>();
+    public List<GameObject> enemyList => Enemy.enemyList;
 
     private Vector3 _spawnPosition;
     private int currentEnemies => enemyList.Count;
@@ -66,19 +66,19 @@ public class DebugEnemySpawner : MonoBehaviour
             switch (enemyDropdown.value)
             {
                 case 0:
-                    enemyScript.InitializeSpawner(this, enemyScript.DummyState);
+                    enemyScript.state = Enemy.State.Dummy;// InitializeSpawner(this, enemyScript.DummyState);
                     break;
 
                 case 1:
-                    enemyScript.InitializeSpawner(this, enemyScript.IdleState);
+                    enemyScript.state = Enemy.State.Idle;
                     break;
 
                 case 2:
-                    enemyScript.InitializeSpawner(this, enemyScript.PatrolState);
+                    enemyScript.state = Enemy.State.Patrol;
                     break;
             }
 
-            enemyList.Add(enemy);
+            // enemyList.Add(enemy);
         }
     }
 
@@ -94,11 +94,16 @@ public class DebugEnemySpawner : MonoBehaviour
     public void DestroyEnemy(GameObject enemy)
     {
         enemyList.Remove(enemy);
-        enemySlider.value = enemyList.Count;
+        UpdateSliderValue();
     }
 
     private void OnSliderValueChanged(float value)
     {
         _enemyCounter.text = value.ToString();
+    }
+
+    public void UpdateSliderValue()
+    {
+        enemySlider.value = enemyList.Count;
     }
 }
