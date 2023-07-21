@@ -1,109 +1,145 @@
-using System.Collections;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody), typeof(NavMeshAgent))]
-[RequireComponent(typeof(Animator), typeof(AudioSource))]
-public class Enemy : MonoBehaviour, IDamagable, ITargetable
+[RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
+[RequireComponent(typeof(Health))]
+public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 {
-    #region States
-
-    public StateMachine StateMachine { get; private set; }
-    public EnemyIdleState IdleState { get; private set; }
-    public EnemyPatrolState PatrolState { get; private set; }
-    public EnemyChaseState ChaseState { get; private set; }
-
-    #endregion States
-
-    #region FieldOfView
-
-    [Range(0, 360)] public float viewAngle;
-    public float viewRadius;
-
-    [SerializeField] private LayerMask targetMask;
-    [SerializeField] private LayerMask obstacleMask;
-
-    #endregion FieldOfView
-
-    public NavMeshAgent navMeshAgent;
-    public Transform player;
-
-    public float Health { get; private set; }
-    public bool canSeePlayer = false;
-
+    [SerializeField] private Selection _selection;
     [SerializeField] private AudioClip _hitClip;
     [SerializeField] private ParticleSystem _hitEffect;
-    [SerializeField] private GameObject _targetIndicator;
+    [SerializeField] private Bullet _bulletPrefab;
+    [SerializeField] private DebugEnemySpawner enemySpawner;
 
+    [SerializeField] private bool _isTarget;
+
+    public State state = new State();
+
+    public static List<GameObject> enemyList = new List<GameObject>();
+
+    public event Action OnSeekStart;
+
+    public event Action OnSeekEnd;
+
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
+
+    private StateMachine _stateMachine;
+    public EnemyIdleState IdleState { get; private set; }
+    public EnemyDummyState DummyState { get; private set; }
+    public EnemyPatrolState PatrolState { get; private set; }
+    public EnemyChaseState ChaseState { get; private set; }
+    public EnemyRangeAttackState RangeAttackState { get; private set; }
+    public Transform Target { get; set; }
+    public bool IsTargetFound { get; set; }
+
+    private IHealth _health;
+    private NavMeshAgent _navMeshAgent;
     private AudioSource _audioSource;
-    private Animator _animator;
-    private Transform _target;
-
-    private static string Player => "Player";
+    private EnemyAnimator _animator;
+    private EnemyState _startState;
 
     private bool _isAlive;
-    private bool _isTarget;
 
     private void Awake()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
+        _health = GetComponent<Health>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<EnemyAnimator>();
         _audioSource = GetComponent<AudioSource>();
 
-        StateMachine = new StateMachine();
+        _stateMachine = new StateMachine();
+        IdleState = new EnemyIdleState(this, _stateMachine);
+        DummyState = new EnemyDummyState(this, _stateMachine);
 
-        IdleState = new EnemyIdleState(this, StateMachine);
-        PatrolState = new EnemyPatrolState(this, StateMachine);
-        ChaseState = new EnemyChaseState(this, StateMachine);
+        PatrolState = new EnemyPatrolState(this, _stateMachine);
+        ChaseState = new EnemyChaseState(this, _stateMachine);
+        RangeAttackState = new EnemyRangeAttackState(this, _stateMachine);
+
+        //  _stateMachine.Initialize(DummyState);
+
+        IsTargetFound = false;
     }
 
     private void Start()
     {
-        StateMachine.Initialize(PatrolState);
-
-        StartCoroutine(nameof(FindTargetsWithDelay), .2f);
-
         _isAlive = true;
+        enemyList.Add(gameObject);
+        Debug.Log(state);
+        switch (state)
+        {
+            case State.Dummy:
+                _stateMachine.Initialize(DummyState);
+                break;
+
+            case State.Idle:
+                _stateMachine.Initialize(IdleState);
+                break;
+
+            case State.Patrol:
+                _stateMachine.Initialize(PatrolState);
+                break;
+
+            case State.Chase:
+                _stateMachine.Initialize(ChaseState);
+                break;
+
+            case State.Attack:
+                _stateMachine.Initialize(RangeAttackState);
+                break;
+
+            default:
+                _stateMachine.Initialize(DummyState);
+                break;
+        }
+        Debug.Log(enemyList.Count);
+    }
+
+    public void InitializeSpawner(DebugEnemySpawner spawner, EnemyState startState)
+    {
+        enemySpawner = spawner;
+        //_stateMachine.ChangeState(startState);
     }
 
     private void Update()
     {
-        Debug.Log(StateMachine.CurrentState);
-        StateMachine.CurrentState.LogicUpdate();
+        //   Debug.Log(_stateMachine.CurrentState);
+        _stateMachine.CurrentState.LogicUpdate();
     }
 
     private void FixedUpdate()
     {
-        StateMachine.CurrentState.PhysicsUpdate();
+        _stateMachine.CurrentState.PhysicsUpdate();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
-        if (_isAlive)
-        {
-            Health -= damage;
-            DamageEffect();
-            _animator.SetTrigger("TakeHit");
-
-            if (Health < 0)
-            {
-                Death();
-            }
-        }
+        if (!_isAlive)
+            return;
+        _health.Decrease(damage);
+        DamageEffect();
+        _animator.PlayTakeDamageAnimation();
     }
 
-    public void Death()
+    private void OnDied()
     {
-        Health = 0;
         _isAlive = false;
-        _animator.SetBool("Dead", true);
-        Destroy(gameObject, 0.8f);
+        _animator.PlayDeathAnimation();
+        StopSeek();
+        if (enemySpawner != null)
+        {
+            enemySpawner.UpdateSliderValue();
+        }
+        Destroy(gameObject, 1f);
     }
 
     public void ToggleSelfTarget()
     {
         _isTarget = !_isTarget;
-        _targetIndicator.SetActive(_isTarget);
+        if (_isTarget)
+            _selection.Select();
+        else _selection.Deselect();
     }
 
     private void DamageEffect()
@@ -112,48 +148,64 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable
         _hitEffect.Play();
     }
 
-    #region FieldOfView
-
-    private IEnumerator FindTargetsWithDelay(float delay)
+    public void Shoot(Vector3 target)
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(delay);
-            FindVisibleTargets();
-        }
+        Vector3 position = transform.position;
+        Vector3 forward = transform.forward;
+        Vector3 spawnPosition = position + forward * 0.5f;
+        Vector3 direction = (target - transform.position).normalized;
+        spawnPosition.y = spawnPosition.y + 1.5f;
+        var bullet = Instantiate(_bulletPrefab, spawnPosition, Quaternion.LookRotation(direction));
+        bullet.SetTarget(direction);
     }
 
-    private void FindVisibleTargets()
+    public void StartMoveAnimation()
     {
-        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
-
-        for (int i = 0; i < targetsInViewRadius.Length; i++)
-        {
-            _target = targetsInViewRadius[i].transform;
-            Vector3 dirToTarget = (_target.position - transform.position).normalized;
-            if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
-            {
-                float dstToTarget = Vector3.Distance(transform.position, _target.position);
-                if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask))
-                {
-                    if (_target.CompareTag(Player))
-                    {
-                        player = _target;
-                        canSeePlayer = true;
-                    }
-                }
-            }
-        }
+        _animator.StartMoveAnimation();
     }
 
-    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
+    public void EndMoveAnimation()
     {
-        if (!angleIsGlobal)
-        {
-            angleInDegrees += transform.eulerAngles.y;
-        }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+        _animator.EndMoveAnimation();
     }
 
-    #endregion FieldOfView
+    public void StartSeek()
+    {
+        OnSeekStart?.Invoke();
+    }
+
+    public void StopSeek()
+    {
+        OnSeekEnd?.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        _health.Died += OnDied;
+    }
+
+    private void OnDisable()
+    {
+        StopSeek();
+        _health.Died -= OnDied;
+    }
+
+    private void OnDestroy()
+    {
+        enemyList.Remove(gameObject);
+        // enemyList.Remove(gameObject);
+        /*if (enemySpawner != null)
+
+            enemySpawner.DestroyEnemy(gameObject);
+        */
+    }
+
+    public enum State
+    {
+        Dummy,
+        Idle,
+        Patrol,
+        Chase,
+        Attack
+    };
 }

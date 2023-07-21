@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+//TODO подумать насчет временем полёта пули / время уничтожения
+//TODO изменить setTarget
 public class Bullet : MonoBehaviour
 {
+    [SerializeField][Min(1)] private int _damage = 10;
     [SerializeField] private float _moveSpeed;
 
     private Vector3 _shootDir;
 
-    public void SetTarget(Vector3 _shootDir)
+    public void SetTarget(Vector3 shootDirection)
     {
-        this._shootDir = _shootDir;
+        _shootDir = shootDirection;
     }
 
     private void Start()
@@ -20,15 +21,19 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.position += _shootDir * _moveSpeed * Time.deltaTime;
+        transform.position += _shootDir * (_moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<IDamagable>(out IDamagable target))
+        if (other.CompareTag("Wall"))
         {
-            target.TakeDamage(10);
             Destroy(gameObject);
+            return;
         }
+        if (!other.TryGetComponent<IDamagable>(out var target))
+            return;
+        target.TakeDamage(_damage);
+        Destroy(gameObject);
     }
 }

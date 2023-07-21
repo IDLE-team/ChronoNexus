@@ -1,10 +1,10 @@
 public interface IState
 {
-    public void Enter();
+    abstract public void Enter();
 
-    public void LogicUpdate();
+    abstract public void LogicUpdate();
 
-    public void PhysicsUpdate();
+    abstract public void PhysicsUpdate();
 
-    public void Exit();
+    abstract public void Exit();
 }

@@ -1,34 +1,37 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyPatrolState : EnemyState
 {
     private Vector3 _destination;
 
-    public EnemyPatrolState(Enemy _enemy, StateMachine StateMachine) : base(_enemy, StateMachine)
+    public EnemyPatrolState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
     {
     }
 
     public override void Enter()
     {
+        _enemy.StartSeek();
         _destination = GetRandomDirection();
-        _enemy.navMeshAgent.SetDestination(_destination);
+        _enemy.NavMeshAgent.SetDestination(_destination);
+        _enemy.StartMoveAnimation();
     }
 
     public override void LogicUpdate()
     {
-        if (_enemy.canSeePlayer)
+        if (_enemy.IsTargetFound)
         {
-            _enemy.StateMachine.ChangeState(_enemy.ChaseState);
+            _stateMachine.ChangeState(_enemy.ChaseState);
             return;
         }
 
-        if (_enemy.navMeshAgent.remainingDistance <= 1f)
+        if (!(_enemy.NavMeshAgent.remainingDistance <= 1f))
         {
-            _destination = GetRandomDirection();
-            _enemy.navMeshAgent.SetDestination(_destination);
+            return;
         }
+        _enemy.EndMoveAnimation();
+        _destination = GetRandomDirection();
+        _enemy.NavMeshAgent.SetDestination(_destination);
+        _enemy.StartMoveAnimation();
     }
 
     private Vector3 GetRandomDirection()
@@ -38,6 +41,8 @@ public class EnemyPatrolState : EnemyState
 
     public override void Exit()
     {
+        _enemy.EndMoveAnimation();
+        _enemy.StopSeek();
     }
 
     public override void PhysicsUpdate()

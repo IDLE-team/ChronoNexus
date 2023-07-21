@@ -1,68 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-using System;
 
 public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    private bool pointerDown;
-    private bool pointerUp;
+    [SerializeField] private float _requiredHoldTime;
 
-    private float pointerDownTimer;
+    private bool _pointerDown;
+    private bool _pointerUp;
+    private float _pointerDownTimer;
 
-    [SerializeField]
-    private float requiredHoldTime;
+    public event Action OnClicked;
 
-    public UnityEvent onClick;
-    public UnityEvent onLongClick;
+    public event Action OnLongClicked;
 
-    // [SerializeField]
-    // private Image fillImage;
+    public PointerEventData PointerEventData { get; private set; }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        pointerDown = true;
-        Debug.Log("OnPointerDown");
+        _pointerDown = true;
+        PointerEventData = eventData;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        pointerUp = true;
-        Debug.Log("OnPointerUp");
+        _pointerUp = true;
     }
 
     private void Update()
     {
-        if (pointerDown)
+        if (_pointerDown)
         {
-            pointerDownTimer += Time.deltaTime;
-            if (pointerDownTimer >= requiredHoldTime)
+            _pointerDownTimer += Time.deltaTime;
+            if (_pointerDownTimer >= _requiredHoldTime)
             {
-                if (onLongClick != null)
-                    onLongClick.Invoke();
+                OnLongClicked?.Invoke();
+                Reset();
             }
         }
-        if (pointerUp && pointerDownTimer <= requiredHoldTime)
-        {
-            if (onClick != null)
-                onClick.Invoke();
-            Reset();
-        }
-        else if (pointerUp && pointerDownTimer >= requiredHoldTime)
-        {
-            Reset();
-        }
-        //    fillImage.fillAmount = pointerDownTimer / requiredHoldTime;
+        if (!_pointerUp || !(_pointerDownTimer <= _requiredHoldTime))
+            return;
+        OnClicked?.Invoke();
+        Reset();
     }
 
+    [Fix]
     private void Reset()
     {
-        pointerDown = false;
-        pointerUp = false;
-        pointerDownTimer = 0;
+        _pointerDown = false;
+        _pointerUp = false;
+        _pointerDownTimer = 0;
         //  fillImage.fillAmount = pointerDownTimer / requiredHoldTime;
     }
 }

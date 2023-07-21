@@ -1,93 +1,216 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CharacterTargetLock : MonoBehaviour
 {
-    [HideInInspector] public Transform _nearestTarget { get; private set; }
-    [HideInInspector] public bool isLookAt { get; private set; }
-
     [SerializeField] private LayerMask _lookLayer;
-    [SerializeField] private CharacterController _characterController;
+
+    [SerializeField] private Character _character;
+    [SerializeField] private Joystick _targetJoystick;
+    //  [SerializeField] private DebugEnemySpawner _enemySpawner;
 
     [Tooltip("Enemy detect radius")]
-    public float enemyDetectRadius;
+    [SerializeField] private float _radius = 10f;
 
-    private Collider[] _colliders;
+    [SerializeField][Min(0.1f)] private float _autoTargetRefreshDelay;
+    [SerializeField][Min(0.1f)] private float _manualTargetRefreshDelay;
+
+    [SerializeField] private float _angleThreshold;
+
+    public Transform LookTarget { get; private set; }
+    public Transform PreviousTarget => _previousTarget;
+
+    public float DebugTestUniTask;
+    public bool IsLookAt { get; private set; }
+
+    private List<GameObject> _targets => Enemy.enemyList;
 
     private Transform _previousTarget;
+
     private Transform _closestTarget;
 
+    private float _previousAngle;
     private float _closestDistance;
     private float _targetDistance;
 
+    private bool _isEnemyTargeted = false;
+    private bool _isStickSearch = false;
+
+    public bool IsEnemyTargeted => _isEnemyTargeted;
+    public bool IsStickSearch => _isStickSearch;
+
     private void Start()
     {
-        StartCoroutine(RefreshTarget());
+        RefreshTargetAsync().Forget();
     }
 
-    public void LookAtTarget()
+    private void FindTarget()
     {
-        _colliders = null;
-        _colliders = Physics.OverlapSphere(new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), enemyDetectRadius, _lookLayer);
-        if (_colliders.Length > 0)
+        if (_targets.Count > 0)
         {
-            _closestDistance = enemyDetectRadius;
-            foreach (Collider collider in _colliders)
+            _closestDistance = _radius;
+            _closestTarget = null;
+
+            foreach (var target in _targets)
             {
-                if (collider == null)
-                {
+                _targetDistance = Vector3.Distance(transform.position, target.transform.position);
+
+                if (_targetDistance > _radius)
                     continue;
-                }
-                _targetDistance = Vector3.Distance(transform.position, collider.transform.position);
+
                 if (_targetDistance < _closestDistance)
                 {
                     _closestDistance = _targetDistance;
-                    _closestTarget = collider.transform;
+                    _closestTarget = target.transform;
                 }
-                _nearestTarget = null;
             }
-            _nearestTarget = _closestTarget;
-            if (_previousTarget != _nearestTarget || _previousTarget == null)
+
+            if (_closestTarget == null && IsLookAt)
             {
                 if (_previousTarget != null)
-                    _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
-                if (_nearestTarget != null)
                 {
-                    _nearestTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+                    _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
                 }
-                _previousTarget = _nearestTarget;
+                SetEmptyTarget();
+                return;
             }
-            isLookAt = true;
+
+            if (_closestTarget == _previousTarget)
+                return;
+
+            if (_previousTarget != null)
+                _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+
+            LookTarget = _closestTarget;
+            _previousTarget = _closestTarget;
+
+            LookTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+            IsLookAt = true;
+            _isEnemyTargeted = true;
         }
-        else
+        else if (IsLookAt)
+            SetEmptyTarget();
+    }
+
+    public void ChooseTarget()
+    {
+        if (_targets.Count <= 0 && IsLookAt)
         {
+            SetEmptyTarget();
+            return;
+        }
+        _previousAngle = _angleThreshold;
+        for (int i = 0; i < _targets.Count; i++)
+        {
+            if (!_targets[i].gameObject.activeInHierarchy)
+                continue;
+            if (Vector3.Distance(_targets[i].transform.position, transform.position) > _radius)
+                continue;
+
+            float angle = GetAngle(_targets[i]);
+
+            if (angle > _angleThreshold)
+                continue;
+
+            if (_targets[i] == _previousTarget)
+                continue;
+            if (i != 0)
+            {
+                if (Mathf.Abs(_previousAngle - angle) <= 5)
+                {
+                    var current = Vector3.Distance(_targets[i].transform.position, transform.position);
+                    var previous = Vector3.Distance(_targets[i - 1].transform.position, transform.position);
+                    if (current > previous)
+                    {
+                        _previousAngle = angle;
+                        continue;
+                    }
+                }
+            }
+
+            _previousAngle = angle;
+
+            _targets[i].gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
             if (_previousTarget != null)
             {
-                _previousTarget?.gameObject.GetComponent<ITargetable>()?.ToggleSelfTarget();
+                _previousTarget.GetComponent<ITargetable>().ToggleSelfTarget();
             }
-            _previousTarget = null;
-            _nearestTarget = null;
-            if (isLookAt)
-            {
-                _characterController.CharacterMovement.ResetAnimationValues();
-                isLookAt = false;
-            }
+            IsLookAt = true;
+
+            LookTarget = _targets[i].transform;
+
+            _previousTarget = _targets[i].transform;
+            _previousAngle = angle;
+
+            _isEnemyTargeted = true;
         }
     }
 
-    private IEnumerator RefreshTarget()
+    private float GetAngle(GameObject enemy)
+    {
+        Vector3 stickDirection = new Vector3(_targetJoystick.Direction.x, 0, _targetJoystick.Direction.y).normalized;
+        Vector3 enemyDirection = (enemy.transform.position - transform.position);
+
+        enemyDirection = new Vector3(enemyDirection.x, 0, enemyDirection.z);
+
+        float angle = Vector3.Angle(enemyDirection, stickDirection);
+        //Debug.Log(enemy.name + "  " + angle);
+        return angle;
+    }
+
+    private void SetEmptyTarget()
+    {
+        _previousTarget = null;
+        LookTarget = null;
+        _isEnemyTargeted = false;
+        IsLookAt = false;
+        _character.Movement.ResetAnimationValues();
+    }
+
+    private async UniTaskVoid RefreshTargetAsync()
     {
         while (true)
         {
-            LookAtTarget();
-            yield return new WaitForSeconds(0.5f);
+            DebugTestUniTask = Random.Range(0, 10);
+            if (LookTarget != null && Vector3.Distance(LookTarget.transform.position, transform.position) > _radius)
+            {
+                Debug.Log(Vector3.Distance(LookTarget.transform.position, transform.position));
+                LookTarget.GetComponent<ITargetable>().ToggleSelfTarget();
+                SetEmptyTarget();
+            }
+            if (LookTarget == null)
+            {
+                _isEnemyTargeted = false;
+            }
+
+            if (!_isEnemyTargeted && !_isStickSearch)
+            {
+                FindTarget();
+            }
+            else if (_isStickSearch)
+            {
+                ChooseTarget();
+            }
+            await UniTask.Delay(TimeSpan.FromSeconds(_manualTargetRefreshDelay), cancellationToken: this.GetCancellationTokenOnDestroy());
         }
+    }
+
+    public void TurnOnStickSearch()
+    {
+        _isStickSearch = true;
+    }
+
+    public void TurnOffStickSearch()
+    {
+        _isStickSearch = false;
     }
 
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, enemyDetectRadius);
+        Gizmos.DrawWireSphere(transform.position, _radius);
     }
 }
