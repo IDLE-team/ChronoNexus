@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DebugInfoUI : MonoBehaviour
 {
-    [SerializeField] private CharacterTargetLock _targetLock;
+    [SerializeField] private ÑharacterTargetingSystem _targetLock;
     private TextMeshProUGUI _debugText;
 
     private void Start()
@@ -16,7 +16,7 @@ public class DebugInfoUI : MonoBehaviour
     private void Update()
     {
         _debugText.text =
-            $"LookTarget: {(_targetLock.LookTarget != null ? _targetLock.LookTarget.name : "null")}\n" +
+            $"LookTarget: {(_targetLock.Target != null ? _targetLock.Target.name : "null")}\n" +
             $"PreviousTarget: {(_targetLock.PreviousTarget != null ? _targetLock.PreviousTarget.name : "null")}\n" +
 
             $"\nisLookAt: {_targetLock.IsLookAt}\n" +

@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 
     [SerializeField] private bool _isTarget;
 
+
     public State state = new State();
 
     public static List<GameObject> enemyList = new List<GameObject>();
@@ -23,6 +24,31 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 
     public event Action OnSeekEnd;
 
+    public event Action OnUIUpdate;
+
+    public string CurrentState
+    {
+        get
+        {
+            switch (_stateMachine.CurrentState)
+            {
+                case EnemyDummyState:
+                    return State.Dummy.ToString();
+                case EnemyIdleState:
+                    return State.Idle.ToString();
+                case EnemyPatrolState:
+                    return State.Patrol.ToString();
+                case EnemyChaseState:
+                    return State.Chase.ToString();
+                case EnemyRangeAttackState:
+                    return State.Attack.ToString();
+                default:
+                    return " ";
+            };
+
+
+        }
+    }
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
     private StateMachine _stateMachine;
@@ -39,6 +65,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     private AudioSource _audioSource;
     private EnemyAnimator _animator;
     private EnemyState _startState;
+
 
     private bool _isAlive;
 
@@ -66,7 +93,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     {
         _isAlive = true;
         enemyList.Add(gameObject);
-        Debug.Log(state);
+        //Debug.Log(state);
         switch (state)
         {
             case State.Dummy:
@@ -93,7 +120,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
                 _stateMachine.Initialize(DummyState);
                 break;
         }
-        Debug.Log(enemyList.Count);
+        //Debug.Log(enemyList.Count);
     }
 
     public void InitializeSpawner(DebugEnemySpawner spawner, EnemyState startState)
@@ -134,11 +161,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
         Destroy(gameObject, 1f);
     }
 
-    public void ToggleSelfTarget()
+    public void SetSelfTarget(bool _isActive)
     {
-        _isTarget = !_isTarget;
-        if (_isTarget)
-            _selection.Select();
+        _isTarget = _isActive;
+
+        if (_isTarget) _selection.Select();
+
         else _selection.Deselect();
     }
 
@@ -182,14 +210,21 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     private void OnEnable()
     {
         _health.Died += OnDied;
+        _stateMachine.OnStateChanged += UpdateUI;
     }
 
     private void OnDisable()
     {
         StopSeek();
         _health.Died -= OnDied;
+        _stateMachine.OnStateChanged -= UpdateUI;
+
     }
 
+    private void UpdateUI()
+    {
+        OnUIUpdate?.Invoke();
+    }
     private void OnDestroy()
     {
         enemyList.Remove(gameObject);

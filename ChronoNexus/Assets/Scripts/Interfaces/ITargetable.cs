@@ -1,4 +1,4 @@
 ﻿internal interface ITargetable
 {
-    public void ToggleSelfTarget();
+    public void SetSelfTarget(bool isActive);
 }

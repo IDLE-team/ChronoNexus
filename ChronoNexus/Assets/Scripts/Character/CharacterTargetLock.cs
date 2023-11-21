@@ -72,7 +72,7 @@ public class CharacterTargetLock : MonoBehaviour
             {
                 if (_previousTarget != null)
                 {
-                    _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+                    _previousTarget.gameObject.GetComponent<ITargetable>().SetSelfTarget(false);
                 }
                 SetEmptyTarget();
                 return;
@@ -82,12 +82,12 @@ public class CharacterTargetLock : MonoBehaviour
                 return;
 
             if (_previousTarget != null)
-                _previousTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+                _previousTarget.gameObject.GetComponent<ITargetable>().SetSelfTarget(false);
 
             LookTarget = _closestTarget;
             _previousTarget = _closestTarget;
 
-            LookTarget.gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+            LookTarget.gameObject.GetComponent<ITargetable>().SetSelfTarget(true);
             IsLookAt = true;
             _isEnemyTargeted = true;
         }
@@ -133,10 +133,10 @@ public class CharacterTargetLock : MonoBehaviour
 
             _previousAngle = angle;
 
-            _targets[i].gameObject.GetComponent<ITargetable>().ToggleSelfTarget();
+            _targets[i].gameObject.GetComponent<ITargetable>().SetSelfTarget(false);
             if (_previousTarget != null)
             {
-                _previousTarget.GetComponent<ITargetable>().ToggleSelfTarget();
+                _previousTarget.GetComponent<ITargetable>().SetSelfTarget(false);
             }
             IsLookAt = true;
 
@@ -152,11 +152,21 @@ public class CharacterTargetLock : MonoBehaviour
     private float GetAngle(GameObject enemy)
     {
         Vector3 stickDirection = new Vector3(_targetJoystick.Direction.x, 0, _targetJoystick.Direction.y).normalized;
-        Vector3 enemyDirection = (enemy.transform.position - transform.position);
+        Vector3 enemyDirection = (enemy.transform.position - Camera.main.transform.position);
 
-        enemyDirection = new Vector3(enemyDirection.x, 0, enemyDirection.z);
+        enemyDirection = new Vector3(enemyDirection.x, 0, enemyDirection.z).normalized;
 
-        float angle = Vector3.Angle(enemyDirection, stickDirection);
+        Vector3 cameraDirection = Camera.main.transform.forward;
+        cameraDirection = new Vector3(cameraDirection.x, 0, cameraDirection.z).normalized;
+
+        // ¬ычисл€ем угол между вектором направлени€ к цели и вектором отклонени€ джойстика
+        float angle = Vector3.SignedAngle(enemyDirection, stickDirection, Vector3.up);
+
+        // ¬ычисл€ем знак угла на основе положени€ цели относительно камеры
+        float sign = Mathf.Sign(Vector3.Dot(cameraDirection, Vector3.Cross(stickDirection, enemyDirection)));
+
+        angle *= sign;
+        //float angle = Vector3.Angle(enemyDirection, stickDirection);
         //Debug.Log(enemy.name + "  " + angle);
         return angle;
     }
@@ -178,7 +188,7 @@ public class CharacterTargetLock : MonoBehaviour
             if (LookTarget != null && Vector3.Distance(LookTarget.transform.position, transform.position) > _radius)
             {
                 Debug.Log(Vector3.Distance(LookTarget.transform.position, transform.position));
-                LookTarget.GetComponent<ITargetable>().ToggleSelfTarget();
+                LookTarget.GetComponent<ITargetable>().SetSelfTarget(false);
                 SetEmptyTarget();
             }
             if (LookTarget == null)

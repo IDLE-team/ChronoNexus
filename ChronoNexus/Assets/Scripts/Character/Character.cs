@@ -26,7 +26,7 @@ public class Character : MonoBehaviour, IDamagable
     public CharacterAudioController AudioController { get; private set; }
     public CharacterMovement Movement { get; private set; }
     public CharacterAnimator Animator { get; private set; }
-    public CharacterTargetLock TargetLock { get; private set; }
+    public СharacterTargetingSystem CharacterTargetingSystem { get; private set; }
 
     private Attacker Attacker { get; set; }
 
@@ -47,7 +47,7 @@ public class Character : MonoBehaviour, IDamagable
         _health = GetComponent<Health>();
         Movement = GetComponent<CharacterMovement>();
         Attacker = GetComponent<Attacker>();
-        TargetLock = GetComponent<CharacterTargetLock>();
+        CharacterTargetingSystem = GetComponent<СharacterTargetingSystem>();
         Animator = GetComponent<CharacterAnimator>();
         Rigidbody = GetComponent<Rigidbody>();
         AudioController = GetComponent<CharacterAudioController>();

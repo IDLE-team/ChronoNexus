@@ -5,7 +5,7 @@ public class JoystickButton : MonoBehaviour
 {
     [SerializeField] private LongClickButton _button;
     [SerializeField] private HoverJoystick _joystick;
-    [SerializeField] private CharacterTargetLock _targetLock;
+    [SerializeField] private СharacterTargetingSystem _targetLock;
     //TODO прокинуть через Zenject
     
     private void OnEnable()

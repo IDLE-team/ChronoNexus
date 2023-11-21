@@ -103,7 +103,7 @@ public class TargetFinder : MonoBehaviour
 
     private void OnDestroy()
     {
-        cancellationTokenSource.Cancel();
+        //cancellationTokenSource.Cancel();
     }
 
 #if UNITY_EDITOR

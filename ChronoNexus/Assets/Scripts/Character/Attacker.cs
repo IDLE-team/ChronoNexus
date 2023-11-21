@@ -43,9 +43,9 @@ public class Attacker : MonoBehaviour
     [UsedInAnimator]
     public void Shoot()
     {
-        if (_character.TargetLock.LookTarget != null)
+        if (_character.CharacterTargetingSystem.Target != null)
         {
-            _shootDir = (_character.TargetLock.LookTarget.position - _rangeWeapon.transform.position)
+            _shootDir = (_character.CharacterTargetingSystem.Target.position - _rangeWeapon.transform.position)
                 .normalized;
         }
         else

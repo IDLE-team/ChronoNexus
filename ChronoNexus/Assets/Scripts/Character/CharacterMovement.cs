@@ -83,11 +83,11 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!_character.TargetLock.IsLookAt)
+        if (!_character.CharacterTargetingSystem.IsLookAt)
             return;
-        if (_character.TargetLock.LookTarget == null)
+        if (_character.CharacterTargetingSystem.Target == null)
             return;
-        Vector3 targetPosition = new Vector3(_character.TargetLock.LookTarget.position.x, transform.position.y, _character.TargetLock.LookTarget.position.z);
+        Vector3 targetPosition = new Vector3(_character.CharacterTargetingSystem.Target.position.x, transform.position.y, _character.CharacterTargetingSystem.Target.position.z);
         Vector3 direction = targetPosition - transform.position;
         direction.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -141,7 +141,7 @@ public class CharacterMovement : MonoBehaviour
         _targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         _character.Rigidbody.velocity = _targetDirection.normalized * _speed;
-        if (_character.TargetLock.IsLookAt)
+        if (_character.CharacterTargetingSystem.IsLookAt)
         {
             _character.Animator.StrafeX(_animationStrafeX);
             _character.Animator.StrafeZ(_animationStrafeZ);
@@ -175,7 +175,7 @@ public class CharacterMovement : MonoBehaviour
         _vertical = _targetSpeed * _joystick.Direction.y;
         _horizontal = _targetSpeed * _joystick.Direction.x;
 
-        _direction = transform.position - _character.TargetLock.LookTarget.position;
+        _direction = transform.position - _character.CharacterTargetingSystem.Target.position;
         _angle = Vector3.Angle(_direction, transform.forward);
 
         if (_direction.x > 0)
