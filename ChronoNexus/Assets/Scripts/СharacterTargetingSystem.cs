@@ -35,7 +35,8 @@ public class ÑharacterTargetingSystem : MonoBehaviour
 
     private float _nearestDistance;
     private float _targetDistance;
-
+    private float _startSphereCastThickness;
+    
     private bool _shouldFindTarget = true;
     private bool _isEnemyTargeted = false;
     private bool _isStickSearch = false;
@@ -44,6 +45,7 @@ public class ÑharacterTargetingSystem : MonoBehaviour
         _camera = Camera.main;
         _character = GetComponent<Character>();
         RefreshTargetAsync().Forget();
+        _startSphereCastThickness = _sphereCastThickness;
     }
     private void FindTarget()
     {
@@ -89,8 +91,13 @@ public class ÑharacterTargetingSystem : MonoBehaviour
 
     private void ChooseTarget()
     {
+
         if (_targets.Count <= 0)
+        {
+         //   _sphereCastThickness = _startSphereCastThickness;
             return;
+        }
+
 
         Vector3 stickDirection = new Vector3(_targetJoystick.Direction.x, 0f, _targetJoystick.Direction.y).normalized; 
 
@@ -103,11 +110,10 @@ public class ÑharacterTargetingSystem : MonoBehaviour
         Debug.DrawRay(_visorPosition.position, targetDirection.normalized*_radius, Color.green) ;
 
         if(Physics.SphereCast(_visorPosition.position, _sphereCastThickness, targetDirection.normalized, out hit, _radius, _targetLayer))
-       // if (Physics.Raycast(_visorPosition.position, _targetDirection.normalized, out hit, _radius, _targetLayer))
         {
-            if(hit.transform == Target)
+            //_sphereCastThickness = _startSphereCastThickness;
+            if (hit.transform == Target)
                 return;
-            
             Target = hit.transform;
             Target.GetComponent<ITargetable>().SetSelfTarget(true);
 
@@ -117,6 +123,10 @@ public class ÑharacterTargetingSystem : MonoBehaviour
             _previousTarget = Target;
             IsLookAt = true;
         }
+       // else
+       // {
+           // _sphereCastThickness = _startSphereCastThickness * 2f;
+      //  }
 
 
     }
