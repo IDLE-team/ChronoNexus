@@ -5,9 +5,8 @@ public class EnemyChaseState : EnemyState
 {
     private Vector3 _playerPosition;
 
-    public EnemyChaseState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
-    {
-    }
+    public EnemyChaseState(Enemy enemy, StateMachine stateMachine)
+        : base(enemy, stateMachine) { }
 
     public override void Enter()
     {
@@ -32,7 +31,18 @@ public class EnemyChaseState : EnemyState
         }
         if (Vector3.Distance(_enemy.transform.position, _playerPosition) < 8f)
         {
-            _stateMachine.ChangeState(_enemy.RangeAttackState);
+            switch (_enemy.enemyType)
+            {
+                case Enemy.EnemyType.Guard:
+                    _stateMachine.ChangeState(_enemy.MeleeAttackState);
+                    break;
+                case Enemy.EnemyType.Stormtrooper:
+                    _stateMachine.ChangeState(_enemy.RangeAttackState);
+                    break;
+                default:
+                    _stateMachine.ChangeState(_enemy.RangeAttackState);
+                    break;
+            }
         }
     }
 

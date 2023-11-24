@@ -7,14 +7,25 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 {
-    [SerializeField] private Selection _selection;
-    [SerializeField] private AudioClip _hitClip;
-    [SerializeField] private ParticleSystem _hitEffect;
-    [SerializeField] private Bullet _bulletPrefab;
-    [SerializeField] private DebugEnemySpawner enemySpawner;
+    [SerializeField]
+    private Selection _selection;
 
-    [SerializeField] private bool _isTarget;
+    [SerializeField]
+    private AudioClip _hitClip;
 
+    [SerializeField]
+    private ParticleSystem _hitEffect;
+
+    [SerializeField]
+    private Bullet _bulletPrefab;
+
+    [SerializeField]
+    private DebugEnemySpawner enemySpawner;
+
+    [SerializeField]
+    private bool _isTarget;
+
+    public EnemyType enemyType = new EnemyType();
 
     public State state = new State();
 
@@ -44,9 +55,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
                     return State.Attack.ToString();
                 default:
                     return " ";
-            };
-
-
+            }
+            ;
         }
     }
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
@@ -56,6 +66,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     public EnemyDummyState DummyState { get; private set; }
     public EnemyPatrolState PatrolState { get; private set; }
     public EnemyChaseState ChaseState { get; private set; }
+    public EnemyMeleeAttackState MeleeAttackState { get; private set; }
     public EnemyRangeAttackState RangeAttackState { get; private set; }
     public Transform Target { get; set; }
     public bool IsTargetFound { get; set; }
@@ -65,7 +76,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     private AudioSource _audioSource;
     private EnemyAnimator _animator;
     private EnemyState _startState;
-
 
     private bool _isAlive;
 
@@ -83,6 +93,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
         PatrolState = new EnemyPatrolState(this, _stateMachine);
         ChaseState = new EnemyChaseState(this, _stateMachine);
         RangeAttackState = new EnemyRangeAttackState(this, _stateMachine);
+        MeleeAttackState = new EnemyMeleeAttackState(this, _stateMachine);
 
         //  _stateMachine.Initialize(DummyState);
 
@@ -113,7 +124,18 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
                 break;
 
             case State.Attack:
-                _stateMachine.Initialize(RangeAttackState);
+                switch (enemyType)
+                {
+                    case Enemy.EnemyType.Guard:
+                        _stateMachine.ChangeState(MeleeAttackState);
+                        break;
+                    case Enemy.EnemyType.Stormtrooper:
+                        _stateMachine.ChangeState(RangeAttackState);
+                        break;
+                    default:
+                        _stateMachine.ChangeState(RangeAttackState);
+                        break;
+                }
                 break;
 
             default:
@@ -131,7 +153,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 
     private void Update()
     {
-        //   Debug.Log(_stateMachine.CurrentState);
+        Debug.Log(_stateMachine.CurrentState);
         _stateMachine.CurrentState.LogicUpdate();
     }
 
@@ -165,9 +187,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     {
         _isTarget = _isActive;
 
-        if (_isTarget) _selection.Select();
-
-        else _selection.Deselect();
+        if (_isTarget)
+            _selection.Select();
+        else
+            _selection.Deselect();
     }
 
     private void DamageEffect()
@@ -177,6 +200,17 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     }
 
     public void Shoot(Vector3 target)
+    {
+        Vector3 position = transform.position;
+        Vector3 forward = transform.forward;
+        Vector3 spawnPosition = position + forward * 0.5f;
+        Vector3 direction = (target - transform.position).normalized;
+        spawnPosition.y = spawnPosition.y + 1.5f;
+        var bullet = Instantiate(_bulletPrefab, spawnPosition, Quaternion.LookRotation(direction));
+        bullet.SetTarget(direction);
+    }
+
+    public void MeleeAttack(Vector3 target)
     {
         Vector3 position = transform.position;
         Vector3 forward = transform.forward;
@@ -218,13 +252,13 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
         StopSeek();
         _health.Died -= OnDied;
         _stateMachine.OnStateChanged -= UpdateUI;
-
     }
 
     private void UpdateUI()
     {
         OnUIUpdate?.Invoke();
     }
+
     private void OnDestroy()
     {
         enemyList.Remove(gameObject);
@@ -242,5 +276,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
         Patrol,
         Chase,
         Attack
+    };
+
+    public enum EnemyType
+    {
+        Stormtrooper,
+        Guard
     };
 }
