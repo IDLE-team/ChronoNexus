@@ -208,7 +208,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 
     public void MeleeAttack()
     {
-        _enemyAttacker.Hit();
+        //_enemyAttacker.Hit();
+        // hit привязан к аниматору(((
     }
 
     public void StartMoveAnimation()

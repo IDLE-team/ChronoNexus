@@ -24,7 +24,9 @@ public class EnemyMeleeAttackState : EnemyState
         cancellationTokenSource = new CancellationTokenSource();
         _target = _enemy.Target.transform;
         _enemy.NavMeshAgent.speed = 2.5f;
+        _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
         _isAttack = true;
+        _enemy.EndMoveAnimation();
         MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
     }
 
@@ -33,7 +35,7 @@ public class EnemyMeleeAttackState : EnemyState
         _isAttack = false;
         _enemy.IsTargetFound = false;
         _enemy.NavMeshAgent.speed = 1.5f;
-        _enemy.EndMoveAnimation();
+        //_enemy.EndMoveAnimation();
     }
 
     public override void LogicUpdate()
@@ -103,13 +105,13 @@ public class EnemyMeleeAttackState : EnemyState
                 )
                 {
                     _enemy.StartAttackAnimation();
-                    _enemy.NavMeshAgent.SetDestination(_target.position);
+                    //_enemy.NavMeshAgent.SetDestination(_target.position);
                     _enemy.MeleeAttack(); //spawn enemy blade
                     attackTimer = attackInterval;
                 }
                 else if (attackTimer > 0)
                 {
-                    _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
+                    //_enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                 }
 
                 await UniTask.Yield();

@@ -32,7 +32,7 @@ public class EnemyChaseState : EnemyState
         switch (_enemy.enemyType) // attack state select
         {
             case Enemy.EnemyType.Guard:
-                if (Vector3.Distance(_enemy.transform.position, _playerPosition) <= 2f)
+                if (Vector3.Distance(_enemy.transform.position, _playerPosition) <= 1.7f)
                 {
                     _stateMachine.ChangeState(_enemy.MeleeAttackState);
                 }

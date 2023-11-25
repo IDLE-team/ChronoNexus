@@ -60,25 +60,6 @@ public class EnemyAttacker : MonoBehaviour
     [UsedInAnimator]
     public void Shoot(Vector3 target)
     {
-        // if (_enemy.CharacterTargetingSystem.Target != null)
-        // {
-        //     _shootDir = (
-        //         _enemy.CharacterTargetingSystem.Target.position
-        //         - _rangeWeapon.transform.position
-        //     ).normalized;
-        // }
-        // else
-        // {
-        //     _shootDir = transform.forward;
-        // }
-
-        // var bullet = Instantiate(
-        //     _bullet,
-        //     _rangeWeapon.position,
-        //     Quaternion.LookRotation(transform)
-        // );
-        // bullet.SetTarget(transform);
-
         Vector3 position = transform.position;
         Vector3 forward = transform.forward;
         Vector3 spawnPosition = position + forward * 0.5f;
