@@ -5,15 +5,13 @@ using UnityEngine;
 
 public class EnemyMeleeAttackState : EnemyState
 {
-    //ToDo �������� �������
-
     private Transform _target;
     private Vector3 _targetPosition;
-    private float shootingTimer = 0;
-    private float shootingInterval = 2f;
+    private float attackTimer = 0;
+    private float attackInterval = 1f;
     private float retreatDistance = 5f;
-    private float minDelay = 3f;
-    private float maxDelay = 4f;
+    private float minDelay = 0.5f;
+    private float maxDelay = 2f;
     private bool _isAttack = false;
 
     private CancellationTokenSource cancellationTokenSource;
@@ -26,7 +24,7 @@ public class EnemyMeleeAttackState : EnemyState
         cancellationTokenSource = new CancellationTokenSource();
         _target = _enemy.Target.transform;
         _enemy.NavMeshAgent.speed = 2.5f;
-        //_isAttack = true;
+        _isAttack = true;
         MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
     }
 
@@ -53,23 +51,19 @@ public class EnemyMeleeAttackState : EnemyState
             _targetPosition.z
         );
         _enemy.transform.LookAt(targetPosition);
-        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 8f)
+
+        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 2f)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
             return;
         }
 
-        shootingTimer -= Time.deltaTime;
+        attackTimer -= Time.deltaTime;
 
-        if (
-            shootingTimer <= 0f
-            && Vector3.Distance(_enemy.transform.position, _targetPosition) <= 2f
-        )
-        {
-            _isAttack = true;
-            _enemy.MeleeAttack(_targetPosition);
-            shootingTimer = shootingInterval;
-        }
+        // if (attackTimer <= 0f )
+        // {
+        //     attackTimer = attackInterval;
+        // }
     }
 
     public override void PhysicsUpdate()
@@ -84,10 +78,10 @@ public class EnemyMeleeAttackState : EnemyState
         _targetPosition = _enemy.Target.position;
         _target = _enemy.Target.transform;
 
-        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 2f)
-        {
-            _enemy.NavMeshAgent.SetDestination(_target.position);
-        }
+        // if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 2f)
+        // {
+        //     _enemy.NavMeshAgent.SetDestination(_target.position);
+        // }
     }
 
     private async UniTask MeleeAttackAndRetreat(CancellationToken cancellationToken)
@@ -103,27 +97,22 @@ public class EnemyMeleeAttackState : EnemyState
 
             if (!cancellationToken.IsCancellationRequested)
             {
-                // Vector3 randomDirection = Random.insideUnitSphere.normalized;
-                // Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
-                // retreatPosition = new Vector3(
-                //     retreatPosition.x,
-                //     _enemy.transform.position.y,
-                //     retreatPosition.z
-                // );
-
-                // float distanceToTarget = Vector3.Distance(retreatPosition, _target.position);
-
-                // if (distanceToTarget < 5f)
-                // {
-                //     retreatPosition += randomDirection * (5f - distanceToTarget);
-                // }
-                // if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
-                // {
-                _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
-                _enemy.StartMoveAnimation();
+                if (
+                    attackTimer <= 0
+                    && Vector3.Distance(_enemy.transform.position, _targetPosition) <= 2f
+                )
+                {
+                    _enemy.StartAttackAnimation();
+                    _enemy.NavMeshAgent.SetDestination(_target.position);
+                    _enemy.MeleeAttack(); //spawn enemy blade
+                    attackTimer = attackInterval;
+                }
+                else if (attackTimer > 0)
+                {
+                    _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
+                }
 
                 await UniTask.Yield();
-                // }
             }
         }
         await UniTask.Yield();

@@ -29,20 +29,26 @@ public class EnemyChaseState : EnemyState
         {
             _stateMachine.ChangeState(_enemy.PatrolState);
         }
-        if (Vector3.Distance(_enemy.transform.position, _playerPosition) < 8f)
+        switch (_enemy.enemyType) // attack state select
         {
-            switch (_enemy.enemyType)
-            {
-                case Enemy.EnemyType.Guard:
+            case Enemy.EnemyType.Guard:
+                if (Vector3.Distance(_enemy.transform.position, _playerPosition) <= 2f)
+                {
                     _stateMachine.ChangeState(_enemy.MeleeAttackState);
-                    break;
-                case Enemy.EnemyType.Stormtrooper:
+                }
+                break;
+            case Enemy.EnemyType.Stormtrooper:
+                if (Vector3.Distance(_enemy.transform.position, _playerPosition) < 8f)
+                {
                     _stateMachine.ChangeState(_enemy.RangeAttackState);
-                    break;
-                default:
+                }
+                break;
+            default:
+                if (Vector3.Distance(_enemy.transform.position, _playerPosition) < 8f)
+                {
                     _stateMachine.ChangeState(_enemy.RangeAttackState);
-                    break;
-            }
+                }
+                break;
         }
     }
 

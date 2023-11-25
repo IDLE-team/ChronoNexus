@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyRangeAttackState : EnemyState
 {
-    //ToDo Улучшить систему
+    //ToDo пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private Transform _target;
     private Vector3 _targetPosition;
@@ -18,9 +18,8 @@ public class EnemyRangeAttackState : EnemyState
 
     private CancellationTokenSource cancellationTokenSource;
 
-    public EnemyRangeAttackState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
-    {
-    }
+    public EnemyRangeAttackState(Enemy enemy, StateMachine stateMachine)
+        : base(enemy, stateMachine) { }
 
     public override void Enter()
     {
@@ -48,7 +47,11 @@ public class EnemyRangeAttackState : EnemyState
             return;
         }
 
-        Vector3 targetPosition = new Vector3(_targetPosition.x, _enemy.transform.position.y, _targetPosition.z);
+        Vector3 targetPosition = new Vector3(
+            _targetPosition.x,
+            _enemy.transform.position.y,
+            _targetPosition.z
+        );
         _enemy.transform.LookAt(targetPosition);
         if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 8f)
         {
@@ -91,7 +94,12 @@ public class EnemyRangeAttackState : EnemyState
             {
                 Vector3 randomDirection = Random.insideUnitSphere.normalized;
                 Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
-                retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
+
+                retreatPosition = new Vector3(
+                    retreatPosition.x,
+                    _enemy.transform.position.y,
+                    retreatPosition.z
+                );
 
                 float distanceToTarget = Vector3.Distance(retreatPosition, _target.position);
 
