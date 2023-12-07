@@ -10,6 +10,10 @@ public class EnemyChaseState : EnemyState
 
     public override void Enter()
     {
+        if (_enemy.enemyType == Enemy.EnemyType.Guard)
+        {
+            _enemy.NavMeshAgent.speed *= 2;
+        }
         _enemy.StartMoveAnimation();
     }
 
@@ -32,7 +36,7 @@ public class EnemyChaseState : EnemyState
         switch (_enemy.enemyType) // attack state select
         {
             case Enemy.EnemyType.Guard:
-                if (Vector3.Distance(_enemy.transform.position, _playerPosition) <= 1.7f)
+                if (Vector3.Distance(_enemy.transform.position, _playerPosition) <= 1.9f)
                 {
                     _stateMachine.ChangeState(_enemy.MeleeAttackState);
                 }

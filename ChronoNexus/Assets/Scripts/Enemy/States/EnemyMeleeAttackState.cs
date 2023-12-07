@@ -9,9 +9,9 @@ public class EnemyMeleeAttackState : EnemyState
     private Vector3 _targetPosition;
     private float attackTimer = 0;
     private float attackInterval = 1f;
-    private float retreatDistance = 5f;
-    private float minDelay = 0.5f;
-    private float maxDelay = 2f;
+    private float retreatDistance = 2.5f;
+    private float minDelay = 0.1f;
+    private float maxDelay = 0.5f;
     private bool _isAttack = false;
 
     private CancellationTokenSource cancellationTokenSource;
@@ -62,10 +62,12 @@ public class EnemyMeleeAttackState : EnemyState
 
         attackTimer -= Time.deltaTime;
 
-        // if (attackTimer <= 0f )
-        // {
-        //     attackTimer = attackInterval;
-        // }
+        if (attackTimer <= 0 && Vector3.Distance(_enemy.transform.position, _targetPosition) <= 2f)
+        {
+            _enemy.StartAttackAnimation();
+            _enemy.MeleeAttack();
+            attackTimer = attackInterval;
+        }
     }
 
     public override void PhysicsUpdate()
@@ -91,7 +93,6 @@ public class EnemyMeleeAttackState : EnemyState
         while (_isAttack && !cancellationToken.IsCancellationRequested)
         {
             await UniTask.Delay((int)(Random.Range(minDelay, maxDelay) * 1000));
-
             if (_enemy == null)
                 cancellationTokenSource.Cancel();
             if (_enemy.Target == null)
@@ -99,22 +100,26 @@ public class EnemyMeleeAttackState : EnemyState
 
             if (!cancellationToken.IsCancellationRequested)
             {
-                if (
-                    attackTimer <= 0
-                    && Vector3.Distance(_enemy.transform.position, _targetPosition) <= 2f
-                )
-                {
-                    _enemy.StartAttackAnimation();
-                    //_enemy.NavMeshAgent.SetDestination(_target.position);
-                    _enemy.MeleeAttack(); //spawn enemy blade
-                    attackTimer = attackInterval;
-                }
-                else if (attackTimer > 0)
-                {
-                    //_enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
-                }
+                Vector3 randomDirection = Random.onUnitSphere.normalized;
+                Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
 
-                await UniTask.Yield();
+                retreatPosition = new Vector3(
+                    retreatPosition.x,
+                    _enemy.transform.position.y,
+                    retreatPosition.z
+                );
+
+                if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
+                {
+                    _enemy.NavMeshAgent.SetDestination(retreatPosition);
+                    _enemy.StartMoveAnimation();
+
+                    await UniTask.Yield();
+                }
+                else
+                {
+                    _enemy.EndMoveAnimation();
+                }
             }
         }
         await UniTask.Yield();
