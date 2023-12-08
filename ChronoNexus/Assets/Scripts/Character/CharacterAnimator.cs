@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour
@@ -18,6 +15,7 @@ public class CharacterAnimator : MonoBehaviour
     private static readonly int TurnHash = Animator.StringToHash("Turn");
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private static readonly int ShootHash = Animator.StringToHash("Shoot");
+    private static readonly int SitHash = Animator.StringToHash("Sit");
 
     private void Awake()
     {
@@ -47,5 +45,9 @@ public class CharacterAnimator : MonoBehaviour
     public void Fire()
     {
         _animator.SetTrigger(ShootHash);
+    }
+    public void Sit(bool value)
+    {
+        _animator.SetBool(SitHash, value);
     }
 }

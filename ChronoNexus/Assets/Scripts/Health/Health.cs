@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using System;
 using TMPro;
 using UnityEngine;
@@ -7,6 +6,9 @@ public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] private float _value;
     [SerializeField] private TMP_InputField _healthSetter;
+
+    [SerializeField] private float damageMultiplayerInShelter = 0.5f;
+    public bool _inShelter;
     public float Value => _value;
 
     public event Action Died;
@@ -28,7 +30,15 @@ public class Health : MonoBehaviour, IHealth
 
     public void Decrease(float value)
     {
-        _value -= value;
+        if (_inShelter)
+        {
+            _value = _value - (value * damageMultiplayerInShelter);
+        }
+        else
+        {
+            _value -= value;
+        }
+
         if (_value <= 0)
         {
             _value = 0;
