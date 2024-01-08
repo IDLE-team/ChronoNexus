@@ -40,7 +40,12 @@ public class EnemyAnimator : MonoBehaviour
         _animator.speed = 0;
         Debug.Log("Должна была смениться скорость");
     }
-
+    public void SlowAnimation()
+    {
+        _lastSpeed = _animator.speed;
+        _animator.speed = 0.3f;
+        Debug.Log("Должна была смениться скорость");
+    }
     public void ContinueAnimation()
     {
         _animator.speed = 1;

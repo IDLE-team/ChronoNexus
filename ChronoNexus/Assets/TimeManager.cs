@@ -21,6 +21,8 @@ public class TimeManager : MonoBehaviour
     public TextMeshProUGUI debugText;
     private float basePitch;
     public bool IsTimeStopped;
+    public bool IsTimeSlowed;
+
     public float resumeTimeDelay;
     
     private List<ITimeBody> timeBodies = new List<ITimeBody>();
@@ -54,7 +56,7 @@ public class TimeManager : MonoBehaviour
     public void ContinueTime()
     {
         IsTimeStopped = false;
-
+        IsTimeSlowed = false;
         for (var i = 0; i < timeBodies.Count; i++)
         {
             if (timeBodies[i] == null)
@@ -85,7 +87,23 @@ public class TimeManager : MonoBehaviour
         audioSource.pitch = 0.3f;
        StartCoroutine(ResumeTimeWithDelay());
     }
-
+    public void SlowTime()
+    {
+        IsTimeSlowed = true;
+        for (var i = 0; i < timeBodies.Count; i++)
+        {
+            if (timeBodies[i] == null)
+            {
+                timeBodies.RemoveAt(i);
+                continue;
+            }
+            timeBodies[i].SetSlowTime();
+        }
+        postProcessVolume.profile = timeStopVolumeProfile;
+        basePitch = audioSource.pitch;
+        audioSource.pitch = 0.5f;
+        StartCoroutine(ResumeTimeWithDelay());
+    }
     private void OnDebugSliderValueChanged(float value)
     {
         resumeTimeDelay = value;

@@ -286,6 +286,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         if (gameObject != null)
         {
             isTimeStopped = false;
+            isTimeSlowed = false;
+
             _navMeshAgent.isStopped = false;
 
             _animator.ContinueAnimation();
@@ -304,7 +306,14 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     public void SlowTimeAction()
     {
-        throw new NotImplementedException();
+        if (gameObject != null)
+        {
+            isTimeSlowed = true;
+            _navMeshAgent.speed = 0.1f;
+            _navMeshAgent.acceleration = 0.1f;
+
+            _animator.SlowAnimation();
+        }
     }
 
     public void RewindTimeAction()

@@ -1,4 +1,3 @@
-using Language.Lua;
 using System;
 using UnityEngine;
 
@@ -13,12 +12,10 @@ public class Bullet : MonoBehaviour, ITimeAffected
 
     public float TimeBeforeAffectedTimer;
     private bool CanBeAffected;
-    private bool IsStopped;
-
     public event Action OnTimeAffectedDestroy;
 
-    public bool isTimeStopped { get; set ; }
-    public bool isTimeAccelerated { get ; set; }
+    public bool isTimeStopped { get; set; }
+    public bool isTimeAccelerated { get; set; }
     public bool isTimeSlowed { get; set; }
     public bool isTimeRewinded { get; set; }
 
@@ -35,12 +32,17 @@ public class Bullet : MonoBehaviour, ITimeAffected
     private void FixedUpdate()
     {
         TimeBeforeAffectedTimer -= Time.deltaTime;
-        if(TimeBeforeAffectedTimer <= 0f)
+        if (TimeBeforeAffectedTimer <= 0f)
         {
             CanBeAffected = true;
         }
-        if(CanBeAffected && TimeManager.instance.IsTimeStopped && !IsStopped)
+        if (CanBeAffected && TimeManager.instance.IsTimeStopped && !isTimeStopped)
         {
+            return;
+        }
+        else if (CanBeAffected && TimeManager.instance.IsTimeSlowed && !isTimeSlowed)
+        {
+            transform.position += _shootDir * (_moveSpeed * 0.1f * Time.deltaTime);
             return;
         }
         transform.position += _shootDir * (_moveSpeed * Time.deltaTime);
@@ -62,17 +64,18 @@ public class Bullet : MonoBehaviour, ITimeAffected
 
     public void RealTimeAction()
     {
-        IsStopped = false;
+        isTimeStopped = false;
+        isTimeSlowed = false;
     }
 
     public void StopTimeAction()
     {
-        IsStopped = true;
+        isTimeStopped = true;
     }
 
     public void SlowTimeAction()
     {
-        throw new System.NotImplementedException();
+        isTimeSlowed = true;
     }
 
     public void RewindTimeAction()

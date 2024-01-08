@@ -48,8 +48,20 @@ public class EnemyRangeAttackState : EnemyState
             return;
         }
 
-        Vector3 targetPosition = new Vector3(_targetPosition.x, _enemy.transform.position.y, _targetPosition.z);
-        _enemy.transform.LookAt(targetPosition);
+        Vector3 targetPosition = _targetPosition - _enemy.transform.transform.position;
+
+
+       // new Vector3(_targetPosition.x, _enemy.transform.position.y, _targetPosition.z);
+        Quaternion toRotation = Quaternion.LookRotation(targetPosition, Vector3.up);
+        //_enemy.transform.LookAt(targetPosition);
+        if (_enemy.isTimeSlowed)
+        {
+            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
+        }
+        else
+        {
+            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * Time.deltaTime);
+        }
         if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 8f)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
