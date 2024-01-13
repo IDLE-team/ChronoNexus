@@ -189,6 +189,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         _animator.PlayDeathAnimation();
         OnTimeAffectedDestroy?.Invoke();
         StopSeek();
+        GetComponent<EnemyLoot>().DropLoot();
         if (enemySpawner != null)
         {
             enemySpawner.UpdateSliderValue();

@@ -15,7 +15,7 @@ public class Shelter : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        //player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Start()
@@ -28,6 +28,7 @@ public class Shelter : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             //Start timer
+            player = other.gameObject;
             _isPlayerInShelter = true;
             EnterShelter();
         }
@@ -105,7 +106,7 @@ public class Shelter : MonoBehaviour
                 Debug.Log("SHELTERED!!!!");
 
                 player.GetComponent<CharacterAnimator>().Sit(true);
-                player.transform.DOLocalMove(new Vector3(transform.position.x, player.transform.position.y, transform.position.z), 0.5f);
+                player.transform.DOMove(new Vector3(transform.position.x, player.transform.position.y, transform.position.z), 0.5f);
                 player.GetComponent<Health>()._inShelter = true;
 
 
