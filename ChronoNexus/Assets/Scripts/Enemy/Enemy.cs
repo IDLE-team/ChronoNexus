@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
 [RequireComponent(typeof(Health))]
-public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
+public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffected
 {
     [SerializeField]
     private Selection _selection;
@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     public event Action OnSeekEnd;
 
     public event Action OnUIUpdate;
+    public event Action OnTimeAffectedDestroy;
 
     public string CurrentState
     {
@@ -70,6 +71,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     public EnemyRangeAttackState RangeAttackState { get; private set; }
     public Transform Target { get; set; }
     public bool IsTargetFound { get; set; }
+    public bool isTimeStopped { get; set; }
+    public bool isTimeAccelerated { get; set; }
+    public bool isTimeSlowed { get; set; }
+    public bool isTimeRewinded { get; set; }
 
     private IHealth _health;
     private NavMeshAgent _navMeshAgent;
@@ -155,13 +160,18 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 
     private void Update()
     {
-        Debug.Log(_stateMachine.CurrentState);
-        _stateMachine.CurrentState.LogicUpdate();
+        if (!isTimeStopped)
+        {
+            _stateMachine.CurrentState.LogicUpdate();
+        }
     }
 
     private void FixedUpdate()
     {
-        _stateMachine.CurrentState.PhysicsUpdate();
+        if (!isTimeStopped)
+        {
+            _stateMachine.CurrentState.PhysicsUpdate();
+        }
     }
 
     public void TakeDamage(float damage)
@@ -177,6 +187,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
     {
         _isAlive = false;
         _animator.PlayDeathAnimation();
+        OnTimeAffectedDestroy?.Invoke();
         StopSeek();
         if (enemySpawner != null)
         {
@@ -257,12 +268,58 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker
 
     private void OnDestroy()
     {
+        OnTimeAffectedDestroy?.Invoke();
         enemyList.Remove(gameObject);
         // enemyList.Remove(gameObject);
         /*if (enemySpawner != null)
 
             enemySpawner.DestroyEnemy(gameObject);
         */
+    }
+
+    public void RealTimeAction()
+    {
+        if (gameObject != null)
+        {
+            isTimeStopped = false;
+            isTimeSlowed = false;
+
+            _navMeshAgent.isStopped = false;
+
+            _animator.ContinueAnimation();
+        }
+    }
+
+    public void StopTimeAction()
+    {
+        if (gameObject != null)
+        {
+            isTimeStopped = true;
+            _navMeshAgent.isStopped = true;
+            _animator.StopAnimation();
+        }
+    }
+
+    public void SlowTimeAction()
+    {
+        if (gameObject != null)
+        {
+            isTimeSlowed = true;
+            _navMeshAgent.speed = 0.1f;
+            _navMeshAgent.acceleration = 0.1f;
+
+            _animator.SlowAnimation();
+        }
+    }
+
+    public void RewindTimeAction()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AcceleratedTimeAction()
+    {
+        throw new NotImplementedException();
     }
 
     public enum State

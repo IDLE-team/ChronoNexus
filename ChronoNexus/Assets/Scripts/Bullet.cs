@@ -1,13 +1,23 @@
+using System;
 using UnityEngine;
 
 //TODO подумать насчет временем полёта пули / время уничтожения
 //TODO изменить setTarget
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, ITimeAffected
 {
     [SerializeField][Min(1)] private int _damage = 10;
     [SerializeField] private float _moveSpeed;
 
     private Vector3 _shootDir;
+
+    public float TimeBeforeAffectedTimer;
+    private bool CanBeAffected;
+    public event Action OnTimeAffectedDestroy;
+
+    public bool isTimeStopped { get; set; }
+    public bool isTimeAccelerated { get; set; }
+    public bool isTimeSlowed { get; set; }
+    public bool isTimeRewinded { get; set; }
 
     public void SetTarget(Vector3 shootDirection)
     {
@@ -16,11 +26,25 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 2);
+        Destroy(gameObject, 20);
     }
 
     private void FixedUpdate()
     {
+        TimeBeforeAffectedTimer -= Time.deltaTime;
+        if (TimeBeforeAffectedTimer <= 0f)
+        {
+            CanBeAffected = true;
+        }
+        if (CanBeAffected && TimeManager.instance.IsTimeStopped && !isTimeStopped)
+        {
+            return;
+        }
+        else if (CanBeAffected && TimeManager.instance.IsTimeSlowed && !isTimeSlowed)
+        {
+            transform.position += _shootDir * (_moveSpeed * 0.1f * Time.deltaTime);
+            return;
+        }
         transform.position += _shootDir * (_moveSpeed * Time.deltaTime);
     }
 
@@ -34,6 +58,33 @@ public class Bullet : MonoBehaviour
         if (!other.TryGetComponent<IDamagable>(out var target))
             return;
         target.TakeDamage(_damage);
+        OnTimeAffectedDestroy?.Invoke();
         Destroy(gameObject);
+    }
+
+    public void RealTimeAction()
+    {
+        isTimeStopped = false;
+        isTimeSlowed = false;
+    }
+
+    public void StopTimeAction()
+    {
+        isTimeStopped = true;
+    }
+
+    public void SlowTimeAction()
+    {
+        isTimeSlowed = true;
+    }
+
+    public void RewindTimeAction()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void AcceleratedTimeAction()
+    {
+        throw new System.NotImplementedException();
     }
 }

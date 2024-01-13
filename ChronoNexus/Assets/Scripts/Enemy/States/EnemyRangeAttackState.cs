@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyRangeAttackState : EnemyState
 {
-    //ToDo пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    //ToDo Улучшить систему
 
     private Transform _target;
     private Vector3 _targetPosition;
@@ -18,8 +18,9 @@ public class EnemyRangeAttackState : EnemyState
 
     private CancellationTokenSource cancellationTokenSource;
 
-    public EnemyRangeAttackState(Enemy enemy, StateMachine stateMachine)
-        : base(enemy, stateMachine) { }
+    public EnemyRangeAttackState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
+    {
+    }
 
     public override void Enter()
     {
@@ -47,12 +48,20 @@ public class EnemyRangeAttackState : EnemyState
             return;
         }
 
-        Vector3 targetPosition = new Vector3(
-            _targetPosition.x,
-            _enemy.transform.position.y,
-            _targetPosition.z
-        );
-        _enemy.transform.LookAt(targetPosition);
+        Vector3 targetPosition = _targetPosition - _enemy.transform.transform.position;
+
+
+       // new Vector3(_targetPosition.x, _enemy.transform.position.y, _targetPosition.z);
+        Quaternion toRotation = Quaternion.LookRotation(targetPosition, Vector3.up);
+        //_enemy.transform.LookAt(targetPosition);
+        if (_enemy.isTimeSlowed)
+        {
+            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
+        }
+        else
+        {
+            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * Time.deltaTime);
+        }
         if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 8f)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
@@ -94,12 +103,7 @@ public class EnemyRangeAttackState : EnemyState
             {
                 Vector3 randomDirection = Random.insideUnitSphere.normalized;
                 Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
-
-                retreatPosition = new Vector3(
-                    retreatPosition.x,
-                    _enemy.transform.position.y,
-                    retreatPosition.z
-                );
+                retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
 
                 float distanceToTarget = Vector3.Distance(retreatPosition, _target.position);
 
