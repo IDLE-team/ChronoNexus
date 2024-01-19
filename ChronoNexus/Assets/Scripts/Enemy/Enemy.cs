@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     [SerializeField]
     private bool _isTarget;
+    private EnemyLoot _loot;
 
     public EnemyType enemyType = new EnemyType();
 
@@ -92,6 +93,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         _animator = GetComponent<EnemyAnimator>();
         _audioSource = GetComponent<AudioSource>();
         _enemyAttacker = GetComponent<EnemyAttacker>();
+        _loot = GetComponent<EnemyLoot>();
 
         _stateMachine = new StateMachine();
         IdleState = new EnemyIdleState(this, _stateMachine);
@@ -189,7 +191,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         _animator.PlayDeathAnimation();
         OnTimeAffectedDestroy?.Invoke();
         StopSeek();
-        GetComponent<EnemyLoot>().DropLoot();
+        _loot.DropLoot();
+        Debug.Log("enemy died");
         if (enemySpawner != null)
         {
             enemySpawner.UpdateSliderValue();
