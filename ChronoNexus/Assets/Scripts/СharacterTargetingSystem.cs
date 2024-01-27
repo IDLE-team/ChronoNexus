@@ -3,11 +3,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.InputSystem.OnScreen;
+using Zenject;
+using UnityEngine.InputSystem;
 
 public class —haracterTargetingSystem : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
-    [SerializeField] private Joystick _targetJoystick;
+
+
+    //[SerializeField] private Joystick _targetJoystick;
     [SerializeField] private Transform _visorPosition;
 
     [Tooltip("Enemy detect radius")]
@@ -40,12 +45,34 @@ public class —haracterTargetingSystem : MonoBehaviour
     private bool _shouldFindTarget = true;
     private bool _isEnemyTargeted = false;
     private bool _isStickSearch = false;
+
+    private PlayerInputActions _input;
+
+    [Inject]
+    private void Construct(PlayerInputActions input, CharacterAnimator animator)
+    {
+        Debug.Log("” ‡ÚÚ‡ÍÂ‡");
+        _input = input;
+        _input.Player.TargetLock.started += OnTargetLockStarted;
+        _input.Player.TargetLock.canceled += OnTargetLockCanceled;
+
+
+    }
+
     private void Start()
     {
         _camera = Camera.main;
         _character = GetComponent<Character>();
         RefreshTargetAsync().Forget();
         _startSphereCastThickness = _sphereCastThickness;
+    }
+    private void OnTargetLockStarted(InputAction.CallbackContext obj)
+    {
+        TurnOnStickSearch();
+    }
+    private void OnTargetLockCanceled(InputAction.CallbackContext obj)
+    {
+        TurnOffStickSearch();
     }
     private void FindTarget()
     {
@@ -98,8 +125,12 @@ public class —haracterTargetingSystem : MonoBehaviour
             return;
         }
 
-
-        Vector3 stickDirection = new Vector3(_targetJoystick.Direction.x, 0f, _targetJoystick.Direction.y).normalized; 
+        Vector2 inputDirection = ReadTargetMoveInput();
+        if(inputDirection == Vector2.zero)
+        {
+            return;
+        }
+        Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized; 
 
         var _targetRotation = Mathf.Atan2(stickDirection.x, stickDirection.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
@@ -182,6 +213,7 @@ public class —haracterTargetingSystem : MonoBehaviour
     {
         _isStickSearch = false;
     }
+    private Vector2 ReadTargetMoveInput() => _input.Player.TargetLockMove.ReadValue<Vector2>();
 
     private void OnDrawGizmosSelected()
     {

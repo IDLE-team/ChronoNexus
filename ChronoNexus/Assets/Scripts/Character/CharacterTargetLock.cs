@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
+using UnityEngine.InputSystem.OnScreen;
 public class CharacterTargetLock : MonoBehaviour
 {
     [SerializeField] private LayerMask _lookLayer;

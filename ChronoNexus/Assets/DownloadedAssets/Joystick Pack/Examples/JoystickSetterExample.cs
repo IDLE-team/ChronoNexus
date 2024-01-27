@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.InputSystem.OnScreen;
 public class JoystickSetterExample : MonoBehaviour
 {
     public VariableJoystick variableJoystick;

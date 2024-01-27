@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
+using Zenject;
 
 public class CharacterMovement : MonoBehaviour
 {
@@ -32,6 +30,8 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] private float _rotationSpeed;
     //------------------------------------------------------------------------------------//
 
+    private PlayerInputActions _input;
+
     public Slider speedSlider;
     public Slider rotationSlider;
 
@@ -39,7 +39,7 @@ public class CharacterMovement : MonoBehaviour
     public TextMeshProUGUI rotationSpeedText;
 
     [SerializeField] private Character _character;
-    [SerializeField] private FloatingJoystick _joystick;
+    //SerializeField] private FloatingJoystick _joystick;
 
     private Camera _camera;
 
@@ -65,10 +65,19 @@ public class CharacterMovement : MonoBehaviour
     private float _animationStrafeX;
     private float _animationStrafeZ;
 
-    private void Awake()
+    [Inject]
+    private void Construct(PlayerInputActions input)
     {
+        _input = input;
         _camera = Camera.main;
+        Debug.Log("Construct");
     }
+
+    private void OnEnable() => _input.Enable();
+    private void OnDisable() => _input.Disable();
+
+    private Vector2 ReadMovementInput() => _input.Player.Movement.ReadValue<Vector2>();
+    private Vector3 GetConvertedInputDirection(Vector2 direction) => new Vector3(direction.x, 0, direction.y);
 
     private void Start()
     {
@@ -105,6 +114,67 @@ public class CharacterMovement : MonoBehaviour
     private void Move()
     {
         _targetSpeed = MoveSpeed;
+        Vector2 inputDirection = ReadMovementInput();
+        Vector3 convertedDirection = GetConvertedInputDirection(inputDirection);
+
+        Debug.Log("InputDir: " + inputDirection);
+        Debug.Log("ConvertedDir: " + convertedDirection);
+
+        if (inputDirection == Vector2.zero) _targetSpeed = 0.0f;
+
+        _speedOffset = 0.1f;
+        var velocity = _character.Rigidbody.velocity;
+        _currentHorizontalSpeed = new Vector3(velocity.x, 0.0f, velocity.z).magnitude;
+        
+        _inputMagnitude = inputDirection.magnitude;
+        //_inputDirection = new Vector3(_joystick.Direction.x, 0.0f, _joystick.Direction.y).normalized;
+
+        _animationBlend = Mathf.Lerp(_animationBlend, _targetSpeed * _inputMagnitude, Time.deltaTime * SpeedChangeRate);
+        if (_animationBlend < 0.01f) _animationBlend = 0f;
+
+        if (_currentHorizontalSpeed < _targetSpeed - _speedOffset ||
+            _currentHorizontalSpeed > _targetSpeed + _speedOffset)
+        {
+            _speed = Mathf.Lerp(_currentHorizontalSpeed, _targetSpeed * _inputMagnitude,
+                Time.deltaTime * SpeedChangeRate);
+
+            _speed = Mathf.Round(_speed * 1000f) / 1000f;
+        }
+        else
+        {
+            _speed = _targetSpeed;
+        }
+
+        if (inputDirection != Vector2.zero)
+        {
+            _targetRotation = Mathf.Atan2(convertedDirection.x, convertedDirection.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
+            _rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity,
+                RotationSmoothTime);
+
+            transform.rotation = Quaternion.Euler(0.0f, _rotation, 0.0f);
+        }
+
+        _targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
+
+        _character.Rigidbody.velocity = _targetDirection.normalized * _speed;
+        if (_character.CharacterTargetingSystem.IsLookAt)
+        {
+            _character.Animator.StrafeX(_animationStrafeX);
+            _character.Animator.StrafeZ(_animationStrafeZ);
+        }
+        else
+        {
+            _character.Animator.StrafeZ(_animationBlend);
+        }
+        if (_inputMagnitude > 0.1f)
+        {
+            _character.Animator.MotionSpeed(_inputMagnitude);
+        }
+        else
+        {
+            _character.Animator.MotionSpeed(1);
+        }
+        /*
         if (_joystick.Direction == Vector2.zero) _targetSpeed = 0.0f;
 
         _speedOffset = 0.1f;
@@ -158,9 +228,9 @@ public class CharacterMovement : MonoBehaviour
         {
             _character.Animator.MotionSpeed(1);
         }
+         */
     }
-
-    [Delete] //Не подходит по ответственности
+        [Delete] //Не подходит по ответственности
     public void ResetAnimationValues()
     {
         print("Reset Animations Values");
@@ -172,8 +242,9 @@ public class CharacterMovement : MonoBehaviour
 
     private void TargetLockSetAnimations()
     {
-        _vertical = _targetSpeed * _joystick.Direction.y;
-        _horizontal = _targetSpeed * _joystick.Direction.x;
+        Vector2 inputDirection = ReadMovementInput();
+        _vertical = _targetSpeed * inputDirection.y;
+        _horizontal = _targetSpeed * inputDirection.x;
 
         _direction = transform.position - _character.CharacterTargetingSystem.Target.position;
         _angle = Vector3.Angle(_direction, transform.forward);

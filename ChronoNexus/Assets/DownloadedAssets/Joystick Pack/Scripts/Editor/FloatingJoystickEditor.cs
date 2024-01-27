@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+using UnityEngine.InputSystem.OnScreen;
+/*
 [CustomEditor(typeof(FloatingJoystick))]
 public class FloatingJoystickEditor : JoystickEditor
 {
@@ -19,3 +20,4 @@ public class FloatingJoystickEditor : JoystickEditor
         }
     }
 }
+*/

@@ -1,28 +1,33 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-
-public class HoverJoystick : Joystick
+namespace UnityEngine.InputSystem.OnScreen
 {
-    public UnityEvent onPointerUp;
-    private PointerEventData pointerEventData;
+    public class HoverJoystick : Joystick
+    {
+        public UnityEvent onPointerUp;
+        private PointerEventData pointerEventData;
 
-    protected override void Start()
-    {
-        base.Start();
-        background.gameObject.SetActive(false);
-    }
-    
-    public void Initialize(PointerEventData eventData)
-    {
-        eventData.pointerDrag = gameObject;
-        eventData.pointerPress = gameObject;
-        OnPointerDown(eventData);
-    }
+        protected override void Start()
+        {
+            base.Start();
+            background.gameObject.SetActive(false);
+        }
 
-    public override void OnPointerUp(PointerEventData eventData)
-    {
-        base.OnPointerUp(eventData);
-        onPointerUp?.Invoke();
+        public void Initialize(PointerEventData eventData)
+        {
+            Debug.Log(eventData);
+            eventData.pointerDrag = gameObject;
+            eventData.pointerPress = gameObject;
+            eventData.Reset();
+    OnPointerDown(eventData);
+        }
+
+        public override void OnPointerUp(PointerEventData eventData)
+        {
+            Debug.Log("PointerUp");
+            base.OnPointerUp(eventData);
+            onPointerUp?.Invoke();
+        }
     }
 }

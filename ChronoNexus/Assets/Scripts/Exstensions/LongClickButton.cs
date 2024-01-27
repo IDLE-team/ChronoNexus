@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
-public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class LongClickButton : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private float _requiredHoldTime;
 
@@ -19,12 +19,14 @@ public class LongClickButton : MonoBehaviour, IPointerDownHandler, IPointerUpHan
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _pointerDown = true;
+        Debug.Log("Pointer: " + PointerEventData);
         PointerEventData = eventData;
+        _pointerDown = true;
     }
-
+    
     public void OnPointerUp(PointerEventData eventData)
     {
+        _pointerDown = false;
         _pointerUp = true;
     }
 
