@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     [SerializeField]
     private bool _isTarget;
+    private EnemyLoot _loot;
 
     public EnemyType enemyType = new EnemyType();
 
@@ -81,6 +82,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     private AudioSource _audioSource;
     private EnemyAnimator _animator;
     private EnemyState _startState;
+    private EnemyAttacker _enemyAttacker;
 
     private bool _isAlive;
 
@@ -90,6 +92,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<EnemyAnimator>();
         _audioSource = GetComponent<AudioSource>();
+        _enemyAttacker = GetComponent<EnemyAttacker>();
+        _loot = GetComponent<EnemyLoot>();
 
         _stateMachine = new StateMachine();
         IdleState = new EnemyIdleState(this, _stateMachine);
@@ -187,6 +191,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         _animator.PlayDeathAnimation();
         OnTimeAffectedDestroy?.Invoke();
         StopSeek();
+        _loot.DropLoot();
+        Debug.Log("enemy died");
         if (enemySpawner != null)
         {
             enemySpawner.UpdateSliderValue();
@@ -212,24 +218,13 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     public void Shoot(Vector3 target)
     {
-        Vector3 position = transform.position;
-        Vector3 forward = transform.forward;
-        Vector3 spawnPosition = position + forward * 0.5f;
-        Vector3 direction = (target - transform.position).normalized;
-        spawnPosition.y = spawnPosition.y + 1.5f;
-        var bullet = Instantiate(_bulletPrefab, spawnPosition, Quaternion.LookRotation(direction));
-        bullet.SetTarget(direction);
+        _enemyAttacker.Shoot(target);
     }
 
-    public void MeleeAttack(Vector3 target)
+    public void MeleeAttack()
     {
-        Vector3 position = transform.position;
-        Vector3 forward = transform.forward;
-        Vector3 spawnPosition = position + forward * 0.5f;
-        Vector3 direction = (target - transform.position).normalized;
-        spawnPosition.y = spawnPosition.y + 1.5f;
-        var bullet = Instantiate(_bulletPrefab, spawnPosition, Quaternion.LookRotation(direction));
-        bullet.SetTarget(direction);
+        //_enemyAttacker.Hit();
+        // hit привязан к аниматору(((
     }
 
     public void StartMoveAnimation()
@@ -240,6 +235,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public void EndMoveAnimation()
     {
         _animator.EndMoveAnimation();
+    }
+
+    public void StartAttackAnimation()
+    {
+        _animator.PlayAttackAnimation();
     }
 
     public void StartSeek()

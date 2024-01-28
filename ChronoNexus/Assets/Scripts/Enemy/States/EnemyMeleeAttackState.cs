@@ -5,15 +5,13 @@ using UnityEngine;
 
 public class EnemyMeleeAttackState : EnemyState
 {
-    //ToDo �������� �������
-
     private Transform _target;
     private Vector3 _targetPosition;
-    private float shootingTimer = 0;
-    private float shootingInterval = 2f;
-    private float retreatDistance = 5f;
-    private float minDelay = 3f;
-    private float maxDelay = 4f;
+    private float attackTimer = 0;
+    private float attackInterval = 1f;
+    private float retreatDistance = 2.5f;
+    private float minDelay = 0.1f;
+    private float maxDelay = 0.5f;
     private bool _isAttack = false;
 
     private CancellationTokenSource cancellationTokenSource;
@@ -26,7 +24,9 @@ public class EnemyMeleeAttackState : EnemyState
         cancellationTokenSource = new CancellationTokenSource();
         _target = _enemy.Target.transform;
         _enemy.NavMeshAgent.speed = 2.5f;
-        //_isAttack = true;
+        _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
+        _isAttack = true;
+        _enemy.EndMoveAnimation();
         MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
     }
 
@@ -35,7 +35,7 @@ public class EnemyMeleeAttackState : EnemyState
         _isAttack = false;
         _enemy.IsTargetFound = false;
         _enemy.NavMeshAgent.speed = 1.5f;
-        _enemy.EndMoveAnimation();
+        //_enemy.EndMoveAnimation();
     }
 
     public override void LogicUpdate()
@@ -53,22 +53,20 @@ public class EnemyMeleeAttackState : EnemyState
             _targetPosition.z
         );
         _enemy.transform.LookAt(targetPosition);
-        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 8f)
+
+        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 2f)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
             return;
         }
 
-        shootingTimer -= Time.deltaTime;
+        attackTimer -= Time.deltaTime;
 
-        if (
-            shootingTimer <= 0f
-            && Vector3.Distance(_enemy.transform.position, _targetPosition) <= 2f
-        )
+        if (attackTimer <= 0 && Vector3.Distance(_enemy.transform.position, _targetPosition) <= 2f)
         {
-            _isAttack = true;
-            _enemy.MeleeAttack(_targetPosition);
-            shootingTimer = shootingInterval;
+            _enemy.StartAttackAnimation();
+            _enemy.MeleeAttack();
+            attackTimer = attackInterval;
         }
     }
 
@@ -84,10 +82,10 @@ public class EnemyMeleeAttackState : EnemyState
         _targetPosition = _enemy.Target.position;
         _target = _enemy.Target.transform;
 
-        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 2f)
-        {
-            _enemy.NavMeshAgent.SetDestination(_target.position);
-        }
+        // if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 2f)
+        // {
+        //     _enemy.NavMeshAgent.SetDestination(_target.position);
+        // }
     }
 
     private async UniTask MeleeAttackAndRetreat(CancellationToken cancellationToken)
@@ -95,7 +93,6 @@ public class EnemyMeleeAttackState : EnemyState
         while (_isAttack && !cancellationToken.IsCancellationRequested)
         {
             await UniTask.Delay((int)(Random.Range(minDelay, maxDelay) * 1000));
-
             if (_enemy == null)
                 cancellationTokenSource.Cancel();
             if (_enemy.Target == null)
@@ -103,27 +100,26 @@ public class EnemyMeleeAttackState : EnemyState
 
             if (!cancellationToken.IsCancellationRequested)
             {
-                // Vector3 randomDirection = Random.insideUnitSphere.normalized;
-                // Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
-                // retreatPosition = new Vector3(
-                //     retreatPosition.x,
-                //     _enemy.transform.position.y,
-                //     retreatPosition.z
-                // );
+                Vector3 randomDirection = Random.onUnitSphere.normalized;
+                Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
 
-                // float distanceToTarget = Vector3.Distance(retreatPosition, _target.position);
+                retreatPosition = new Vector3(
+                    retreatPosition.x,
+                    _enemy.transform.position.y,
+                    retreatPosition.z
+                );
 
-                // if (distanceToTarget < 5f)
-                // {
-                //     retreatPosition += randomDirection * (5f - distanceToTarget);
-                // }
-                // if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
-                // {
-                _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
-                _enemy.StartMoveAnimation();
+                if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
+                {
+                    _enemy.NavMeshAgent.SetDestination(retreatPosition);
+                    _enemy.StartMoveAnimation();
 
-                await UniTask.Yield();
-                // }
+                    await UniTask.Yield();
+                }
+                else
+                {
+                    _enemy.EndMoveAnimation();
+                }
             }
         }
         await UniTask.Yield();

@@ -9,6 +9,7 @@ public class DebugEnemySpawner : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _enemyCounter;
     [SerializeField] private Slider enemySlider;
     [SerializeField] private TMP_Dropdown enemyDropdown;
+    [SerializeField] private TMP_Dropdown enemyTypeDropdown;
     [SerializeField] private int maxEnemies = 20;
 
     public List<GameObject> enemyList => Enemy.enemyList;
@@ -63,6 +64,8 @@ public class DebugEnemySpawner : MonoBehaviour
             var enemy = Instantiate(enemyPrefab, _spawnPosition, Quaternion.identity);
             enemy.name = "Enemy " + i;
             var enemyScript = enemy.GetComponent<Enemy>();
+
+
             switch (enemyDropdown.value)
             {
                 case 0:
@@ -76,6 +79,21 @@ public class DebugEnemySpawner : MonoBehaviour
                 case 2:
                     enemyScript.state = Enemy.State.Patrol;
                     break;
+            }
+
+            switch (enemyTypeDropdown.value)
+            {
+                case 0:
+                    enemyScript.enemyType = Enemy.EnemyType.Stormtrooper;
+                    break;
+
+                case 1:
+                    enemyScript.enemyType = Enemy.EnemyType.Guard;
+                    break;
+
+                /*case 2:
+                    enemyScript.state = Enemy.State.Patrol;
+                    break;*/
             }
 
             // enemyList.Add(enemy);

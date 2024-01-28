@@ -9,6 +9,9 @@ public class EnemyAnimator : MonoBehaviour
     private static readonly int TakeHit = Animator.StringToHash("TakeHit");
     private static readonly int Moving = Animator.StringToHash("isMove");
 
+    private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int Shoot = Animator.StringToHash("Shoot");
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -50,5 +53,15 @@ public class EnemyAnimator : MonoBehaviour
     {
         _animator.speed = 1;
 
+    }
+
+    public void PlayAttackAnimation()
+    {
+        _animator.SetTrigger(Attack);
+    }
+
+    public void PlayShootAnimation()
+    {
+        _animator.SetTrigger(Shoot);
     }
 }
