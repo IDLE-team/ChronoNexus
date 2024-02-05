@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public bool isTimeSlowed { get; set; }
     public bool isTimeRewinded { get; set; }
 
-    private IHealth _health;
+    private Health _health;
     private NavMeshAgent _navMeshAgent;
     private AudioSource _audioSource;
     private EnemyAnimator _animator;
@@ -180,6 +180,26 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     {
         if (!_isAlive)
             return;
+
+
+        if (_health.MaxHealth <= 20f)
+        {
+            float _chance = UnityEngine.Random.Range(1, 4);
+            switch (_chance)
+            {
+                case 1:
+                case 2:
+                    Debug.Log("Агрессия");
+                    break;
+                case 3:
+                    Debug.Log("Страх");
+                    break;
+                case 4:
+                    Debug.Log("Расчет");
+                    break;
+            }
+        }
+
         _health.Decrease(damage);
         DamageEffect();
         _animator.PlayTakeDamageAnimation();

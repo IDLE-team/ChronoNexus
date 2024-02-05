@@ -5,10 +5,13 @@ using UnityEngine;
 public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] private float _value;
+    private float _maxHealth;
+    public float MaxHealth => _maxHealth;
     [SerializeField] private TMP_InputField _healthSetter;
 
     [SerializeField] private float damageMultiplayerInShelter = 0.5f;
     public bool _inShelter;
+    
     public float Value => _value;
 
     public event Action Died;
@@ -18,6 +21,8 @@ public class Health : MonoBehaviour, IHealth
     // healthSetter - дебаг штука, по-хорошему бы куда-то ещё закинуть её, но пока так
     private void OnEnable()
     {
+        _maxHealth = _value;
+
         if (_healthSetter != null)
             _healthSetter.onEndEdit.AddListener(SetHealth);
     }
