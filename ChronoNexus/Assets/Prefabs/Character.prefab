@@ -7428,7 +7428,6 @@ GameObject:
   - component: {fileID: 7487028825248208875}
   - component: {fileID: 7487028825248208874}
   - component: {fileID: 7487028825248208877}
-  - component: {fileID: 8111172727190909907}
   - component: {fileID: 553264863667323961}
   - component: {fileID: 8862775590155641657}
   m_Layer: 6
@@ -7646,7 +7645,6 @@ MonoBehaviour:
   speedText: {fileID: 0}
   rotationSpeedText: {fileID: 0}
   _character: {fileID: 7487028825248208872}
-  _joystick: {fileID: 0}
 --- !u!114 &7487028825248208874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7681,29 +7679,6 @@ MonoBehaviour:
   _damage: 10
   _character: {fileID: 7487028825248208872}
   _inputService: {fileID: 0}
-  _animator: {fileID: 0}
---- !u!114 &8111172727190909907
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9131697651019852562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 813896d471c37774693db1b69dbb459e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _lookLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  _character: {fileID: 7487028825248208872}
-  _targetJoystick: {fileID: 0}
-  _radius: 10
-  _autoTargetRefreshDelay: 0
-  _manualTargetRefreshDelay: 0
-  _angleThreshold: 0
-  DebugTestUniTask: 0
 --- !u!114 &553264863667323961
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -70,7 +70,6 @@ public class CharacterMovement : MonoBehaviour
     {
         _input = input;
         _camera = Camera.main;
-        Debug.Log("Construct");
     }
 
     private void OnEnable() => _input.Enable();
@@ -100,7 +99,6 @@ public class CharacterMovement : MonoBehaviour
         Vector3 direction = targetPosition - transform.position;
         direction.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
-        Debug.Log("Пытается");
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * 50 * Time.deltaTime);
 
         TargetLockSetAnimations();
@@ -116,9 +114,6 @@ public class CharacterMovement : MonoBehaviour
         _targetSpeed = MoveSpeed;
         Vector2 inputDirection = ReadMovementInput();
         Vector3 convertedDirection = GetConvertedInputDirection(inputDirection);
-
-        Debug.Log("InputDir: " + inputDirection);
-        Debug.Log("ConvertedDir: " + convertedDirection);
 
         if (inputDirection == Vector2.zero) _targetSpeed = 0.0f;
 

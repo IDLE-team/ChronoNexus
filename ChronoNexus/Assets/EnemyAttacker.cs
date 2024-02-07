@@ -30,18 +30,18 @@ public class EnemyAttacker : MonoBehaviour
     [SerializeField]
     private EnemyAnimator _animator;
 
-    [Inject]
-    private void Construct(IInputService inputService, CharacterAnimator animator)
-    {
+  //  [Inject]
+   // private void Construct(IInputService inputService, CharacterAnimator animator)
+   // {
         //_inputService = inputService;
         //_animator = animator;
-    }
+   // }
 
-    private void OnEnable()
-    {
+ //   private void OnEnable()
+  //  {
         // _inputService.Attacked += _animator.Attack;
         // _inputService.Shot += _animator.Fire;
-    }
+  //  }
 
     [UsedInAnimator]
     public void Hit()

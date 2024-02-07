@@ -118,16 +118,18 @@ public class ÑharacterTargetingSystem : MonoBehaviour
 
     private void ChooseTarget()
     {
-
+        RaycastHit hit;
         if (_targets.Count <= 0)
         {
-         //   _sphereCastThickness = _startSphereCastThickness;
+            //   _sphereCastThickness = _startSphereCastThickness;
+            Debug.Log("NoTargets");
             return;
         }
 
         Vector2 inputDirection = ReadTargetMoveInput();
         if(inputDirection == Vector2.zero)
         {
+            Debug.Log("Zero");
             return;
         }
         Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized; 
@@ -135,14 +137,14 @@ public class ÑharacterTargetingSystem : MonoBehaviour
         var _targetRotation = Mathf.Atan2(stickDirection.x, stickDirection.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
         
-        
-        RaycastHit hit;
+       
+        Debug.DrawRay(_visorPosition.position, targetDirection.normalized*_radius, Color.green);
 
-        Debug.DrawRay(_visorPosition.position, targetDirection.normalized*_radius, Color.green) ;
-
+ 
         if(Physics.SphereCast(_visorPosition.position, _sphereCastThickness, targetDirection.normalized, out hit, _radius, _targetLayer))
         {
             //_sphereCastThickness = _startSphereCastThickness;
+
             if (hit.transform == Target)
                 return;
             Target = hit.transform;
@@ -154,10 +156,6 @@ public class ÑharacterTargetingSystem : MonoBehaviour
             _previousTarget = Target;
             IsLookAt = true;
         }
-       // else
-       // {
-           // _sphereCastThickness = _startSphereCastThickness * 2f;
-      //  }
 
 
     }
@@ -205,7 +203,6 @@ public class ÑharacterTargetingSystem : MonoBehaviour
 
     public void TurnOnStickSearch()
     {
-
         _isStickSearch = true;
     }
 

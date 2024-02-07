@@ -32,7 +32,7 @@ public class TargetFinder : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(cancellationToken.IsCancellationRequested);
+       // Debug.Log(cancellationToken.IsCancellationRequested);
     }
 
     private void OnEnable()

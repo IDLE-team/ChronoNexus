@@ -1551,8 +1551,6 @@ GameObject:
   - component: {fileID: 1202829733427281969}
   - component: {fileID: 1202829733427281966}
   - component: {fileID: 1202829733427281967}
-  - component: {fileID: 1202829733427281968}
-  - component: {fileID: 1202829733904671862}
   m_Layer: 5
   m_Name: Shoot
   m_TagString: Untagged
@@ -1663,32 +1661,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1202829733427281968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202829733427281965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d880824205d96ee4da44f9515ae19867, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _requiredHoldTime: 0.16
---- !u!114 &1202829733904671862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202829733427281965}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d54531977ecb194c95e2d3aa7a5d72a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ControlPath: <Pointer>/press
 --- !u!1 &1202829733427991747
 GameObject:
   m_ObjectHideFlags: 0
@@ -10241,7 +10213,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1202829735337608339}
   - component: {fileID: 1202829735337608338}
-  - component: {fileID: 2089232995631702405}
   m_Layer: 5
   m_Name: AttackTargetHandler
   m_TagString: Untagged
@@ -10283,25 +10254,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e87dbc7f20ba9b4988f503b70abe68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _button: {fileID: 1202829733427281968}
+  _button: {fileID: 0}
   _joystick: {fileID: 1202829733675670402}
   _targetLock: {fileID: 0}
   _requiredHoldTime: 0.2
   _attacker: {fileID: 0}
---- !u!114 &2089232995631702405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1202829735337608336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9d677f1681015749b15c436eec6d880, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MovementRange: 50
-  m_ControlPath: 
+  _visualPrefab: {fileID: 0}
 --- !u!1 &1202829735370630096
 GameObject:
   m_ObjectHideFlags: 0

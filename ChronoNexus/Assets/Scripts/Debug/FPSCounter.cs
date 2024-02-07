@@ -21,7 +21,7 @@ public class FPSCounter : MonoBehaviour
         if (time >= pollingTime)
         {
             int frameRate = Mathf.RoundToInt((float)frameCount / time);
-            FpsText.text = frameRate.ToString() + " FPS";
+            FpsText.text = frameRate.ToString() + "\nFPS";
 
             time -= pollingTime;
             frameCount = 0;

@@ -2,57 +2,73 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
-
-public class LongClickButton : MonoBehaviour, IPointerDownHandler
+using UnityEngine.InputSystem.Layouts;
+namespace UnityEngine.InputSystem.OnScreen
 {
-    [SerializeField] private float _requiredHoldTime;
-
-    private bool _pointerDown;
-    private bool _pointerUp;
-    private float _pointerDownTimer;
-
-    public event Action OnClicked;
-
-    public event Action OnLongClicked;
-
-    public PointerEventData PointerEventData { get; private set; }
-
-    public void OnPointerDown(PointerEventData eventData)
+    public class LongClickButton : OnScreenControl, IPointerDownHandler, IPointerUpHandler
     {
-        Debug.Log("Pointer: " + PointerEventData);
-        PointerEventData = eventData;
-        _pointerDown = true;
-    }
-    
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        _pointerDown = false;
-        _pointerUp = true;
-    }
+        [SerializeField] private float _requiredHoldTime;
 
-    private void Update()
-    {
-        if (_pointerDown)
+        private bool _pointerDown;
+        private bool _pointerUp;
+        private float _pointerDownTimer;
+
+        public event Action OnClicked;
+
+        public event Action OnLongClicked;
+
+        public PointerEventData PointerEventData { get; private set; }
+
+        [InputControl(layout = "Button")]
+        [SerializeField]
+        private string m_ControlPath;
+
+        protected override string controlPathInternal
         {
-            _pointerDownTimer += Time.deltaTime;
-            if (_pointerDownTimer >= _requiredHoldTime)
+            get => m_ControlPath;
+            set => m_ControlPath = value;
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            PointerEventData = eventData;
+            _pointerDown = true;
+        }
+
+        public void OnPointerUp(PointerEventData eventData)
+        {
+            SendValueToControl(0.0f);
+            _pointerDown = false;
+            _pointerUp = true;
+        }
+
+
+        private void Update()
+        {
+            if (_pointerDown)
             {
-                OnLongClicked?.Invoke();
+                _pointerDownTimer += Time.deltaTime;
+                if (_pointerDownTimer >= _requiredHoldTime)
+                {
+                    OnLongClicked?.Invoke();
+                    Reset();
+                }
+            }
+
+            if (_pointerUp && (_pointerDownTimer <= _requiredHoldTime))
+            {
+                SendValueToControl(1.0f);
                 Reset();
             }
         }
-        if (!_pointerUp || !(_pointerDownTimer <= _requiredHoldTime))
-            return;
-        OnClicked?.Invoke();
-        Reset();
-    }
 
-    [Fix]
-    private void Reset()
-    {
-        _pointerDown = false;
-        _pointerUp = false;
-        _pointerDownTimer = 0;
-        //  fillImage.fillAmount = pointerDownTimer / requiredHoldTime;
+        [Fix]
+        private void Reset()
+        {
+            _pointerDown = false;
+            _pointerUp = false;
+            _pointerDownTimer = 0;
+            //  fillImage.fillAmount = pointerDownTimer / requiredHoldTime;
+        }
     }
 }
