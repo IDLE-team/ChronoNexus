@@ -2457,13 +2457,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _rangeWeapon: {fileID: 8993778964597562375}
-  _bulletPrefab: {fileID: 3669826307443937433, guid: 30e57ac830bd64949ae2a79063ba921b,
+  _selectedBullet: {fileID: 3669826307443937433, guid: 1e023cc35898b0446bf7649c9248ac98,
     type: 3}
+  _bulletPrefabs:
+  - {fileID: 3669826307443937433, guid: 1e023cc35898b0446bf7649c9248ac98, type: 3}
+  - {fileID: 3669826307443937433, guid: d9ca390dac0e5bc408bda2d2e4d86452, type: 3}
   _attackZone: {fileID: 4279579281971070184}
   _visualHitEffect: {fileID: 1491819284759577580}
-  _damage: 10
-  _enemy: {fileID: 8993778964191881328}
-  _animator: {fileID: 8993778964191881342}
+  _defaultMelleeDamage: 10
+  _defaultAttackInterval: 2
+  _immortality: 0
 --- !u!114 &7814182681157555738
 MonoBehaviour:
   m_ObjectHideFlags: 0

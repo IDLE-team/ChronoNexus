@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 using UnityEngine.VFX;
 using Zenject;
 
@@ -12,8 +10,13 @@ public class EnemyAttacker : MonoBehaviour
     [SerializeField]
     private Transform _rangeWeapon;
 
+    //private Bullet _bulletPrefab;
     [SerializeField]
-    private Bullet _bulletPrefab;
+    private Bullet _selectedBullet;
+    public Bullet SelectedBullet => _selectedBullet;
+
+    [SerializeField]
+    private Bullet[] _bulletPrefabs;
 
     [SerializeField]
     private AttackZone _attackZone;
@@ -21,13 +24,22 @@ public class EnemyAttacker : MonoBehaviour
     [SerializeField]
     private VisualEffect _visualHitEffect;
 
+    
     [SerializeField]
-    private int _damage;
+    private float _defaultMelleeDamage;
+    public float DefaultMelleeDamage => _defaultMelleeDamage;
+    private float _melleeDamage;
+    [SerializeField]
+    private float _defaultAttackInterval;
+    public float AttackInterval => _defaultAttackInterval;
+    private float _attackInterval;
 
-    [SerializeField]
+    [SerializeField] private bool _immortality;
+    public bool Immortality => _immortality;
+
+
+    
     private Enemy _enemy;
-
-    [SerializeField]
     private EnemyAnimator _animator;
 
     [Inject]
@@ -39,9 +51,56 @@ public class EnemyAttacker : MonoBehaviour
 
     private void OnEnable()
     {
+        _melleeDamage = _defaultMelleeDamage;
+        _attackInterval = _defaultAttackInterval;
         // _inputService.Attacked += _animator.Attack;
         // _inputService.Shot += _animator.Fire;
     }
+    public void ActivateImmortality(bool activate)
+    {
+        _immortality = activate;
+    }
+
+    public void ChangeBullet(Bullet bullet)
+    {
+        _selectedBullet = bullet;
+    }
+    public void SwapBullet()
+    {
+        if (_bulletPrefabs.Length > 1)
+        {
+            _selectedBullet = _bulletPrefabs[1];
+            Debug.Log(_bulletPrefabs.Length);
+        }
+    }
+
+    public void SetSpeedAttackInterval(float attackInterval)
+    {
+        _attackInterval = attackInterval;
+    }
+    public void MultiplyAttackInterval(float multi)
+    {
+        _attackInterval *= multi;
+    }   
+    public void ResetAttackInterval()
+    {
+        _attackInterval = _defaultAttackInterval;
+    }
+
+    public void SetDamage(float newDamage)
+    {
+        _melleeDamage = newDamage;
+    }
+    public void ResetDamage()
+    {
+        _melleeDamage = _defaultMelleeDamage;
+    }
+    public void MultiplyDamage(float multi)
+    {
+        _melleeDamage *= multi;
+    }
+
+
 
     [UsedInAnimator]
     public void Hit()
@@ -53,7 +112,7 @@ public class EnemyAttacker : MonoBehaviour
         );
         foreach (Collider collider in hitPlayer)
         {
-            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_damage);
+            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_melleeDamage);
         }
     }
 
@@ -65,7 +124,7 @@ public class EnemyAttacker : MonoBehaviour
         Vector3 spawnPosition = position + forward * 0.5f;
         Vector3 direction = (target - transform.position).normalized;
         spawnPosition.y = spawnPosition.y + 1.5f;
-        var bullet = Instantiate(_bulletPrefab, spawnPosition, Quaternion.LookRotation(direction));
+        var bullet = Instantiate(_selectedBullet, spawnPosition, Quaternion.LookRotation(direction));
         bullet.SetTarget(direction);
     }
 

@@ -55,6 +55,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
                     return State.Chase.ToString();
                 case EnemyRangeAttackState:
                     return State.Attack.ToString();
+                case EnemyMeleeAttackState:
+                    return State.Attack.ToString();
                 default:
                     return " ";
             }
@@ -62,6 +64,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         }
     }
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
+    public EnemyAttacker EnemyAttacker => _enemyAttacker;
 
     private StateMachine _stateMachine;
     public EnemyIdleState IdleState { get; private set; }
@@ -70,6 +73,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public EnemyChaseState ChaseState { get; private set; }
     public EnemyMeleeAttackState MeleeAttackState { get; private set; }
     public EnemyRangeAttackState RangeAttackState { get; private set; }
+
+    public EnemyFearState FearState { get; private set; }
+    public EnemyAggressionState AggressionState { get; private set; }
+    public EnemyPrudenceState PrudenceState { get; private set; }
+
     public Transform Target { get; set; }
     public bool IsTargetFound { get; set; }
     public bool isTimeStopped { get; set; }
@@ -103,6 +111,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         ChaseState = new EnemyChaseState(this, _stateMachine);
         RangeAttackState = new EnemyRangeAttackState(this, _stateMachine);
         MeleeAttackState = new EnemyMeleeAttackState(this, _stateMachine);
+
+        FearState = new EnemyFearState(this, _stateMachine);
+        AggressionState = new EnemyAggressionState(this, _stateMachine);
+        PrudenceState = new EnemyPrudenceState(this, _stateMachine);
 
         //  _stateMachine.Initialize(DummyState);
 
@@ -180,22 +192,26 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     {
         if (!_isAlive)
             return;
-
-
-        if (_health.MaxHealth <= 20f)
+        if (_enemyAttacker.Immortality)
         {
-            float _chance = UnityEngine.Random.Range(1, 4);
+            return;
+        }
+
+        if (_health.Value <= _health.MaxHealth/2)
+        {
+            float _chance = UnityEngine.Random.Range(1, 3);
             switch (_chance)
             {
                 case 1:
                 case 2:
-                    Debug.Log("Агрессия");
+                    // flags for states
+                    _stateMachine.ChangeState(AggressionState); 
                     break;
                 case 3:
-                    Debug.Log("Страх");
+                    _stateMachine.ChangeState(FearState);
                     break;
                 case 4:
-                    Debug.Log("Расчет");
+                    //_stateMachine.ChangeState(PrudenceState);
                     break;
             }
         }
@@ -212,7 +228,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         OnTimeAffectedDestroy?.Invoke();
         StopSeek();
         _loot.DropLoot();
-        Debug.Log("enemy died");
+        Debug.Log(this.gameObject + " :Enemy died");
         if (enemySpawner != null)
         {
             enemySpawner.UpdateSliderValue();
@@ -352,7 +368,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         Idle,
         Patrol,
         Chase,
-        Attack
+        Attack,
+        Fear,
+        Aggression,
+        Prudence
     };
 
     public enum EnemyType
@@ -360,4 +379,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         Stormtrooper,
         Guard
     };
+    /*public enum EnemyPattern
+    {
+        Fear,
+        Aggression,
+        Prudence
+    };*/
 }

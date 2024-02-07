@@ -10,7 +10,7 @@ public class EnemyRangeAttackState : EnemyState
     private Transform _target;
     private Vector3 _targetPosition;
     private float shootingTimer = 0;
-    private float shootingInterval = 2f;
+    private float shootingInterval;
     private float retreatDistance = 5f;
     private float minDelay = 3f;
     private float maxDelay = 4f;
@@ -24,10 +24,14 @@ public class EnemyRangeAttackState : EnemyState
 
     public override void Enter()
     {
-        cancellationTokenSource = new CancellationTokenSource();
-        _target = _enemy.Target.transform;
+        shootingInterval = _enemy.EnemyAttacker.AttackInterval;
         _enemy.NavMeshAgent.speed = 2.5f;
+        
+        _target = _enemy.Target.transform;
+        
         _isAttack = true;
+        
+        cancellationTokenSource = new CancellationTokenSource();
         ShootAndRetreat(cancellationTokenSource.Token).Forget();
     }
 
