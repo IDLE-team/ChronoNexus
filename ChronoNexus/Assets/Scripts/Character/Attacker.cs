@@ -24,13 +24,12 @@ public class Attacker : MonoBehaviour
     [Inject]
     private void Construct(PlayerInputActions input, CharacterAnimator animator)
     {
-        Debug.Log("У аттакера");
         _input = input;
         _input.Player.Fire.performed += OnFire;
         _input.Player.Hit.performed += OnHit;
 
         _animator = animator;
-        Debug.Log("Аниматор: " + _animator);
+
 
     }
     /*
@@ -54,12 +53,10 @@ public class Attacker : MonoBehaviour
 
     private void OnFire(InputAction.CallbackContext obj)
     {
-        Debug.Log("Стрельба");
         _animator.Fire();
     }
     private void OnHit(InputAction.CallbackContext obj)
     {
-        Debug.Log("Удар");
 
         _animator.Attack();
     }
@@ -68,7 +65,6 @@ public class Attacker : MonoBehaviour
     public void Hit()
     {
         Collider[] hitEnemies = Physics.OverlapSphere(_attackZone.transform.position, _attackZone.Radius, _enemyLayer);
-        Debug.Log("Жёсткий удар");
         foreach (Collider collider in hitEnemies)
         {
             collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_damage);

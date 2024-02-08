@@ -8,16 +8,16 @@ public class InputService : MonoBehaviour, IInputService
 
     public event Action Shot;
 
-    [SerializeField] private LongClickButton longClickButton;
+   // [SerializeField] private LongClickButton longClickButton;
 
     private void OnEnable()
     {
-        longClickButton.OnClicked += Fire;
+      //  longClickButton.OnClicked += Fire;
     }
 
     private void OnDisable()
     {
-        longClickButton.OnClicked -= Fire;
+     //   longClickButton.OnClicked -= Fire;
     }
 
     private void Update()

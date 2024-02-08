@@ -8,11 +8,14 @@ public class ServiceInstaller : MonoInstaller
     {
         BindInput();
     }
-
     private void BindInput()
     {
         PlayerInputActions input = new PlayerInputActions();
+        CharacterInput input2 = new CharacterInput();
+
         input.Enable();   
         Container.Bind<PlayerInputActions>().FromInstance(input).AsSingle();
+        Container.Bind<CharacterInput>().FromInstance(input2).AsSingle();
+
     }
 }

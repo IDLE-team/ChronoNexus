@@ -8,6 +8,8 @@ public class Bullet : MonoBehaviour, ITimeAffected
     [SerializeField][Min(1)] private int _damage = 10;
     [SerializeField] private float _moveSpeed;
 
+    [SerializeField] private LayerMask _obstacleLayerMask;
+
     private Vector3 _shootDir;
 
     public float TimeBeforeAffectedTimer;
@@ -19,6 +21,7 @@ public class Bullet : MonoBehaviour, ITimeAffected
     public bool isTimeSlowed { get; set; }
     public bool isTimeRewinded { get; set; }
 
+    
     public void SetTarget(Vector3 shootDirection)
     {
         _shootDir = shootDirection;
@@ -50,7 +53,13 @@ public class Bullet : MonoBehaviour, ITimeAffected
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Wall"))
+        //if (other.CompareTag("Wall"))
+        //{
+        //    Destroy(gameObject);
+        //   return;
+        //}
+        
+        if ((_obstacleLayerMask.value & (1 << other.transform.gameObject.layer)) > 0)
         {
             Destroy(gameObject);
             return;
