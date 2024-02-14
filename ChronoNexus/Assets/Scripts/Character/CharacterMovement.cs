@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovement : MonoBehaviour, ITransformable
 {
     //------------------------------------------------------------------------------------//
 
@@ -64,6 +64,8 @@ public class CharacterMovement : MonoBehaviour
     private float _animationBlend;
     private float _animationStrafeX;
     private float _animationStrafeZ;
+
+    public Transform Transform => transform;
 
     [Inject]
     private void Construct(PlayerInputActions input)

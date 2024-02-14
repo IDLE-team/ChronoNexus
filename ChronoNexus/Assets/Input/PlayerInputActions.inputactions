@@ -67,6 +67,33 @@
                     "processors": "StickDeadzone(min=0.2)",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TimeRewind",
+                    "type": "Button",
+                    "id": "adcf6452-a344-4013-ac3d-2b61913a8920",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RewindCancel",
+                    "type": "Button",
+                    "id": "cfe18189-1446-495b-b3aa-5ce8918af48e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RewindApply",
+                    "type": "Button",
+                    "id": "94a87966-6064-40d5-a8e5-52fa86d65f3b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -243,6 +270,39 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "TargetLockMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "acafc3c0-a9a5-4b22-97f0-5dd0d16b4a68",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "TimeRewind",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d00eca0e-c754-418c-b01d-834a7475fd2e",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RewindCancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f1a31332-8c39-4b87-986e-fc5f62de5a8e",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RewindApply",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
