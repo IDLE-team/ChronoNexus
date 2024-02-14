@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 [RequireComponent(typeof(Rigidbody), typeof(Outfitter))]
 [RequireComponent(typeof(CharacterMovement), typeof(Attacker), typeof(CharacterAnimator))]
@@ -29,6 +30,8 @@ public class Character : MonoBehaviour, IDamagable
     public СharacterTargetingSystem CharacterTargetingSystem { get; private set; }
 
     private Attacker Attacker { get; set; }
+
+    public Transform Transform => transform;
 
     private void OnEnable()
     {

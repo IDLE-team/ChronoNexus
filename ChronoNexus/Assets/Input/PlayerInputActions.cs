@@ -89,6 +89,33 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": ""StickDeadzone(min=0.2)"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""TimeRewind"",
+                    ""type"": ""Button"",
+                    ""id"": ""adcf6452-a344-4013-ac3d-2b61913a8920"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RewindCancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""cfe18189-1446-495b-b3aa-5ce8918af48e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RewindApply"",
+                    ""type"": ""Button"",
+                    ""id"": ""94a87966-6064-40d5-a8e5-52fa86d65f3b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -267,6 +294,39 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""TargetLockMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""acafc3c0-a9a5-4b22-97f0-5dd0d16b4a68"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""TimeRewind"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d00eca0e-c754-418c-b01d-834a7475fd2e"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RewindCancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1a31332-8c39-4b87-986e-fc5f62de5a8e"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RewindApply"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -349,6 +409,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_TimeSlow = m_Player.FindAction("TimeSlow", throwIfNotFound: true);
         m_Player_TargetLock = m_Player.FindAction("TargetLock", throwIfNotFound: true);
         m_Player_TargetLockMove = m_Player.FindAction("TargetLockMove", throwIfNotFound: true);
+        m_Player_TimeRewind = m_Player.FindAction("TimeRewind", throwIfNotFound: true);
+        m_Player_RewindCancel = m_Player.FindAction("RewindCancel", throwIfNotFound: true);
+        m_Player_RewindApply = m_Player.FindAction("RewindApply", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_TargetLockActivator = m_UI.FindAction("TargetLockActivator", throwIfNotFound: true);
@@ -418,6 +481,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_TimeSlow;
     private readonly InputAction m_Player_TargetLock;
     private readonly InputAction m_Player_TargetLockMove;
+    private readonly InputAction m_Player_TimeRewind;
+    private readonly InputAction m_Player_RewindCancel;
+    private readonly InputAction m_Player_RewindApply;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -429,6 +495,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @TimeSlow => m_Wrapper.m_Player_TimeSlow;
         public InputAction @TargetLock => m_Wrapper.m_Player_TargetLock;
         public InputAction @TargetLockMove => m_Wrapper.m_Player_TargetLockMove;
+        public InputAction @TimeRewind => m_Wrapper.m_Player_TimeRewind;
+        public InputAction @RewindCancel => m_Wrapper.m_Player_RewindCancel;
+        public InputAction @RewindApply => m_Wrapper.m_Player_RewindApply;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -459,6 +528,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @TargetLockMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTargetLockMove;
                 @TargetLockMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTargetLockMove;
                 @TargetLockMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTargetLockMove;
+                @TimeRewind.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeRewind;
+                @TimeRewind.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeRewind;
+                @TimeRewind.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTimeRewind;
+                @RewindCancel.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewindCancel;
+                @RewindCancel.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewindCancel;
+                @RewindCancel.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewindCancel;
+                @RewindApply.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewindApply;
+                @RewindApply.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewindApply;
+                @RewindApply.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewindApply;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -484,6 +562,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @TargetLockMove.started += instance.OnTargetLockMove;
                 @TargetLockMove.performed += instance.OnTargetLockMove;
                 @TargetLockMove.canceled += instance.OnTargetLockMove;
+                @TimeRewind.started += instance.OnTimeRewind;
+                @TimeRewind.performed += instance.OnTimeRewind;
+                @TimeRewind.canceled += instance.OnTimeRewind;
+                @RewindCancel.started += instance.OnRewindCancel;
+                @RewindCancel.performed += instance.OnRewindCancel;
+                @RewindCancel.canceled += instance.OnRewindCancel;
+                @RewindApply.started += instance.OnRewindApply;
+                @RewindApply.performed += instance.OnRewindApply;
+                @RewindApply.canceled += instance.OnRewindApply;
             }
         }
     }
@@ -557,6 +644,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnTimeSlow(InputAction.CallbackContext context);
         void OnTargetLock(InputAction.CallbackContext context);
         void OnTargetLockMove(InputAction.CallbackContext context);
+        void OnTimeRewind(InputAction.CallbackContext context);
+        void OnRewindCancel(InputAction.CallbackContext context);
+        void OnRewindApply(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
