@@ -7,16 +7,16 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PolygonScifi_01_A
+  m_Name: PolygonScifi_01_A 1
   m_Shader: {fileID: 4800000, guid: e88aeddd2ef1f934d805981244872e27, type: 3}
   m_ValidKeywords:
   - _EMISSION
   - _HALFTONESHAPE_DOT
   - _NORMALMAP
+  - _OUTLINE
   m_InvalidKeywords:
   - _METALLICGLOSSMAP
   - _METALLICSPECGLOSSMAP
-  - _STEPVIARAMPTEXTURE_ON
   m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -100,7 +100,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RampTex:
-        m_Texture: {fileID: 2800000, guid: 5733e66a9ccdc0c4ea8c937df7acd59c, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -144,7 +144,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DiffuseStep: 0.123
+    - _DiffuseStep: 0.028
     - _DirtAmount: 0.889
     - _DitherTexelSize: 1
     - _DitherThreshold: 1
@@ -165,7 +165,7 @@ Material:
     - _HairSpecularSize: 0.8
     - _HairSpecularSmoothness: 0.1
     - _HalfToneDiffuseStep: 0
-    - _HalfToneEnabled: 0
+    - _HalfToneEnabled: 1
     - _HalfToneIncludeReceivedShadow: 0
     - _HalfToneShape: 0
     - _HalfToneUvMode: 0
@@ -184,9 +184,9 @@ Material:
     - _NoiseScale: 1
     - _NoiseStrength: 0.1
     - _OcclusionStrength: 1
-    - _OutlineEnabled: 0
+    - _OutlineEnabled: 1
     - _OutlineMode: 0
-    - _OutlineWidth: 5.82
+    - _OutlineWidth: 2.1
     - _OverrideShadowColor: 0
     - _Parallax: 0.02
     - _QueueOffset: 0
@@ -194,7 +194,7 @@ Material:
     - _RimEnabled: 0
     - _RimLightAlign: 0
     - _RimLightSmoothness: 0
-    - _RimPower: 0.55
+    - _RimPower: 0.086
     - _Shininess: 0
     - _SizeFalloff: 0
     - _Smoothness: 1
@@ -211,7 +211,7 @@ Material:
     - _SrcBlend: 1
     - _StencilComp: 0
     - _StencilRef: 0
-    - _StepViaRampTexture: 1
+    - _StepViaRampTexture: 0
     - _Surface: 0
     - _Tiling: 0.15
     - _UVSec: 0
@@ -222,14 +222,14 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - _EmissionColor: {r: 1.9766746, g: 1.9766746, b: 1.9766746, a: 0}
     - _FaceFrontDirection: {r: 0, g: 0, b: 1, a: 0}
     - _FaceRightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _HairSpecColor: {r: 0, g: 0, b: 0, a: 1}
     - _HalfToneColor: {r: 0, g: 0, b: 0, a: 1}
     - _HatchingColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0, g: 1, b: 0.99022484, a: 1}
-    - _OutlineDistancFade: {r: -25, g: 50, b: 0, a: 0}
+    - _OutlineDistancFade: {r: -33.955223, g: 41.044777, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
