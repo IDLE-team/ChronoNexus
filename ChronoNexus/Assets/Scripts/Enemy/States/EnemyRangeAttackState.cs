@@ -1,36 +1,62 @@
-using System.Collections;
-using System.Threading;
 using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
 
 public class EnemyRangeAttackState : EnemyState
 {
-    //ToDo Улучшить систему
-
     private Transform _target;
     private Vector3 _targetPosition;
+
     private float shootingTimer = 0;
     private float shootingInterval;
+
     private float retreatDistance = 5f;
     private float minDelay = 3f;
     private float maxDelay = 4f;
+
+    private float reloadTimer = 0;
+    private float reloadInterval = 7f;
+
     private bool _isAttack = false;
+    private bool _isReloading = false;
+
+    private int ammoCount;
+    private int ammoMaxCount;
+
 
     private CancellationTokenSource cancellationTokenSource;
 
     public EnemyRangeAttackState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
     {
+
     }
 
     public override void Enter()
     {
-        shootingInterval = _enemy.EnemyAttacker.AttackInterval;
+        switch (_enemy.enemyType)
+        {
+            case Enemy.EnemyType.Stormtrooper:
+                shootingInterval = _enemy.EnemyAttacker.RangedAttackInterval;
+                break;
+            case Enemy.EnemyType.Guard:
+
+                break;
+            case Enemy.EnemyType.Juggernaut:
+                shootingInterval = _enemy.EnemyAttacker.JuggernautAttackInterval;
+                ammoMaxCount = _enemy.EnemyAttacker.JuggernautAmmoCount;
+                ammoCount = ammoMaxCount;
+                break;
+            default:
+                shootingInterval = _enemy.EnemyAttacker.AttackInterval;
+                break;
+        }
+
         _enemy.NavMeshAgent.speed = 2.5f;
-        
+
         _target = _enemy.Target.transform;
-        
+
         _isAttack = true;
-        
+
         cancellationTokenSource = new CancellationTokenSource();
         ShootAndRetreat(cancellationTokenSource.Token).Forget();
     }
@@ -55,29 +81,80 @@ public class EnemyRangeAttackState : EnemyState
         Vector3 targetPosition = _targetPosition - _enemy.transform.transform.position;
 
 
-       // new Vector3(_targetPosition.x, _enemy.transform.position.y, _targetPosition.z);
+        // new Vector3(_targetPosition.x, _enemy.transform.position.y, _targetPosition.z);
         Quaternion toRotation = Quaternion.LookRotation(targetPosition, Vector3.up);
         //_enemy.transform.LookAt(targetPosition);
         if (_enemy.isTimeSlowed)
         {
-            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
+            if (_enemy.enemyType != Enemy.EnemyType.Juggernaut)
+            {
+                _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
+            }
+            else if(!_isReloading)
+            {
+                _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
+            }
         }
         else
         {
-            _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * Time.deltaTime);
+            if (_enemy.enemyType != Enemy.EnemyType.Juggernaut )
+            {
+                _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * Time.deltaTime);
+            }
+            else if (!_isReloading)
+            {
+                _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * Time.deltaTime);
+            }
         }
+
         if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 8f)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
             return;
         }
-
-        shootingTimer -= Time.deltaTime;
-        if (shootingTimer <= 0f)
+        if (_enemy.enemyType != Enemy.EnemyType.Juggernaut)
         {
+            shootingTimer -= Time.deltaTime;
+            if (shootingTimer <= 0f)
+            {
+                _enemy.Shoot(_targetPosition);
+                shootingTimer = shootingInterval;
+            }
+            return;
+        }
+
+        if (!_isReloading)
+        {
+            shootingTimer -= Time.deltaTime;
+        }
+
+        if (shootingTimer <= 0f && !_isReloading)
+        {
+            _enemy.EndMoveAnimation();
             _enemy.Shoot(_targetPosition);
             shootingTimer = shootingInterval;
+            if(ammoCount > 0)
+            {
+                ammoCount--;
+                
+            }
+            else
+            {
+                ammoCount = ammoMaxCount;
+                reloadTimer = reloadInterval;
+                _isReloading = true;
+            }
         }
+        if (reloadTimer >= 0f && _isReloading)
+        {
+            reloadTimer -= Time.deltaTime;
+        }
+        else
+        {
+            _enemy.StartMoveAnimation();
+            _isReloading = false;
+        }
+
     }
 
     public override void PhysicsUpdate()
@@ -102,6 +179,12 @@ public class EnemyRangeAttackState : EnemyState
                 cancellationTokenSource.Cancel();
             if (_enemy.Target == null)
                 cancellationTokenSource.Cancel();
+            if (_enemy.enemyType == Enemy.EnemyType.Juggernaut 
+                //&& !_isReloading && ammoCount > 0
+                )
+            {
+                cancellationTokenSource.Cancel();
+            }
 
             if (!cancellationToken.IsCancellationRequested)
             {

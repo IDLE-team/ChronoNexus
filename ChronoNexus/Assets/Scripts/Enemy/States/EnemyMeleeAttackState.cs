@@ -21,6 +21,21 @@ public class EnemyMeleeAttackState : EnemyState
 
     public override void Enter()
     {
+        switch (_enemy.enemyType)
+        {
+            case Enemy.EnemyType.Stormtrooper:
+                attackInterval = _enemy.EnemyAttacker.RangedAttackInterval;
+                break;
+            case Enemy.EnemyType.Guard:
+                attackInterval = _enemy.EnemyAttacker.MelleeAttackInterval;
+                break;
+            case Enemy.EnemyType.Juggernaut:
+                attackInterval = _enemy.EnemyAttacker.JuggernautAttackInterval;
+                break;
+            default:
+                attackInterval = _enemy.EnemyAttacker.AttackInterval;
+                break;
+        }
         cancellationTokenSource = new CancellationTokenSource();
         _target = _enemy.Target.transform;
         _enemy.NavMeshAgent.speed = 2.5f;

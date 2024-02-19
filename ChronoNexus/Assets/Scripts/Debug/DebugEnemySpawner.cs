@@ -91,9 +91,9 @@ public class DebugEnemySpawner : MonoBehaviour
                     enemyScript.enemyType = Enemy.EnemyType.Guard;
                     break;
 
-                /*case 2:
-                    enemyScript.state = Enemy.State.Patrol;
-                    break;*/
+                case 2:
+                    enemyScript.enemyType = Enemy.EnemyType.Juggernaut;
+                    break;
             }
 
             // enemyList.Add(enemy);

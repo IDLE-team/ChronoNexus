@@ -24,14 +24,30 @@ public class EnemyAttacker : MonoBehaviour
     [SerializeField]
     private VisualEffect _visualHitEffect;
 
-    
+    [Header("Configs")]
     [SerializeField]
     private float _defaultMelleeDamage;
     public float DefaultMelleeDamage => _defaultMelleeDamage;
     private float _melleeDamage;
+
+    [Header("Attack Speed")]
     [SerializeField]
     private float _defaultAttackInterval;
     public float AttackInterval => _defaultAttackInterval;
+    [SerializeField]
+    private float _rangedAttackInterval;
+    public float RangedAttackInterval => _rangedAttackInterval;
+    [SerializeField]
+    private float _melleeAttackInterval;
+    public float MelleeAttackInterval => _melleeAttackInterval;
+    [SerializeField]
+    private float _juggernautAttackInterval;
+    public float JuggernautAttackInterval => _juggernautAttackInterval;
+    [SerializeField]
+    private int _juggernautAmmoCount;
+    public int JuggernautAmmoCount => _juggernautAmmoCount;
+
+
     private float _attackInterval;
 
     [SerializeField] private bool _immortality;

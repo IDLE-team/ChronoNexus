@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     private bool _isDamagable = true;
     public bool isDamagable => _isDamagable;
+    private bool _isLowHPBuffSelected;
 
 
     public EnemyType enemyType = new EnemyType();
@@ -133,6 +134,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     private void Start()
     {
         _isAlive = true;
+        _isLowHPBuffSelected = false;
         enemyList.Add(gameObject);
         //Debug.Log(state);
         if (enemyType == Enemy.EnemyType.Juggernaut)
@@ -200,12 +202,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
             _stateMachine.CurrentState.PhysicsUpdate();
         }
     }
-    public void TakeJuggernautDamage(float damage)
-    {
-        _health.Decrease(damage);
-        DamageEffect();
-        _animator.PlayTakeDamageAnimation();
-    }
 
     public void TakeDamage(float damage)
     {
@@ -214,14 +210,15 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
         if(Target == null)
         {
-            //_navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
+            _navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
         }
         if (_enemyAttacker.Immortality)
         {
             return;
         }
-        if (_health.Value <= _health.MaxHealth / 4 && _stateMachine.CurrentState != DummyState)
+        if (!_isLowHPBuffSelected && _health.Value <= _health.MaxHealth / 4 && _stateMachine.CurrentState != DummyState )
         {
+            _isLowHPBuffSelected = true;
             //изменить на настраиваемую
             Debug.Log("Сделать настройку шанса для каждого стейта");
             float _chance = UnityEngine.Random.Range(1, 4);
@@ -230,11 +227,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
                 case 1:
                 case 2:
                     // flags for states
-                    _stateMachine.ChangeState(AggressionState);
+                    //_stateMachine.ChangeState(AggressionState);
                     Debug.Log("AggressionState");
                     break;
                 case 3:
-                    _stateMachine.ChangeState(FearState);
+                    //_stateMachine.ChangeState(FearState);
                     Debug.Log("FearState");
                     break;
                 case 4:
@@ -242,10 +239,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
                     Debug.Log("PrudenceState");
                     break;
             }
-        }
-        if (enemyType == EnemyType.Juggernaut)
-        {
-            return;
         }
         _health.Decrease(damage);
         DamageEffect();
