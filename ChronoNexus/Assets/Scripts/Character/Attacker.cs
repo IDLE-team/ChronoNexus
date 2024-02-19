@@ -12,10 +12,11 @@ public class Attacker : MonoBehaviour
     [SerializeField] private Bullet _bullet;
     [SerializeField] private AttackZone _attackZone;
     [SerializeField] private VisualEffect _visualHitEffect;
-    [SerializeField] private int _damage;
+    [SerializeField] private float _damage;
     [SerializeField] private Character _character;
     [SerializeField] private InputService _inputService;
 
+    public float Damage => _damage;
     private Vector3 _shootDir;
     private CharacterAnimator _animator;
 

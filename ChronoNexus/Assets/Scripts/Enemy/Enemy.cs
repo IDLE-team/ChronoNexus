@@ -24,11 +24,18 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     [SerializeField]
     private bool _isTarget;
+
     private EnemyLoot _loot;
+
+    private bool _isDamagable = true;
+    public bool isDamagable => _isDamagable;
+
 
     public EnemyType enemyType = new EnemyType();
 
     public State state = new State();
+
+
 
     public static List<GameObject> enemyList = new List<GameObject>();
 
@@ -37,6 +44,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public event Action OnSeekEnd;
 
     public event Action OnUIUpdate;
+
     public event Action OnTimeAffectedDestroy;
 
     public string CurrentState
@@ -96,6 +104,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     private void Awake()
     {
+        
         _health = GetComponent<Health>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<EnemyAnimator>();
@@ -126,6 +135,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         _isAlive = true;
         enemyList.Add(gameObject);
         //Debug.Log(state);
+        if (enemyType == Enemy.EnemyType.Juggernaut)
+        {
+            _isDamagable = false;
+        }
         switch (state)
         {
             case State.Dummy:
@@ -187,38 +200,57 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
             _stateMachine.CurrentState.PhysicsUpdate();
         }
     }
+    public void TakeJuggernautDamage(float damage)
+    {
+        _health.Decrease(damage);
+        DamageEffect();
+        _animator.PlayTakeDamageAnimation();
+    }
 
     public void TakeDamage(float damage)
     {
         if (!_isAlive)
             return;
+
+        if(Target == null)
+        {
+            //_navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
+        }
         if (_enemyAttacker.Immortality)
         {
             return;
         }
-
-        if (_health.Value <= _health.MaxHealth/2)
+        if (_health.Value <= _health.MaxHealth / 4 && _stateMachine.CurrentState != DummyState)
         {
-            float _chance = UnityEngine.Random.Range(1, 3);
+            //изменить на настраиваемую
+            Debug.Log("Сделать настройку шанса для каждого стейта");
+            float _chance = UnityEngine.Random.Range(1, 4);
             switch (_chance)
             {
                 case 1:
                 case 2:
                     // flags for states
-                    _stateMachine.ChangeState(AggressionState); 
+                    _stateMachine.ChangeState(AggressionState);
+                    Debug.Log("AggressionState");
                     break;
                 case 3:
                     _stateMachine.ChangeState(FearState);
+                    Debug.Log("FearState");
                     break;
                 case 4:
                     //_stateMachine.ChangeState(PrudenceState);
+                    Debug.Log("PrudenceState");
                     break;
             }
         }
-
+        if (enemyType == EnemyType.Juggernaut)
+        {
+            return;
+        }
         _health.Decrease(damage);
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
+
     }
 
     private void OnDied()
@@ -377,7 +409,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public enum EnemyType
     {
         Stormtrooper,
-        Guard
+        Guard,
+        Juggernaut
     };
     /*public enum EnemyPattern
     {

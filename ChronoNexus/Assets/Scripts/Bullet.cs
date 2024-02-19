@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour, ITimeAffected
 {
     [SerializeField][Min(1)] private int _damage = 10;
+    public int Damage => _damage;
     [SerializeField] private float _moveSpeed;
 
     [SerializeField] private LayerMask _obstacleLayerMask;
