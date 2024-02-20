@@ -97,13 +97,13 @@ namespace PixelCrushers.DialogueSystem
             alternateGameObjectDragDropCommand = commands.alternateGameObjectDragDropCommand;
         }
 
-        public static string DrawLayout(GUIContent guiContent, string sequence, ref Rect rect)
+        public static string DrawLayout(GUIContent guiContent, string sequence, ref Rect rect, DialogueEntry entry = null, Field field = null)
         {
             var syntaxState = SequenceSyntaxState.Unchecked;
-            return DrawLayout(guiContent, sequence, ref rect, ref syntaxState);
+            return DrawLayout(guiContent, sequence, ref rect, ref syntaxState, entry, field);
         }
 
-        public static string DrawLayout(GUIContent guiContent, string sequence, ref Rect rect, ref SequenceSyntaxState syntaxState)
+        public static string DrawLayout(GUIContent guiContent, string sequence, ref Rect rect, ref SequenceSyntaxState syntaxState, DialogueEntry entry = null, Field field = null)
         {
             if (!string.IsNullOrEmpty(queuedText))
             {
@@ -115,6 +115,12 @@ namespace PixelCrushers.DialogueSystem
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField(guiContent);
+
+            if (entry != null && field != null && DialogueEditor.DialogueEditorWindow.instance != null)
+            {
+                DialogueEditor.DialogueEditorWindow.instance.DrawAISequence(entry, field);
+            }
+
             EditorGUI.BeginDisabledGroup(string.IsNullOrEmpty(sequence));
             if (GUILayout.Button(new GUIContent("Check", "Check sequence for errors."), EditorStyles.miniButton, GUILayout.Width(52)))
             {
@@ -172,7 +178,11 @@ namespace PixelCrushers.DialogueSystem
                                     if (string.IsNullOrEmpty(currentAudioCommand)) continue;
                                     var clip = obj as AudioClip;
                                     var path = AssetDatabase.GetAssetPath(clip);
+#if USE_ADDRESSABLES
+                                    if (true) // If using addressables, doesn't need to be in Resources
+#else
                                     if (path.Contains("Resources"))
+#endif
                                     {
                                         sequence = AddCommandToSequence(sequence, currentAudioCommand + "(" + GetResourceName(path) + ")");
                                         GUI.changed = true;
@@ -184,7 +194,7 @@ namespace PixelCrushers.DialogueSystem
                                     }
                                     else
                                     {
-                                        EditorUtility.DisplayDialog("Not in Resources Folder", "To use drag-n-drop, audio clips must be located in the hierarchy of a Resources folder.", "OK");
+                                        EditorUtility.DisplayDialog("Not in Resources Folder", "To use drag-n-drop, audio clips must be located in the hierarchy of a Resources folder or must be marked Addressable.", "OK");
                                     }
                                 }
                                 else if (obj is GameObject)
@@ -368,7 +378,7 @@ namespace PixelCrushers.DialogueSystem
                 case ComponentDragDropCommand.SetEnabledTrue:
                     return "SetEnabled(" + componentName + ",true," + goName + ")";
                 case ComponentDragDropCommand.SetEnabledFalse:
-                    return "SetEnabled(" + componentName+ ",false," + goName + ")";
+                    return "SetEnabled(" + componentName + ",false," + goName + ")";
                 case ComponentDragDropCommand.Nothing:
                     return string.Empty;
             }
@@ -487,6 +497,13 @@ namespace PixelCrushers.DialogueSystem
                     foreach (var type in assembly.GetTypes().Where(t => typeof(PixelCrushers.DialogueSystem.SequencerCommands.SequencerCommand).IsAssignableFrom(t)))
                     {
                         var commandName = type.Name.Substring("SequencerCommand".Length);
+
+                        var attr = Attribute.GetCustomAttribute(type, typeof(SequencerCommandGroupAttribute)) as SequencerCommandGroupAttribute;
+                        if (attr != null && !string.IsNullOrEmpty(attr.submenu))
+                        {
+                            menu.AddItem(new GUIContent(attr.submenu + "/" + commandName), false, StartSequencerCommand, commandName);
+                        }
+
                         list.Add(commandName);
                     }
                 }
@@ -503,7 +520,7 @@ namespace PixelCrushers.DialogueSystem
         {
             menu.AddItem(new GUIContent("Shortcuts/Help..."), false, OpenURL, "https://www.pixelcrushers.com/dialogue_system/manual2x/html/cutscene_sequences.html#shortcuts");
             var list = new List<string>();
-            var allSequencerShortcuts = GameObject.FindObjectsOfType<SequencerShortcuts>();
+            var allSequencerShortcuts = GameObjectUtility.FindObjectsByType<SequencerShortcuts>();
             foreach (var sequencerShortcuts in allSequencerShortcuts)
             {
                 foreach (var shortcut in sequencerShortcuts.shortcuts)
@@ -547,7 +564,7 @@ namespace PixelCrushers.DialogueSystem
             }
             var parser = new SequenceParser();
             var result = parser.Parse(sequenceToCheck);
-            return (result == null || result.Count == 0) ? SequenceSyntaxState.Error : SequenceSyntaxState.Valid; 
+            return (result == null || result.Count == 0) ? SequenceSyntaxState.Error : SequenceSyntaxState.Valid;
         }
 
         public static void SetSyntaxStateGUIColor(SequenceSyntaxState syntaxState)

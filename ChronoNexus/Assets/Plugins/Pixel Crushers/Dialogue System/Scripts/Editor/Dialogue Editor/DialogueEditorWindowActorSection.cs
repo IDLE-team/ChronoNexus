@@ -97,11 +97,9 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void DrawActorListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-            //if (!(0 <= index && index < database.actors.Count)) return;
             if (!(0 <= index && index < filteredActors.Count)) return;
             var nameControl = "ActorName" + index;
             var descriptionControl = "ActorDescription" + index;
-            //var actor = database.actors[index];
             var actor = filteredActors[index];
             var fieldWidth = rect.width / 4;
             EditorGUI.BeginDisabledGroup(!EditorTools.IsAssetInFilter(actor, actorFilter) || IsActorSyncedFromOtherDB(actor));
@@ -133,9 +131,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void DrawActorListElementBackground(Rect rect, int index, bool isActive, bool isFocused)
         {
-            //if (!(0 <= index && index < database.actors.Count)) return;
             if (!(0 <= index && index < filteredActors.Count)) return;
-            //var actor = database.actors[index];
             var actor = filteredActors[index];
             if (EditorTools.IsAssetInFilter(actor, actorFilter))
             {
@@ -154,9 +150,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void OnActorListRemove(ReorderableList list)
         {
-            //if (!(0 <= list.index && list.index < database.actors.Count)) return;
             if (!(0 <= list.index && list.index < filteredActors.Count)) return;
-            //var actor = database.actors[list.index];
             var actor = filteredActors[list.index];
             if (actor == null) return;
             if (IsActorSyncedFromOtherDB(actor)) return;
@@ -169,7 +163,6 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
                     database.actors.Remove(actor);
                 }
                 if (deletedLastOne) inspectorSelection = null;
-                //else inspectorSelection = (list.index < list.count) ? database.actors[list.index] : (list.count > 0) ? database.actors[list.count - 1] : null;
                 else inspectorSelection = (list.index < list.count) ? filteredActors[list.index] : (list.count > 0) ? filteredActors[list.count - 1] : null;
                 SetDatabaseDirty("Remove Actor");
             }
@@ -182,9 +175,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
 
         private void OnActorListSelect(ReorderableList list)
         {
-            //if (!(0 <= list.index && list.index < database.actors.Count)) return;
             if (!(0 <= list.index && list.index < filteredActors.Count)) return;
-            //inspectorSelection = database.actors[list.index];
             inspectorSelection = filteredActors[list.index];
             actorListSelectedIndex = list.index;
         }
@@ -288,9 +279,16 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
             else if (useDisplayNameField)
             {
-                EditTextField(actor.fields, "Display Name", "The name to show in UIs.", false);
-                DrawLocalizedVersions(actor.fields, "Display Name {0}", false, FieldType.Text);
+                if (!hasDisplayNameField && string.IsNullOrEmpty(actor.LookupValue("Display Name")))
+                {
+                    Field.SetValue(actor.fields, "Display Name", actor.Name);
+                }
+                DrawRevisableTextField(displayNameLabel, actor, null, actor.fields, "Display Name");
+                DrawLocalizedVersions(actor, actor.fields, "Display Name {0}", false, FieldType.Text);
             }
+
+            // AI - Voice
+            DrawAIVoiceSelection(actor);
 
             // Portrait Textures:
             actorTexturesFoldout = EditorGUILayout.Foldout(actorTexturesFoldout, new GUIContent("Portrait Textures", "Portrait images using texture assets."));
@@ -373,10 +371,13 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
 
             // Portrait Sprites:
+            EditorGUILayout.BeginHorizontal();
             actorSpritesFoldout = EditorGUILayout.Foldout(actorSpritesFoldout, new GUIContent("Portrait Sprites", "Portrait images using sprite assets."));
+            GUILayout.FlexibleSpace();
+            DrawAIPortraitSprites(actor);
+            EditorGUILayout.EndHorizontal();
             if (actorSpritesFoldout)
             {
-
                 try
                 {
                     var newPortrait = EditorGUILayout.ObjectField(new GUIContent("Portraits", "This actor's portrait. Only necessary if your UI uses portraits."),
@@ -465,6 +466,13 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
         private void DrawActorPrimaryFields(Actor actor)
         {
             if (actor == null || actor.fields == null || template.actorPrimaryFieldTitles == null) return;
+
+            var descriptionField = Field.Lookup(actor.fields, DialogueSystemFields.Description);
+            if (descriptionField != null)
+            {
+                DrawMainSectionField(descriptionField);
+            }
+
             foreach (var field in actor.fields)
             {
                 var fieldTitle = field.title;

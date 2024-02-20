@@ -1,4 +1,4 @@
-// Recompile at 4/26/2023 11:50:56 AM
+// Recompile at 2/20/2024 12:16:14 PM
 
 // Copyright (c) Pixel Crushers. All rights reserved.
 
@@ -106,12 +106,11 @@ namespace PixelCrushers
 
         protected virtual void OnEnable()
         {
-            UpdateText();
+            if (started) UpdateText();
         }
 
         public virtual void UpdateText()
         {
-            if (!started) return;
             var language = (UILocalizationManager.instance != null) ? UILocalizationManager.instance.currentLanguage : string.Empty;
 
             // Skip if no text table or language set:
@@ -299,6 +298,7 @@ namespace PixelCrushers
         public virtual void UpdateDropdownOptions()
         {
             fieldNames.Clear();
+            tmpFieldNames.Clear();
             UpdateText();
         }
     }

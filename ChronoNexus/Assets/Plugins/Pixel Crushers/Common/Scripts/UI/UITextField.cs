@@ -1,4 +1,5 @@
-// Recompile at 4/26/2023 11:50:56 AM
+// Recompile at 2/20/2024 12:16:14 PM
+
 
 // Copyright (c) Pixel Crushers. All rights reserved.
 
@@ -9,7 +10,7 @@ namespace PixelCrushers
 {
 
     /// <summary>
-    /// A UITextField can refer to a UI.Text or TMPro.TextMeshProUGUI.
+    /// A UITextField can refer to a UI.Text, TMPro.TextMeshProUGUI, or SuperTextMesh.
     /// </summary>
     [Serializable]
     public class UITextField

@@ -716,8 +716,9 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: STARTER_ASSETS_PACKAGES_CHECKED;TMP_PRESENT;USE_CINEMACHINE
-    Standalone: STARTER_ASSETS_PACKAGES_CHECKED;TMP_PRESENT;USE_CINEMACHINE
+    Android: STARTER_ASSETS_PACKAGES_CHECKED;USE_CINEMACHINE;USE_NEW_INPUT;TMP_PRESENT
+    Standalone: STARTER_ASSETS_PACKAGES_CHECKED;USE_CINEMACHINE;USE_NEW_INPUT;TMP_PRESENT
+    WebGL: USE_NEW_INPUT;TMP_PRESENT
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

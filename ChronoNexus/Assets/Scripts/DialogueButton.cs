@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 
 public class DialogueButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] private ProximitySelector _proximitySelector;
+   [SerializeField] private ProximitySelector _proximitySelector;
 
     public void OnPointerDown(PointerEventData eventData)
     {

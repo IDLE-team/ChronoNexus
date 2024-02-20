@@ -1,4 +1,5 @@
-// Recompile at 4/26/2023 11:50:56 AM
+// Recompile at 2/20/2024 12:16:14 PM
+
 // Copyright (c) Pixel Crushers. All rights reserved.
 
 using System.Collections;
@@ -238,7 +239,7 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public virtual IEnumerator Play(int fromIndex)
         {
-            if ((textComponent != null) && (charactersPerSecond > 0))
+            if ((textComponent != null) && (charactersPerSecond > 0) && !string.IsNullOrEmpty(textComponent.text))
             {
                 if (waitOneFrameBeforeStarting) yield return null;
                 textComponent.text = textComponent.text.Replace("<br>", "\n");
@@ -421,12 +422,13 @@ namespace PixelCrushers.DialogueSystem
         /// </summary>
         public override void Stop()
         {
-            if (isPlaying)
+            var wasPlaying = isPlaying;
+            StopTypewriterCoroutine();
+            if (wasPlaying)
             {
                 onEnd.Invoke();
                 Sequencer.Message(SequencerMessages.Typed);
             }
-            StopTypewriterCoroutine();
             if (textComponent != null) 
             {
                 textComponent.maxVisibleCharacters = textComponent.textInfo.characterCount;

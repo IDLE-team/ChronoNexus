@@ -212,9 +212,6 @@ namespace PixelCrushers
                     DontDestroyOnLoad(gameObject);
                 }
             }
-#if !UNITY_5_3
-            SceneManager.sceneLoaded += OnSceneLoaded;
-#endif
         }
 
         public void OnDestroy()
@@ -229,6 +226,9 @@ namespace PixelCrushers
             m_lastMousePosition = GetMousePosition();
             SetInputDevice(inputDevice);
             BrieflyIgnoreMouseMovement();
+#if !UNITY_5_3
+            SceneManager.sceneLoaded += OnSceneLoaded;
+#endif
         }
 
         private void OnSceneLoaded(UnityEngine.SceneManagement.Scene scene, LoadSceneMode mode)
@@ -265,7 +265,7 @@ namespace PixelCrushers
         private void SetGraphicRaycasters(bool deviceUsesCursor)
         {
             if (!controlGraphicRaycasters) return;
-            var raycasters = FindObjectsOfType<UnityEngine.UI.GraphicRaycaster>();
+            var raycasters = GameObjectUtility.FindObjectsByType<UnityEngine.UI.GraphicRaycaster>();
             for (int i = 0; i < raycasters.Length; i++)
             {
                 raycasters[i].enabled = deviceUsesCursor;
@@ -478,6 +478,12 @@ namespace PixelCrushers
             if (Keyboard.current == null || keyCode == KeyCode.None) return false;
             if (keyCode == KeyCode.Return) return (Keyboard.current["enter"] as KeyControl).wasPressedThisFrame;
             var s = keyCode.ToString().ToLower();
+            if (s.StartsWith("mouse"))
+            {
+                if (s == "mouse0") return Mouse.current.leftButton.wasPressedThisFrame;
+                else if (s == "mouse1") return Mouse.current.rightButton.wasPressedThisFrame;
+                else if (s == "mouse2") return Mouse.current.middleButton.wasPressedThisFrame;
+            }
             if (s.StartsWith("joystick") || s.StartsWith("mouse")) return false;
             if ((KeyCode.Alpha0 <= keyCode && keyCode <= KeyCode.Alpha9) || 
                 (KeyCode.Keypad0 <= keyCode && keyCode <= KeyCode.Keypad9))

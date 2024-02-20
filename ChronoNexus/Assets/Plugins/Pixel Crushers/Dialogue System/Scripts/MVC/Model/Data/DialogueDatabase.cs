@@ -154,7 +154,7 @@ namespace PixelCrushers.DialogueSystem
         }
 
         /// <summary>
-        /// Gets the type of the character (PC or NPC) of an actor.
+        /// Gets the type of the character (PC or NPC) of an actor based on the actor's IsPlayer value.
         /// </summary>
         /// <returns>
         /// The character type (PC or NPC)
@@ -162,10 +162,6 @@ namespace PixelCrushers.DialogueSystem
         /// <param name='actorID'>
         /// The Actor ID to check.
         /// </param>
-        /// <remarks>
-        /// The comparison is based on the value of playerID, not the actor's IsPlayer field. If more than one actor's
-        /// IsPlayer field is true, this will only identify the first one.
-        /// </remarks>
         public CharacterType GetCharacterType(int actorID)
         {
             return IsPlayerID(actorID) ? CharacterType.PC : CharacterType.NPC;
@@ -213,6 +209,18 @@ namespace PixelCrushers.DialogueSystem
         }
 
         #endregion
+
+        public delegate string GetCustomEntrytagDelegate(Conversation conversation, DialogueEntry entry);
+        public static GetCustomEntrytagDelegate getCustomEntrytag = null;
+
+#if UNITY_2019_3_OR_NEWER && UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void InitStaticVariables()
+        {
+            getCustomEntrytag = null;
+        }
+#endif
+
 
         /// <summary>
         /// Gets the actor by name.
@@ -654,11 +662,11 @@ namespace PixelCrushers.DialogueSystem
                     {
                         var oldLuaIndex = kvp.Key;
                         var newLuaIndex = kvp.Value;
-                        if (entry.conditionsString.Contains(oldLuaIndex))
+                        if (!string.IsNullOrEmpty(entry.conditionsString) && entry.conditionsString.Contains(oldLuaIndex))
                         {
                             entry.conditionsString = ReplaceLuaIndex(entry.conditionsString, "Actor", oldLuaIndex, newLuaIndex);
                         }
-                        if (entry.userScript.Contains(oldLuaIndex))
+                        if (!string.IsNullOrEmpty(entry.userScript) && entry.userScript.Contains(oldLuaIndex))
                         {
                             entry.userScript = ReplaceLuaIndex(entry.userScript, "Actor", oldLuaIndex, newLuaIndex);
                         }
@@ -702,11 +710,11 @@ namespace PixelCrushers.DialogueSystem
                     {
                         var oldLuaIndex = kvp.Key;
                         var newLuaIndex = kvp.Value;
-                        if (entry.conditionsString.Contains(oldLuaIndex))
+                        if (!string.IsNullOrEmpty(entry.conditionsString) && entry.conditionsString.Contains(oldLuaIndex))
                         {
                             entry.conditionsString = ReplaceLuaIndex(entry.conditionsString, "Item", oldLuaIndex, newLuaIndex);
                         }
-                        if (entry.userScript.Contains(oldLuaIndex))
+                        if (!string.IsNullOrEmpty(entry.userScript) && entry.userScript.Contains(oldLuaIndex))
                         {
                             entry.userScript = ReplaceLuaIndex(entry.userScript, "Item", oldLuaIndex, newLuaIndex);
                         }
@@ -750,11 +758,11 @@ namespace PixelCrushers.DialogueSystem
                     {
                         var oldLuaIndex = kvp.Key;
                         var newLuaIndex = kvp.Value;
-                        if (entry.conditionsString.Contains(oldLuaIndex))
+                        if (!string.IsNullOrEmpty(entry.conditionsString) && entry.conditionsString.Contains(oldLuaIndex))
                         {
                             entry.conditionsString = ReplaceLuaIndex(entry.conditionsString, "Location", oldLuaIndex, newLuaIndex);
                         }
-                        if (entry.userScript.Contains(oldLuaIndex))
+                        if (!string.IsNullOrEmpty(entry.userScript) && entry.userScript.Contains(oldLuaIndex))
                         {
                             entry.userScript = ReplaceLuaIndex(entry.userScript, "Location", oldLuaIndex, newLuaIndex);
                         }
@@ -798,11 +806,11 @@ namespace PixelCrushers.DialogueSystem
                     {
                         var oldLuaIndex = kvp.Key;
                         var newLuaIndex = kvp.Value;
-                        if (entry.conditionsString.Contains(oldLuaIndex))
+                        if (!string.IsNullOrEmpty(entry.conditionsString) && entry.conditionsString.Contains(oldLuaIndex))
                         {
                             entry.conditionsString = ReplaceLuaIndex(entry.conditionsString, "Variable", oldLuaIndex, newLuaIndex);
                         }
-                        if (entry.userScript.Contains(oldLuaIndex))
+                        if (!string.IsNullOrEmpty(entry.userScript) && entry.userScript.Contains(oldLuaIndex))
                         {
                             entry.userScript = ReplaceLuaIndex(entry.userScript, "Variable", oldLuaIndex, newLuaIndex);
                         }
@@ -963,14 +971,9 @@ namespace PixelCrushers.DialogueSystem
         public const string InvalidEntrytag = "invalid_entrytag";
         public const string VoiceOverFileFieldName = DialogueSystemFields.VoiceOverFile;
 
-        public delegate string GetCustomEntrytagDelegate(Conversation conversation, DialogueEntry entry);
-        public static GetCustomEntrytagDelegate getCustomEntrytag = null;
-
-
         //--- Was manually specifying invalid filename chars: private static Regex entrytagRegex = new Regex("[;:,!\'\"\t\r\n\\/\\?\\[\\] ]");
         private static Regex entrytagRegex = new Regex(string.Format("[{0}]", Regex.Escape(" " + new string(System.IO.Path.GetInvalidFileNameChars()) + new string(System.IO.Path.GetInvalidPathChars()))));
         private static Regex actorNameLineNumberEntrytagRegex = new Regex("[,\"\t\r\n\\/<>?]");
-
 
         /// <summary>
         /// Gets the entrytag string of a dialogue entry.

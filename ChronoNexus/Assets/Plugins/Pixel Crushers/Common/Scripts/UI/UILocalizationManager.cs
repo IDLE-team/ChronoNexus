@@ -47,6 +47,7 @@ namespace PixelCrushers
         public LocalizedFonts localizedFonts { get { return m_localizedFonts; } set { m_localizedFonts = value; } }
 
         private static UILocalizationManager s_instance = null;
+        private static bool s_isQuitting = false;
 
         /// <summary>
         /// Current global instance of UILocalizationManager. If one doesn't exist,
@@ -56,12 +57,12 @@ namespace PixelCrushers
         {
             get
             {
-                if (s_instance == null)
+                if (s_instance == null && !s_isQuitting)
                 {
-                    s_instance = FindObjectOfType<UILocalizationManager>();
+                    s_instance = GameObjectUtility.FindFirstObjectByType<UILocalizationManager>();
                     if (s_instance == null && Application.isPlaying)
                     {
-                        var globalTextTable = FindObjectOfType<GlobalTextTable>();
+                        var globalTextTable = GameObjectUtility.FindFirstObjectByType<GlobalTextTable>();
                         s_instance = (globalTextTable != null) ? globalTextTable.gameObject.AddComponent<UILocalizationManager>()
                             : new GameObject("UILocalizationManager").AddComponent<UILocalizationManager>();
                     }
@@ -79,8 +80,14 @@ namespace PixelCrushers
         static void InitStaticVariables()
         {
             s_instance = null;
+            s_isQuitting = false;
         }
 #endif
+
+        private void OnApplicationQuit()
+        {
+            s_isQuitting = true;
+        }
 
         /// <summary>
         /// Overrides the global text table.
@@ -236,7 +243,7 @@ namespace PixelCrushers
 
             var localizeUIs = m_alsoUpdateInactiveLocalizeUI
                 ? GameObjectUtility.FindObjectsOfTypeAlsoInactive<LocalizeUI>()
-                : FindObjectsOfType<LocalizeUI>();
+                : GameObjectUtility.FindObjectsByType<LocalizeUI>();
             for (int i = 0; i < localizeUIs.Length; i++)
             {
                 localizeUIs[i].UpdateText();
