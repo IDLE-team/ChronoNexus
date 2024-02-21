@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5424543803000646982}
   - component: {fileID: 3669826307443937433}
   m_Layer: 0
-  m_Name: Bullet Omega
+  m_Name: Bullet Default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e2a29bb84ebd65b4eb2e9c45fb62b4bf, type: 2}
+  - {fileID: 2100000, guid: 7507dc467c93acb40b6e65d01c69f8d8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,6 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78e0aa00c8128f34daf593e83d08dfc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 50
+  _damage: 10
   _moveSpeed: 30
+  _obstacleLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   TimeBeforeAffectedTimer: 0.05

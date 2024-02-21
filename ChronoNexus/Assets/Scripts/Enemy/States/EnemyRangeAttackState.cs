@@ -33,23 +33,22 @@ public class EnemyRangeAttackState : EnemyState
 
     public override void Enter()
     {
-        switch (_enemy.enemyType)
+        shootingInterval = _enemy.EnemyAttacker.RangedAttackInterval;
+        ammoMaxCount = _enemy.EnemyAttacker._AmmoCount;
+        ammoCount = ammoMaxCount;
+
+        /*switch (_enemy.enemyType)
         {
             case Enemy.EnemyType.Stormtrooper:
-                shootingInterval = _enemy.EnemyAttacker.RangedAttackInterval;
                 break;
             case Enemy.EnemyType.Guard:
 
                 break;
             case Enemy.EnemyType.Juggernaut:
-                shootingInterval = _enemy.EnemyAttacker.JuggernautAttackInterval;
-                ammoMaxCount = _enemy.EnemyAttacker.JuggernautAmmoCount;
-                ammoCount = ammoMaxCount;
                 break;
             default:
-                shootingInterval = _enemy.EnemyAttacker.AttackInterval;
                 break;
-        }
+        }*/
 
         _enemy.NavMeshAgent.speed = 2.5f;
 

@@ -135,8 +135,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     {
         _isAlive = true;
         _isLowHPBuffSelected = false;
+
         enemyList.Add(gameObject);
-        //Debug.Log(state);
+
+
+
         if (enemyType == Enemy.EnemyType.Juggernaut)
         {
             _isDamagable = false;
@@ -208,7 +211,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         if (!_isAlive)
             return;
 
-        if(Target == null)
+        if(Target == null &&  _stateMachine.CurrentState != DummyState)
         {
             _navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
         }

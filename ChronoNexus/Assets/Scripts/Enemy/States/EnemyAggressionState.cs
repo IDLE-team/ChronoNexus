@@ -32,7 +32,7 @@ public class EnemyAggressionState : EnemyState
                 
                 break;
             case Enemy.EnemyType.Guard:
-                _enemy.EnemyAttacker.MultiplyAttackInterval(0.5f);
+                //_enemy.EnemyAttacker.MultiplyAttackInterval(0.5f);
                 break;
             default:
                 break;

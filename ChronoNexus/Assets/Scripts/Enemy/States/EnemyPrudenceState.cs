@@ -18,8 +18,8 @@ public class EnemyPrudenceState : EnemyState
         switch (_enemy.enemyType)
         {
             case Enemy.EnemyType.Stormtrooper:
-                _enemy.EnemyAttacker.MultiplyAttackInterval(2f);
-                _enemy.EnemyAttacker.SwapBullet();
+                //_enemy.EnemyAttacker.MultiplyAttackInterval(2f);
+                _enemy.EnemyAttacker.SwapBullet(1);
 
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                 // понижение скорости атаки
@@ -28,7 +28,7 @@ public class EnemyPrudenceState : EnemyState
                 break;
             case Enemy.EnemyType.Guard:
                 _enemy.EnemyAttacker.ActivateImmortality(true);
-                _enemy.EnemyAttacker.MultiplyAttackInterval(0.5f);
+                //_enemy.EnemyAttacker.MultiplyAttackInterval(0.5f);
 
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
 

@@ -1,20 +1,12 @@
 using UnityEngine;
 using UnityEngine.VFX;
-using Zenject;
 
 public class EnemyAttacker : MonoBehaviour
 {
     [SerializeField]
     private LayerMask _playerLayer;
-
-    [SerializeField]
-    private Transform _rangeWeapon;
-
-    //private Bullet _bulletPrefab;
-    [SerializeField]
-    private Bullet _selectedBullet;
-    public Bullet SelectedBullet => _selectedBullet;
-
+    /*[SerializeField]
+    private Transform _rangeWeapon;*/
     [SerializeField]
     private Bullet[] _bulletPrefabs;
 
@@ -22,55 +14,69 @@ public class EnemyAttacker : MonoBehaviour
     private AttackZone _attackZone;
 
     [SerializeField]
+    private Collider _NonDamageZone;
+
+    [SerializeField]
     private VisualEffect _visualHitEffect;
-
-    [Header("Configs")]
+    
+    [Header("Melee")]
     [SerializeField]
-    private float _defaultMelleeDamage;
-    public float DefaultMelleeDamage => _defaultMelleeDamage;
-    private float _melleeDamage;
+    private float _defaultMeleeDamage;
+    public float DefaultMeleeDamage => _defaultMeleeDamage;
 
-    [Header("Attack Speed")]
     [SerializeField]
+    private float _melleeAttackInterval;
+    public float MelleeAttackInterval => _melleeAttackInterval;
+
+    [Header("Ranged")]
+    /*[SerializeField]
     private float _defaultAttackInterval;
-    public float AttackInterval => _defaultAttackInterval;
+    public float AttackInterval => _attackInterval;*/
     [SerializeField]
     private float _rangedAttackInterval;
     public float RangedAttackInterval => _rangedAttackInterval;
     [SerializeField]
-    private float _melleeAttackInterval;
-    public float MelleeAttackInterval => _melleeAttackInterval;
-    [SerializeField]
-    private float _juggernautAttackInterval;
-    public float JuggernautAttackInterval => _juggernautAttackInterval;
-    [SerializeField]
-    private int _juggernautAmmoCount;
-    public int JuggernautAmmoCount => _juggernautAmmoCount;
+    private int _ammoCount;
+    public int _AmmoCount => _ammoCount;
 
 
-    private float _attackInterval;
+    [Header("Debug and temp")]
+    [SerializeField]
+    private float _meleeDamage;
+    public float MeleeDamage => _meleeDamage;
+
+    [SerializeField]
+    private Bullet _selectedBullet;
+    public Bullet SelectedBullet => _selectedBullet;
 
     [SerializeField] private bool _immortality;
     public bool Immortality => _immortality;
 
 
-    
-    private Enemy _enemy;
-    private EnemyAnimator _animator;
 
-    [Inject]
-    private void Construct(IInputService inputService, CharacterAnimator animator)
-    {
-        //_inputService = inputService;
-        //_animator = animator;
-    }
+
+
+
+
+    private Enemy _enemy;
+
 
     private void OnEnable()
     {
-        _melleeDamage = _defaultMelleeDamage;
-        _attackInterval = _defaultAttackInterval;
-        // _inputService.Attacked += _animator.Attack;
-        // _inputService.Shot += _animator.Fire;
+        _enemy = GetComponent<Enemy>();
+        if(_enemy.enemyType == Enemy.EnemyType.Juggernaut) 
+        {
+            _NonDamageZone.gameObject.SetActive(true);
+        }
+        else
+        {
+            _NonDamageZone.gameObject.SetActive(false);
+        }
+        _selectedBullet = _bulletPrefabs[0];
+        
+
+        //_melleeDamage = _defaultMelleeDamage;
+        //_attackInterval = _defaultAttackInterval;
     }
     public void ActivateImmortality(bool activate)
     {
@@ -81,42 +87,17 @@ public class EnemyAttacker : MonoBehaviour
     {
         _selectedBullet = bullet;
     }
-    public void SwapBullet()
+    public void SwapBullet(int bulletSlot)
     {
-        if (_bulletPrefabs.Length > 1)
+        if (_bulletPrefabs.Length > bulletSlot - 1)
         {
-            _selectedBullet = _bulletPrefabs[1];
-            Debug.Log(_bulletPrefabs.Length);
+            _selectedBullet = _bulletPrefabs[bulletSlot - 1];
+        }
+        else
+        {
+            Debug.Log("Bullet swap failed!");
         }
     }
-
-    public void SetSpeedAttackInterval(float attackInterval)
-    {
-        _attackInterval = attackInterval;
-    }
-    public void MultiplyAttackInterval(float multi)
-    {
-        _attackInterval *= multi;
-    }   
-    public void ResetAttackInterval()
-    {
-        _attackInterval = _defaultAttackInterval;
-    }
-
-    public void SetDamage(float newDamage)
-    {
-        _melleeDamage = newDamage;
-    }
-    public void ResetDamage()
-    {
-        _melleeDamage = _defaultMelleeDamage;
-    }
-    public void MultiplyDamage(float multi)
-    {
-        _melleeDamage *= multi;
-    }
-
-
 
     [UsedInAnimator]
     public void Hit()
@@ -128,7 +109,7 @@ public class EnemyAttacker : MonoBehaviour
         );
         foreach (Collider collider in hitPlayer)
         {
-            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_melleeDamage);
+            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_meleeDamage);
         }
     }
 
