@@ -58,12 +58,12 @@ public class EnemyAttacker : MonoBehaviour
     private Enemy _enemy;
     private EnemyAnimator _animator;
 
-    [Inject]
-    private void Construct(IInputService inputService, CharacterAnimator animator)
-    {
+   // [Inject]
+   // private void Construct(IInputService inputService, CharacterAnimator animator)
+   //{
         //_inputService = inputService;
         //_animator = animator;
-    }
+   // }
 
     private void OnEnable()
     {
