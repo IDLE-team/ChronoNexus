@@ -13,6 +13,8 @@ public class CharacterAudioController : MonoBehaviour
 
     private AudioSource _audioSource;
 
+    [SerializeField] private AudioSource _footstepAudioSource;
+
     private void Awake()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -20,8 +22,8 @@ public class CharacterAudioController : MonoBehaviour
 
     public void PlayFootstepSound()
     {
-        _audioSource.clip = _footStepClips[Random.Range(0, _footStepClips.Count)];
-        _audioSource.Play();
+        _footstepAudioSource.clip = _footStepClips[Random.Range(0, _footStepClips.Count)];
+        _footstepAudioSource.Play();
     }
 
     public void PlayHitSound()
