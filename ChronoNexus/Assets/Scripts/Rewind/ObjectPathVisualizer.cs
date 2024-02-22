@@ -18,7 +18,7 @@ public class ObjectPathVisualizer : MonoBehaviour
     private int _intervalBetweenVisualisableObjects = 15;
 
     private LineRenderer _path;
-    private GameObject _arrowHead;
+  //  private GameObject _arrowHead;
 
     private List<GameObject> _visualisableObjectInstances = new List<GameObject>();
 
@@ -26,7 +26,7 @@ public class ObjectPathVisualizer : MonoBehaviour
     private void Contsruct(ObjectPathVisualizerConfig config)
     {
         _pathPrefab = config.PathPrefab;
-        _arrowHeadPrefab = config.ArrowHeadPrefab;
+       // _arrowHeadPrefab = config.ArrowHeadPrefab;
         _intervalBetweenVisualisableObjects = config.IntervalBetweenVisualisableObjects;
     }
 
@@ -60,7 +60,7 @@ public class ObjectPathVisualizer : MonoBehaviour
         for (int i = 0; i < showingPointsCount; i++)
             _path.SetPosition(showingPointsCount - 1 - i, points[i].Position);
 
-        InstantiateArrowHead(points[showingPointsCount - 1].Position, points[showingPointsCount - 2].Position);
+       // InstantiateArrowHead(points[showingPointsCount - 1].Position, points[showingPointsCount - 2].Position);
     }
 
     public void ShowActivation(int layer)
@@ -89,7 +89,7 @@ public class ObjectPathVisualizer : MonoBehaviour
             _path.SetPosition(i, point.Position);
         }
 
-        InstantiateArrowHead(points[points.Count - 1].Position, points[points.Count - 2].Position);
+    //    InstantiateArrowHead(points[points.Count - 1].Position, points[points.Count - 2].Position);
         
        // _path.gameObject.layer = layer;
        // _arrowHead.gameObject.layer = layer;
@@ -139,16 +139,16 @@ public class ObjectPathVisualizer : MonoBehaviour
     {
         DestroyArrowHead();
 
-        _arrowHead = Instantiate(_arrowHeadPrefab, spawnPoint, Quaternion.identity, null);
-        _arrowHead.transform.forward = spawnPoint - directionPoint;
+       // _arrowHead = Instantiate(_arrowHeadPrefab, spawnPoint, Quaternion.identity, null);
+      //  _arrowHead.transform.forward = spawnPoint - directionPoint;
     }
 
     private void DestroyArrowHead()
     {
-        if (_arrowHead != null)
+     //   if (_arrowHead != null)
         {
-            Destroy(_arrowHead.gameObject);
-            _arrowHead = null;
+        //    Destroy(_arrowHead.gameObject);
+        //    _arrowHead = null;
         }
     }
 

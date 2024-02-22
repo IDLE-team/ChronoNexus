@@ -1,11 +1,11 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
-using UnityEngine.InputSystem.OnScreen;
-using Zenject;
 using UnityEngine.InputSystem;
+using Zenject;
+using Random = UnityEngine.Random;
 
 public class —haracterTargetingSystem : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class —haracterTargetingSystem : MonoBehaviour
     [SerializeField][Min(0.1f)] private float _autoTargetRefreshDelay;
     [SerializeField][Min(0.1f)] private float _manualTargetRefreshDelay;
     [SerializeField] float _sphereCastThickness;
+    [SerializeField] GameObject _targetPointer;
     public Transform Target { get; private set; }
     public Transform PreviousTarget => _previousTarget;
     public bool IsLookAt { get; private set; }
@@ -29,7 +30,7 @@ public class —haracterTargetingSystem : MonoBehaviour
 
     public float DebugTestUniTask;
 
-
+    Tween appearTween;
     private List<GameObject> _targets => Enemy.enemyList;
 
     private Camera _camera;
@@ -38,10 +39,12 @@ public class —haracterTargetingSystem : MonoBehaviour
     private Transform _previousTarget;
     private Transform _nearestTarget;
 
+    private Vector3 _startTargetPointerScale;
+
     private float _nearestDistance;
     private float _targetDistance;
     private float _startSphereCastThickness;
-    
+
     private bool _shouldFindTarget = true;
     private bool _isEnemyTargeted = false;
     private bool _isStickSearch = false;
@@ -51,7 +54,6 @@ public class —haracterTargetingSystem : MonoBehaviour
     [Inject]
     private void Construct(PlayerInputActions input, CharacterAnimator animator)
     {
-        Debug.Log("” ‡ÚÚ‡ÍÂ‡");
         _input = input;
         _input.Player.TargetLock.started += OnTargetLockStarted;
         _input.Player.TargetLock.canceled += OnTargetLockCanceled;
@@ -63,6 +65,8 @@ public class —haracterTargetingSystem : MonoBehaviour
     {
         _camera = Camera.main;
         _character = GetComponent<Character>();
+        _startTargetPointerScale = _targetPointer.transform.localScale;
+        Debug.Log("ST " + _startTargetPointerScale); 
         RefreshTargetAsync().Forget();
         _startSphereCastThickness = _sphereCastThickness;
     }
@@ -112,45 +116,71 @@ public class —haracterTargetingSystem : MonoBehaviour
         _nearestTarget.GetComponent<ITargetable>().SetSelfTarget(true);
 
         Target = _nearestTarget.transform;
+        ShowTargetPointer();
+
         IsLookAt = true;
         _isEnemyTargeted = true;
     }
 
+    private void Update()
+    {
+        if (_isStickSearch)
+        {
+            Vector2 inputDirection = ReadTargetMoveInput();
+            Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
+            var _targetRotation = Mathf.Atan2(stickDirection.x, stickDirection.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
+            _targetPointer.transform.rotation = Quaternion.Euler(90, _targetRotation, 0);
+            return;
+        }
+
+        if (Target != null)
+        {
+            Vector3 directionToEnemy = Target.position - _targetPointer.transform.position;
+
+            float targetRotation = Mathf.Atan2(directionToEnemy.x, directionToEnemy.z) * Mathf.Rad2Deg;
+
+            _targetPointer.transform.rotation = Quaternion.Euler(90, targetRotation, 0);
+        }
+    }
     private void ChooseTarget()
     {
         RaycastHit hit;
         if (_targets.Count <= 0)
         {
-            //   _sphereCastThickness = _startSphereCastThickness;
+            //_sphereCastThickness = _startSphereCastThickness;
             Debug.Log("NoTargets");
             return;
         }
 
         Vector2 inputDirection = ReadTargetMoveInput();
-        if(inputDirection == Vector2.zero)
+        if (inputDirection == Vector2.zero)
         {
             Debug.Log("Zero");
             return;
         }
-        Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized; 
-
+        Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
         var _targetRotation = Mathf.Atan2(stickDirection.x, stickDirection.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-        
-       
-        Debug.DrawRay(_visorPosition.position, targetDirection.normalized*_radius, Color.green);
 
- 
-        if(Physics.SphereCast(_visorPosition.position, _sphereCastThickness, targetDirection.normalized, out hit, _radius, _targetLayer))
+        Debug.DrawRay(_visorPosition.position, targetDirection.normalized * _radius, Color.green);
+
+
+        if (Physics.SphereCast(_visorPosition.position, _sphereCastThickness, targetDirection.normalized, out hit, _radius, _targetLayer))
         {
             //_sphereCastThickness = _startSphereCastThickness;
-
+            // Debug.Log("Hit: " + hit);
+           // Debug.DrawRay(_visorPosition.position, targetDirection.normalized * _radius, Color.red);
+           // Debug.DrawRay(hit.point, hit.normal, Color.blue);
+           // if (!hit.collider.gameObject.CompareTag("Enemy"))
+           // {
+            //    return;
+            //}
             if (hit.transform == Target)
                 return;
             Target = hit.transform;
             Target.GetComponent<ITargetable>().SetSelfTarget(true);
 
-            if(_previousTarget != null)
+            if (_previousTarget != null)
                 _previousTarget.GetComponent<ITargetable>().SetSelfTarget(false);
 
             _previousTarget = Target;
@@ -160,7 +190,28 @@ public class —haracterTargetingSystem : MonoBehaviour
 
     }
 
+    private void ShowTargetPointer()
+    {
+        Debug.Log("Show");
+        _targetPointer.SetActive(true);
+        _targetPointer.transform.localScale = Vector3.zero;
+        if(appearTween != null)
+        {
+            appearTween.Kill();
+        }
+        appearTween = _targetPointer.transform.DOScale(_startTargetPointerScale, 0.2f);
 
+    }
+    private void HideTargetPointer()
+    {
+        Debug.Log("Hide");
+        if (appearTween != null)
+        {
+            appearTween.Kill();
+        }
+        appearTween = _targetPointer.transform.DOScale(0, 0.2f).OnComplete(() => _targetPointer.SetActive(false));
+
+    }
     private void SetEmptyTarget()
     {
         Target = null;
@@ -168,6 +219,10 @@ public class —haracterTargetingSystem : MonoBehaviour
 
         _previousTarget = null;
         _isEnemyTargeted = false;
+
+        if(!_isStickSearch)
+            HideTargetPointer();
+
         _character.Movement.ResetAnimationValues();
     }
 
@@ -192,7 +247,7 @@ public class —haracterTargetingSystem : MonoBehaviour
                 FindTarget();
             }
 
-            else if  (_isStickSearch)
+            else if (_isStickSearch)
             {
                 ChooseTarget();
             }
@@ -204,11 +259,17 @@ public class —haracterTargetingSystem : MonoBehaviour
     public void TurnOnStickSearch()
     {
         _isStickSearch = true;
+        ShowTargetPointer();
     }
 
     public void TurnOffStickSearch()
     {
         _isStickSearch = false;
+        if (Target == null)
+        {
+            HideTargetPointer();
+        }
+
     }
     private Vector2 ReadTargetMoveInput() => _input.Player.TargetLockMove.ReadValue<Vector2>();
 

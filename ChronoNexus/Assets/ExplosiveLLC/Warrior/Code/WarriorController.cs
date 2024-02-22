@@ -129,7 +129,7 @@ namespace WarriorAnims
 				animator.gameObject.AddComponent<WarriorAnimatorParentMove>();
 				animator.GetComponent<WarriorAnimatorParentMove>().animator = animator;
 				animator.GetComponent<WarriorAnimatorParentMove>().warriorController = this;
-				animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
+				animator.updateMode = AnimatorUpdateMode.Fixed;
 				animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
 			}
 
