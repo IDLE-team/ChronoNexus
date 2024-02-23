@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(EnemyAnimator), typeof(AudioSource), typeof(Health))]
-[RequireComponent(typeof(EnemyAttacker), typeof(TargetFinder), typeof(TimeBody))]
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
+[RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffected
 {
     [SerializeField]
-    private Selection _selection;
+    private TargetSelection _selection;
+
+    [SerializeField]
+    private Transform _aimTargetTransform;
 
     [SerializeField]
     private AudioClip _hitClip;
@@ -28,11 +30,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     private EnemyLoot _loot;
 
-    private bool _isLowHPBuffSelected;
-    private bool _isAggressive;
-    private bool _isPrudence;
-    private bool _isFear;
+    private bool _isValid = true;
 
+
+    private bool _isDamagable = true;
+    public bool isDamagable => _isDamagable;
+    private bool _isLowHPBuffSelected;
 
 
     public EnemyType enemyType = new EnemyType();
@@ -50,6 +53,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public event Action OnUIUpdate;
 
     public event Action OnTimeAffectedDestroy;
+
+    public event Action OnDie;
+
+    public event Action OnTargetInvalid;
 
     public string CurrentState
     {
@@ -79,16 +86,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public EnemyAttacker EnemyAttacker => _enemyAttacker;
 
     private StateMachine _stateMachine;
-
     public EnemyIdleState IdleState { get; private set; }
     public EnemyDummyState DummyState { get; private set; }
-
     public EnemyPatrolState PatrolState { get; private set; }
     public EnemyChaseState ChaseState { get; private set; }
-
     public EnemyMeleeAttackState MeleeAttackState { get; private set; }
     public EnemyRangeAttackState RangeAttackState { get; private set; }
-    public JuggernautRangeAttackState JuggernautAttackState { get; private set; }
 
     public EnemyFearState FearState { get; private set; }
     public EnemyAggressionState AggressionState { get; private set; }
@@ -109,7 +112,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     private EnemyAttacker _enemyAttacker;
 
     private bool _isAlive;
-    
 
     private void Awake()
     {
@@ -127,10 +129,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
         PatrolState = new EnemyPatrolState(this, _stateMachine);
         ChaseState = new EnemyChaseState(this, _stateMachine);
-
         RangeAttackState = new EnemyRangeAttackState(this, _stateMachine);
         MeleeAttackState = new EnemyMeleeAttackState(this, _stateMachine);
-        JuggernautAttackState = new JuggernautRangeAttackState(this, _stateMachine);
 
         FearState = new EnemyFearState(this, _stateMachine);
         AggressionState = new EnemyAggressionState(this, _stateMachine);
@@ -145,12 +145,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     {
         _isAlive = true;
         _isLowHPBuffSelected = false;
-
         enemyList.Add(gameObject);
-
-
-
-
+        //Debug.Log(state);
+        if (enemyType == Enemy.EnemyType.Juggernaut)
+        {
+            _isDamagable = false;
+        }
         switch (state)
         {
             case State.Dummy:
@@ -172,15 +172,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
             case State.Attack:
                 switch (enemyType)
                 {
-                    case EnemyType.Guard:
-                        
+                    case Enemy.EnemyType.Guard:
                         _stateMachine.ChangeState(MeleeAttackState);
                         break;
-                    case EnemyType.Stormtrooper:
+                    case Enemy.EnemyType.Stormtrooper:
                         _stateMachine.ChangeState(RangeAttackState);
-                        break;
-                    case EnemyType.Juggernaut:
-                        _stateMachine.ChangeState(JuggernautAttackState);
                         break;
                     default:
                         _stateMachine.ChangeState(RangeAttackState);
@@ -220,24 +216,21 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public void TakeDamage(float damage)
     {
         if (!_isAlive)
-        {
             return;
-        }
-        if (_stateMachine.CurrentState != DummyState && Target == null)
+
+        /*
+        if(Target == null)
         {
             _navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
         }
+        */
         if (_enemyAttacker.Immortality)
         {
             return;
         }
-        if (_stateMachine.CurrentState != DummyState 
-            && !_isLowHPBuffSelected 
-            && _health.Value <= _health.MaxHealth / 4
-            )
+        if (!_isLowHPBuffSelected && _health.Value <= _health.MaxHealth / 4 && _stateMachine.CurrentState != DummyState)
         {
             _isLowHPBuffSelected = true;
-
             //изменить на настраиваемую
             Debug.Log("Сделать настройку шанса для каждого стейта");
             float _chance = UnityEngine.Random.Range(1, 4);
@@ -247,45 +240,39 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
                 case 2:
                     // flags for states
                     //_stateMachine.ChangeState(AggressionState);
-
-                    _isAggressive = true;
                     Debug.Log("AggressionState");
                     break;
                 case 3:
                     //_stateMachine.ChangeState(FearState);
-                    _isFear = true;
                     Debug.Log("FearState");
                     break;
                 case 4:
-                    _stateMachine.ChangeState(PrudenceState);
-                    _isPrudence = true;
+                    //_stateMachine.ChangeState(PrudenceState);
                     Debug.Log("PrudenceState");
                     break;
             }
         }
         _health.Decrease(damage);
-        //
         DamageEffect();
-        //
         _animator.PlayTakeDamageAnimation();
 
     }
 
     private void OnDied()
     {
+        OnTargetInvalid?.Invoke();
+        _isValid = false;
         _isAlive = false;
         _animator.PlayDeathAnimation();
-
         OnTimeAffectedDestroy?.Invoke();
-
+        SetSelfTarget(false);
         StopSeek();
         _loot.DropLoot();
-
         if (enemySpawner != null)
         {
             enemySpawner.UpdateSliderValue();
         }
-
+        OnDie?.Invoke();
         Destroy(gameObject, 1f);
     }
 
@@ -305,6 +292,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         _hitEffect.Play();
     }
 
+    public void Shoot(Vector3 target)
+    {
+        _enemyAttacker.Shoot(target);
+    }
 
     public void MeleeAttack()
     {
@@ -373,9 +364,6 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
             isTimeStopped = false;
             isTimeSlowed = false;
 
-            _navMeshAgent.speed = 1.5f;
-            _navMeshAgent.acceleration = 8f;
-
             _navMeshAgent.isStopped = false;
 
             _animator.ContinueAnimation();
@@ -414,6 +402,14 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         throw new NotImplementedException();
     }
 
+    public Transform GetTransform()
+    {
+        return _aimTargetTransform;
+    }
+    public bool GetTargetValid()
+    {
+        return _isValid;
+    }
     public enum State
     {
         Dummy,
@@ -432,4 +428,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         Guard,
         Juggernaut
     };
+    /*public enum EnemyPattern
+    {
+        Fear,
+        Aggression,
+        Prudence
+    };*/
 }

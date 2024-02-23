@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
-public class Selection : MonoBehaviour
+public class TargetSelection : MonoBehaviour
 {
     private MeshRenderer _meshRender;
 

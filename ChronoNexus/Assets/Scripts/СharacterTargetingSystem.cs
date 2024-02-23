@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 using UnityEngine.InputSystem.OnScreen;
 using Zenject;
 using UnityEngine.InputSystem;
-
+using DG.Tweening;
 public class ÑharacterTargetingSystem : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
@@ -21,6 +21,10 @@ public class ÑharacterTargetingSystem : MonoBehaviour
     [SerializeField][Min(0.1f)] private float _autoTargetRefreshDelay;
     [SerializeField][Min(0.1f)] private float _manualTargetRefreshDelay;
     [SerializeField] float _sphereCastThickness;
+
+    [SerializeField] GameObject _targetPointer;
+    [SerializeField] AimRigController _aimRigController;
+
     public Transform Target { get; private set; }
     public Transform PreviousTarget => _previousTarget;
     public bool IsLookAt { get; private set; }
@@ -29,7 +33,7 @@ public class ÑharacterTargetingSystem : MonoBehaviour
 
     public float DebugTestUniTask;
 
-
+    Tween appearTween;
     private List<GameObject> _targets => Enemy.enemyList;
 
     private Camera _camera;
@@ -41,7 +45,7 @@ public class ÑharacterTargetingSystem : MonoBehaviour
     private float _nearestDistance;
     private float _targetDistance;
     private float _startSphereCastThickness;
-    
+    private Vector3 _startTargetPointerScale;
     private bool _shouldFindTarget = true;
     private bool _isEnemyTargeted = false;
     private bool _isStickSearch = false;
@@ -65,6 +69,27 @@ public class ÑharacterTargetingSystem : MonoBehaviour
         _character = GetComponent<Character>();
         RefreshTargetAsync().Forget();
         _startSphereCastThickness = _sphereCastThickness;
+        _startTargetPointerScale = _targetPointer.transform.localScale;
+    }
+    private void Update()
+    {
+        if (_isStickSearch)
+        {
+            Vector2 inputDirection = ReadTargetMoveInput();
+            Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
+            var _targetRotation = Mathf.Atan2(stickDirection.x, stickDirection.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
+            _targetPointer.transform.rotation = Quaternion.Euler(90, _targetRotation, 0);
+            return;
+        }
+
+        if (Target != null)
+        {
+            Vector3 directionToEnemy = Target.position - _targetPointer.transform.position;
+
+            float targetRotation = Mathf.Atan2(directionToEnemy.x, directionToEnemy.z) * Mathf.Rad2Deg;
+
+            _targetPointer.transform.rotation = Quaternion.Euler(90, targetRotation, 0);
+        }
     }
     private void OnTargetLockStarted(InputAction.CallbackContext obj)
     {
@@ -86,6 +111,11 @@ public class ÑharacterTargetingSystem : MonoBehaviour
         {
             if (target == null)
                 continue;
+
+            if (!target.GetComponent<ITargetable>().GetTargetValid())
+            {
+                continue;
+            }
 
             _targetDistance = Vector3.Distance(transform.position, target.transform.position);
 
@@ -111,8 +141,19 @@ public class ÑharacterTargetingSystem : MonoBehaviour
 
         _nearestTarget.GetComponent<ITargetable>().SetSelfTarget(true);
 
+        if (Target != null)
+        {
+            Target.GetComponent<ITargetable>().OnTargetInvalid -= SetEmptyTarget;
+        }
         Target = _nearestTarget.transform;
+        ShowTargetPointer();
         IsLookAt = true;
+
+        _aimRigController._aimTarget.position = Target.GetComponent<ITargetable>().GetTransform().position;
+        _aimRigController._aimTarget.parent = Target.GetComponent<ITargetable>().GetTransform();
+        Target.GetComponent<ITargetable>().OnTargetInvalid += SetEmptyTarget;
+
+        _aimRigController.SetWeight(1);
         _isEnemyTargeted = true;
     }
 
@@ -127,33 +168,49 @@ public class ÑharacterTargetingSystem : MonoBehaviour
         }
 
         Vector2 inputDirection = ReadTargetMoveInput();
-        if(inputDirection == Vector2.zero)
+        if (inputDirection == Vector2.zero)
         {
             Debug.Log("Zero");
             return;
         }
-        Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized; 
+        Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
 
         var _targetRotation = Mathf.Atan2(stickDirection.x, stickDirection.z) * Mathf.Rad2Deg + _camera.transform.eulerAngles.y;
         Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
-        
-       
-        Debug.DrawRay(_visorPosition.position, targetDirection.normalized*_radius, Color.green);
 
- 
-        if(Physics.SphereCast(_visorPosition.position, _sphereCastThickness, targetDirection.normalized, out hit, _radius, _targetLayer))
+
+        Debug.DrawRay(_visorPosition.position, targetDirection.normalized * _radius, Color.green);
+
+
+        if (Physics.SphereCast(_visorPosition.position, _sphereCastThickness, targetDirection.normalized, out hit, _radius, _targetLayer))
         {
             //_sphereCastThickness = _startSphereCastThickness;
 
             if (hit.transform == Target)
                 return;
+            if (!hit.transform.GetComponent<ITargetable>().GetTargetValid())
+            {
+                return;
+            }
+            if (Target != null)
+            {
+                Target.GetComponent<ITargetable>().OnTargetInvalid -= SetEmptyTarget;
+            }
             Target = hit.transform;
-            Target.GetComponent<ITargetable>().SetSelfTarget(true);
+            var targetable = Target.GetComponent<ITargetable>();
+            targetable.SetSelfTarget(true);
 
-            if(_previousTarget != null)
+            if (_previousTarget != null)
                 _previousTarget.GetComponent<ITargetable>().SetSelfTarget(false);
 
             _previousTarget = Target;
+            _aimRigController._aimTarget.position = targetable.GetTransform().position;
+            _aimRigController._aimTarget.parent = targetable.GetTransform();
+
+            _aimRigController.SetWeight(1);
+
+            Target.GetComponent<ITargetable>().OnTargetInvalid += SetEmptyTarget;
+
             IsLookAt = true;
         }
 
@@ -163,14 +220,46 @@ public class ÑharacterTargetingSystem : MonoBehaviour
 
     private void SetEmptyTarget()
     {
+        Debug.Log("SetEmptyCalled");
+        _aimRigController._aimTarget.SetParent(null, true);
+        _aimRigController.SetWeight(0);
+
         Target = null;
         IsLookAt = false;
 
         _previousTarget = null;
         _isEnemyTargeted = false;
-        _character.Movement.ResetAnimationValues();
-    }
 
+        // _character.Movement.ResetAnimationValues();
+
+
+        if (!_isStickSearch)
+            HideTargetPointer();
+
+        //_character.Movement.ResetAnimationValues();
+    }
+    private void ShowTargetPointer()
+    {
+        Debug.Log("Show");
+        _targetPointer.SetActive(true);
+        _targetPointer.transform.localScale = Vector3.zero;
+        if (appearTween != null)
+        {
+            appearTween.Kill();
+        }
+        appearTween = _targetPointer.transform.DOScale(_startTargetPointerScale, 0.2f);
+
+    }
+    private void HideTargetPointer()
+    {
+        Debug.Log("Hide");
+        if (appearTween != null)
+        {
+            appearTween.Kill();
+        }
+        appearTween = _targetPointer.transform.DOScale(0, 0.2f).OnComplete(() => _targetPointer.SetActive(false));
+
+    }
     private async UniTaskVoid RefreshTargetAsync()
     {
 
@@ -192,7 +281,7 @@ public class ÑharacterTargetingSystem : MonoBehaviour
                 FindTarget();
             }
 
-            else if  (_isStickSearch)
+            else if (_isStickSearch)
             {
                 ChooseTarget();
             }
@@ -204,11 +293,17 @@ public class ÑharacterTargetingSystem : MonoBehaviour
     public void TurnOnStickSearch()
     {
         _isStickSearch = true;
+        ShowTargetPointer();
+
     }
 
     public void TurnOffStickSearch()
     {
         _isStickSearch = false;
+        if (Target == null)
+        {
+            HideTargetPointer();
+        }
     }
     private Vector2 ReadTargetMoveInput() => _input.Player.TargetLockMove.ReadValue<Vector2>();
 

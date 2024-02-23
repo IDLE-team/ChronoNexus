@@ -33,17 +33,8 @@ public class Attacker : MonoBehaviour
 
 
     }
-    /*
-    private void Construct(IInputService inputService, CharacterAnimator animator)
-    {
-        //_inputService = inputService;
-        //_animator = animator;
-    }
-    */
     private void OnEnable()
     {
-      //  _inputService.Attacked += _animator.Attack;
-      //  _inputService.Shot += _animator.Fire;
         _input.Enable();
     }
 
@@ -77,8 +68,9 @@ public class Attacker : MonoBehaviour
     {
         if (_character.CharacterTargetingSystem.Target != null)
         {
-            _shootDir = (_character.CharacterTargetingSystem.Target.position - _rangeWeapon.transform.position)
+            _shootDir = ((_character.CharacterTargetingSystem.Target.position - _rangeWeapon.transform.position) + new Vector3(0, 1,0))
                 .normalized;
+            
         }
         else
         {
@@ -96,10 +88,4 @@ public class Attacker : MonoBehaviour
         _character.AudioController.PlayHitSound();
     }
 
-  /*  private void OnDisable()
-    {
-        _inputService.Attacked -= _animator.Attack;
-        _inputService.Shot -= _animator.Fire;
-    }
-  */
 }

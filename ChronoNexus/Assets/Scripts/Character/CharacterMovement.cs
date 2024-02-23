@@ -93,6 +93,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
 
     private void Update()
     {
+        /*
         if (!_character.CharacterTargetingSystem.IsLookAt)
             return;
         if (_character.CharacterTargetingSystem.Target == null)
@@ -102,8 +103,8 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         direction.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * 50 * Time.deltaTime);
-
-        TargetLockSetAnimations();
+        */
+        //   TargetLockSetAnimations();
     }
 
     private void FixedUpdate()
@@ -122,7 +123,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         _speedOffset = 0.1f;
         var velocity = _character.Rigidbody.velocity;
         _currentHorizontalSpeed = new Vector3(velocity.x, 0.0f, velocity.z).magnitude;
-        
+
         _inputMagnitude = inputDirection.magnitude;
         //_inputDirection = new Vector3(_joystick.Direction.x, 0.0f, _joystick.Direction.y).normalized;
 
@@ -154,15 +155,16 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         _targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
         _character.Rigidbody.velocity = _targetDirection.normalized * _speed;
-        if (_character.CharacterTargetingSystem.IsLookAt)
-        {
-            _character.Animator.StrafeX(_animationStrafeX);
-            _character.Animator.StrafeZ(_animationStrafeZ);
-        }
-        else
-        {
-            _character.Animator.StrafeZ(_animationBlend);
-        }
+
+        //  if (_character.CharacterTargetingSystem.IsLookAt)
+        //  {
+        //     _character.Animator.StrafeX(_animationStrafeX);
+        //     _character.Animator.StrafeZ(_animationStrafeZ);
+        //  }
+        //  else
+        //  {
+        _character.Animator.StrafeZ(_animationBlend);
+        // }
         if (_inputMagnitude > 0.1f)
         {
             _character.Animator.MotionSpeed(_inputMagnitude);
@@ -171,6 +173,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         {
             _character.Animator.MotionSpeed(1);
         }
+
         /*
         if (_joystick.Direction == Vector2.zero) _targetSpeed = 0.0f;
 
@@ -227,7 +230,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         }
          */
     }
-        [Delete] //Не подходит по ответственности
+    [Delete] //Не подходит по ответственности
     public void ResetAnimationValues()
     {
         print("Reset Animations Values");
@@ -237,6 +240,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         _character.Animator.StrafeZ(0);
     }
 
+    /*
     private void TargetLockSetAnimations()
     {
         Vector2 inputDirection = ReadMovementInput();
@@ -278,7 +282,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
             _animationStrafeX = Mathf.Lerp(_animationStrafeX, -_horizontal, Time.deltaTime * TargetSmoothAnimation);
         }
     }
-
+    */
     private void OnSpeedSliderValueChanged(float value)
     {
         MoveSpeed = value;
