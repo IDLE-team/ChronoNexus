@@ -9,8 +9,8 @@ public class Health : MonoBehaviour, IHealth
     public float MaxHealth => _maxHealth;
     [SerializeField] private TMP_InputField _healthSetter;
 
-    [SerializeField] private float damageMultiplayerInShelter = 0.5f;
-    public bool _inShelter;
+    /*[SerializeField] private float damageMultiplayerInShelter = 0.5f;
+    public bool _inShelter;*/
     
     public float Value => _value;
 
@@ -35,14 +35,15 @@ public class Health : MonoBehaviour, IHealth
 
     public void Decrease(float value)
     {
-        if (_inShelter)
+        /*if (_inShelter)
         {
             _value = _value - (value * damageMultiplayerInShelter);
         }
         else
         {
-            _value -= value;
-        }
+            
+        }*/
+        _value -= value;
 
         if (_value <= 0)
         {

@@ -25,25 +25,36 @@ public class EnemyAttacker : MonoBehaviour
     public float DefaultMeleeDamage => _defaultMeleeDamage;
 
     [SerializeField]
-    private float _melleeAttackInterval;
-    public float MelleeAttackInterval => _melleeAttackInterval;
+    private float _defaultMeleeAttackInterval;
+    public float DefaultMeleeAttackInterval => _defaultMeleeAttackInterval;
+    
 
     [Header("Ranged")]
-    /*[SerializeField]
-    private float _defaultAttackInterval;
-    public float AttackInterval => _attackInterval;*/
     [SerializeField]
-    private float _rangedAttackInterval;
-    public float RangedAttackInterval => _rangedAttackInterval;
+    private float _defaultRangedAttackInterval;
+    public float DefaultRangedAttackInterval => _defaultRangedAttackInterval;
+    
     [SerializeField]
     private int _ammoCount;
     public int _AmmoCount => _ammoCount;
 
 
-    [Header("Debug and temp")]
+    [Header("Temp")]
+
+    [SerializeField]
+    private float _rangedAttackInterval;
+    public float RangedAttackInterval => _rangedAttackInterval;
+
+    [SerializeField]
+    private float _meleeAttackInterval;
+    public float MeleeAttackInterval => _meleeAttackInterval;
+
     [SerializeField]
     private float _meleeDamage;
     public float MeleeDamage => _meleeDamage;
+
+
+
 
     [SerializeField]
     private Bullet _selectedBullet;
@@ -63,7 +74,15 @@ public class EnemyAttacker : MonoBehaviour
 
     private void OnEnable()
     {
+        _selectedBullet = _bulletPrefabs[0];
+
+        _rangedAttackInterval = _defaultRangedAttackInterval;
+        _meleeAttackInterval = _defaultMeleeAttackInterval;
+        _meleeDamage = _defaultMeleeDamage;
+        
+
         _enemy = GetComponent<Enemy>();
+
         if(_enemy.enemyType == Enemy.EnemyType.Juggernaut) 
         {
             _NonDamageZone.gameObject.SetActive(true);
@@ -72,7 +91,8 @@ public class EnemyAttacker : MonoBehaviour
         {
             _NonDamageZone.gameObject.SetActive(false);
         }
-        _selectedBullet = _bulletPrefabs[0];
+
+        
         
 
         //_melleeDamage = _defaultMelleeDamage;
@@ -82,6 +102,30 @@ public class EnemyAttacker : MonoBehaviour
     {
         _immortality = activate;
     }
+
+
+
+    public void SetRangedAttackInterval(float interval)
+    {
+        _rangedAttackInterval = interval;
+    }
+    public void ResetRangedAttackInterval()
+    {
+        _rangedAttackInterval = _defaultRangedAttackInterval;
+    }
+    public void SetMeleeAttackInterval(float interval)
+    {
+        _meleeAttackInterval = interval;
+    }
+    public void ResetMeleeAttackInterval()
+    {
+        _meleeAttackInterval = _defaultMeleeAttackInterval;
+    }
+
+
+
+
+
 
     public void ChangeBullet(Bullet bullet)
     {
@@ -98,6 +142,13 @@ public class EnemyAttacker : MonoBehaviour
             Debug.Log("Bullet swap failed!");
         }
     }
+
+
+
+
+
+
+
 
     [UsedInAnimator]
     public void Hit()

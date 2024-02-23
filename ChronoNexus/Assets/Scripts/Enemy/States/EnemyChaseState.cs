@@ -29,14 +29,14 @@ public class EnemyChaseState : EnemyState
             _stateMachine.ChangeState(_enemy.DummyState);
             return;
         }
-        if (Vector3.Distance(_enemy.transform.position, _playerPosition) > 10f)
+        if (Vector3.Distance(_enemy.transform.position, _playerPosition) > 15f)
         {
             _stateMachine.ChangeState(_enemy.PatrolState);
         }
-        switch (_enemy.enemyType) // attack state select
+        switch (_enemy.enemyType)
         {
             case Enemy.EnemyType.Guard:
-                if (Vector3.Distance(_enemy.transform.position, _playerPosition) <= 1.9f)
+                if (Vector3.Distance(_enemy.transform.position, _playerPosition) < 2f)
                 {
                     _stateMachine.ChangeState(_enemy.MeleeAttackState);
                 }
@@ -45,6 +45,12 @@ public class EnemyChaseState : EnemyState
                 if (Vector3.Distance(_enemy.transform.position, _playerPosition) < 8f)
                 {
                     _stateMachine.ChangeState(_enemy.RangeAttackState);
+                }
+                break;
+            case Enemy.EnemyType.Juggernaut:
+                if (Vector3.Distance(_enemy.transform.position, _playerPosition) < 12f)
+                {
+                    _stateMachine.ChangeState(_enemy.JuggernautAttackState);
                 }
                 break;
             default:

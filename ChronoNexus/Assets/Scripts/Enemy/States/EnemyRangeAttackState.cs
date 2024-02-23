@@ -10,18 +10,30 @@ public class EnemyRangeAttackState : EnemyState
     private float shootingTimer = 0;
     private float shootingInterval;
 
-    private float retreatDistance = 5f;
-    private float minDelay = 3f;
-    private float maxDelay = 4f;
+    private float retreatDistance = 1f;
+    private float minDelay = 0.5f;
+    private float maxDelay = 2f;
 
     private float reloadTimer = 0;
-    private float reloadInterval = 7f;
+    private float reloadInterval = 3f;
 
-    private bool _isAttack = false;
     private bool _isReloading = false;
 
     private int ammoCount;
     private int ammoMaxCount;
+
+    private float _maxDistanceBetweenTarget = 8f;
+    private float _minDistanceBetweenTarget = 5f;
+
+    private bool _isAttack = false;
+
+    private float _defaultAgentSpeed = 1.5f;
+    private float _runningAgentSpeed = 5f;
+
+    Vector3 randomDirection;
+    Vector3 retreatPosition;
+    //Vector3 targetPosition;
+    Quaternion toRotation;
 
 
     private CancellationTokenSource cancellationTokenSource;
@@ -36,23 +48,10 @@ public class EnemyRangeAttackState : EnemyState
         shootingInterval = _enemy.EnemyAttacker.RangedAttackInterval;
         ammoMaxCount = _enemy.EnemyAttacker._AmmoCount;
         ammoCount = ammoMaxCount;
-
-        /*switch (_enemy.enemyType)
-        {
-            case Enemy.EnemyType.Stormtrooper:
-                break;
-            case Enemy.EnemyType.Guard:
-
-                break;
-            case Enemy.EnemyType.Juggernaut:
-                break;
-            default:
-                break;
-        }*/
-
-        _enemy.NavMeshAgent.speed = 2.5f;
+        //_enemy.NavMeshAgent.speed = 2.5f;
 
         _target = _enemy.Target.transform;
+        _targetPosition = _target.position;
 
         _isAttack = true;
 
@@ -77,83 +76,76 @@ public class EnemyRangeAttackState : EnemyState
             return;
         }
 
-        Vector3 targetPosition = _targetPosition - _enemy.transform.transform.position;
-
-
-        // new Vector3(_targetPosition.x, _enemy.transform.position.y, _targetPosition.z);
-        Quaternion toRotation = Quaternion.LookRotation(targetPosition, Vector3.up);
-        //_enemy.transform.LookAt(targetPosition);
+        toRotation = Quaternion.LookRotation(_targetPosition - _enemy.transform.transform.position, Vector3.up);
         if (_enemy.isTimeSlowed)
         {
-            if (_enemy.enemyType != Enemy.EnemyType.Juggernaut)
-            {
-                _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
-            }
-            else if(!_isReloading)
+            if(!_isReloading)
             {
                 _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
             }
         }
         else
         {
-            if (_enemy.enemyType != Enemy.EnemyType.Juggernaut )
-            {
-                _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * Time.deltaTime);
-            }
-            else if (!_isReloading)
+            if(!_isReloading)
             {
                 _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * Time.deltaTime);
             }
         }
 
-        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > 8f)
+        if (Vector3.Distance(_enemy.transform.position, _targetPosition) > _maxDistanceBetweenTarget)
         {
             _stateMachine.ChangeState(_enemy.ChaseState);
-            return;
-        }
-        if (_enemy.enemyType != Enemy.EnemyType.Juggernaut)
-        {
-            shootingTimer -= Time.deltaTime;
-            if (shootingTimer <= 0f)
-            {
-                _enemy.Shoot(_targetPosition);
-                shootingTimer = shootingInterval;
-            }
             return;
         }
 
         if (!_isReloading)
         {
-            shootingTimer -= Time.deltaTime;
+            if (_enemy.isTimeSlowed)
+            {
+                shootingTimer -= (Time.deltaTime * 0.2f);
+            }
+            else
+            {
+                shootingTimer -= Time.deltaTime;
+            }
+
         }
 
         if (shootingTimer <= 0f && !_isReloading)
         {
-            _enemy.EndMoveAnimation();
-            _enemy.Shoot(_targetPosition);
+            _enemy.EnemyAttacker.Shoot(_targetPosition);
             shootingTimer = shootingInterval;
-            if(ammoCount > 0)
+            if (ammoCount > 0)
             {
                 ammoCount--;
-                
             }
-            else
+            else if (!_isReloading)
             {
                 ammoCount = ammoMaxCount;
                 reloadTimer = reloadInterval;
+                _enemy.EndMoveAnimation();
+                _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
+                //start reloading animation
                 _isReloading = true;
             }
         }
         if (reloadTimer >= 0f && _isReloading)
         {
-            reloadTimer -= Time.deltaTime;
+            if (_enemy.isTimeSlowed)
+            {
+                reloadTimer -= (Time.deltaTime * 0.2f);
+            }
+            else
+            {
+                reloadTimer -= Time.deltaTime;
+            }
         }
-        else
+        else if (_isReloading)
         {
-            _enemy.StartMoveAnimation();
+            //stop reloading animation
+            //_enemy.StartMoveAnimation();
             _isReloading = false;
         }
-
     }
 
     public override void PhysicsUpdate()
@@ -178,32 +170,72 @@ public class EnemyRangeAttackState : EnemyState
                 cancellationTokenSource.Cancel();
             if (_enemy.Target == null)
                 cancellationTokenSource.Cancel();
-            if (_enemy.enemyType == Enemy.EnemyType.Juggernaut 
-                //&& !_isReloading && ammoCount > 0
+            if (Vector3.Distance(_enemy.transform.position, _targetPosition) > _maxDistanceBetweenTarget)
+                cancellationTokenSource.Cancel();
+
+
+            if (!cancellationToken.IsCancellationRequested
+                && !_isReloading
+                && Vector3.Distance(_enemy.transform.position, _targetPosition) <= _maxDistanceBetweenTarget
+                && Vector3.Distance(_enemy.transform.position, _targetPosition) > _minDistanceBetweenTarget
                 )
             {
-                cancellationTokenSource.Cancel();
-            }
-
-            if (!cancellationToken.IsCancellationRequested)
-            {
-                Vector3 randomDirection = Random.insideUnitSphere.normalized;
-                Vector3 retreatPosition = _target.position + randomDirection * retreatDistance;
-                retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
-
-                float distanceToTarget = Vector3.Distance(retreatPosition, _target.position);
-
-                if (distanceToTarget < 5f)
+                do
                 {
-                    retreatPosition += randomDirection * (5f - distanceToTarget);
-                }
+                    randomDirection = Random.insideUnitSphere.normalized;
+                    retreatPosition = _enemy.transform.position + randomDirection * ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
+                    retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
+
+                } while (Vector3.Distance(_targetPosition, retreatPosition) < _minDistanceBetweenTarget || Vector3.Distance(_targetPosition, retreatPosition) > _maxDistanceBetweenTarget);
+
+
                 if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
                 {
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
+                    _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
                     _enemy.StartMoveAnimation();
-
-                    await UniTask.Yield();
                 }
+                else
+                {
+                    _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
+                    _enemy.EndMoveAnimation();
+                }
+                await UniTask.Yield();
+            }
+            else if (!cancellationToken.IsCancellationRequested
+                 && !_isReloading
+                 && Vector3.Distance(_enemy.transform.position, _targetPosition) <= _minDistanceBetweenTarget
+
+                 )
+            {
+                do
+                {
+                    randomDirection = Random.insideUnitSphere.normalized;
+                    retreatPosition = _enemy.transform.position + randomDirection * ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
+                    retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
+
+                } while (Vector3.Distance(_targetPosition, retreatPosition) <= _minDistanceBetweenTarget);
+
+
+                if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
+                {
+                    _enemy.NavMeshAgent.SetDestination(retreatPosition);
+                    _enemy.NavMeshAgent.speed = _runningAgentSpeed;
+                    _enemy.StartMoveAnimation();
+                }
+                else
+                {
+                    _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
+                    _enemy.EndMoveAnimation();
+                }
+                await UniTask.Yield();
+            }
+            else if (!cancellationToken.IsCancellationRequested && _isReloading)
+            {
+                _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
+                _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
+                _enemy.EndMoveAnimation();
+                await UniTask.Yield();
             }
         }
         await UniTask.Yield();
