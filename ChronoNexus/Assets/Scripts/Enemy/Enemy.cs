@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(EnemyAnimator), typeof(AudioSource))]
-[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(EnemyAnimator), typeof(AudioSource), typeof(Health))]
+[RequireComponent(typeof(TargetFinder), typeof(TimeBody), typeof(NavMeshAgent))]
+[RequireComponent(typeof(EnemyAttacker), typeof(EnemyLoot))]
 public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffected
 {
     [SerializeField]
@@ -84,6 +85,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     }
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public EnemyAttacker EnemyAttacker => _enemyAttacker;
+    public TargetFinder TargetFinder => _targetFinder;
 
     private StateMachine _stateMachine;
     public EnemyIdleState IdleState { get; private set; }
@@ -113,12 +115,13 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     private EnemyAnimator _animator;
     private EnemyState _startState;
     private EnemyAttacker _enemyAttacker;
+    private TargetFinder _targetFinder;
 
     private bool _isAlive;
 
     private void Awake()
     {
-
+        _targetFinder = GetComponent<TargetFinder>();   
         _health = GetComponent<Health>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<EnemyAnimator>();
@@ -132,8 +135,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
         PatrolState = new EnemyPatrolState(this, _stateMachine);
         ChaseState = new EnemyChaseState(this, _stateMachine);
+
         RangeAttackState = new EnemyRangeAttackState(this, _stateMachine);
         MeleeAttackState = new EnemyMeleeAttackState(this, _stateMachine);
+        JuggernautAttackState = new JuggernautRangeAttackState(this, _stateMachine);
 
         FearState = new EnemyFearState(this, _stateMachine);
         AggressionState = new EnemyAggressionState(this, _stateMachine);
@@ -221,12 +226,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         if (!_isAlive)
             return;
 
-        /*
-        if(Target == null)
+        
+        if(_stateMachine.CurrentState != DummyState && Target == null)
         {
             _navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
         }
-        */
+        
         if (_enemyAttacker.Immortality)
         {
             return;
@@ -309,6 +314,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public void StartMoveAnimation()
     {
         _animator.StartMoveAnimation();
+    }
+    public void SetMoveX(int value)
+    {
+        _animator.SetMoveX(value);
     }
 
     public void EndMoveAnimation()

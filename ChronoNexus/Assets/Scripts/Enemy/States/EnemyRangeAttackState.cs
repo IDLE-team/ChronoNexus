@@ -123,6 +123,7 @@ public class EnemyRangeAttackState : EnemyState
             {
                 ammoCount = ammoMaxCount;
                 reloadTimer = reloadInterval;
+                //_enemy.TargetFinder.SetWeight(0);
                 _enemy.EndMoveAnimation();
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                 //start reloading animation
@@ -144,6 +145,7 @@ public class EnemyRangeAttackState : EnemyState
         {
             //stop reloading animation
             //_enemy.StartMoveAnimation();
+            //_enemy.TargetFinder.SetWeight(1);
             _isReloading = false;
         }
     }
@@ -200,6 +202,7 @@ public class EnemyRangeAttackState : EnemyState
                     _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                     _enemy.EndMoveAnimation();
                 }
+                //_enemy.TargetFinder.SetWeight(1);
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested
@@ -228,12 +231,14 @@ public class EnemyRangeAttackState : EnemyState
                     _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                     _enemy.EndMoveAnimation();
                 }
+                //_enemy.TargetFinder.SetWeight(1);
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested && _isReloading)
             {
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                 _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
+               // _enemy.TargetFinder.SetWeight(0);
                 _enemy.EndMoveAnimation();
                 await UniTask.Yield();
             }

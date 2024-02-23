@@ -20,6 +20,9 @@ public class TargetFinder : MonoBehaviour
     private ISeeker _seeker;
     private Transform _target;
 
+    [SerializeField] AimRigController _aimRigController;
+    
+
     private CancellationTokenSource cancellationTokenSource;
     private CancellationToken cancellationToken;
 
@@ -105,6 +108,13 @@ public class TargetFinder : MonoBehaviour
     {
         //cancellationTokenSource.Cancel();
     }
+
+    public void SetWeight(int value)
+    {
+
+        _aimRigController.SetWeight(value);
+    }
+    
 
 #if UNITY_EDITOR
 

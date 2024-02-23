@@ -9,6 +9,9 @@ public class EnemyAnimator : MonoBehaviour
     private static readonly int TakeHit = Animator.StringToHash("TakeHit");
     private static readonly int Moving = Animator.StringToHash("isMove");
 
+    private static readonly int MoveX = Animator.StringToHash("MoveX");
+    private static readonly int MoveY = Animator.StringToHash("MoveY");
+
     private static readonly int Attack = Animator.StringToHash("Attack");
     private static readonly int Shoot = Animator.StringToHash("Shoot");
 
@@ -37,17 +40,26 @@ public class EnemyAnimator : MonoBehaviour
         _animator.SetTrigger(TakeHit);
     }
 
+    public void SetMoveX(int value)
+    {
+        _animator.SetFloat(MoveX, value);
+    }
+    public void SetMoveY(int value)
+    {
+        _animator.SetFloat(MoveX, value);
+    }
+
     public void StopAnimation()
     {
         _lastSpeed = _animator.speed;
         _animator.speed = 0;
-        Debug.Log("Должна была смениться скорость");
+        //Debug.Log("Должна была смениться скорость");
     }
     public void SlowAnimation()
     {
         _lastSpeed = _animator.speed;
         _animator.speed = 0.3f;
-        Debug.Log("Должна была смениться скорость");
+        //Debug.Log("Должна была смениться скорость");
     }
     public void ContinueAnimation()
     {

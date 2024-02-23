@@ -69,6 +69,7 @@ public class JuggernautRangeAttackState : EnemyState
         _isAttack = false;
         _enemy.IsTargetFound = false;
         _enemy.NavMeshAgent.speed = 1.5f;
+        _enemy.TargetFinder.SetWeight(0);
         //_enemy.EndMoveAnimation();
     }
 
@@ -130,6 +131,7 @@ public class JuggernautRangeAttackState : EnemyState
             else if (!_isReloading)
             {
                 ammoCount = ammoMaxCount;
+                _enemy.TargetFinder.SetWeight(0);
                 reloadTimer = reloadInterval;
                 _enemy.EndMoveAnimation();
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
@@ -152,6 +154,7 @@ public class JuggernautRangeAttackState : EnemyState
         {
             //stop reloading animation
             //_enemy.StartMoveAnimation();
+            _enemy.TargetFinder.SetWeight(1);
             _isReloading = false;
         }
 
@@ -202,6 +205,16 @@ public class JuggernautRangeAttackState : EnemyState
                 {
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
                     _enemy.NavMeshAgent.speed = _shootingAgentSpeed;
+                    if(Vector3.Distance(_enemy.transform.position, _targetPosition) <= Vector3.Distance(retreatPosition, _targetPosition))
+                    {
+                        //back
+                        _enemy.SetMoveX(0);
+                    }
+                    else
+                    {
+                        _enemy.SetMoveX(1);
+                        //forward
+                    }
                     _enemy.StartMoveAnimation();
                 }
                 else
@@ -209,6 +222,7 @@ public class JuggernautRangeAttackState : EnemyState
                     _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                     _enemy.EndMoveAnimation();
                 }
+                _enemy.TargetFinder.SetWeight(1);
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested
@@ -224,11 +238,22 @@ public class JuggernautRangeAttackState : EnemyState
 
                 } while (Vector3.Distance(_targetPosition, retreatPosition) <= _minDistanceBetweenTarget);
 
+                
 
                 if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
                 {
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
                     _enemy.NavMeshAgent.speed = _shootingAgentSpeed;
+                    if (Vector3.Distance(_enemy.transform.position, _targetPosition) <= Vector3.Distance(retreatPosition, _targetPosition))
+                    {
+                        //back
+                        _enemy.SetMoveX(0);
+                    }
+                    else
+                    {
+                        _enemy.SetMoveX(1);
+                        //forward
+                    }
                     _enemy.StartMoveAnimation();
                 }
                 else
@@ -236,6 +261,15 @@ public class JuggernautRangeAttackState : EnemyState
                     _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                     _enemy.EndMoveAnimation();
                 }
+                /*if(Vector3.Distance(_targetPosition, _enemy.transform.position) <= 2)
+                {
+                    _enemy.atta
+                }
+                else
+                {*/
+                    _enemy.TargetFinder.SetWeight(1);
+                
+                
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested && _isReloading)
@@ -243,6 +277,7 @@ public class JuggernautRangeAttackState : EnemyState
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                 _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
                 _enemy.EndMoveAnimation();
+                _enemy.TargetFinder.SetWeight(0);
                 await UniTask.Yield();
             }
 
