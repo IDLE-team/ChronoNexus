@@ -88,10 +88,13 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     private StateMachine _stateMachine;
     public EnemyIdleState IdleState { get; private set; }
     public EnemyDummyState DummyState { get; private set; }
+
     public EnemyPatrolState PatrolState { get; private set; }
     public EnemyChaseState ChaseState { get; private set; }
+
     public EnemyMeleeAttackState MeleeAttackState { get; private set; }
     public EnemyRangeAttackState RangeAttackState { get; private set; }
+    public JuggernautRangeAttackState JuggernautAttackState { get; private set; }
 
     public EnemyFearState FearState { get; private set; }
     public EnemyAggressionState AggressionState { get; private set; }
