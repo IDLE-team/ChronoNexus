@@ -8,7 +8,10 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffected
 {
     [SerializeField]
-    private Selection _selection;
+    private TargetSelection _selection;
+
+    [SerializeField]
+    private Transform _aimTargetTransform;
 
     [SerializeField]
     private AudioClip _hitClip;
@@ -26,6 +29,9 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     private bool _isTarget;
 
     private EnemyLoot _loot;
+
+    private bool _isValid = true;
+
 
     private bool _isDamagable = true;
     public bool isDamagable => _isDamagable;
@@ -47,6 +53,10 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public event Action OnUIUpdate;
 
     public event Action OnTimeAffectedDestroy;
+
+    public event Action OnDie;
+
+    public event Action OnTargetInvalid;
 
     public string CurrentState
     {
@@ -105,7 +115,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     private void Awake()
     {
-        
+
         _health = GetComponent<Health>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<EnemyAnimator>();
@@ -208,15 +218,17 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         if (!_isAlive)
             return;
 
+        /*
         if(Target == null)
         {
             _navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
         }
+        */
         if (_enemyAttacker.Immortality)
         {
             return;
         }
-        if (!_isLowHPBuffSelected && _health.Value <= _health.MaxHealth / 4 && _stateMachine.CurrentState != DummyState )
+        if (!_isLowHPBuffSelected && _health.Value <= _health.MaxHealth / 4 && _stateMachine.CurrentState != DummyState)
         {
             _isLowHPBuffSelected = true;
             //изменить на настраиваемую
@@ -248,16 +260,19 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     private void OnDied()
     {
+        OnTargetInvalid?.Invoke();
+        _isValid = false;
         _isAlive = false;
         _animator.PlayDeathAnimation();
         OnTimeAffectedDestroy?.Invoke();
+        SetSelfTarget(false);
         StopSeek();
         _loot.DropLoot();
-        Debug.Log(this.gameObject + " :Enemy died");
         if (enemySpawner != null)
         {
             enemySpawner.UpdateSliderValue();
         }
+        OnDie?.Invoke();
         Destroy(gameObject, 1f);
     }
 
@@ -387,6 +402,14 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         throw new NotImplementedException();
     }
 
+    public Transform GetTransform()
+    {
+        return _aimTargetTransform;
+    }
+    public bool GetTargetValid()
+    {
+        return _isValid;
+    }
     public enum State
     {
         Dummy,
