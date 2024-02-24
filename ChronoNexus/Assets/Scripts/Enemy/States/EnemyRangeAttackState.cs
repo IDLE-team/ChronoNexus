@@ -28,7 +28,7 @@ public class EnemyRangeAttackState : EnemyState
     private bool _isAttack = false;
 
     private float _defaultAgentSpeed = 1.5f;
-    private float _runningAgentSpeed = 5f;
+    private float _runningAgentSpeed = 3f;
 
     Vector3 randomDirection;
     Vector3 retreatPosition;
@@ -53,6 +53,8 @@ public class EnemyRangeAttackState : EnemyState
         _target = _enemy.Target.transform;
         _targetPosition = _target.position;
 
+        _enemy.TargetFinder.SetWeight(1);
+
         _isAttack = true;
 
         cancellationTokenSource = new CancellationTokenSource();
@@ -76,7 +78,7 @@ public class EnemyRangeAttackState : EnemyState
             return;
         }
 
-        toRotation = Quaternion.LookRotation(_targetPosition - _enemy.transform.transform.position, Vector3.up);
+        /*toRotation = Quaternion.LookRotation(_targetPosition - _enemy.transform.transform.position, Vector3.up);
         if (_enemy.isTimeSlowed)
         {
             if(!_isReloading)
@@ -90,7 +92,7 @@ public class EnemyRangeAttackState : EnemyState
             {
                 _enemy.transform.rotation = Quaternion.Slerp(_enemy.transform.rotation, toRotation, 6f * Time.deltaTime);
             }
-        }
+        }*/
 
         if (Vector3.Distance(_enemy.transform.position, _targetPosition) > _maxDistanceBetweenTarget)
         {
@@ -123,7 +125,7 @@ public class EnemyRangeAttackState : EnemyState
             {
                 ammoCount = ammoMaxCount;
                 reloadTimer = reloadInterval;
-                //_enemy.TargetFinder.SetWeight(0);
+                _enemy.TargetFinder.SetWeight(0);
                 _enemy.EndMoveAnimation();
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                 //start reloading animation
@@ -144,8 +146,8 @@ public class EnemyRangeAttackState : EnemyState
         else if (_isReloading)
         {
             //stop reloading animation
-            //_enemy.StartMoveAnimation();
-            //_enemy.TargetFinder.SetWeight(1);
+            _enemy.StartMoveAnimation();
+            _enemy.TargetFinder.SetWeight(1);
             _isReloading = false;
         }
     }
@@ -202,7 +204,7 @@ public class EnemyRangeAttackState : EnemyState
                     _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                     _enemy.EndMoveAnimation();
                 }
-                //_enemy.TargetFinder.SetWeight(1);
+                _enemy.TargetFinder.SetWeight(1);
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested
@@ -231,14 +233,14 @@ public class EnemyRangeAttackState : EnemyState
                     _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                     _enemy.EndMoveAnimation();
                 }
-                //_enemy.TargetFinder.SetWeight(1);
+                _enemy.TargetFinder.SetWeight(1);
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested && _isReloading)
             {
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                 _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
-               // _enemy.TargetFinder.SetWeight(0);
+                _enemy.TargetFinder.SetWeight(0);
                 _enemy.EndMoveAnimation();
                 await UniTask.Yield();
             }

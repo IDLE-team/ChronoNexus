@@ -55,6 +55,7 @@ public class JuggernautRangeAttackState : EnemyState
         _target = _enemy.Target.transform;
         _targetPosition = _target.position;
 
+        _enemy.TargetFinder.SetWeight(1);
         _isAttack = true;
 
         _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);

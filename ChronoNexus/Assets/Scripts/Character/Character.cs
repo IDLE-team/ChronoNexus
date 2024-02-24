@@ -55,6 +55,11 @@ public class Character : MonoBehaviour, IDamagable
         Rigidbody = GetComponent<Rigidbody>();
         AudioController = GetComponent<CharacterAudioController>();
     }
+    private void Start()
+    {
+        _hpBar.maxValue = _health.Value;
+        _hpBar.value = _health.Value;
+    }
 
     public void TakeDamage(float damage)
     {

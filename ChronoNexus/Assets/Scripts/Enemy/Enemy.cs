@@ -43,6 +43,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     public State state = new State();
 
+    private int _hitCount;
+
 
 
     public static List<GameObject> enemyList = new List<GameObject>();
@@ -121,7 +123,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     private void Awake()
     {
-        _targetFinder = GetComponent<TargetFinder>();   
+        _targetFinder = GetComponent<TargetFinder>();
         _health = GetComponent<Health>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<EnemyAnimator>();
@@ -226,12 +228,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         if (!_isAlive)
             return;
 
-        
-        if(_stateMachine.CurrentState != DummyState && Target == null)
+
+        if (_stateMachine.CurrentState != DummyState && Target == null)
         {
             _navMeshAgent.SetDestination(GameObject.FindGameObjectWithTag("Player").transform.position);
         }
-        
+
         if (_enemyAttacker.Immortality)
         {
             return;
@@ -262,7 +264,17 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         }
         _health.Decrease(damage);
         DamageEffect();
-        _animator.PlayTakeDamageAnimation();
+        if (_hitCount > 4)
+        {
+            
+            _animator.PlayTakeDamageAnimation();
+            _hitCount = 0;
+        }
+        else
+        {
+            _hitCount += 1;
+        }
+
 
     }
 
