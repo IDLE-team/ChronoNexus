@@ -31,16 +31,16 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 0.9523509, y: 0.86371255, z: 1, w: 0.0059974524}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   midtones:
     m_OverrideState: 1
-    m_Value: {x: 0.66621953, y: 1, z: 0.88041896, w: 0.02247191}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   highlights:
     m_OverrideState: 1
-    m_Value: {x: 0.95193094, y: 1, z: 0.9890785, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   shadowsStart:
     m_OverrideState: 0
-    m_Value: 0.24
+    m_Value: 0
   shadowsEnd:
     m_OverrideState: 0
     m_Value: 0.3
@@ -66,6 +66,30 @@ MonoBehaviour:
   mode:
     m_OverrideState: 1
     m_Value: 2
+  neutralHDRRangeReductionMode:
+    m_OverrideState: 0
+    m_Value: 2
+  acesPreset:
+    m_OverrideState: 0
+    m_Value: 3
+  hueShiftAmount:
+    m_OverrideState: 0
+    m_Value: 0
+  detectPaperWhite:
+    m_OverrideState: 0
+    m_Value: 0
+  paperWhite:
+    m_OverrideState: 0
+    m_Value: 300
+  detectBrightnessLimits:
+    m_OverrideState: 0
+    m_Value: 1
+  minNits:
+    m_OverrideState: 0
+    m_Value: 0.005
+  maxNits:
+    m_OverrideState: 0
+    m_Value: 1000
 --- !u!114 &-4774351869961934070
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -80,9 +104,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   master:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value:
-      <length>k__BackingField: 5
+      <length>k__BackingField: 2
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
@@ -94,33 +118,6 @@ MonoBehaviour:
           value: 0
           inSlope: 1
           outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.055686276
-          value: 0.097360134
-          inSlope: 2.0016782
-          outSlope: 2.0016782
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.27686277
-          value: 0.38943934
-          inSlope: 0.9412455
-          outSlope: 0.9412455
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.67921567
-          value: 0.8003304
-          inSlope: 0.36702034
-          outSlope: 0.36702034
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
@@ -297,10 +294,10 @@ MonoBehaviour:
   active: 1
   temperature:
     m_OverrideState: 1
-    m_Value: 2
+    m_Value: -10
   tint:
     m_OverrideState: 1
-    m_Value: 53
+    m_Value: 6
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,6 +319,7 @@ MonoBehaviour:
   - {fileID: -7068806121262157663}
   - {fileID: -1072066051176458200}
   - {fileID: -4774351869961934070}
+  - {fileID: 8953292042725799151}
 --- !u!114 &4412803617635028925
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -343,13 +341,13 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.414
+    m_Value: 0.306
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.571
+    m_Value: 0.239
   rounded:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
 --- !u!114 &6809736386011905742
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -363,34 +361,40 @@ MonoBehaviour:
   m_Name: Bloom
   m_EditorClassIdentifier: 
   active: 1
+  skipIterations:
+    m_OverrideState: 0
+    m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.9
+    m_Value: 0.35
   intensity:
     m_OverrideState: 1
-    m_Value: 0.24
+    m_Value: 0.46
   scatter:
     m_OverrideState: 1
-    m_Value: 0.597
+    m_Value: 0.246
   clamp:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 65472
   tint:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   highQualityFiltering:
+    m_OverrideState: 1
+    m_Value: 1
+  downscale:
     m_OverrideState: 0
     m_Value: 0
-  skipIterations:
-    m_OverrideState: 1
-    m_Value: 3
+  maxIterations:
+    m_OverrideState: 0
+    m_Value: 6
   dirtTexture:
     m_OverrideState: 0
-    m_Value: {fileID: 0}
+    m_Value: {fileID: 2800000, guid: ca0fdcf3107ba3a4f83fed8507fecb2b, type: 3}
     dimension: 1
   dirtIntensity:
     m_OverrideState: 0
-    m_Value: 19.86
+    m_Value: 0
 --- !u!114 &7436561544559222523
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -406,10 +410,38 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 0.9742335, y: 1, z: 0.9906375, w: 0.000000003013718}
+    m_Value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0.79825246, y: 0.94058365, z: 1, w: -0.04494382}
+    m_Value: {x: 0.71445274, y: 0.79912925, z: 1, w: 0.3707996}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 0.27136886, y: 1, z: 0.9119171, w: 0.43448162}
+    m_Value: {x: 0.65907085, y: 0.75094646, z: 1, w: 1}
+--- !u!114 &8953292042725799151
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: 
+  active: 1
+  postExposure:
+    m_OverrideState: 1
+    m_Value: -0.61
+  contrast:
+    m_OverrideState: 1
+    m_Value: -2.48
+  colorFilter:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  hueShift:
+    m_OverrideState: 1
+    m_Value: -14
+  saturation:
+    m_OverrideState: 1
+    m_Value: 94
