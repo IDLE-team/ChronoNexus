@@ -90,7 +90,13 @@ public class TargetFinder : MonoBehaviour
                 break;
             if (results[i].gameObject == gameObject)
                 continue;
-            _target = results[i].transform;
+            if (!results[i].TryGetComponent<ITargetable>(out ITargetable target))
+            {
+               continue;
+            }
+
+            _target = results[i].GetComponent<ITargetable>().GetTransform();
+
             var dirToTarget = (_target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) >= ViewAngle / 2)
                 continue;
@@ -98,7 +104,7 @@ public class TargetFinder : MonoBehaviour
             var dstToTarget = Vector3.Distance(transform.position, _target.position);
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;
-
+            
             _seeker.Target = _target;
             _seeker.IsTargetFound = true;
         }
@@ -111,7 +117,6 @@ public class TargetFinder : MonoBehaviour
 
     public void SetWeight(int value)
     {
-
         _aimRigController.SetWeight(value);
     }
     

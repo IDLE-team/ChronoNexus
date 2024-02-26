@@ -1,4 +1,5 @@
-using System.Threading;
+using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class EnemyChaseState : EnemyState
@@ -12,7 +13,12 @@ public class EnemyChaseState : EnemyState
     {
         if (_enemy.enemyType == Enemy.EnemyType.Guard)
         {
-            _enemy.NavMeshAgent.speed *= 2;
+            if(!_enemy.isTimeSlowed && !_enemy.isTimeStopped)
+                _enemy.NavMeshAgent.speed *= 2;
+            else
+            {
+                TimeWaiter().Forget();
+            }
         }
         _enemy.StartMoveAnimation();
     }
@@ -21,7 +27,7 @@ public class EnemyChaseState : EnemyState
     {
         _enemy.IsTargetFound = false;
     }
-
+    
     public override void LogicUpdate()
     {
         if (_enemy.Target == null)
@@ -72,4 +78,11 @@ public class EnemyChaseState : EnemyState
         _playerPosition = _enemy.Target.position;
         _enemy.NavMeshAgent.SetDestination(_playerPosition);
     }
+    
+    private async UniTask TimeWaiter()
+    {
+        await UniTask.WaitUntil(() => !_enemy.isTimeSlowed && !_enemy.isTimeStopped);
+        _enemy.NavMeshAgent.speed *= 2;
+    }
+
 }

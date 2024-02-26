@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class EnemyPrudenceState : EnemyState
 {
-    //Для дальников: Противник останавливается на месте и целится в игрока. Скорость атаки сильно уменьшена, но урон сильно повышен
-    //Для ближников: Противник становится неуязвимым на 2* секунды, скорость атаки увеличивается
 
 
     public EnemyPrudenceState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)

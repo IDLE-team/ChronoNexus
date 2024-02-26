@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class EnemyFearState : EnemyState
 {
-    //Прячется за ближайшее укрытие, скорость атаки уменьшается.
-    //Кидает одну гранату и остается в укрытии.
-    //Если игрок подходит слишком близко к этому укрытию, враг перебегает в другое
 
     private CancellationTokenSource cancellationTokenSource;
     public EnemyFearState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)

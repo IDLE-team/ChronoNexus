@@ -17,5 +17,11 @@ public class AimRigController : MonoBehaviour
         _rig.weight = weight;
     }
 
+    public void SlowDown()
+    {
+      //  _rig.
+      
+    }
+
 
 }

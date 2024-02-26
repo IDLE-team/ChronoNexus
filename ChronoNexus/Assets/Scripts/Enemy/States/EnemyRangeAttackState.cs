@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyRangeAttackState : EnemyState
@@ -28,7 +29,7 @@ public class EnemyRangeAttackState : EnemyState
     private bool _isAttack = false;
 
     private float _defaultAgentSpeed = 1.5f;
-    private float _runningAgentSpeed = 3f;
+    private float _runningAgentSpeed = 2f;
 
     Vector3 randomDirection;
     Vector3 retreatPosition;
@@ -51,12 +52,12 @@ public class EnemyRangeAttackState : EnemyState
         //_enemy.NavMeshAgent.speed = 2.5f;
 
         _target = _enemy.Target.transform;
-        _targetPosition = _target.position;
+        _targetPosition = _target.localPosition;
 
         _enemy.TargetFinder.SetWeight(1);
 
         _isAttack = true;
-
+        _enemy.OnDie += CancelCancelationToken;
         cancellationTokenSource = new CancellationTokenSource();
         ShootAndRetreat(cancellationTokenSource.Token).Forget();
     }
@@ -65,7 +66,10 @@ public class EnemyRangeAttackState : EnemyState
     {
         _isAttack = false;
         _enemy.IsTargetFound = false;
-        _enemy.NavMeshAgent.speed = 1.5f;
+        _enemy.OnDie -= CancelCancelationToken;
+
+        if(!_enemy.isTimeSlowed && !_enemy.isTimeStopped)
+            _enemy.NavMeshAgent.speed = 1.5f;
         _enemy.EndMoveAnimation();
     }
 
@@ -164,6 +168,14 @@ public class EnemyRangeAttackState : EnemyState
         _target = _enemy.Target.transform;
     }
 
+
+
+
+    private void CancelCancelationToken()
+    {
+        cancellationTokenSource.RegisterRaiseCancelOnDestroy(_enemy.gameObject);
+        cancellationTokenSource.Cancel();
+    }
     private async UniTask ShootAndRetreat(CancellationToken cancellationToken)
     {
         while (_isAttack && !cancellationToken.IsCancellationRequested)
@@ -196,7 +208,12 @@ public class EnemyRangeAttackState : EnemyState
                 if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
                 {
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
-                    _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
+                    
+                    if(_enemy.isTimeSlowed)
+                        _enemy.NavMeshAgent.speed = 0.1f;
+                    else
+                        _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
+                    
                     _enemy.StartMoveAnimation();
                 }
                 else
@@ -224,8 +241,15 @@ public class EnemyRangeAttackState : EnemyState
 
                 if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
                 {
+                    if (_enemy.isTimeStopped)
+                        return;
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
-                    _enemy.NavMeshAgent.speed = _runningAgentSpeed;
+                    
+                    if (_enemy.isTimeSlowed)
+                        _enemy.NavMeshAgent.speed = 0.2f;
+                    else
+                        _enemy.NavMeshAgent.speed = _runningAgentSpeed;
+                    
                     _enemy.StartMoveAnimation();
                 }
                 else

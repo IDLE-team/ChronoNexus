@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,8 +25,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     private Bullet _bulletPrefab;
 
     [SerializeField]
-    private DebugEnemySpawner enemySpawner;
-
+    private DebugEnemySpawner _enemySpawner;
+    
+    [SerializeField]
+    private TargetFinder _targetFinder;
+    
     [SerializeField]
     private bool _isTarget;
 
@@ -36,6 +40,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     private bool _isDamagable = true;
     public bool isDamagable => _isDamagable;
+
     private bool _isLowHPBuffSelected;
 
 
@@ -87,7 +92,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     }
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
     public EnemyAttacker EnemyAttacker => _enemyAttacker;
-    public TargetFinder TargetFinder => _targetFinder;
+    //public TargetFinder TargetFinder => _targetFinder;
 
     private StateMachine _stateMachine;
     public EnemyIdleState IdleState { get; private set; }
@@ -104,6 +109,8 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public EnemyAggressionState AggressionState { get; private set; }
     public EnemyPrudenceState PrudenceState { get; private set; }
 
+    public TargetFinder TargetFinder => _targetFinder;
+
     public Transform Target { get; set; }
     public bool IsTargetFound { get; set; }
     public bool isTimeStopped { get; set; }
@@ -117,7 +124,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     private EnemyAnimator _animator;
     private EnemyState _startState;
     private EnemyAttacker _enemyAttacker;
-    private TargetFinder _targetFinder;
+
+    private float _lastNavAcceleration;
+    private float _lastNavSpeed;
+    private float _lastNavAngularSpeed;
+
 
     private bool _isAlive;
 
@@ -203,7 +214,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
 
     public void InitializeSpawner(DebugEnemySpawner spawner, EnemyState startState)
     {
-        enemySpawner = spawner;
+        _enemySpawner = spawner;
         //_stateMachine.ChangeState(startState);
     }
 
@@ -242,7 +253,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         {
             _isLowHPBuffSelected = true;
             //изменить на настраиваемую
-            Debug.Log("Сделать настройку шанса для каждого стейта");
+            // Debug.Log("Сделать настройку шанса для каждого стейта");
             float _chance = UnityEngine.Random.Range(1, 4);
             switch (_chance)
             {
@@ -283,19 +294,45 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         OnTargetInvalid?.Invoke();
         _isValid = false;
         _isAlive = false;
-        _animator.PlayDeathAnimation();
-        OnTimeAffectedDestroy?.Invoke();
         SetSelfTarget(false);
         StopSeek();
-        _loot.DropLoot();
-        if (enemySpawner != null)
+        _stateMachine.ChangeState(DummyState);
+        _navMeshAgent.velocity = Vector3.zero;
+        _navMeshAgent.speed = 0;
+        _navMeshAgent.angularSpeed = 0;
+        var rb = gameObject.GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
+        _navMeshAgent.isStopped = true;
+        if (isTimeStopped)
         {
-            enemySpawner.UpdateSliderValue();
+            RealTimeDieWaiter().Forget();
+            return;
         }
-        OnDie?.Invoke();
-        Destroy(gameObject, 1f);
+        Die();
     }
 
+    private void Die()
+    {
+        _animator.PlayDeathAnimation();
+        _navMeshAgent.velocity = Vector3.zero;
+        
+        _loot.DropLoot();
+        if (_enemySpawner != null)
+        {
+            _enemySpawner.UpdateSliderValue();
+        }
+        OnDie?.Invoke();
+    }
+
+    public void DieDestroy()
+    {
+        OnTimeAffectedDestroy?.Invoke();
+        Destroy(gameObject, 1f);
+        
+    }
+    
+    
     public void SetSelfTarget(bool _isActive)
     {
         _isTarget = _isActive;
@@ -387,19 +424,36 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         {
             isTimeStopped = false;
             isTimeSlowed = false;
-
-            _navMeshAgent.isStopped = false;
+            if (_isAlive)
+            {
+                _navMeshAgent.isStopped = false;
+                _navMeshAgent.speed = _lastNavSpeed;
+                _navMeshAgent.angularSpeed = _lastNavAngularSpeed;
+            }
 
             _animator.ContinueAnimation();
         }
     }
 
+    private void SetLastNavMeshValues()
+    {
+      //  _lastNavAcceleration = _navMeshAgent.acceleration;
+        _lastNavSpeed = _navMeshAgent.speed;
+        _lastNavAngularSpeed = _navMeshAgent.angularSpeed;
+    }
     public void StopTimeAction()
     {
         if (gameObject != null)
         {
+            SetLastNavMeshValues();
             isTimeStopped = true;
             _navMeshAgent.isStopped = true;
+          //  _navMeshAgent.acceleration = 0;
+            _navMeshAgent.speed = 0;
+            _navMeshAgent.angularSpeed = 0;
+            _navMeshAgent.velocity = Vector3.zero;
+
+            
             _animator.StopAnimation();
         }
     }
@@ -409,8 +463,11 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
         if (gameObject != null)
         {
             isTimeSlowed = true;
+            SetLastNavMeshValues();
             _navMeshAgent.speed = 0.1f;
-            _navMeshAgent.acceleration = 0.1f;
+
+            //   _navMeshAgent.acceleration = 0.1f;
+            _navMeshAgent.angularSpeed = 0.1f;
 
             _animator.SlowAnimation();
         }
@@ -433,6 +490,13 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     public bool GetTargetValid()
     {
         return _isValid;
+    }
+    
+    private async UniTask RealTimeDieWaiter()
+    {
+        // Передаем CancellationToken при вызове метода WaitUntil
+        await UniTask.WaitUntil(() => !isTimeStopped);
+        OnDied();
     }
     public enum State
     {

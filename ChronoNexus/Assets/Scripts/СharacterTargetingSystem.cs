@@ -7,7 +7,7 @@ using UnityEngine.InputSystem.OnScreen;
 using Zenject;
 using UnityEngine.InputSystem;
 using DG.Tweening;
-public class —haracterTargetingSystem : MonoBehaviour
+public class –°haracterTargetingSystem : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
 
@@ -25,8 +25,8 @@ public class —haracterTargetingSystem : MonoBehaviour
     [SerializeField] GameObject _targetPointer;
     [SerializeField] AimRigController _aimRigController;
 
-    public Transform Target { get; private set; }
-    public Transform PreviousTarget => _previousTarget;
+    public ITargetable Target { get; private set; }
+    public ITargetable PreviousTarget => _previousTarget;
     public bool IsLookAt { get; private set; }
     public bool IsEnemyTargeted => _isEnemyTargeted;
     public bool IsStickSearch => _isStickSearch;
@@ -39,8 +39,8 @@ public class —haracterTargetingSystem : MonoBehaviour
     private Camera _camera;
     private Character _character;
 
-    private Transform _previousTarget;
-    private Transform _nearestTarget;
+    private ITargetable _previousTarget;
+    private ITargetable _nearestTarget;
 
     private float _nearestDistance;
     private float _targetDistance;
@@ -55,11 +55,9 @@ public class —haracterTargetingSystem : MonoBehaviour
     [Inject]
     private void Construct(PlayerInputActions input, CharacterAnimator animator)
     {
-        Debug.Log("” ‡ÚÚ‡ÍÂ‡");
         _input = input;
         _input.Player.TargetLock.started += OnTargetLockStarted;
         _input.Player.TargetLock.canceled += OnTargetLockCanceled;
-
 
     }
 
@@ -84,7 +82,7 @@ public class —haracterTargetingSystem : MonoBehaviour
 
         if (Target != null)
         {
-            Vector3 directionToEnemy = Target.position - _targetPointer.transform.position;
+            Vector3 directionToEnemy = Target.GetTransform().position - _targetPointer.transform.position;
 
             float targetRotation = Mathf.Atan2(directionToEnemy.x, directionToEnemy.z) * Mathf.Rad2Deg;
 
@@ -112,12 +110,15 @@ public class —haracterTargetingSystem : MonoBehaviour
             if (target == null)
                 continue;
 
-            if (!target.GetComponent<ITargetable>().GetTargetValid())
+            if (!target.TryGetComponent<ITargetable>(out ITargetable selectedTarget))
+                continue;
+            
+            if (!selectedTarget.GetTargetValid())
             {
                 continue;
             }
 
-            _targetDistance = Vector3.Distance(transform.position, target.transform.position);
+            _targetDistance = Vector3.Distance(transform.position, selectedTarget.GetTransform().position);
 
             if (_targetDistance > _radius)
                 continue;
@@ -126,7 +127,7 @@ public class —haracterTargetingSystem : MonoBehaviour
                 continue;
 
             _nearestDistance = _targetDistance;
-            _nearestTarget = target.transform;
+            _nearestTarget = selectedTarget;
         }
         if (_nearestTarget == null)
             return;
@@ -135,23 +136,23 @@ public class —haracterTargetingSystem : MonoBehaviour
             return;
 
         if (_previousTarget != null)
-            _previousTarget.GetComponent<ITargetable>().SetSelfTarget(false);
+            _previousTarget.SetSelfTarget(false);
 
         _previousTarget = _nearestTarget;
 
-        _nearestTarget.GetComponent<ITargetable>().SetSelfTarget(true);
+        _nearestTarget.SetSelfTarget(true);
 
         if (Target != null)
         {
-            Target.GetComponent<ITargetable>().OnTargetInvalid -= SetEmptyTarget;
+            Target.OnTargetInvalid -= SetEmptyTarget;
         }
-        Target = _nearestTarget.transform;
+        Target = _nearestTarget;
         ShowTargetPointer();
         IsLookAt = true;
 
-        _aimRigController._aimTarget.position = Target.GetComponent<ITargetable>().GetTransform().position;
-        _aimRigController._aimTarget.parent = Target.GetComponent<ITargetable>().GetTransform();
-        Target.GetComponent<ITargetable>().OnTargetInvalid += SetEmptyTarget;
+        _aimRigController._aimTarget.position = Target.GetTransform().position;
+        _aimRigController._aimTarget.parent = Target.GetTransform();
+        Target.OnTargetInvalid += SetEmptyTarget;
 
         _aimRigController.SetWeight(1);
         _isEnemyTargeted = true;
@@ -185,31 +186,35 @@ public class —haracterTargetingSystem : MonoBehaviour
         if (Physics.SphereCast(_visorPosition.position, _sphereCastThickness, targetDirection.normalized, out hit, _radius, _targetLayer))
         {
             //_sphereCastThickness = _startSphereCastThickness;
-
-            if (hit.transform == Target)
+            if (!hit.transform.gameObject.TryGetComponent<ITargetable>(out ITargetable selectedTarget))
                 return;
-            if (!hit.transform.GetComponent<ITargetable>().GetTargetValid())
+            if (selectedTarget == Target)
+                return;
+
+            
+            if (!selectedTarget.GetTargetValid())
             {
                 return;
             }
             if (Target != null)
             {
-                Target.GetComponent<ITargetable>().OnTargetInvalid -= SetEmptyTarget;
+                Target.OnTargetInvalid -= SetEmptyTarget;
             }
-            Target = hit.transform;
-            var targetable = Target.GetComponent<ITargetable>();
-            targetable.SetSelfTarget(true);
+            Target = selectedTarget;
+            Target.SetSelfTarget(true);
+            Debug.Log("Target: " + Target);
+            Debug.Log("PrevTarget: " + _previousTarget);
 
             if (_previousTarget != null)
-                _previousTarget.GetComponent<ITargetable>().SetSelfTarget(false);
+                _previousTarget.SetSelfTarget(false);
 
             _previousTarget = Target;
-            _aimRigController._aimTarget.position = targetable.GetTransform().position;
-            _aimRigController._aimTarget.parent = targetable.GetTransform();
+            _aimRigController._aimTarget.position = Target.GetTransform().position;
+            _aimRigController._aimTarget.parent = Target.GetTransform();
 
             _aimRigController.SetWeight(1);
 
-            Target.GetComponent<ITargetable>().OnTargetInvalid += SetEmptyTarget;
+            Target.OnTargetInvalid += SetEmptyTarget;
 
             IsLookAt = true;
         }
@@ -267,9 +272,9 @@ public class —haracterTargetingSystem : MonoBehaviour
         {
             DebugTestUniTask = Random.Range(0, 10);
 
-            if (Target != null && Vector3.Distance(Target.transform.position, transform.position) > _radius)
+            if (Target != null && Vector3.Distance(Target.GetTransform().position, transform.position) > _radius)
             {
-                Target.GetComponent<ITargetable>().SetSelfTarget(false);
+                Target.SetSelfTarget(false);
                 SetEmptyTarget();
             }
 

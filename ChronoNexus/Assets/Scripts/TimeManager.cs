@@ -31,7 +31,6 @@ public class TimeManager : MonoBehaviour
     [Inject]
     private void Construct(PlayerInputActions input)
     {
-        Debug.Log("У аттакера");
         _input = input;
         _input.Player.TimeStop.performed += OnStopTimePerformed;
         _input.Player.TimeSlow.performed += OnSlowTimePerformed;
@@ -42,10 +41,17 @@ public class TimeManager : MonoBehaviour
 
     private void OnStopTimePerformed(InputAction.CallbackContext obj)
     {
+        if(IsTimeStopped || IsTimeSlowed)
+            return;
+        Debug.Log("РќР°Р¶Р°С‚РёРµ");
         StopTime();
     }
     private void OnSlowTimePerformed(InputAction.CallbackContext obj)
     {
+        if(IsTimeStopped || IsTimeSlowed)
+            return;
+        Debug.Log("РќР°Р¶Р°С‚РёРµ");
+
         SlowTime();
     }
     private void Start()
@@ -61,7 +67,7 @@ public class TimeManager : MonoBehaviour
     public void RemoveTimeBody(ITimeBody body)
     {
         timeBodies.Remove(body);
-        Debug.Log("Удалило");
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
     }
     private void Awake()
     {
@@ -93,6 +99,7 @@ public class TimeManager : MonoBehaviour
     }
     public void StopTime()
     {
+        
         IsTimeStopped = true;
         for (var i = 0; i < timeBodies.Count; i++)
         {
@@ -116,8 +123,10 @@ public class TimeManager : MonoBehaviour
             if (timeBodies[i] == null)
             {
                 timeBodies.RemoveAt(i);
+                Debug.Log("РЈР±СЂР°Р»Рѕ" + timeBodies[i]);
                 continue;
             }
+            Debug.Log(timeBodies[i]);
             timeBodies[i].SetSlowTime();
         }
         postProcessVolume.profile = timeStopVolumeProfile;

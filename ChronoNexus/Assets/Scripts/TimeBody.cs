@@ -8,6 +8,7 @@ public class TimeBody : MonoBehaviour, ITimeBody
 
     private void OnEnable()
     {
+        Debug.Log("OnEnable: " + gameObject.name);
         _timeAffectedBody.OnTimeAffectedDestroy += RemoveFromTimeManager;
 
         if (TimeManager.instance != null)
@@ -58,7 +59,6 @@ public class TimeBody : MonoBehaviour, ITimeBody
 
     public void SetStopTime()
     {
-        Debug.Log("Остановка времени");
         _timeAffectedBody.StopTimeAction();
     }
 

@@ -53,7 +53,8 @@ public class JuggernautRangeAttackState : EnemyState
         //_enemy.NavMeshAgent.speed = 0.75f;
 
         _target = _enemy.Target.transform;
-        _targetPosition = _target.position;
+        _targetPosition = _target.localPosition;
+        Debug.Log("TargetInMethod: " + _targetPosition);
 
         _enemy.TargetFinder.SetWeight(1);
         _isAttack = true;
@@ -69,7 +70,8 @@ public class JuggernautRangeAttackState : EnemyState
     {
         _isAttack = false;
         _enemy.IsTargetFound = false;
-        _enemy.NavMeshAgent.speed = 1.5f;
+        if(!_enemy.isTimeSlowed && !_enemy.isTimeStopped)
+            _enemy.NavMeshAgent.speed = 1.5f;
         _enemy.TargetFinder.SetWeight(0);
         //_enemy.EndMoveAnimation();
     }
@@ -205,6 +207,9 @@ public class JuggernautRangeAttackState : EnemyState
                 if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
                 {
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
+                    if (_enemy.isTimeSlowed)
+                        _enemy.NavMeshAgent.speed = 0.1f;
+                    else
                     _enemy.NavMeshAgent.speed = _shootingAgentSpeed;
                     if(Vector3.Distance(_enemy.transform.position, _targetPosition) <= Vector3.Distance(retreatPosition, _targetPosition))
                     {
@@ -244,6 +249,9 @@ public class JuggernautRangeAttackState : EnemyState
                 if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
                 {
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
+                    if (_enemy.isTimeSlowed)
+                        _enemy.NavMeshAgent.speed = 0.1f;
+                    else
                     _enemy.NavMeshAgent.speed = _shootingAgentSpeed;
                     if (Vector3.Distance(_enemy.transform.position, _targetPosition) <= Vector3.Distance(retreatPosition, _targetPosition))
                     {
@@ -276,6 +284,9 @@ public class JuggernautRangeAttackState : EnemyState
             else if (!cancellationToken.IsCancellationRequested && _isReloading)
             {
                 _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
+                if (_enemy.isTimeSlowed)
+                    _enemy.NavMeshAgent.speed = 0.1f;
+                else
                 _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
                 _enemy.EndMoveAnimation();
                 _enemy.TargetFinder.SetWeight(0);

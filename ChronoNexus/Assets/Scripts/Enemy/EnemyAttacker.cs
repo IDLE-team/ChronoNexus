@@ -167,11 +167,7 @@ public class EnemyAttacker : MonoBehaviour
     [UsedInAnimator]
     public void Shoot(Vector3 target)
     {
-        //Vector3 position = transform.position;
-        //Vector3 forward = transform.forward;
-        //Vector3 spawnPosition = position + forward * 0.5f;
-        Vector3 direction = (target - transform.position).normalized;
-        //spawnPosition.y = spawnPosition.y + 1.5f;
+        Vector3 direction = (target - _shootPosition.position).normalized;
         var bullet = Instantiate(_selectedBullet, _shootPosition.position, Quaternion.LookRotation(direction));
         bullet.SetTarget(direction);
     }

@@ -68,8 +68,7 @@ public class Attacker : MonoBehaviour
     {
         if (_character.CharacterTargetingSystem.Target != null)
         {
-            _shootDir = ((_character.CharacterTargetingSystem.Target.position - _rangeWeapon.transform.position) + new Vector3(0, 1,0))
-                .normalized;
+            _shootDir = ((_character.CharacterTargetingSystem.Target.GetTransform().position - _rangeWeapon.transform.position).normalized);
             
         }
         else

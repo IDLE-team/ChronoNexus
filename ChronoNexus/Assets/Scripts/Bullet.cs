@@ -25,6 +25,7 @@ public class Bullet : MonoBehaviour, ITimeAffected
     
     public void SetTarget(Vector3 shootDirection)
     {
+      //  Debug.Log("ShootDir: " + shootDirection);
         _shootDir = shootDirection;
     }
 

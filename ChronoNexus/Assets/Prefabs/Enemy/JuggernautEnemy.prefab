@@ -81,7 +81,6 @@ GameObject:
   - component: {fileID: 4837116069173889545}
   - component: {fileID: 4365742768724158}
   - component: {fileID: 8545208759657124622}
-  - component: {fileID: 6200383287267615016}
   - component: {fileID: 8034145423339571568}
   - component: {fileID: 2934918585460628345}
   - component: {fileID: 4926761236069427471}
@@ -153,7 +152,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712839722526214741}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 500
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -331,7 +330,8 @@ MonoBehaviour:
   _hitEffect: {fileID: 3688922409594974404}
   _bulletPrefab: {fileID: 3669826307443937433, guid: 30e57ac830bd64949ae2a79063ba921b,
     type: 3}
-  enemySpawner: {fileID: 0}
+  _enemySpawner: {fileID: 0}
+  _targetFinder: {fileID: 0}
   _isTarget: 0
   enemyType: 2
   state: 1
@@ -372,7 +372,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.18
   m_Speed: 1.5
-  m_Acceleration: 8
+  m_Acceleration: 80
   avoidancePriority: 50
   m_AngularSpeed: 200
   m_StoppingDistance: 1
@@ -383,18 +383,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
---- !u!114 &6200383287267615016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712839722526214741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f05465b79affb64ba43ea8481435dc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8034145423339571568
 MonoBehaviour:
   m_ObjectHideFlags: 0

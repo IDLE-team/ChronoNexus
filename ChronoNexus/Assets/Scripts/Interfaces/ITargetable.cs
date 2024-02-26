@@ -1,7 +1,7 @@
 ﻿using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine;
 using System;
-internal interface ITargetable
+public interface ITargetable
 {
     public void SetSelfTarget(bool isActive);
     public Transform GetTransform();

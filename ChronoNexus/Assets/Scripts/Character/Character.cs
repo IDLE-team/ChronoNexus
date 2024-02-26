@@ -10,7 +10,7 @@ using Zenject;
 [RequireComponent(typeof(CharacterMovement), typeof(Attacker), typeof(CharacterAnimator))]
 [RequireComponent(typeof(CharacterAudioController))]
 [Fix]
-public class Character : MonoBehaviour, IDamagable
+public class Character : MonoBehaviour, IDamagable, ITargetable
 {
     //Я не знаю как лучше сделать, поэтому просто через префаб пока прокидываем точку.
     [SerializeField] private Transform _aimTarget;
@@ -31,6 +31,7 @@ public class Character : MonoBehaviour, IDamagable
 
     private Attacker Attacker { get; set; }
 
+    private bool _isValid = true;
     public Transform Transform => transform;
 
     private void OnEnable()
@@ -68,6 +69,8 @@ public class Character : MonoBehaviour, IDamagable
 
     public void Die()
     {
+        _isValid = false;
+        OnTargetInvalid?.Invoke();
         Death().Forget();
     }
 
@@ -78,4 +81,21 @@ public class Character : MonoBehaviour, IDamagable
         _levelController.Restart();
         await UniTask.Yield();
     }
+
+    public void SetSelfTarget(bool isActive)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Transform GetTransform()
+    {
+        return _aimTarget;
+    }
+
+    public bool GetTargetValid()
+    {
+        return _isValid;
+    }
+
+    public event Action OnTargetInvalid;
 }

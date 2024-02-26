@@ -9,19 +9,19 @@ public class TimeControllerHolder : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, affectRadius);
 
-        // Перебираем найденные объекты
+        // РџРµСЂРµР±РёСЂР°РµРј РЅР°Р№РґРµРЅРЅС‹Рµ РѕР±СЉРµРєС‚С‹
         foreach (Collider collider in colliders)
         {
-            // Пытаемся получить доступ к компоненту MonoBehaviour на объекте
+            // РџС‹С‚Р°РµРјСЃСЏ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє РєРѕРјРїРѕРЅРµРЅС‚Сѓ MonoBehaviour РЅР° РѕР±СЉРµРєС‚Рµ
             MonoBehaviour[] scripts = collider.gameObject.GetComponents<MonoBehaviour>();
 
-            // Вызываем нужные методы для каждого скрипта
+            // Р’С‹Р·С‹РІР°РµРј РЅСѓР¶РЅС‹Рµ РјРµС‚РѕРґС‹ РґР»СЏ РєР°Р¶РґРѕРіРѕ СЃРєСЂРёРїС‚Р°
             foreach (MonoBehaviour script in scripts)
             {
-                // Проверяем, что компонент реализует нужный интерфейс или содержит нужный метод
+                // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РєРѕРјРїРѕРЅРµРЅС‚ СЂРµР°Р»РёР·СѓРµС‚ РЅСѓР¶РЅС‹Р№ РёРЅС‚РµСЂС„РµР№СЃ РёР»Рё СЃРѕРґРµСЂР¶РёС‚ РЅСѓР¶РЅС‹Р№ РјРµС‚РѕРґ
                 if (script is ITimeAffected)
                 {
-                    ((ITimeAffected)script).StopTimeAction();
+             //       ((ITimeAffected)script).StopTimeAction();
                 }
             }
         }
@@ -34,13 +34,13 @@ public class TimeControllerHolder : MonoBehaviour
         yield return new WaitForSeconds(delay);
         foreach (Collider collider in timeBodies)
         {
-            // Пытаемся получить доступ к компоненту MonoBehaviour на объекте
+            // РџС‹С‚Р°РµРјСЃСЏ РїРѕР»СѓС‡РёС‚СЊ РґРѕСЃС‚СѓРї Рє РєРѕРјРїРѕРЅРµРЅС‚Сѓ MonoBehaviour РЅР° РѕР±СЉРµРєС‚Рµ
             MonoBehaviour[] scripts = collider.gameObject.GetComponents<MonoBehaviour>();
 
-            // Вызываем нужные методы для каждого скрипта
+            // Р’С‹Р·С‹РІР°РµРј РЅСѓР¶РЅС‹Рµ РјРµС‚РѕРґС‹ РґР»СЏ РєР°Р¶РґРѕРіРѕ СЃРєСЂРёРїС‚Р°
             foreach (MonoBehaviour script in scripts)
             {
-                // Проверяем, что компонент реализует нужный интерфейс или содержит нужный метод
+                // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РєРѕРјРїРѕРЅРµРЅС‚ СЂРµР°Р»РёР·СѓРµС‚ РЅСѓР¶РЅС‹Р№ РёРЅС‚РµСЂС„РµР№СЃ РёР»Рё СЃРѕРґРµСЂР¶РёС‚ РЅСѓР¶РЅС‹Р№ РјРµС‚РѕРґ
                 if (script is ITimeAffected)
                 {
                     ((ITimeAffected)script).RealTimeAction();
