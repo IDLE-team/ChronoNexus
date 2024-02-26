@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PolygonScifi_01_A 1
-  m_Shader: {fileID: 4800000, guid: 6c046203321edf34fb092959a05e5b4a, type: 3}
+  m_Shader: {fileID: 4800000, guid: 48bccc0cce2e16b45802a370e0e3104b, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
@@ -17,7 +17,6 @@ Material:
   - _MK_EMISSION_MAP
   - _MK_ENVIRONMENT_REFLECTIONS_AMBIENT
   - _MK_LIGHT_CEL
-  - _MK_OUTLINE_HULL_CLIP
   - _MK_RECEIVE_SHADOWS
   - _MK_WRAPPED_DIFFUSE
   m_InvalidKeywords:
@@ -149,10 +148,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _OutlineMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Overlay:
         m_Texture: {fileID: 2800000, guid: 10098b6ab07bb81478f96a9c740c4fec, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -236,8 +231,12 @@ Material:
     - _BrushLowerCut: 0
     - _BrushSize: 0.8
     - _BumpScale: 0.5
+    - _CameraFade: 0
+    - _CameraFadeFarDistance: 2
+    - _CameraFadeNearDistance: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _ColorBlend: 0
     - _ColorGrading: 0
     - _Contrast: 1
     - _Cull: 2
@@ -265,6 +264,7 @@ Material:
     - _FaceShadowSmoothness: 0
     - _FallOff: 8.19
     - _FlattenGI: 0
+    - _Flipbook: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.2
     - _GlossinessSource: 0
@@ -308,18 +308,12 @@ Material:
     - _NormalMapIntensity: 1
     - _OcclusionStrength: 1
     - _OptionsTab: 1
-    - _Outline: 3
-    - _OutlineData: 0
     - _OutlineEnabled: 1
-    - _OutlineFadeMax: 2
-    - _OutlineFadeMin: 0.25
     - _OutlineMode: 0
-    - _OutlineNoise: 0
-    - _OutlineSize: 5
-    - _OutlineTab: 0
     - _OutlineWidth: 2.1
     - _OverrideShadowColor: 0
     - _Parallax: 0.02
+    - _ParticlesTab: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RenderFace: 2
@@ -339,6 +333,9 @@ Material:
     - _Smoothness: 1
     - _SmoothnessSource: 0
     - _SmoothnessTextureChannel: 0
+    - _SoftFade: 0
+    - _SoftFadeFarDistance: 1
+    - _SoftFadeNearDistance: 0
     - _SpecClipMaskScale: 1
     - _SpecShadowStrength: 1
     - _SpecSource: 0
