@@ -37,9 +37,11 @@ namespace UnityEngine.InputSystem.OnScreen
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            SendValueToControl(0.0f);
-            _pointerDown = false;
-            _pointerUp = true;
+            if (_pointerDownTimer < _requiredHoldTime)
+            {
+                OnClicked?.Invoke();
+            }
+            Reset();
         }
 
 
@@ -51,14 +53,8 @@ namespace UnityEngine.InputSystem.OnScreen
                 if (_pointerDownTimer >= _requiredHoldTime)
                 {
                     OnLongClicked?.Invoke();
-                    Reset();
+                    _pointerDown = false;
                 }
-            }
-
-            if (_pointerUp && (_pointerDownTimer <= _requiredHoldTime))
-            {
-                SendValueToControl(1.0f);
-                Reset();
             }
         }
 

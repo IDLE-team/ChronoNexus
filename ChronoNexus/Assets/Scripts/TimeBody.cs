@@ -8,7 +8,6 @@ public class TimeBody : MonoBehaviour, ITimeBody
 
     private void OnEnable()
     {
-        Debug.Log("OnEnable: " + gameObject.name);
         _timeAffectedBody.OnTimeAffectedDestroy += RemoveFromTimeManager;
 
         if (TimeManager.instance != null)

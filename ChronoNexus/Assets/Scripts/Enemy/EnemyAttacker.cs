@@ -167,9 +167,10 @@ public class EnemyAttacker : MonoBehaviour
     [UsedInAnimator]
     public void Shoot(Vector3 target)
     {
+    
         Vector3 direction = (target - _shootPosition.position).normalized;
         var bullet = Instantiate(_selectedBullet, _shootPosition.position, Quaternion.LookRotation(direction));
-        bullet.SetTarget(direction);
+        bullet.Initialize(direction, 10, 20f);
     }
 
     [UsedInAnimator]

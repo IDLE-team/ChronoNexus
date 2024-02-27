@@ -8,8 +8,9 @@ public class JoystickButton : MonoBehaviour
     [SerializeField] private LongClickButton _button;
     [SerializeField] private HoverJoystick _joystick;
     [SerializeField] private СharacterTargetingSystem _targetLock;
-    [SerializeField] private float _requiredHoldTime;
     [SerializeField] private Attacker _attacker;
+    [SerializeField] private float _requiredHoldTime;
+    [SerializeField] private WeaponController _weaponController  ;
     private bool _isTargetLockPerformed;
     private float _holdTimer;
 
@@ -19,20 +20,21 @@ public class JoystickButton : MonoBehaviour
     private void OnEnable()
     {
         _button.OnLongClicked += ActivateJoystick;
-        _button.OnClicked += StartShoot;
+         _button.OnClicked += StartShoot;
 
     }
 
     private void OnDisable()
     {
         _button.OnLongClicked -= ActivateJoystick;
-        _button.OnClicked -= StartShoot;
+         _button.OnClicked -= StartShoot;
     }
 
     private PlayerInputActions _input;
     private void StartShoot()
-    {
-        _attacker.Shoot();
+    { 
+        _attacker.StartFire();
+      // _weaponController.CurrentWeapon.Fire();
     }
     public void ActivateJoystick()
     {

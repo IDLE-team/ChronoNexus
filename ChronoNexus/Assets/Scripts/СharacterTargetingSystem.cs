@@ -22,6 +22,7 @@ public class СharacterTargetingSystem : MonoBehaviour
     [SerializeField][Min(0.1f)] private float _manualTargetRefreshDelay;
     [SerializeField] float _sphereCastThickness;
 
+    [SerializeField] private Transform _forwardPlayerAim;
     [SerializeField] GameObject _targetPointer;
     [SerializeField] AimRigController _aimRigController;
 
@@ -68,6 +69,8 @@ public class СharacterTargetingSystem : MonoBehaviour
         RefreshTargetAsync().Forget();
         _startSphereCastThickness = _sphereCastThickness;
         _startTargetPointerScale = _targetPointer.transform.localScale;
+        _aimRigController._aimTarget.position = _forwardPlayerAim.transform.position;
+        _aimRigController._aimTarget.parent = _forwardPlayerAim;
     }
     private void Update()
     {
@@ -202,9 +205,6 @@ public class СharacterTargetingSystem : MonoBehaviour
             }
             Target = selectedTarget;
             Target.SetSelfTarget(true);
-            Debug.Log("Target: " + Target);
-            Debug.Log("PrevTarget: " + _previousTarget);
-
             if (_previousTarget != null)
                 _previousTarget.SetSelfTarget(false);
 
@@ -226,7 +226,9 @@ public class СharacterTargetingSystem : MonoBehaviour
     private void SetEmptyTarget()
     {
         Debug.Log("SetEmptyCalled");
-        _aimRigController._aimTarget.SetParent(null, true);
+        //_aimRigController._aimTarget.SetParent(null, true);
+        _aimRigController._aimTarget.position = _forwardPlayerAim.transform.position;
+        _aimRigController._aimTarget.parent = _forwardPlayerAim;
         _aimRigController.SetWeight(0);
 
         Target = null;
@@ -245,7 +247,6 @@ public class СharacterTargetingSystem : MonoBehaviour
     }
     private void ShowTargetPointer()
     {
-        Debug.Log("Show");
         _targetPointer.SetActive(true);
         _targetPointer.transform.localScale = Vector3.zero;
         if (appearTween != null)
@@ -257,7 +258,6 @@ public class СharacterTargetingSystem : MonoBehaviour
     }
     private void HideTargetPointer()
     {
-        Debug.Log("Hide");
         if (appearTween != null)
         {
             appearTween.Kill();

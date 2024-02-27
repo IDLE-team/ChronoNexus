@@ -212,7 +212,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1660454568634840587}
   - component: {fileID: 991821708388290625}
-  - component: {fileID: 7523136544709669666}
   m_Layer: 0
   m_Name: Rig 1
   m_TagString: Untagged
@@ -254,21 +253,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Weight: 0
   m_Effectors: []
---- !u!114 &7523136544709669666
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873436545119823624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e4ae2d860564f74d8fa02afc37ee999, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rig: {fileID: 991821708388290625}
-  _aimTarget: {fileID: 0}
-  _constraints: []
 --- !u!1 &1225338749191930355
 GameObject:
   m_ObjectHideFlags: 0
@@ -2871,6 +2855,7 @@ GameObject:
   - component: {fileID: 7814182681157555738}
   - component: {fileID: 3375590781581631603}
   - component: {fileID: 7078482639277288140}
+  - component: {fileID: 3576072713808266789}
   m_Layer: 7
   m_Name: DefaultEnemy
   m_TagString: Enemy
@@ -3093,7 +3078,7 @@ MonoBehaviour:
   _viewRadius: 10
   _findDelay: 0.1
   canSeeTarget: 0
-  _aimRigController: {fileID: 7523136544709669666}
+  _aimRigController: {fileID: 3576072713808266789}
 --- !u!114 &8993778964191881328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3318,6 +3303,22 @@ MonoBehaviour:
   - {fileID: 8993778964597562431}
   - {fileID: 8993778964597562419}
   - {fileID: 8993778964597562429}
+--- !u!114 &3576072713808266789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8993778964597064085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4ae2d860564f74d8fa02afc37ee999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigList:
+  - {fileID: 991821708388290625}
+  _aimTarget: {fileID: 0}
+  _constraints: []
 --- !u!1 &8993778964687056039
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,18 +1,17 @@
 using System;
 using UnityEngine;
 
-//TODO подумать насчет временем полёта пули / время уничтожения
-//TODO изменить setTarget
 public class Bullet : MonoBehaviour, ITimeAffected
 {
-    [SerializeField][Min(1)] private int _damage = 10;
-    public int Damage => _damage;
-    [SerializeField] private float _moveSpeed;
-
     [SerializeField] private LayerMask _obstacleLayerMask;
 
     private Vector3 _shootDir;
+    
+    private float _damage;
+    private float _moveSpeed;
 
+    public float Damage => _damage;
+    
     public float TimeBeforeAffectedTimer;
     private bool CanBeAffected;
     public event Action OnTimeAffectedDestroy;
@@ -22,11 +21,11 @@ public class Bullet : MonoBehaviour, ITimeAffected
     public bool isTimeSlowed { get; set; }
     public bool isTimeRewinded { get; set; }
 
-    
-    public void SetTarget(Vector3 shootDirection)
+    public void Initialize( Vector3 shootDirection, float damage, float speed)
     {
-      //  Debug.Log("ShootDir: " + shootDirection);
+        _damage = damage;
         _shootDir = shootDirection;
+        _moveSpeed = speed;
     }
 
     private void Start()

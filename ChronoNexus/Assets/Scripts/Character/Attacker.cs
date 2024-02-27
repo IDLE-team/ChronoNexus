@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,11 +16,12 @@ public class Attacker : MonoBehaviour
     [SerializeField] private float _damage;
     [SerializeField] private Character _character;
     [SerializeField] private InputService _inputService;
-
+    [SerializeField] private WeaponController _weaponController;
     public float Damage => _damage;
     private Vector3 _shootDir;
     private CharacterAnimator _animator;
-
+    private bool _canFire = true;
+    private bool _resetTimer;
     private PlayerInputActions _input;
 
     [Inject]
@@ -45,14 +47,59 @@ public class Attacker : MonoBehaviour
 
     private void OnFire(InputAction.CallbackContext obj)
     {
-        _animator.Fire();
+        StartFire();
     }
     private void OnHit(InputAction.CallbackContext obj)
     {
-
         _animator.Attack();
     }
 
+    public void StartFire()
+    {
+        if (_weaponController.CurrentWeapon == null)
+            return;
+        if (_character.CharacterTargetingSystem.Target == null)
+        {
+            _character.AimRigController.SetWeight(1);
+            _character.AimRigController.StopSmoothWeight();
+
+            if (_canFire)
+            {
+                StartCoroutine(TimerToReset());
+            }
+            else
+            {
+                _resetTimer = true;
+            }
+        }
+        
+        _animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
+        
+    }
+
+    IEnumerator TimerToReset()
+    {
+        _canFire = false;
+        yield return new WaitForSeconds(1f);
+        Debug.Log("ResetTimerStatus" + _resetTimer);
+        if (_resetTimer)
+        {
+            StartCoroutine(TimerToReset());
+            _resetTimer = false;
+            _character.AimRigController.StopSmoothWeight();
+            yield return null;
+        }
+
+        else
+        {
+            Debug.Log("Called");
+            _canFire = true;
+            _resetTimer = false;
+            _character.AimRigController.SetSmoothWeight(0);
+        }
+    }
+    
+    
     [UsedInAnimator]
     public void Hit()
     {
@@ -62,22 +109,7 @@ public class Attacker : MonoBehaviour
             collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_damage);
         }
     }
-
-    [UsedInAnimator]
-    public void Shoot()
-    {
-        if (_character.CharacterTargetingSystem.Target != null)
-        {
-            _shootDir = ((_character.CharacterTargetingSystem.Target.GetTransform().position - _rangeWeapon.transform.position).normalized);
-            
-        }
-        else
-        {
-            _shootDir = transform.forward;
-        }
-        var bullet = Instantiate(_bullet, _rangeWeapon.position, Quaternion.LookRotation(_shootDir));
-        bullet.SetTarget(_shootDir);
-    }
+    
 
     [UsedInAnimator]
     public void PlayEffect()

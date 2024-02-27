@@ -87,6 +87,7 @@ GameObject:
   - component: {fileID: 5059573310530627058}
   - component: {fileID: 4549097827345412069}
   - component: {fileID: 5772738212280064789}
+  - component: {fileID: 5607017370122685427}
   m_Layer: 7
   m_Name: JuggernautEnemy
   m_TagString: Enemy
@@ -311,7 +312,7 @@ MonoBehaviour:
   _viewRadius: 10
   _findDelay: 0.1
   canSeeTarget: 0
-  _aimRigController: {fileID: 2643746634188371035}
+  _aimRigController: {fileID: 5607017370122685427}
 --- !u!114 &615608473235203711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,6 +548,22 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: -0.12}
+--- !u!114 &5607017370122685427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712839722526214741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4ae2d860564f74d8fa02afc37ee999, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigList:
+  - {fileID: 1114567021609098749}
+  _aimTarget: {fileID: 0}
+  _constraints: []
 --- !u!1 &713704588030374565
 GameObject:
   m_ObjectHideFlags: 0
@@ -6667,7 +6684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e4ae2d860564f74d8fa02afc37ee999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rig: {fileID: 1114567021609098749}
+  _rigList: []
   _aimTarget: {fileID: 0}
   _constraints: []
 --- !u!1 &3234364120671576100

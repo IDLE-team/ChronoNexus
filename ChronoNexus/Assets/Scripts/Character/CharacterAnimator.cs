@@ -42,9 +42,9 @@ public class CharacterAnimator : MonoBehaviour
         _animator.SetTrigger(AttackHash);
     }
 
-    public void Fire()
+    public void Fire(int hash)
     {
-        _animator.SetTrigger(ShootHash);
+        _animator.SetTrigger(hash);
     }
     public void Sit(bool value)
     {

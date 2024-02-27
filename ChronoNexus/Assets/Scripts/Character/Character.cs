@@ -1,12 +1,13 @@
 using Cysharp.Threading.Tasks;
 using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
-[RequireComponent(typeof(Rigidbody), typeof(Outfitter))]
+[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CharacterMovement), typeof(Attacker), typeof(CharacterAnimator))]
 [RequireComponent(typeof(CharacterAudioController))]
 [Fix]
@@ -29,6 +30,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     public CharacterAnimator Animator { get; private set; }
     public СharacterTargetingSystem CharacterTargetingSystem { get; private set; }
 
+    public AimRigController AimRigController { get; private set; }
     private Attacker Attacker { get; set; }
 
     private bool _isValid = true;
@@ -47,7 +49,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     private void Awake()
     {
         //TODO прокинуть через Zenject
-        _outfitter = GetComponent<Outfitter>();
+        //_outfitter = GetComponent<Outfitter>();
         _health = GetComponent<Health>();
         Movement = GetComponent<CharacterMovement>();
         Attacker = GetComponent<Attacker>();
@@ -55,6 +57,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         Animator = GetComponent<CharacterAnimator>();
         Rigidbody = GetComponent<Rigidbody>();
         AudioController = GetComponent<CharacterAudioController>();
+        AimRigController = GetComponent<AimRigController>();
     }
     private void Start()
     {
