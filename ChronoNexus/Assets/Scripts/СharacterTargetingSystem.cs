@@ -157,7 +157,7 @@ public class СharacterTargetingSystem : MonoBehaviour
         _aimRigController._aimTarget.parent = Target.GetTransform();
         Target.OnTargetInvalid += SetEmptyTarget;
 
-        _aimRigController.SetWeight(1);
+        _aimRigController.SetSmoothWeight(1);
         _isEnemyTargeted = true;
     }
 
@@ -212,7 +212,7 @@ public class СharacterTargetingSystem : MonoBehaviour
             _aimRigController._aimTarget.position = Target.GetTransform().position;
             _aimRigController._aimTarget.parent = Target.GetTransform();
 
-            _aimRigController.SetWeight(1);
+            _aimRigController.SetSmoothWeight(1);
 
             Target.OnTargetInvalid += SetEmptyTarget;
 
@@ -229,7 +229,7 @@ public class СharacterTargetingSystem : MonoBehaviour
         //_aimRigController._aimTarget.SetParent(null, true);
         _aimRigController._aimTarget.position = _forwardPlayerAim.transform.position;
         _aimRigController._aimTarget.parent = _forwardPlayerAim;
-        _aimRigController.SetWeight(0);
+        _aimRigController.SetSmoothWeight(0);
 
         Target = null;
         IsLookAt = false;

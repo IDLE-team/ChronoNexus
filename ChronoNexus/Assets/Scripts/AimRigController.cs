@@ -31,6 +31,10 @@ public class AimRigController : MonoBehaviour
 
     public void SetSmoothWeight(float weight)
     {
+        if (coroutine != null)
+        {
+            StopSmoothWeight();
+        }
         coroutine = SmootherWeight(weight);
         StartCoroutine(coroutine);
     }
@@ -38,7 +42,7 @@ public class AimRigController : MonoBehaviour
     public void StopSmoothWeight()
     {
         if(coroutine != null)
-        StopCoroutine(coroutine);
+            StopCoroutine(coroutine);
     }
     public void SetCurrentRig(int rigID)
     {

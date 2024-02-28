@@ -60,8 +60,8 @@ public class Attacker : MonoBehaviour
             return;
         if (_character.CharacterTargetingSystem.Target == null)
         {
-            _character.AimRigController.SetWeight(1);
-            _character.AimRigController.StopSmoothWeight();
+            _character.AimRigController.SetSmoothWeight(1);
+                //_character.AimRigController.StopSmoothWeight();
 
             if (_canFire)
             {
@@ -73,6 +73,14 @@ public class Attacker : MonoBehaviour
             }
         }
         
+      //  else if (_character.CharacterTargetingSystem.Target != null)
+      //  {
+        //    if(_character.AimRigController.CurrentRig.weight != 1)
+        //        _character.AimRigController.SetWeight(1);
+        //    _character.AimRigController.StopSmoothWeight();
+
+      //  }
+        
         _animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
         
     }
@@ -81,7 +89,14 @@ public class Attacker : MonoBehaviour
     {
         _canFire = false;
         yield return new WaitForSeconds(1f);
-        Debug.Log("ResetTimerStatus" + _resetTimer);
+        if (_character.CharacterTargetingSystem.Target != null)
+        {
+            // _character.AimRigController.StopSmoothWeight();
+            _canFire = true;
+            _resetTimer = false;
+            yield return null;
+        }
+        
         if (_resetTimer)
         {
             StartCoroutine(TimerToReset());
@@ -90,12 +105,25 @@ public class Attacker : MonoBehaviour
             yield return null;
         }
 
-        else
+        else if(!_resetTimer)
         {
-            Debug.Log("Called");
             _canFire = true;
             _resetTimer = false;
-            _character.AimRigController.SetSmoothWeight(0);
+            if (_character.CharacterTargetingSystem.Target != null)
+            {
+                // _character.AimRigController.StopSmoothWeight();
+                _canFire = true;
+                _resetTimer = false;
+                yield return null;
+            }
+
+            else
+            {
+                Debug.Log("ХУЙНЯ ЕБАНАЯ СРАБОТАЛА");
+                _character.AimRigController.SetSmoothWeight(0);
+            }
+
+          //  _character.AimRigController.SetSmoothWeight(0);
         }
     }
     
