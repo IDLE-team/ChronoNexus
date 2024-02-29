@@ -13,16 +13,19 @@ public class Attacker : MonoBehaviour
     [SerializeField] private Bullet _bullet;
     [SerializeField] private AttackZone _attackZone;
     [SerializeField] private VisualEffect _visualHitEffect;
-    [SerializeField] private float _damage;
     [SerializeField] private Character _character;
     [SerializeField] private InputService _inputService;
     [SerializeField] private WeaponController _weaponController;
-    public float Damage => _damage;
-    private Vector3 _shootDir;
+    
+    [SerializeField] private float _damage;
+
+    private PlayerInputActions _input;
     private CharacterAnimator _animator;
+    private Vector3 _shootDir;
+
+    public float Damage => _damage;
     private bool _canFire = true;
     private bool _resetTimer;
-    private PlayerInputActions _input;
 
     [Inject]
     private void Construct(PlayerInputActions input, CharacterAnimator animator)
@@ -61,7 +64,6 @@ public class Attacker : MonoBehaviour
         if (_character.CharacterTargetingSystem.Target == null)
         {
             _character.AimRigController.SetSmoothWeight(1);
-                //_character.AimRigController.StopSmoothWeight();
 
             if (_canFire)
             {
@@ -72,17 +74,7 @@ public class Attacker : MonoBehaviour
                 _resetTimer = true;
             }
         }
-        
-      //  else if (_character.CharacterTargetingSystem.Target != null)
-      //  {
-        //    if(_character.AimRigController.CurrentRig.weight != 1)
-        //        _character.AimRigController.SetWeight(1);
-        //    _character.AimRigController.StopSmoothWeight();
-
-      //  }
-        
         _animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
-        
     }
 
     IEnumerator TimerToReset()
@@ -91,7 +83,6 @@ public class Attacker : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (_character.CharacterTargetingSystem.Target != null)
         {
-            // _character.AimRigController.StopSmoothWeight();
             _canFire = true;
             _resetTimer = false;
             yield return null;
@@ -111,7 +102,6 @@ public class Attacker : MonoBehaviour
             _resetTimer = false;
             if (_character.CharacterTargetingSystem.Target != null)
             {
-                // _character.AimRigController.StopSmoothWeight();
                 _canFire = true;
                 _resetTimer = false;
                 yield return null;
@@ -119,11 +109,9 @@ public class Attacker : MonoBehaviour
 
             else
             {
-                Debug.Log("ХУЙНЯ ЕБАНАЯ СРАБОТАЛА");
                 _character.AimRigController.SetSmoothWeight(0);
             }
-
-          //  _character.AimRigController.SetSmoothWeight(0);
+            
         }
     }
     

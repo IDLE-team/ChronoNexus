@@ -5,6 +5,10 @@
     {
         public override void Fire(ITargetable target, Transform holder)
         {
+            if (Time.time - _lastFireTime < FireRate)
+            {
+                return;
+            }
             if (target != null)
             {
                 _shootDir = ((target.GetTransform().position - WeaponPrefab.transform.position).normalized);
@@ -15,5 +19,8 @@
             }
             var bullet = Instantiate(BulletPrefab, FirePosition.position, Quaternion.LookRotation(_shootDir));
             bullet.Initialize(_shootDir, Damage, ProjectileSpeed);
+            PlayWeaponAudio();
+
+            _lastFireTime = Time.time;
         }
     }

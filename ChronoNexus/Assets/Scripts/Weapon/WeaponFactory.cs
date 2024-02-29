@@ -7,32 +7,38 @@ public class WeaponFactory : MonoBehaviour
     
     public Weapon CreateWeapon(WeaponData data, Transform holder)
     {
-        GameObject spawnedWeapon; 
+        Weapon weapon;
+        
+        var weaponHolder = Instantiate(_prefab, holder);
+        weaponHolder.name = data.WeaponName;
+        
         switch (data.WeaponSubType)
         {
             case WeaponSubType.Pistol:
-               spawnedWeapon = Instantiate(_prefab, holder);
-               spawnedWeapon.name = data.WeaponName;
-               var pistolWeapon = spawnedWeapon.AddComponent<PistolWeapon>();
-               pistolWeapon.SetData(data);
-               pistolWeapon.WeaponPrefab = Instantiate(pistolWeapon.WeaponPrefab, spawnedWeapon.transform);
-               pistolWeapon.SetFirePosition();
-               return pistolWeapon;
-
-
-
+                var pistol = weaponHolder.AddComponent<PistolWeapon>();
+                pistol.SetData(data, weaponHolder.transform);
+                weapon = pistol;
+                break;
+                
             case WeaponSubType.Rifle:
-                spawnedWeapon = Instantiate(_prefab, holder);
-                spawnedWeapon.name = data.WeaponName;
-                var rifleWeapon = spawnedWeapon.AddComponent<RifleWeapon>();
-                rifleWeapon.SetData(data);
-                rifleWeapon.WeaponPrefab = Instantiate(rifleWeapon.WeaponPrefab, spawnedWeapon.transform);
-                rifleWeapon.SetFirePosition();
+                var rifle = weaponHolder.AddComponent<RifleWeapon>();
+                rifle.SetData(data, weaponHolder.transform);
+                weapon = rifle;
+                break;
 
-                return  rifleWeapon;
-                     default:
-                 throw new ArgumentOutOfRangeException(nameof(data), data, null);
+            case WeaponSubType.Shotgun:
+                var shotgun = weaponHolder.AddComponent<ShotgunWeapon>();
+                shotgun.SetData(data, weaponHolder.transform);
+                weapon = shotgun;
+                break;
+            
+            default:
+               var defaultWeapon = weaponHolder.AddComponent<PistolWeapon>();
+               defaultWeapon.SetData(data, weaponHolder.transform);
+               weapon = defaultWeapon;
+               break;
         }
+        return weapon;
     }
     
 }

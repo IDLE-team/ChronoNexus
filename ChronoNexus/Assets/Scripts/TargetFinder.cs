@@ -117,7 +117,8 @@ public class TargetFinder : MonoBehaviour
 
     public void SetWeight(int value)
     {
-        _aimRigController.SetSmoothWeight(value);
+        //_aimRigController.SetSmoothWeight(value);
+        _aimRigController.SetWeight(value);
     }
     
 

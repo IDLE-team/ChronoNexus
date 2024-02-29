@@ -41,6 +41,10 @@ public class WeaponController : MonoBehaviour
             case WeaponSubType.Rifle:
                 _rigController.SetCurrentRig(1);
                 break;
+            
+            case WeaponSubType.Shotgun:
+                _rigController.SetCurrentRig(1);
+                break;
         }
     }
     

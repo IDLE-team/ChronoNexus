@@ -6,8 +6,10 @@
     {
         public override void Fire(ITargetable target, Transform holder)
         {
-            if(!CanFire)
+            if (Time.time - _lastFireTime < FireRate)
+            {
                 return;
+            }
             
             if (target != null)
             {
@@ -17,20 +19,19 @@
             {
                 _shootDir = holder.forward;
             }
-
+            _lastFireTime = Time.time;
             FireBurst().Forget();
         }
         async UniTask FireBurst()
         {
-            CanFire = false;
             for (int i = 0; i < 3; i++)
             {
-                var bullet = Instantiate(BulletPrefab,FirePosition.position, Quaternion.LookRotation(_shootDir));
+                PlayWeaponAudio();
+                Debug.Log("FirePosition: " + FirePosition);
+                var bullet = Instantiate(BulletPrefab, FirePosition.position, Quaternion.LookRotation(_shootDir));
                 bullet.Initialize(_shootDir, Damage, ProjectileSpeed);
-                await UniTask.Delay((int)(FireRate * 1000));
+                await UniTask.Delay((int)(0.1f * 1000));
 
             }
-
-            CanFire = true;
         }
     }

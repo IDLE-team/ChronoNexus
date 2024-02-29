@@ -9,7 +9,7 @@ public class WeaponData : ScriptableObject
     public WeaponSubType WeaponSubType;
     public GameObject WeaponPrefab;
     public Bullet BulletPrefab;
-
+    public AudioClip WeaponSound;
     public WeaponAnimation WeaponAnimation;
     public float Damage;
     public float ReloadSpeed;
