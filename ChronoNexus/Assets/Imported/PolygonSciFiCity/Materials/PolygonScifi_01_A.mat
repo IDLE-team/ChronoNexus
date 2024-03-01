@@ -17,7 +17,7 @@ Material:
   - _MK_EMISSION
   - _MK_EMISSION_MAP
   - _MK_ENVIRONMENT_REFLECTIONS_AMBIENT
-  - _MK_LIGHT_CEL
+  - _MK_LIGHT_BANDED
   - _MK_RECEIVE_SHADOWS
   - _MK_WRAPPED_DIFFUSE
   m_InvalidKeywords:
@@ -30,7 +30,7 @@ Material:
   - _STEPVIARAMPTEXTURE_ON
   - _WRAPPEDLIGHTING_ON
   m_LightmapFlags: 2
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: 2000
   stringTagMap:
@@ -240,7 +240,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DiffuseSmoothness: 0.184
+    - _DiffuseSmoothness: 0.179
     - _DiffuseStep: 0.123
     - _DiffuseThresholdOffset: 0.25
     - _DirtAmount: 0.889
@@ -293,10 +293,10 @@ Material:
     - _IridescenceSize: 1
     - _IridescenceSmoothness: 0.5
     - _IridescenceThresholdOffset: 0
-    - _Light: 1
+    - _Light: 2
     - _LightBands: 4
-    - _LightBandsScale: 0.5
-    - _LightThreshold: 0.615
+    - _LightBandsScale: 0.198
+    - _LightThreshold: 0.521
     - _Metallic: 0
     - _Mode: 0
     - _NoiseScale: 1
@@ -318,7 +318,7 @@ Material:
     - _RimLightAlign: 0
     - _RimLightSmoothness: 0
     - _RimPower: 0.55
-    - _RimSize: 1
+    - _RimSize: 2.48
     - _RimSmoothness: 0.5
     - _RimThresholdOffset: 0.25
     - _Saturation: 1
@@ -369,7 +369,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DissolveBorderColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissionColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - _EmissionColor: {r: 4, g: 4, b: 4, a: 0}
     - _FaceFrontDirection: {r: 0, g: 0, b: 1, a: 0}
     - _FaceRightDirection: {r: 1, g: 0, b: 0, a: 0}
     - _GoochBrightColor: {r: 1, g: 1, b: 1, a: 1}
@@ -380,7 +380,7 @@ Material:
     - _IridescenceColor: {r: 1, g: 1, b: 1, a: 0.5}
     - _OutlineColor: {r: 0, g: 1, b: 0.99022484, a: 1}
     - _OutlineDistancFade: {r: -25, g: 50, b: 0, a: 0}
-    - _RimBrightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimBrightColor: {r: 0, g: 1, b: 0.8680749, a: 1}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimDarkColor: {r: 0, g: 0, b: 0, a: 1}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 1}
