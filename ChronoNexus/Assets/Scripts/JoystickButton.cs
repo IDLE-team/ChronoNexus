@@ -8,7 +8,7 @@ public class JoystickButton : MonoBehaviour
     [SerializeField] private LongClickButton _button;
     [SerializeField] private HoverJoystick _joystick;
     [SerializeField] private СharacterTargetingSystem _targetLock;
-    [SerializeField] private Attacker _attacker;
+    [SerializeField] private PlayerAttacker _attacker;
     [SerializeField] private float _requiredHoldTime;
     [SerializeField] private WeaponController _weaponController  ;
     private bool _isTargetLockPerformed;

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using Zenject;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(CharacterMovement), typeof(Attacker), typeof(CharacterAnimator))]
+[RequireComponent(typeof(CharacterMovement),  typeof(CharacterAnimator))]
 [RequireComponent(typeof(CharacterAudioController))]
 [Fix]
 public class Character : MonoBehaviour, IDamagable, ITargetable
@@ -31,7 +31,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     public СharacterTargetingSystem CharacterTargetingSystem { get; private set; }
 
     public AimRigController AimRigController { get; private set; }
-    private Attacker Attacker { get; set; }
+    private PlayerAttacker Attacker { get; set; }
 
     private bool _isValid = true;
     public Transform Transform => transform;
@@ -52,7 +52,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         //_outfitter = GetComponent<Outfitter>();
         _health = GetComponent<Health>();
         Movement = GetComponent<CharacterMovement>();
-        Attacker = GetComponent<Attacker>();
+        Attacker = GetComponent<PlayerAttacker>();
         CharacterTargetingSystem = GetComponent<СharacterTargetingSystem>();
         Animator = GetComponent<CharacterAnimator>();
         Rigidbody = GetComponent<Rigidbody>();
