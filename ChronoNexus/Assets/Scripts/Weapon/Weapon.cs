@@ -1,3 +1,6 @@
+using System;
+using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
@@ -14,11 +17,20 @@ public abstract class Weapon : MonoBehaviour
     public GameObject WeaponPrefab;
     public WeaponAnimation WeaponAnimation;
     
+    public TextMeshProUGUI WeaponUI;
+    
     public float Damage;
 
-    public bool CanFire = true;
-    public abstract void Fire(ITargetable target, Transform holder);
+    public bool isFire = true;
     
+    public abstract void Fire(ITargetable target, Transform holder);
+
+    public void StopFire()
+    {
+        isFire = false;
+        Debug.Log("isFire поменялся: " + isFire);
+    }
+
     public virtual void SetData(WeaponData data, Transform parent)
     {
         this.data = data;
@@ -32,6 +44,11 @@ public abstract class Weapon : MonoBehaviour
         SetAudioSource();
     }
 
+    public void SetWeaponUI(TextMeshProUGUI WeaponUI)
+    {
+        this.WeaponUI = WeaponUI;
+    }
+    
     public void SetAudioSource()
     {
         WeaponAudioSource = WeaponPrefab.GetComponent<AudioSource>();

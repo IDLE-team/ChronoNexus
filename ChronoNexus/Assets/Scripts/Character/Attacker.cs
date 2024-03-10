@@ -35,9 +35,8 @@ public class Attacker : MonoBehaviour
         _input.Player.Hit.performed += OnHit;
 
         _animator = animator;
-
-
     }
+    
     private void OnEnable()
     {
         _input.Enable();
@@ -77,6 +76,15 @@ public class Attacker : MonoBehaviour
         _animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.M))
+        {
+            _weaponController.CurrentWeapon.StopFire();
+            Debug.Log("Должен быть стоп");
+        }
+    }
+
     IEnumerator TimerToReset()
     {
         _canFire = false;
@@ -96,6 +104,15 @@ public class Attacker : MonoBehaviour
             yield return null;
         }
 
+ 
+        if (_weaponController.CurrentWeapon.isFire)
+        {
+            StartCoroutine(TimerToReset());
+            _resetTimer = false;
+            _character.AimRigController.StopSmoothWeight();
+            yield return null;
+        }
+        
         else if(!_resetTimer)
         {
             _canFire = true;
@@ -111,7 +128,6 @@ public class Attacker : MonoBehaviour
             {
                 _character.AimRigController.SetSmoothWeight(0);
             }
-            
         }
     }
     

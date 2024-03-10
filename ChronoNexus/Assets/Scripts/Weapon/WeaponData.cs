@@ -11,6 +11,7 @@ public class WeaponData : ScriptableObject
     public Bullet BulletPrefab;
     public AudioClip WeaponSound;
     public WeaponAnimation WeaponAnimation;
+    public int MaxAmmo;
     public float Damage;
     public float ReloadSpeed;
     public float FireRate;

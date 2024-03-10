@@ -487,6 +487,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ISeeker, ITimeAffec
     {
         return _aimTargetTransform;
     }
+
+    public bool GetTargetSelected()
+    {
+        return _isTarget;
+    }
+
     public bool GetTargetValid()
     {
         return _isValid;

@@ -95,6 +95,11 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         return _aimTarget;
     }
 
+    public bool GetTargetSelected()
+    {
+        return _isValid;
+    }
+
     public bool GetTargetValid()
     {
         return _isValid;

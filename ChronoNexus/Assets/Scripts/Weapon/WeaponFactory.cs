@@ -32,6 +32,12 @@ public class WeaponFactory : MonoBehaviour
                 weapon = shotgun;
                 break;
             
+            case WeaponSubType.MachineGun:
+                var machineGun = weaponHolder.AddComponent<MachineGunWeapon>();
+                machineGun.SetData(data, weaponHolder.transform);
+                weapon = machineGun;
+                break;
+            
             default:
                var defaultWeapon = weaponHolder.AddComponent<PistolWeapon>();
                defaultWeapon.SetData(data, weaponHolder.transform);
