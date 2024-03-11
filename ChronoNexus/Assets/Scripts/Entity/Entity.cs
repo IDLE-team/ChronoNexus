@@ -70,7 +70,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
 
     protected virtual void InitializeStartState()
     {
-        Debug.Log("1");
         _stateMachine.Initialize(DummyState);
     }
 
@@ -84,6 +83,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         _animator = GetComponent<EnemyAnimator>();
         _audioSource = GetComponent<AudioSource>();
         _loot = GetComponent<EnemyLoot>();
+        _rigidbody = GetComponent<Rigidbody>();
 
         IsTargetFound = false;
 
@@ -277,12 +277,15 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         
     }
 
-public enum State
+    public enum State
     {
         Dummy,
         Idle,
         Patrol,
-        RandomMove
+        RandomMove,
+        Chase,
+        MeleeAttack,
+        RangeAttack
     };
 
 }

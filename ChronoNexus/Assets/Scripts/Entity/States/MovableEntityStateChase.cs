@@ -51,16 +51,7 @@ public class MovableEntityStateChase : MovableEntityState
 
     protected virtual void AgentDestinationSet()
     {
-        if (Vector3.Distance(_movableEntity.SelfAim.transform.position, _movableEntity.Target.position) <= 2f)
-        {
-            _navMeshAgent.SetDestination(_movableEntity.SelfAim.transform.position);
-            _movableEntity.EndMoveAnimation();
-        }
-        else
-        {
-            _navMeshAgent.SetDestination(_movableEntity.Target.position);
-            _movableEntity.StartMoveAnimation();
-        }
+        _movableEntity.AgentDestinationSet();
     }
 
     protected virtual void TargetChaseDistanceSwitch()

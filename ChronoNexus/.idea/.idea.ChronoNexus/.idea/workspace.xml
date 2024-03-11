@@ -2,176 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bd9c2fb-00c3-42b8-9346-e7e81d6d440f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/EnemyAnimationEventsHolder.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/EnemyAnimationEventsHolder.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyHumanoid.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyHumanoid.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySoldier.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySoldier.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySoldierAttacker.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySoldierAttacker.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStationaryAttacker.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStationaryAttacker.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyHumanoidState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyHumanoidState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyMeleeChaseState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemySoldierChaseState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemySoldierChaseState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemySoldierIdleState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemySoldierIdleState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemySoldierPatrolState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemySoldierPatrolState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemySoldierState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemySoldierState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableEntity.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableEntity.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/EntityState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/EntityState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/EntityStateDummy.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/EntityStateDummy.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStateChase.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStateChase.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStateIdle.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStateIdle.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStatePatrol.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStatePatrol.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStateRandomMove.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStateRandomMove.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableMeleeEntity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableMeleeEntity.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableSoldierEntity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableSoldierEntity.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableMeleeEntityState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableMeleeEntityState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableMeleeEntityStateAttack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableMeleeEntityStateAttack.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableSoldierEntityState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableSoldierEntityState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableSoldierEntityStateAttack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableSoldierEntityStateAttack.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChronoNexus/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChronoNexus/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/EnemyAnimContoller.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/EnemyAnimContoller.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/FromAssets/Armed/Armed-Walk.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animation/FromAssets/Armed/Armed-Walk.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/JuggernautAnimContoller.controller" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/JuggernautAnimContoller.controller.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DownloadedAssets/DizzyMedia/_Assets/LP Sets_Sci-fi Interior/Packs/LPS Sci-Fi Interior Standard.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DownloadedAssets/DizzyMedia/_Assets/LP Sets_Sci-fi Interior/Packs/LPS Sci-Fi Interior URP.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DownloadedAssets/Simple Spin Blur/RP Assets/HDRP Simple Spin Blur.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DownloadedAssets/Simple Spin Blur/RP Assets/URP Simple Spin Blur.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/NeonCity-StandardRP/UnityPackages/NeonCity-HDRP-UModeler.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/NeonCity-StandardRP/UnityPackages/NeonCity-HDRP.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/NeonCity-StandardRP/UnityPackages/NeonCity-StandardRP-UModeler.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Scripts/CommonAssemblyDefinitions.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Compass Navigator Pro Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Corgi Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Devion Inventory Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Dialogue System Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Easy Save Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Emerald AI Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/HUD Navigation System Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Invector Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Inventory Engine Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Inventory Pro Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/PlayMaker Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/RPG Builder Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Rewired Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/Tactical Shooter AI Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Common/Third Party Support/TopDown Engine Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Scripts/DialogueSystemAssemblyDefinitions.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Action-RPG Starter Kit Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Adventure Creator Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Articy Localization Importer.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Behavior Designer Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Bolt Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Cinema Director Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Cinemachine Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Core GameKit Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Corgi Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Customizable SciFi Holo Interface Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Deftly Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Devion Inventory Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/DoozyUI Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Easy Save Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Emerald AI Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/FMOD Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/FaceFX Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Feel Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/GameFlow Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/I2 Localization Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/ICode Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Ink Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Invector Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Inventory Engine Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Inventory Pro Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/JLC Importer.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/KGFMapSystem Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/LipSync Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/LivelyChatBubbles Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Localization Package Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Look Animator Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Makinom Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Master Audio Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Motion Controller Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/NGUI HUD Text Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/NGUI Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/NWT Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/ORK Framework Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/PlayMaker Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/PostProcessing Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/RPG Builder Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/RPG Kit Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/RTVoice Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Realistic FPS Prefab Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Rewired Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Rog Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/SALSA Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/SLATE Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Speech Recognition System Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Spine Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/SuperTextMesh Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/TK2D Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/TalkIt Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Text Animator Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/TopDown Engine Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Topdown Kit Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/UniStorm Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Visual Scripting Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Wwise Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/Yarn2ImportAssemblyDefinitions.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/plyGame Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/uMMORPG Remastered Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/uMMORPG Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/uRPG Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/uSequencer Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Pixel Crushers/Dialogue System/Third Party Support/uSurvival Support.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/DefaultEnemy.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/DefaultEnemy.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Enemy.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Enemy.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/JuggernautEnemy.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/JuggernautEnemy.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/SecurityEnemy.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/SecurityEnemy.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EnemyTest/NavMesh-Navigation.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/EnemyTest/NavMesh-Navigation.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Attacker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/PlayerAttacker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Attacker.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/PlayerAttacker.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAttacker.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAttacker.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyAggressionState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyAggressionState.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyChaseState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyChaseState.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyMeleeChaseState.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyFearState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyFearState.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyIdleState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyIdleState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyMeleeAttackState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyMeleeAttackState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyPatrolState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyPatrolState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyPrudenceState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyPrudenceState.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyRangeAttackState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyRangeAttackState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/EnemyState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/JuggernautRangeAttackState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/States/JuggernautRangeAttackState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/JoystickButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/JoystickButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateMachine/StateMachine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TargetFinder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TargetFinder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/Medium_PipelineAsset_ForwardRenderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Medium_PipelineAsset_ForwardRenderer.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/NavMeshAreas.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/NavMeshAreas.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/DefaultMeleeEnemy.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/DefaultMeleeEnemy.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/DummyEnemy.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/DummyEnemy.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DebugEnemy.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DebugEnemy.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyMeleeAttacker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyMeleeAttacker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/Entity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStateChase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableEntityStateChase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/StateUIUpdater.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/StateUIUpdater.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,6 +128,9 @@
       <workItem from="1709829114741" duration="1107000" />
       <workItem from="1709890667568" duration="2319000" />
       <workItem from="1709930511702" duration="7105000" />
+      <workItem from="1710073920781" duration="10892000" />
+      <workItem from="1710103869869" duration="184000" />
+      <workItem from="1710153804184" duration="8988000" />
     </task>
     <servers />
   </component>

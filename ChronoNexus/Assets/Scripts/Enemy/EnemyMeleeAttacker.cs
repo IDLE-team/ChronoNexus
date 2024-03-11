@@ -7,14 +7,14 @@ public class EnemyMeleeAttacker : Attacker
     //protected float _attackTimer;
     [SerializeField] private AttackZone _attackZone;
     [SerializeField] private VisualEffect _visualHitEffect;
-    [SerializeField] private float _meleeDamage;
+    [SerializeField] private float _meleeDamage = 10f;
     
     [SerializeField] protected float _meleeAttackInterval = 1f;
 
     [SerializeField] protected float _minDelayTokenMelee = 0.3f;
     [SerializeField] protected float _maxDelayTokenMelee = 1f;
 
-    [SerializeField] protected float _maxMeleeAttackDistance = 2f;
+    [SerializeField] protected float _maxMeleeAttackDistance = 1.5f;
     [SerializeField] protected float _minMeleeDistanceToTarget = 1f;
 
     [SerializeField] protected float _meleeAttackAgentSpeed = 4f;

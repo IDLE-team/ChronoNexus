@@ -9,22 +9,22 @@ public class MovableEntity : Entity
 {
     public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
-    private NavMeshAgent _navMeshAgent;
+    protected NavMeshAgent _navMeshAgent;
 
-    private float _lastNavAcceleration;
-    private float _lastNavSpeed;
-    private float _lastNavAngularSpeed;
+    protected float _lastNavAcceleration;
+    protected float _lastNavSpeed;
+    protected float _lastNavAngularSpeed;
     
     public MovableEntityStateIdle IdleState { get; private set; }
     public MovableEntityStateRandomMove RandomMoveState { get; private set; }
     public MovableEntityStateChase ChaseState { get; private set; }
+    public MovableEntityStatePatrol PatrolState { get; private set; }
 
-    [SerializeField]private Vector3[] _patrolPoints;
+    [SerializeField]protected Vector3[] _patrolPoints;
     public Vector3[] PatrolPoints => _patrolPoints;
     
     protected override void InitializeStartState()
     {
-        Debug.Log("2");
         
         switch (state)
         {
@@ -36,6 +36,12 @@ public class MovableEntity : Entity
                 break;
             case State.RandomMove:
                 _stateMachine.Initialize(RandomMoveState);
+                break;
+            case State.Patrol:
+                _stateMachine.Initialize(PatrolState);
+                break;
+            case State.Chase:
+                _stateMachine.Initialize(ChaseState);
                 break;
             default:
                 _stateMachine.Initialize(DummyState);
@@ -49,10 +55,11 @@ public class MovableEntity : Entity
         _navMeshAgent = GetComponent<NavMeshAgent>();
         
         RandomMoveState = new MovableEntityStateRandomMove(this, _stateMachine);
+        PatrolState = new MovableEntityStatePatrol(this, _stateMachine);
         IdleState = new MovableEntityStateIdle(this, _stateMachine);
         ChaseState = new MovableEntityStateChase(this, _stateMachine);
+        
     }
-
     protected override void OnDied()
     {
         _navMeshAgent.velocity = Vector3.zero;
@@ -62,7 +69,6 @@ public class MovableEntity : Entity
         _navMeshAgent.isStopped = true;
         base.OnDied();
     }
-
     protected override void Die()
     {
         _navMeshAgent.velocity = Vector3.zero;
@@ -70,7 +76,6 @@ public class MovableEntity : Entity
 
         base.Die();
     }
-
     public override void RealTimeAction()
     {
         base.RealTimeAction();
@@ -84,7 +89,6 @@ public class MovableEntity : Entity
             }
         }
     }
-
     public override void StopTimeAction()
     {
         
@@ -97,7 +101,6 @@ public class MovableEntity : Entity
         }
         base.StopTimeAction();
     }
-
     public override void SlowTimeAction()
     {
         
@@ -110,33 +113,37 @@ public class MovableEntity : Entity
         }
         base.SlowTimeAction();
     }
-
     public void StartMoveAnimation()
     {
         _animator.StartMoveAnimation();
     }
-
     public void EndMoveAnimation()
     {
         _animator.EndMoveAnimation();
     }
-
-    public void StartAttackAnimation()
-    {
-        _animator.PlayAttackAnimation();
-    }
-
     private void SetLastNavMeshValues()
     {
         _lastNavSpeed = _navMeshAgent.speed;
         _lastNavAngularSpeed = _navMeshAgent.angularSpeed;
     }
-    
     public override void TargetFoundReaction()
     {
         _stateMachine.ChangeState(ChaseState);
     }
-    
+
+    public virtual void AgentDestinationSet()
+    {
+        if (Vector3.Distance(SelfAim.transform.position, Target.position) <= 2f)
+        {
+            _navMeshAgent.SetDestination(SelfAim.transform.position);
+            EndMoveAnimation();
+        }
+        else
+        {
+            _navMeshAgent.SetDestination(Target.position);
+            StartMoveAnimation();
+        }
+    }
     public virtual void TargetChaseDistanceSwitch()
     {
         if (Vector3.Distance(SelfAim.position, Target.position) > 12f)//view distance or check last point
