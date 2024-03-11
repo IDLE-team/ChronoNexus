@@ -261,6 +261,11 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         return _selfAimTargetTransform;
     }
 
+    public bool GetTargetSelected()
+    {
+        return _isTarget;
+    }
+
     public bool GetTargetValid()
     {
         return _isValid;
