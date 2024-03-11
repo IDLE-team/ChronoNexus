@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Health : MonoBehaviour, IHealth
 {
@@ -8,17 +9,12 @@ public class Health : MonoBehaviour, IHealth
     private float _maxHealth;
     public float MaxHealth => _maxHealth;
     [SerializeField] private TMP_InputField _healthSetter;
-
-    /*[SerializeField] private float damageMultiplayerInShelter = 0.5f;
-    public bool _inShelter;*/
-    
     public float Value => _value;
 
     public event Action Died;
 
     public event Action<float> Changed;
-
-    // healthSetter - дебаг штука, по-хорошему бы куда-то ещё закинуть её, но пока так
+    
     private void OnEnable()
     {
         _maxHealth = _value;
@@ -35,16 +31,16 @@ public class Health : MonoBehaviour, IHealth
 
     public void Decrease(float value)
     {
-        /*if (_inShelter)
+        _value -= value;
+        var rnd = Random.Range(0, 100);
+        if (rnd > 80)
         {
-            _value = _value - (value * damageMultiplayerInShelter);
+            DamagePopup.Create(transform.position, (int)value, true);
         }
         else
         {
-            
-        }*/
-        _value -= value;
-
+            DamagePopup.Create(transform.position, (int)value, false);
+        }
         if (_value <= 0)
         {
             _value = 0;
