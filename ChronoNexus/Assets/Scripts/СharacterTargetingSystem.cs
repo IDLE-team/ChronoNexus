@@ -35,7 +35,7 @@ public class СharacterTargetingSystem : MonoBehaviour
     public float DebugTestUniTask;
 
     Tween appearTween;
-    private List<GameObject> _targets => Enemy.enemyList;
+    private List<GameObject> _targets => Entity.enemyList;
 
     private Camera _camera;
     private Character _character;
