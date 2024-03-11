@@ -23,6 +23,10 @@ public class ButtonClickedSetting : MonoBehaviour
 
     private void Start()
     {
+        if (!_button)
+        {
+            _button = gameObject.GetComponent<Button>();
+        }
         if (!_parent)
         {
             _parent = GetComponentInParent<SettignsButtons>();
