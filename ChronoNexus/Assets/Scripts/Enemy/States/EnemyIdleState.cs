@@ -1,6 +1,9 @@
-public class EnemyIdleState : EnemyState
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+
+public class EnemyIdleState : EnemyHumanoidState
 {
-    public EnemyIdleState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
+    public EnemyIdleState(EnemyHumanoid enemy, StateMachine stateMachine) : base(enemy, stateMachine)
     {
     }
 
@@ -14,9 +17,16 @@ public class EnemyIdleState : EnemyState
     {
         if (_enemy.IsTargetFound)
         {
-            _stateMachine.ChangeState(_enemy.ChaseState);
+
+            StateReactionToTarget();
             return;
         }
+    }
+
+    protected virtual void StateReactionToTarget()
+    {
+        Debug.Log(_enemy.ChaseState);
+        _stateMachine.ChangeState(_enemy.ChaseState);
     }
 
     public override void Exit()
@@ -26,5 +36,6 @@ public class EnemyIdleState : EnemyState
 
     public override void PhysicsUpdate()
     {
+        
     }
 }

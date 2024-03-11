@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class StateMachine
 {
@@ -14,6 +15,7 @@ public class StateMachine
 
     public void ChangeState(IState newState)
     {
+        Debug.Log(newState);
         CurrentState.Exit();
         CurrentState = newState;
         newState.Enter();

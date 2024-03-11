@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class StateUIUpdater : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemy;
+    [SerializeField] private Entity _entity;
     [SerializeField] TextMeshProUGUI _textMesh;
     private Camera _cam;
     private void OnEnable()
     {
-        _enemy.OnUIUpdate += UpdateStateUI;
+        _entity.OnUIUpdate += UpdateStateUI;
     }
     private void OnDisable()
     {
-        _enemy.OnUIUpdate -= UpdateStateUI;
+        _entity.OnUIUpdate -= UpdateStateUI;
     }
     private void Start()
     {
@@ -27,6 +27,6 @@ public class StateUIUpdater : MonoBehaviour
     }
     private void UpdateStateUI()
     {
-        _textMesh.text = _enemy.CurrentState.ToUpper();
+        _textMesh.text = _entity.CurrentState.ToUpper();
     }
 }
