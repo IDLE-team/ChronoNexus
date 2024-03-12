@@ -133,20 +133,20 @@ public class MovableEntity : Entity
 
     public virtual void AgentDestinationSet()
     {
-        if (Vector3.Distance(SelfAim.transform.position, Target.position) <= 2f)
+        if (Vector3.Distance(SelfAim.transform.position, Target.GetTransform().position) <= 2f)
         {
             _navMeshAgent.SetDestination(SelfAim.transform.position);
             EndMoveAnimation();
         }
         else
         {
-            _navMeshAgent.SetDestination(Target.position);
+            _navMeshAgent.SetDestination(Target.GetTransform().position);
             StartMoveAnimation();
         }
     }
     public virtual void TargetChaseDistanceSwitch()
     {
-        if (Vector3.Distance(SelfAim.position, Target.position) > 12f)//view distance or check last point
+        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > 12f)//view distance or check last point
         {
             _stateMachine.ChangeState(RandomMoveState);
         }

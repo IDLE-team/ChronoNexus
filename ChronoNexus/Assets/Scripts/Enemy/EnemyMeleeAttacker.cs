@@ -3,8 +3,11 @@ using UnityEngine.VFX;
 
 public class EnemyMeleeAttacker : Attacker
 {
-    [Header("Melee Attack Values")]
+
+    [Header("Melee Attack")]
     //protected float _attackTimer;
+    [SerializeField] private WeaponData _meleeWeaponData;
+
     [SerializeField] private AttackZone _attackZone;
     [SerializeField] private VisualEffect _visualHitEffect;
     [SerializeField] private float _meleeDamage = 10f;
@@ -27,7 +30,8 @@ public class EnemyMeleeAttacker : Attacker
     public float MaxMeleeAttackDistance => _maxMeleeAttackDistance;
     public float MeleeAttackAgentSpeed => _meleeAttackAgentSpeed;
     public float DefaultAgentSpeed => _defaultAgentSpeed;
-    
+
+    public WeaponData MeleeWeaponData => _meleeWeaponData;
 
 
     [UsedInAnimator]
@@ -40,7 +44,7 @@ public class EnemyMeleeAttacker : Attacker
         );
         foreach (Collider collider in hitPlayer)
         {
-            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_meleeDamage);
+            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_meleeDamage, false);
         }
     }
 

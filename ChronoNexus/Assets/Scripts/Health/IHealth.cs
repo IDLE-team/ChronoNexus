@@ -6,5 +6,5 @@ public interface IHealth
     public event Action Died;
     public event Action<float> Changed;
 
-    public void Decrease(float value);
+    public void Decrease(float value, bool isCritical);
 }

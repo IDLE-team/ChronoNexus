@@ -22,13 +22,12 @@ public abstract class Weapon : MonoBehaviour
     public float Damage;
 
     public bool isFire = true;
-    
+    public bool isCoolDown;
     public abstract void Fire(ITargetable target, Transform holder);
 
     public void StopFire()
     {
         isFire = false;
-        Debug.Log("isFire поменялся: " + isFire);
     }
 
     public virtual void SetData(WeaponData data, Transform parent)

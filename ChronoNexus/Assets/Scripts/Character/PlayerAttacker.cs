@@ -137,7 +137,7 @@ public class PlayerAttacker : Attacker
         Collider[] hitEnemies = Physics.OverlapSphere(_attackZone.transform.position, _attackZone.Radius, _targetLayer);
         foreach (Collider collider in hitEnemies)
         {
-            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_damage);
+            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(_damage, false);
         }
     }
     

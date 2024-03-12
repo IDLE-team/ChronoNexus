@@ -103,7 +103,7 @@ public class EnemyHumanoid : Enemy, ISeeker
         }
     }
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage, bool isCritical)
     {
         if (!_isAlive)
             return;
@@ -133,7 +133,7 @@ public class EnemyHumanoid : Enemy, ISeeker
             }
         }
 
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, isCritical);
     }
 
     protected override void OnDied()

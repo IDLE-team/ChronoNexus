@@ -25,12 +25,12 @@ public class WeaponController : MonoBehaviour
         }
         _currentWeapon = _weaponFactory.CreateWeapon(data, holder);
         SetWeaponPlayerSettings();
-
     }
 
     private void SetWeaponPlayerSettings()
     {
-        _currentWeapon.SetWeaponUI(_weaponUI);
+        if(_weaponUI)
+            _currentWeapon.SetWeaponUI(_weaponUI);
         SetWeaponAimRig();
     }
 

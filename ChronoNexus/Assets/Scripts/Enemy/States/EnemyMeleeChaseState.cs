@@ -19,7 +19,7 @@ public class EnemyMeleeChaseState : EnemyHumanoidState
 
     public override void Enter()
     {
-        _targetPosision = _enemy.Target.position;
+        _targetPosision = _enemy.Target.GetTransform().position;
 
         if (!_enemy.isTimeSlowed && !_enemy.isTimeStopped)
         {
@@ -58,7 +58,7 @@ public class EnemyMeleeChaseState : EnemyHumanoidState
             return;
         }
 
-        _targetPosision = _enemy.Target.position;
+        _targetPosision = _enemy.Target.GetTransform().position;
         _enemy.NavMeshAgent.SetDestination(_targetPosision);
     }
 

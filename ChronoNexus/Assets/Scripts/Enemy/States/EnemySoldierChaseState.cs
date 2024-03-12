@@ -20,7 +20,7 @@ public class EnemySoldierChaseState : EnemySoldierState
 
     public override void Enter()
     {
-        _targetPosision = _enemy.Target.position;
+        _targetPosision = _enemy.Target.GetTransform().position;
 
         if (!_enemy.isTimeSlowed && !_enemy.isTimeStopped)
         {
@@ -59,7 +59,7 @@ public class EnemySoldierChaseState : EnemySoldierState
             return;
         }
 
-        _targetPosision = _enemy.Target.position;
+        _targetPosision = _enemy.Target.GetTransform().position;
         _enemy.NavMeshAgent.SetDestination(_targetPosision);
     }
 
