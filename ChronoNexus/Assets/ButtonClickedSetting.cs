@@ -11,8 +11,10 @@ public class ButtonClickedSetting : MonoBehaviour
     private TextMeshProUGUI _text;
     private Button _button;
 
-    [SerializeField] private Color _white = Color.white;
-    [SerializeField] private Color _black;
+    [SerializeField] private Color _ActiveButtonFont = Color.black;
+    [SerializeField] private Color _ActiveButtonBack = Color.white;
+    [SerializeField] private Color _DeactiveButtonFont = Color.white;
+    [SerializeField] private Color _DeactiveButtonBack = Color.black;
 
     private void OnDrawGizmos()
     {
@@ -49,14 +51,16 @@ public class ButtonClickedSetting : MonoBehaviour
     {
         if (clicked)
         {
-            _button.GetComponent<Image>().color = _white;
-            _text.color = _black;
+            //button activated
+            _button.GetComponent<Image>().color = _ActiveButtonBack;
+            _text.color = _ActiveButtonFont;
             isClicked = true;
         }
         else
         {
-            _button.GetComponent<Image>().color = _black;
-            _text.color = _white;
+            //button not active
+            _button.GetComponent<Image>().color = _DeactiveButtonBack;
+            _text.color = _DeactiveButtonFont;
             isClicked = false;
         }
     }
