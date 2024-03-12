@@ -65,9 +65,9 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         _hpBar.value = _health.Value;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool isCritical)
     {
-        _health.Decrease(damage);
+        _health.Decrease(damage, isCritical);
     }
 
     public void Die()

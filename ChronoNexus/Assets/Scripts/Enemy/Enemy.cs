@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ITimeAffected, ISee
     [HideInInspector] public EnemyType enemyType = new EnemyType();
     public State state = new State();
 
-    public Transform Target { get; set; }
+    public ITargetable Target { get; set; }
     public bool IsTargetFound { get; set; }
     public bool isTimeStopped { get; set; }
     public bool isTimeAccelerated { get; set; }
@@ -139,12 +139,12 @@ public class Enemy : MonoBehaviour, IDamagable, ITargetable, ITimeAffected, ISee
         }
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage, bool isCritical)
     {
         if (!_isAlive)
             return;
 
-        _health.Decrease(damage);
+        _health.Decrease(damage, isCritical);
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
     }

@@ -69,7 +69,14 @@ public class Bullet : MonoBehaviour, ITimeAffected
             return;
         var prevDamage = _damage;
         _damage = _damage + Random.Range(-2, 3);
-        target.TakeDamage(_damage);
+        if (_damage - prevDamage > 1)
+        {
+            target.TakeDamage(_damage, true);
+        }
+        else
+        {
+            target.TakeDamage(_damage, false);
+        }
         OnTimeAffectedDestroy?.Invoke();
         Destroy(gameObject);
     }

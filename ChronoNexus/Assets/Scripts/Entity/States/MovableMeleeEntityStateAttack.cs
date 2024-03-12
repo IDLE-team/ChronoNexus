@@ -29,7 +29,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
     public override void Enter()
     {
         //attackInterval = _movableMeleeEntity.EnemyAttacker.MeleeAttackInterval;
-        _targetPosition = _movableMeleeEntity.Target.position;
+        _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
         _isAttack = true;
         _movableMeleeEntity.TargetFinder.SetWeight(1);
         cancellationTokenSource = new CancellationTokenSource();
@@ -100,7 +100,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
             return;
         }
 
-        _targetPosition = _movableMeleeEntity.Target.position;
+        _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
         base.PhysicsUpdate();
     }
 

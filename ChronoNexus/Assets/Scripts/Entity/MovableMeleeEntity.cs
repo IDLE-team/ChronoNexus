@@ -47,20 +47,20 @@ public class MovableMeleeEntity : MovableEntity
     }
     public override void TargetChaseDistanceSwitch()
     {
-        if (Vector3.Distance(SelfAim.position, Target.position) > 12f) //view distance or check last point
+        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > 12f) //view distance or check last point
         {
             _stateMachine.ChangeState(RandomMoveState);
         }
-        else if(Vector3.Distance(SelfAim.position, Target.position) <= 1.5f) // or attack range
+        else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= 1.5f) // or attack range
         {
             _stateMachine.ChangeState(MeleeAttackState);
         }
     }
     public override void AgentDestinationSet()
     {
-        if (Vector3.Distance(SelfAim.position, Target.position) > 1.5f)
+        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > 1.5f)
         {
-            _navMeshAgent.SetDestination(Target.position);
+            _navMeshAgent.SetDestination(Target.GetTransform().position);
         }
     }
 

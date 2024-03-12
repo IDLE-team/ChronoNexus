@@ -76,7 +76,7 @@ public class EnemySoldier : Enemy,ISeeker
     {
         
     }
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float damage, bool isCritical)
     {
         if (!_isAlive)
             return;
@@ -106,7 +106,7 @@ public class EnemySoldier : Enemy,ISeeker
             }
         }
 
-        base.TakeDamage(damage);
+        base.TakeDamage(damage, isCritical);
     }
 
     protected override void OnDied()

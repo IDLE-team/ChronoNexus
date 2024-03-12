@@ -38,7 +38,7 @@ public class EnemyMeleeAttackState : EnemyHumanoidState
         _minDistanceBetweenTarget = _enemy.EnemyAttacker.MinMeleeDistanceToTarget;
         _meleeAttackingAgentSpeed = _enemy.EnemyAttacker.MeleeAttackAgentSpeed;
 
-        _targetPosition = _enemy.Target.position;
+        _targetPosition = _enemy.Target.GetTransform().position;
         _isAttack = true;
 
         cancellationTokenSource = new CancellationTokenSource();
@@ -112,7 +112,7 @@ public class EnemyMeleeAttackState : EnemyHumanoidState
             return;
         }
 
-        _targetPosition = _enemy.Target.position;
+        _targetPosition = _enemy.Target.GetTransform().position;
         
         if (Vector3.Distance(_enemy.SelfAim.transform.position, retreatPosition) > 0.3f)
         {

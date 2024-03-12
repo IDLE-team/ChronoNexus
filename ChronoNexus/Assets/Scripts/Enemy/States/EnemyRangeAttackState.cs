@@ -57,7 +57,7 @@ public class EnemyRangeAttackState : EnemyState
         ammoMaxCount = _enemy.EnemyAttacker.AmmoCount;
         ammoCount = ammoMaxCount;
 
-        _targetPosition = _enemy.Target.transform.position;
+        _targetPosition = _enemy.Target.GetTransform().position;
         _minDelay = _enemy.EnemyAttacker.MinDelayTokenRange;
         _maxDelay = _enemy.EnemyAttacker.MaxDelayTokenRange;
         _maxDistanceBetweenTarget = _enemy.EnemyAttacker.MaxRangeAttackDistance;
@@ -130,7 +130,7 @@ public class EnemyRangeAttackState : EnemyState
 
         if (shootingTimer <= 0f && !_isReloading)
         {
-            _enemy.EnemyAttacker.Shoot(_targetPosition);
+           // _enemy.EnemyAttacker.Shoot(_targetPosition);
             shootingTimer = shootingInterval;
             if (ammoCount > 0)
             {
@@ -185,7 +185,7 @@ public class EnemyRangeAttackState : EnemyState
             _enemy.EndMoveAnimation();
         }
 
-        _targetPosition = _enemy.Target.position;
+        _targetPosition = _enemy.Target.GetTransform().position;
     }
 
 

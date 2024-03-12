@@ -106,7 +106,7 @@ public class TargetFinder : MonoBehaviour
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;
             
-            _seeker.Target = _target;
+            _seeker.Target = target;
             Target = target;
             _seeker.IsTargetFound = true;
         }

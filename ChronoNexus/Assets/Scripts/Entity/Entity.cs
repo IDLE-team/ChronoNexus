@@ -13,10 +13,13 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
     public bool isTimeSlowed { get; set; }
     public bool isTimeRewinded { get; set; }
 
+    public Equiper Equiper => _equiper;
+    public WeaponController WeaponController => _weaponController;
+
     public event Action OnSeekStart;
     public event Action OnSeekEnd;
     public bool IsTargetFound { get; set; }
-    public Transform Target { get; set; }
+    public ITargetable Target { get; set; }
 
 
     [SerializeField] protected TargetSelection _selection;
@@ -25,7 +28,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
     [SerializeField] protected AudioClip _hitClip;
     [SerializeField] protected ParticleSystem _hitEffect;
     [SerializeField] protected DebugEnemySpawner _enemySpawner;
-
+    [SerializeField] protected Equiper _equiper;
+    [SerializeField] protected WeaponController _weaponController;
     public State state = new State();
     protected EnemyState _startState;
 
@@ -35,6 +39,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
 
     protected EnemyLoot _loot;
     protected TargetFinder _targetFinder;
+
     public TargetFinder TargetFinder => _targetFinder;
     protected Health _health;
     protected StateMachine _stateMachine;
@@ -113,12 +118,12 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         }
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage, bool isCritical)
     {
         if (!_isAlive)
             return;
 
-        _health.Decrease(damage);
+        _health.Decrease(damage, isCritical);
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
     }
@@ -279,7 +284,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
 
     public virtual void TargetFoundReaction()
     {
-        
+
     }
 
     public enum State
@@ -292,5 +297,4 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         MeleeAttack,
         RangeAttack
     };
-
 }

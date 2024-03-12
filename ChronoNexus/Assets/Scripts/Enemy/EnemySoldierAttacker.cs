@@ -3,8 +3,10 @@ using UnityEngine.VFX;
 
 public class EnemySoldierAttacker : EnemyMeleeAttacker
 {
-    [Header("Range Attack Values")]
-    
+
+    [Header("Range Attack")]
+    [SerializeField] private WeaponData _rangeWeaponData;
+
     [SerializeField] private float _rangeAttackInterval = 1f;
 
     [SerializeField] private float _minDelayTokenRange = 0.3f;
@@ -32,11 +34,14 @@ public class EnemySoldierAttacker : EnemyMeleeAttacker
     public float RangeAttackAgentSpeed => _rangeAttackAgentSpeed;
     public int AmmoCount => _ammoCount;
     
-    [UsedInAnimator]
+    public WeaponData RangeWeaponData => _rangeWeaponData;
+    
+    /*
     public void Shoot(Vector3 target)
     {
         _bulletDirection = (target - _bulletStartPosition.position).normalized;
         _bullet = Instantiate(_prefabBullet,_bulletStartPosition.position, Quaternion.LookRotation(_bulletDirection));
         _bullet.Initialize(_bulletDirection, 10, 20f);
     }
+    */
 }

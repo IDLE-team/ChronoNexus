@@ -17,10 +17,10 @@
                 Reload();
                 return;
             }
-
+Debug.Log("Target: " + target);
             if (target != null)
             {
-                if(target.GetTargetSelected())
+                //if(target.GetTargetSelected())
                     _shootDir = ((target.GetTransform().position - WeaponPrefab.transform.position).normalized);
             }
             else

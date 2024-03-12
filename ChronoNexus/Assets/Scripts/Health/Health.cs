@@ -14,7 +14,6 @@ public class Health : MonoBehaviour, IHealth
     public event Action Died;
 
     public event Action<float> Changed;
-    
     private void OnEnable()
     {
         _maxHealth = _value;
@@ -29,18 +28,12 @@ public class Health : MonoBehaviour, IHealth
             _healthSetter.onEndEdit.AddListener(SetHealth);
     }
 
-    public void Decrease(float value)
+    public void Decrease(float value, bool isCritical)
     {
         _value -= value;
-        var rnd = Random.Range(0, 100);
-        if (rnd > 80)
-        {
-            DamagePopup.Create(transform.position, (int)value, true);
-        }
-        else
-        {
-            DamagePopup.Create(transform.position, (int)value, false);
-        }
+ 
+         DamagePopup.Create(transform.position, (int)value, isCritical);
+            
         if (_value <= 0)
         {
             _value = 0;
