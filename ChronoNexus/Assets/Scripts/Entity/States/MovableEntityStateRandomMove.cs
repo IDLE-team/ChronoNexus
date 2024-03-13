@@ -9,6 +9,7 @@ public  class MovableEntityStateRandomMove : MovableEntityState
 {
     private Vector3 _destination;
     private float _remainingDistance = 1f;
+    private float _distance;
     
     public MovableEntityStateRandomMove(MovableEntity movableEntity, StateMachine stateMachine):base(movableEntity, stateMachine)
     {
@@ -16,6 +17,8 @@ public  class MovableEntityStateRandomMove : MovableEntityState
     }
     public override void Enter()
     {
+        _distance = _movableEntity.RandomMoveMaxDistance;
+            
         _movableEntity.StartSeek();
         _movableEntity.StartMoveAnimation();
         
@@ -49,9 +52,15 @@ public  class MovableEntityStateRandomMove : MovableEntityState
         }
         base.PhysicsUpdate();
     }
+    protected override async UniTask TimeWaiter()
+    {
+        await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
+        _movableEntity.NavMeshAgent.speed = _movableEntity.RandomMoveSpeed;
+        //Default speed
+    }
     
     private Vector3 GetRandomDirection()
     {
-        return _movableEntity.transform.position + new Vector3(Random.Range(-10f, 10f), _movableEntity.SelfAim.transform.position.y, Random.Range(-10f, 10f));
+        return _movableEntity.transform.position + new Vector3(Random.Range(-_distance, _distance), _movableEntity.SelfAim.transform.position.y, Random.Range(-_distance, _distance));
     }
 }

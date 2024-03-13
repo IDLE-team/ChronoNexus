@@ -7,7 +7,6 @@ using UnityEngine.TextCore.Text;
 
 public class MovableEntityStateChase : MovableEntityState
 {
-    private float _remainingDistance = 1f;
 
     public MovableEntityStateChase(MovableEntity movableEntity, StateMachine stateMachine) : base(movableEntity,
         stateMachine)
@@ -40,7 +39,7 @@ public class MovableEntityStateChase : MovableEntityState
     {
         if (_movableEntity.Target == null)
         {
-            _stateMachine.ChangeState(_movableEntity.DummyState);
+            _stateMachine.ChangeState(_movableEntity.DummyState);//
             return;
         }
 

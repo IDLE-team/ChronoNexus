@@ -7,6 +7,8 @@ using UnityEngine.AI;
 //[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class MovableMeleeEntity : MovableEntity
 {
+    private MovableMeleeEntityAttacker _attacker;
+    public MovableMeleeEntityAttacker MeleeAttacker => _attacker;
     public MovableMeleeEntityStateAttack MeleeAttackState { get; private set; }
     protected override void InitializeStartState()
     {
@@ -38,9 +40,14 @@ public class MovableMeleeEntity : MovableEntity
     protected override void InitializeParam()
     {
         base.InitializeParam();
-        
         MeleeAttackState = new MovableMeleeEntityStateAttack(this, _stateMachine);
     }
+
+    protected override void InitializeIndividualParam()
+    {
+        _attacker = GetComponent<MovableMeleeEntityAttacker>();
+    }
+    
     public void StartAttackAnimation()
     {
         _animator.PlayAttackAnimation();
@@ -51,14 +58,14 @@ public class MovableMeleeEntity : MovableEntity
         {
             _stateMachine.ChangeState(RandomMoveState);
         }
-        else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= 1.5f) // or attack range
+        else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= MeleeAttacker.AttackZone.Radius) // or attack range
         {
             _stateMachine.ChangeState(MeleeAttackState);
         }
     }
     public override void AgentDestinationSet()
     {
-        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > 1.5f)
+        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > MeleeAttacker.AttackZone.Radius)
         {
             _navMeshAgent.SetDestination(Target.GetTransform().position);
         }
