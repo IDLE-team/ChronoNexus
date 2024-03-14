@@ -42,9 +42,11 @@ public class ButtonClickedSetting : MonoBehaviour
     }
     public void Clicked()
     {
-        var b = _parent.RecolorAllButtons(isClicked);
-        PaintButton(b);
-
+        if (!isClicked)
+        {
+            var b = _parent.RecolorAllButtons(isClicked);
+            PaintButton(b);
+        }
     }
 
     public void PaintButton(bool clicked)
