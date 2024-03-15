@@ -28,16 +28,17 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
     public override void Enter()
     {
-        _maxDistanceBetweenTarget = _movableSoldierEntity.MeleeAttacker.MaxMeleeAttackDistance;
-        _minDistanceBetweenTarget = _movableSoldierEntity.MeleeAttacker.MinMeleeDistanceToTarget;
-        _minDelay = _movableSoldierEntity.MeleeAttacker.MinDelayTokenMelee;
-        _maxDelay = _movableSoldierEntity.MeleeAttacker.MaxDelayTokenMelee;
-        _shootingAgentSpeed = _movableSoldierEntity.MeleeAttacker.MeleeAttackAgentSpeed;
+        _maxDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MaxRangeAttackDistance;
+        _minDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MinRangeDistanceToTarget;
+        _minDelay = _movableSoldierEntity.SoldierAttacker.MinDelayTokenRange;
+        _maxDelay = _movableSoldierEntity.SoldierAttacker.MaxDelayTokenRange;
+        _shootingAgentSpeed = _movableSoldierEntity.SoldierAttacker.RangeAttackAgentSpeed;
+        
         _movableSoldierEntity.Equiper.EquipWeapon(_movableSoldierEntity.SoldierAttacker.RangeWeaponData);
         
         if (_movableSoldierEntity.WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
         {
-            _firearmWeapon = (FirearmWeapon) _movableSoldierEntity.WeaponController.CurrentWeapon;
+            _firearmWeapon = (FirearmWeapon)_movableSoldierEntity.WeaponController.CurrentWeapon;
         }
 
         _target = _movableSoldierEntity.Target.GetTransform();
@@ -98,6 +99,8 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             return;
         }
 
+        Debug.Log("1 "+_movableSoldierEntity.transform);
+        Debug.Log("2 "+_movableSoldierEntity.Target);
         _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
         base.LogicUpdate();
         
@@ -105,7 +108,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
     private void TimeSlowedLogicUpdate()
     {
-        if (!_firearmWeapon.IsReloading)
+        if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
         {
             _movableSoldierEntity.transform.rotation = Quaternion.Slerp(_movableSoldierEntity.transform.rotation,
                 _toRotation, 6f * 0.2f * Time.deltaTime);
@@ -114,7 +117,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
     private void TimeDefaultLogicUpdate()
     {
-        if (!_firearmWeapon.IsReloading)
+        if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
         {
             _movableSoldierEntity.transform.rotation = Quaternion.Slerp(_movableSoldierEntity.transform.rotation,
                 _toRotation, 6f * Time.deltaTime);
