@@ -19,6 +19,7 @@ public class TargetFinder : MonoBehaviour
 
     private ISeeker _seeker;
     private Transform _target;
+    public ITargetable Target;
 
     [SerializeField] AimRigController _aimRigController;
     
@@ -105,7 +106,8 @@ public class TargetFinder : MonoBehaviour
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;
             
-            _seeker.Target = _target;
+            _seeker.Target = target;
+            Target = target;
             _seeker.IsTargetFound = true;
         }
     }
@@ -118,7 +120,11 @@ public class TargetFinder : MonoBehaviour
     public void SetWeight(int value)
     {
         //_aimRigController.SetSmoothWeight(value);
-        _aimRigController.SetWeight(value);
+        if (_aimRigController != null)
+        {
+            _aimRigController.SetWeight(value);
+        }
+        
     }
     
 

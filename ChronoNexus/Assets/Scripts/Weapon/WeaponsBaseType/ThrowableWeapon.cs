@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using UnityEngine;
     public class ThrowableWeapon : Weapon
     {
@@ -6,4 +7,5 @@ using UnityEngine;
         {
             throw new System.NotImplementedException();
         }
+
     }

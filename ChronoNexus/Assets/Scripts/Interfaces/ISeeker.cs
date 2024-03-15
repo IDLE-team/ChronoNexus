@@ -9,7 +9,7 @@ internal interface ISeeker
 
     public bool IsTargetFound { get; set; }
 
-    public Transform Target { get; set; }
+    public ITargetable Target { get; set; }
 
     public void StartSeek();
 

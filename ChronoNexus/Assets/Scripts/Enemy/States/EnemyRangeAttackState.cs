@@ -5,15 +5,17 @@ using UnityEngine;
 
 public class EnemyRangeAttackState : EnemyState
 {
-    private Transform _target;
+    private  EnemySoldier _enemy;
+
     private Vector3 _targetPosition;
 
     private float shootingTimer = 0;
     private float shootingInterval;
 
-    private float retreatDistance = 1f;
-    private float minDelay = 0.5f;
-    private float maxDelay = 2f;
+    //private float retreatDistance = 1f;
+
+    /*private float minDelay = 0.5f;
+    private float maxDelay = 2f;*/
 
     private float reloadTimer = 0;
     private float reloadInterval = 3f;
@@ -23,41 +25,51 @@ public class EnemyRangeAttackState : EnemyState
     private int ammoCount;
     private int ammoMaxCount;
 
-    private float _maxDistanceBetweenTarget = 8f;
-    private float _minDistanceBetweenTarget = 5f;
+    /*private float _maxDistanceBetweenTarget = 8f;
+    private float _minDistanceBetweenTarget = 5f;*/
+    
+    protected float _minDelay = 0.3f;
+    protected float _maxDelay = 1f;
+
+    protected float _maxDistanceBetweenTarget = 2f;
+    protected float _minDistanceBetweenTarget = 1f;
 
     private bool _isAttack = false;
 
     private float _defaultAgentSpeed = 1.5f;
     private float _runningAgentSpeed = 2f;
-
-    Vector3 randomDirection;
-    Vector3 retreatPosition;
-    //Vector3 targetPosition;
-    Quaternion toRotation;
+    
+    protected Vector3 randomDirection;
+    protected Vector3 retreatPosition;
+    protected Quaternion toRotation;
 
 
     private CancellationTokenSource cancellationTokenSource;
 
-    public EnemyRangeAttackState(Enemy enemy, StateMachine stateMachine) : base(enemy, stateMachine)
+    public EnemyRangeAttackState(EnemySoldier enemy, StateMachine stateMachine) : base(enemy, stateMachine)
     {
-
     }
 
     public override void Enter()
     {
         shootingInterval = _enemy.EnemyAttacker.RangedAttackInterval;
-        ammoMaxCount = _enemy.EnemyAttacker._AmmoCount;
+        
+        ammoMaxCount = _enemy.EnemyAttacker.AmmoCount;
         ammoCount = ammoMaxCount;
-        //_enemy.NavMeshAgent.speed = 2.5f;
 
-        _target = _enemy.Target.transform;
-        _targetPosition = _target.localPosition;
-
+        _targetPosition = _enemy.Target.GetTransform().position;
+        _minDelay = _enemy.EnemyAttacker.MinDelayTokenRange;
+        _maxDelay = _enemy.EnemyAttacker.MaxDelayTokenRange;
+        _maxDistanceBetweenTarget = _enemy.EnemyAttacker.MaxRangeAttackDistance;
+        _minDistanceBetweenTarget = _enemy.EnemyAttacker.MinRangeDistanceToTarget;
+        _runningAgentSpeed = _enemy.EnemyAttacker.RangeAttackAgentSpeed;
+        
         _enemy.TargetFinder.SetWeight(1);
 
         _isAttack = true;
+        
         _enemy.OnDie += CancelCancelationToken;
+        
         cancellationTokenSource = new CancellationTokenSource();
         ShootAndRetreat(cancellationTokenSource.Token).Forget();
     }
@@ -68,7 +80,7 @@ public class EnemyRangeAttackState : EnemyState
         _enemy.IsTargetFound = false;
         _enemy.OnDie -= CancelCancelationToken;
 
-        if(!_enemy.isTimeSlowed && !_enemy.isTimeStopped)
+        if (!_enemy.isTimeSlowed && !_enemy.isTimeStopped)
             _enemy.NavMeshAgent.speed = 1.5f;
         _enemy.EndMoveAnimation();
     }
@@ -114,12 +126,11 @@ public class EnemyRangeAttackState : EnemyState
             {
                 shootingTimer -= Time.deltaTime;
             }
-
         }
 
         if (shootingTimer <= 0f && !_isReloading)
         {
-            _enemy.EnemyAttacker.Shoot(_targetPosition);
+           // _enemy.EnemyAttacker.Shoot(_targetPosition);
             shootingTimer = shootingInterval;
             if (ammoCount > 0)
             {
@@ -136,6 +147,7 @@ public class EnemyRangeAttackState : EnemyState
                 _isReloading = true;
             }
         }
+
         if (reloadTimer >= 0f && _isReloading)
         {
             if (_enemy.isTimeSlowed)
@@ -164,11 +176,17 @@ public class EnemyRangeAttackState : EnemyState
 
             return;
         }
-        _targetPosition = _enemy.Target.position;
-        _target = _enemy.Target.transform;
+        if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.3f)
+        {
+            _enemy.StartMoveAnimation();
+        }
+        else
+        {
+            _enemy.EndMoveAnimation();
+        }
+
+        _targetPosition = _enemy.Target.GetTransform().position;
     }
-
-
 
 
     private void CancelCancelationToken()
@@ -176,11 +194,12 @@ public class EnemyRangeAttackState : EnemyState
         cancellationTokenSource.RegisterRaiseCancelOnDestroy(_enemy.gameObject);
         cancellationTokenSource.Cancel();
     }
+
     private async UniTask ShootAndRetreat(CancellationToken cancellationToken)
     {
         while (_isAttack && !cancellationToken.IsCancellationRequested)
         {
-            await UniTask.Delay((int)(Random.Range(minDelay, maxDelay) * 1000));
+            await UniTask.Delay((int) (Random.Range(_minDelay, _maxDelay) * 1000));
 
             if (_enemy == null)
                 cancellationTokenSource.Cancel();
@@ -194,26 +213,27 @@ public class EnemyRangeAttackState : EnemyState
                 && !_isReloading
                 && Vector3.Distance(_enemy.transform.position, _targetPosition) <= _maxDistanceBetweenTarget
                 && Vector3.Distance(_enemy.transform.position, _targetPosition) > _minDistanceBetweenTarget
-                )
+               )
             {
                 do
                 {
                     randomDirection = Random.insideUnitSphere.normalized;
-                    retreatPosition = _enemy.transform.position + randomDirection * ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
+                    retreatPosition = _enemy.transform.position +
+                                      randomDirection * ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
                     retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
-
-                } while (Vector3.Distance(_targetPosition, retreatPosition) < _minDistanceBetweenTarget || Vector3.Distance(_targetPosition, retreatPosition) > _maxDistanceBetweenTarget);
+                } while (Vector3.Distance(_targetPosition, retreatPosition) < _minDistanceBetweenTarget ||
+                         Vector3.Distance(_targetPosition, retreatPosition) > _maxDistanceBetweenTarget);
 
 
                 if (Vector3.Distance(_enemy.transform.position, retreatPosition) > 0.1f)
                 {
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
-                    
-                    if(_enemy.isTimeSlowed)
+
+                    if (_enemy.isTimeSlowed)
                         _enemy.NavMeshAgent.speed = 0.1f;
                     else
                         _enemy.NavMeshAgent.speed = _defaultAgentSpeed;
-                    
+
                     _enemy.StartMoveAnimation();
                 }
                 else
@@ -221,21 +241,21 @@ public class EnemyRangeAttackState : EnemyState
                     _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                     _enemy.EndMoveAnimation();
                 }
+
                 _enemy.TargetFinder.SetWeight(1);
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested
-                 && !_isReloading
-                 && Vector3.Distance(_enemy.transform.position, _targetPosition) <= _minDistanceBetweenTarget
-
-                 )
+                     && !_isReloading
+                     && Vector3.Distance(_enemy.transform.position, _targetPosition) <= _minDistanceBetweenTarget
+                    )
             {
                 do
                 {
                     randomDirection = Random.insideUnitSphere.normalized;
-                    retreatPosition = _enemy.transform.position + randomDirection * ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
+                    retreatPosition = _enemy.transform.position +
+                                      randomDirection * ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
                     retreatPosition = new Vector3(retreatPosition.x, _enemy.transform.position.y, retreatPosition.z);
-
                 } while (Vector3.Distance(_targetPosition, retreatPosition) <= _minDistanceBetweenTarget);
 
 
@@ -244,12 +264,12 @@ public class EnemyRangeAttackState : EnemyState
                     if (_enemy.isTimeStopped)
                         return;
                     _enemy.NavMeshAgent.SetDestination(retreatPosition);
-                    
+
                     if (_enemy.isTimeSlowed)
                         _enemy.NavMeshAgent.speed = 0.2f;
                     else
                         _enemy.NavMeshAgent.speed = _runningAgentSpeed;
-                    
+
                     _enemy.StartMoveAnimation();
                 }
                 else
@@ -257,6 +277,7 @@ public class EnemyRangeAttackState : EnemyState
                     _enemy.NavMeshAgent.SetDestination(_enemy.transform.position);
                     _enemy.EndMoveAnimation();
                 }
+
                 _enemy.TargetFinder.SetWeight(1);
                 await UniTask.Yield();
             }
@@ -269,6 +290,7 @@ public class EnemyRangeAttackState : EnemyState
                 await UniTask.Yield();
             }
         }
+
         await UniTask.Yield();
     }
 }

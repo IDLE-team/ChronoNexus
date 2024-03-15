@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 public class Bullet : MonoBehaviour, ITimeAffected
 {
     [SerializeField] private LayerMask _obstacleLayerMask;
@@ -67,7 +67,16 @@ public class Bullet : MonoBehaviour, ITimeAffected
         }
         if (!other.TryGetComponent<IDamagable>(out var target))
             return;
-        target.TakeDamage(_damage);
+        var prevDamage = _damage;
+        _damage = _damage + Random.Range(-2, 3);
+        if (_damage - prevDamage > 1)
+        {
+            target.TakeDamage(_damage, true);
+        }
+        else
+        {
+            target.TakeDamage(_damage, false);
+        }
         OnTimeAffectedDestroy?.Invoke();
         Destroy(gameObject);
     }

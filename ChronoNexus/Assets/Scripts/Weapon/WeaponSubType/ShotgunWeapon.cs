@@ -1,4 +1,5 @@
 
+    using System.Runtime.InteropServices;
     using UnityEngine;
 
     public class ShotgunWeapon : FirearmWeapon
@@ -10,9 +11,17 @@
             {
                 return;
             }
+
+            if (CurrentAmmo <= 0)
+            {
+                Reload();
+                return;
+            }
+
             if (target != null)
             {
-                _shootDir = ((target.GetTransform().position - WeaponPrefab.transform.position).normalized);
+                if(target.GetTargetSelected())
+                    _shootDir = ((target.GetTransform().position - WeaponPrefab.transform.position).normalized);
             }
             else
             {
@@ -27,6 +36,14 @@
                 var bullet = Instantiate(BulletPrefab, FirePosition.position, Quaternion.LookRotation(spreadRotation *_shootDir));
                 bullet.Initialize(spreadRotation * _shootDir, Damage, ProjectileSpeed);
             }
+
+            CurrentAmmo--;
+            UpdateUIWeaponValues();
             _lastFireTime = Time.time;
+            if (CurrentAmmo <= 0)
+            {
+                Reload();
+            }
         }
+        
     }
