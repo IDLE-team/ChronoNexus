@@ -12,6 +12,10 @@ public class UserInterfaceManager : MonoBehaviour
     [SerializeField]
     private InterfaceAnimationComponent _anim;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     private void Start()
     {
         _currentTab = _startTab;
@@ -48,7 +52,7 @@ public class UserInterfaceManager : MonoBehaviour
             {
                 CloseTab(_previousTab);
             }
-            _anim.MoveLeftOnScreen(_currentTab.GetComponent<RectTransform>(), _duration);
+            _anim.MoveUpOnScreen(_currentTab.GetComponent<RectTransform>(), _duration);
             yield return new WaitForSeconds(_duration);
         }
         
@@ -56,7 +60,7 @@ public class UserInterfaceManager : MonoBehaviour
 
     public IEnumerator CloseTabCor(GameObject tabToClose)
     {
-        _anim.MoveLeftOffScreen(tabToClose.GetComponent<RectTransform>(), _duration);
+        _anim.MoveDownOffScreen(tabToClose.GetComponent<RectTransform>(), _duration);
         yield return new WaitForSeconds(_duration);
 
         tabToClose.gameObject.SetActive(false);
