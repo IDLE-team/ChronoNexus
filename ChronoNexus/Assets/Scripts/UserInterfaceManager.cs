@@ -4,18 +4,15 @@ using UnityEngine;
 public class UserInterfaceManager : MonoBehaviour
 {
     [SerializeField] private GameObject _startTab;
-    [SerializeField] private GameObject _currentTab;
-    [SerializeField] private GameObject _previousTab;
+
+    private GameObject _currentTab;
+    private GameObject _previousTab;
 
     [SerializeField] private float _duration;
 
     [SerializeField]
     private InterfaceAnimationComponent _anim;
 
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
     private void Start()
     {
         _currentTab = _startTab;
@@ -25,7 +22,6 @@ public class UserInterfaceManager : MonoBehaviour
     public void OpenTab(GameObject tabToOpen)
     {
         StartCoroutine(OpenTabCor(tabToOpen));
-        print(tabToOpen.name + " OpenTab");
     }
 
     public void CloseTab(GameObject tabToClose)
@@ -35,7 +31,6 @@ public class UserInterfaceManager : MonoBehaviour
 
     public void BackTab()
     {
-        //print("Back Tab " + _previousTab.name);
         OpenTab(_previousTab);
     }
 
