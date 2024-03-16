@@ -79,6 +79,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
 
     protected virtual void InitializeParam()
     {
+        InitializeIndividualParam();
         _stateMachine = new StateMachine();
 
 
@@ -92,7 +93,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         IsTargetFound = false;
 
         DummyState = new EntityStateDummy(this, _stateMachine);
-        InitializeIndividualParam();
+        
     }
 
     protected abstract void InitializeIndividualParam();

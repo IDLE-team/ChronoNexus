@@ -10,7 +10,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     private Vector3 _targetPosition;
     private float _minDelay;
     private float _maxDelay;
-    private float _maxDistanceBetweenTarget;
+    private float _maxDistanceBetweenTarget = 8f;
     private float _minDistanceBetweenTarget;
     private bool _isAttack = false;
     private float _shootingAgentSpeed;
@@ -27,7 +27,11 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     }
 
     public override void Enter()
-    {
+    { 
+        base.Enter();
+        Debug.Log(_movableSoldierEntity);
+        Debug.Log(_movableSoldierEntity.SoldierAttacker);
+        Debug.Log(_movableSoldierEntity.SoldierAttacker.MaxRangeAttackDistance);
         _maxDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MaxRangeAttackDistance;
         _minDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MinRangeDistanceToTarget;
         _minDelay = _movableSoldierEntity.SoldierAttacker.MinDelayTokenRange;
@@ -54,7 +58,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
         _cancellationTokenSource = new CancellationTokenSource();
         ShootAndRetreat(_cancellationTokenSource.Token).Forget();
-        base.Enter();
+        
     }
 
     public override void Exit()

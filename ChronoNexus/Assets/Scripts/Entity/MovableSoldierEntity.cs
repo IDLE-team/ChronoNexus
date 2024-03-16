@@ -43,12 +43,12 @@ public class MovableSoldierEntity : MovableMeleeEntity
     protected override void InitializeParam()
     {
         base.InitializeParam();
-        
+       
         RangeAttackState = new MovableSoldierEntityStateAttack(this, _stateMachine);
     }
     protected override void InitializeIndividualParam()
     {
-        _soldierAttacker = GetComponent<MovableEntitySoldierAttacker>();
+         _soldierAttacker = GetComponent<MovableEntitySoldierAttacker>();
     }
     public override void TargetChaseDistanceSwitch()
     {

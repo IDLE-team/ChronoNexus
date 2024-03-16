@@ -40,6 +40,7 @@ public class MovableMeleeEntity : MovableEntity
     protected override void InitializeParam()
     {
         base.InitializeParam();
+            //
         MeleeAttackState = new MovableMeleeEntityStateAttack(this, _stateMachine);
     }
 
