@@ -104,7 +104,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         }
 
         Debug.Log("1 "+_movableSoldierEntity.transform);
-        Debug.Log("2 "+_movableSoldierEntity.Target);
+        Debug.Log("2 "+_movableSoldierEntity.Target);      
         _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
         base.LogicUpdate();
         

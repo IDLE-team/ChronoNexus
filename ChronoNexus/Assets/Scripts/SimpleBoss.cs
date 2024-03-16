@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SimpleBoss : MonoBehaviour
 {
-    [SerializeField] private Enemy boss;
+    [SerializeField] private GameObject boss;
 
     [SerializeField] private GameObject doortrigger;
     private bool _doorWasOpen;
