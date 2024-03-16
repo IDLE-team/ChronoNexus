@@ -9,6 +9,10 @@ public class HealthPresentor : MonoBehaviour
 
     private Slider _hpBar;
 
+    private void OnLevelWasLoaded()
+    {
+        _health = FindFirstObjectByType<Health>();
+    }
     private void Start()
     {
         _hpBar = GetComponent<Slider>();
