@@ -20,7 +20,10 @@ public class HealthPresentor : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.Changed += UpdateValue;
+        if (_health != null)
+        {
+            _health.Changed += UpdateValue;
+        }
     }
 
     private void OnDisable()

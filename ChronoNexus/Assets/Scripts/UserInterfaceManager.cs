@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UserInterfaceManager : MonoBehaviour
 {
@@ -13,14 +14,29 @@ public class UserInterfaceManager : MonoBehaviour
     [SerializeField]
     private InterfaceAnimationComponent _anim;
 
+    [SerializeField] private Image _black;
+
+    private bool _isGame = false;
+
     private void Start()
     {
+        _isGame = false;
         _currentTab = _startTab;
-        OpenTab(_currentTab);
+        OpenTab(_currentTab,_isGame);
     }
 
-    public void OpenTab(GameObject tabToOpen)
+    public void OpenTab(GameObject tabToOpen, bool isGame)
     {
+        _isGame = isGame;
+        if (_isGame)
+        {
+            _black.gameObject.SetActive(false);
+        }
+        else
+        {
+            _black.gameObject.SetActive(true);
+        }
+
         StartCoroutine(OpenTabCor(tabToOpen));
     }
 
@@ -31,7 +47,7 @@ public class UserInterfaceManager : MonoBehaviour
 
     public void BackTab()
     {
-        OpenTab(_previousTab);
+        OpenTab(_previousTab,_isGame);
     }
 
     public IEnumerator OpenTabCor(GameObject tabToOpen)

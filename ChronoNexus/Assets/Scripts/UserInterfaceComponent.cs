@@ -7,6 +7,8 @@ public class UserInterfaceComponent : MonoBehaviour
     [SerializeField] private UserInterfaceManager _manager;
     [SerializeField] private Button _backButton;
 
+    [SerializeField] private bool _isOnGame = false;
+
     private void OnDrawGizmos()
     {
         _manager = GetComponentInParent<UserInterfaceManager>();
@@ -16,7 +18,7 @@ public class UserInterfaceComponent : MonoBehaviour
     {
         if (_manager)
         {
-            _manager.OpenTab(gameObject);
+            _manager.OpenTab(gameObject, _isOnGame);
         }
     }
 

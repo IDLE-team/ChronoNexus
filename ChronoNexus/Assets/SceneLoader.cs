@@ -8,12 +8,10 @@ public class SceneLoader : MonoBehaviour
 {
 
     [SerializeField] private string _SceneToLoad;
-    [SerializeField] private Image _blackLoadingImage;
 
     public void SceneToLoad()
     {
         StartCoroutine(Load());
-        print(1);
     }
 
     public IEnumerator Load()
@@ -26,7 +24,7 @@ public class SceneLoader : MonoBehaviour
 
     private void LoadScene()
     {
+        Debug.LogError(_SceneToLoad);
         SceneManager.LoadSceneAsync(_SceneToLoad);
-        
     }
 }
