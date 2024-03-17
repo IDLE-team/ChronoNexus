@@ -58,6 +58,8 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         Rigidbody = GetComponent<Rigidbody>();
         AudioController = GetComponent<CharacterAudioController>();
         AimRigController = GetComponent<AimRigController>();
+
+        InventoryItemManager.manager.SetPlayer(this);
     }
     private void Start()
     {
@@ -106,4 +108,12 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     }
 
     public event Action OnTargetInvalid;
+
+    private void OnLevelWasLoaded(int level)
+    {
+        if (level != 0)
+        {
+            InventoryItemManager.manager.SetInventoryEquiped();
+        }
+    }
 }

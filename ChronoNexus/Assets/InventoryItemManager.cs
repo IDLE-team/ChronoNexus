@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class InventoryItemManager : MonoBehaviour
 {
+    public static InventoryItemManager manager;
+
     [Header("Иконки типов предмета")]
     [SerializeField]
     private List<Sprite> _itemTypeIcons = new List<Sprite>();
@@ -21,16 +23,43 @@ public class InventoryItemManager : MonoBehaviour
     [SerializeField] private GameObject _granadeInUse;
     [SerializeField] private GameObject _armorInUse;
 
+
+
+    private Character _player;
+
     private void OnDrawGizmos()
     {
         _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
     }
+    private void Awake()
+    {
+        if (!manager)
+        {
+            manager = this;
+        }
+        else if (manager == this)
+        {
+            Destroy(this);
+        }
+    }
+
     private void Start()
     {
         _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
-        if (_cells.Count >= 12) CreateRandomItemsInInventory();
+        //if (_cells.Count >= 12) CreateRandomItemsInInventory();
+    }
 
-        
+    public void SetPlayer(Character player)
+    {
+        _player = player;
+    }
+
+    public void SetInventoryEquiped()
+    {
+        if (_player)
+        {
+            _player.gameObject.GetComponent<Equiper>().EquipWeapon(GetEquipedGun());
+        }
     }
     public Sprite GetSpriteByType(itemType itemType)
     {
@@ -75,7 +104,7 @@ public class InventoryItemManager : MonoBehaviour
         for (int i = 0; i < Random.Range(3, 10); i++)
         {
             var cell = Instantiate(_itemPrefab, _cells[i].transform);
-            cell.GetComponent<ItemEquipable>().SetItem(
+            cell.GetComponent<ItemEquipable>().SetItemBy(
                 (itemType)Random.Range(0, 4), (itemRarity)Random.Range(0, 4),
                 Random.Range(1, 10), Random.Range(10, 50));
             print(cell.GetComponent<ItemEquipable>().GetMainParam());
@@ -88,6 +117,7 @@ public class InventoryItemManager : MonoBehaviour
         {
             case itemType.gun:
                 TradeParamentrs(_gunInUse, item);
+                SetInventoryEquiped();
                 return;
             case itemType.knife:
                 TradeParamentrs(_knifeInUse, item);
@@ -102,29 +132,37 @@ public class InventoryItemManager : MonoBehaviour
         }
     }
 
-    public void TradeParamentrs(GameObject prev, ItemEquipable next)
+    public void TradeParamentrs(GameObject itemInUse, ItemEquipable next)
     {
-        ItemEquipable previous =  prev.GetComponentInChildren<ItemEquipable>();
-        if (previous) //при переносе предмета с места на место
+        ItemEquipable itemUse = itemInUse.GetComponentInChildren<ItemEquipable>();
+        if (itemUse)
         {
-            itemType tempType;
-            itemRarity tempRarity;
-            int tempLevel;
-            float tempParam;
-            Sprite tempImage;
-            previous.GetAllParamentrs(out tempType, out tempRarity, out tempLevel, out tempParam, out tempImage);
+            var item = Instantiate(itemUse);
+            itemUse.SetItemBy(next);
+            itemUse.ChangeToEquiped();
+            next.SetItemBy(item);
+            next.ChangeToUnequiped();
+            Destroy(item.gameObject);
 
-            previous.SetItem(next.GetTypeItem(), next.GetRarity(), next.GetLvl(), next.GetMainParam(), next.GetSprite());
-            next.SetItem(tempType, tempRarity, tempLevel, tempParam, tempImage);
         }
         else //при установке первого предмета
         {
-            var itemSetted = Instantiate(_itemPrefab, prev.transform);
-            itemSetted.GetComponent<ItemEquipable>().SetItem(next);
+            var itemSet = Instantiate(_itemPrefab, itemInUse.transform);
+            var itemSetted = itemSet.GetComponent<ItemEquipable>();
+            itemSetted.SetItemBy(next);
+            itemSetted.ChangeToEquiped();
             Destroy(next.gameObject);
         }
 
     }
+
+    public WeaponData GetEquipedGun()
+    {
+        print(_gunInUse.GetComponentInChildren<ItemEquipable>().GetData());
+        return _gunInUse.GetComponentInChildren<ItemEquipable>().GetData();
+    }
+
+
 
     public enum itemType
     {

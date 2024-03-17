@@ -49,7 +49,7 @@ public class ShopChestHolder : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-        #region setItemsIcon
+        #region SetItemBysIcon
         if (_isGun)
         {
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
