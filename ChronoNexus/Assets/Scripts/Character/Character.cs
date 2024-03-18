@@ -39,6 +39,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     private void OnEnable()
     {
         _health.Died += Die;
+        
     }
 
     private void OnDisable()
@@ -59,7 +60,9 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         AudioController = GetComponent<CharacterAudioController>();
         AimRigController = GetComponent<AimRigController>();
 
+
         InventoryItemManager.manager.SetPlayer(this);
+
     }
     private void Start()
     {

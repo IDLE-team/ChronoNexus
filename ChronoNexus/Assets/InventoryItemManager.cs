@@ -53,7 +53,6 @@ public class InventoryItemManager : MonoBehaviour
     public void SetPlayer(Character player)
     {
         _player = player;
-        SetInventoryEquiped();
         OnCharacterLinked();
     }
 
@@ -71,11 +70,13 @@ public class InventoryItemManager : MonoBehaviour
 
     public void SetInventoryEquiped()
     {
-        Debug.LogError(_player);
         if (_player)
         {
-            _player.gameObject.GetComponent<Equiper>().EquipWeapon(GetEquipedGun());
-            Debug.LogError("Ёкипирован");
+            var getEquip = GetEquipedGun();
+            if (getEquip != null)
+            {
+                _player.gameObject.GetComponent<Equiper>().EquipWeapon(getEquip);
+            }
         }
     }
     public Sprite GetSpriteByType(itemType itemType)
@@ -145,9 +146,10 @@ public class InventoryItemManager : MonoBehaviour
             case itemType.armor:
                 TradeParamentrs(_armorInUse, item);
                 return;
-
         }
     }
+
+
 
     public void TradeParamentrs(GameObject itemInUse, ItemEquipable next)
     {
@@ -170,13 +172,42 @@ public class InventoryItemManager : MonoBehaviour
             itemSetted.ChangeToEquiped();
             Destroy(next.gameObject);
         }
+    }
+
+    public void TradeParamentrs(ItemEquipable next)
+    {
+        GameObject itemEmpty = Instantiate(_itemPrefab); ;
+        for (int i = 0; i < _cells.Count; i++)
+        {
+            if (!_cells[i].GetComponentInChildren<ItemEquipable>())
+            {
+                itemEmpty.transform.SetParent(_cells[i].transform);
+                break;
+            }
+        }
+        ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
+
+        var item = Instantiate(itemUseEmpty);
+        itemUseEmpty.SetItemBy(next);
+        itemUseEmpty.ChangeToUnequiped();
+        next.SetItemBy(item);
+        next.ChangeToEquiped();
+        Destroy(item.gameObject);
+        Destroy(next.gameObject);
 
     }
 
     public WeaponData GetEquipedGun()
     {
-        print(_gunInUse.GetComponentInChildren<ItemEquipable>().GetData());
-        return _gunInUse.GetComponentInChildren<ItemEquipable>().GetData();
+        var equiped = _gunInUse.GetComponentInChildren<ItemEquipable>();
+        if (equiped)
+        {
+            return _gunInUse.GetComponentInChildren<ItemEquipable>()?.GetData();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     private void OnDisable()

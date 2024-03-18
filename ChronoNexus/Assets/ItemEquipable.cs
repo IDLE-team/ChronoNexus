@@ -42,7 +42,7 @@ public class ItemEquipable : MonoBehaviour
 
     private void Start()
     {
-        _itemButton.onClick.AddListener(UseItem);
+        _itemButton.onClick.AddListener(SetItem);
     }
 
 
@@ -137,10 +137,16 @@ public class ItemEquipable : MonoBehaviour
         _isEquiped = false;
     }
 
-
-    private void UseItem()
+    private void SetItem()
     {
-        _inventoryManager.EquipItem(GetTypeItem(), this);
+        if (!_isEquiped) // to equip inventory
+        {
+            _inventoryManager.EquipItem(GetTypeItem(), this);
+        }
+        else // to set back to inventory
+        {
+            _inventoryManager.TradeParamentrs(this);
+        }
     }
 
     public itemType GetTypeItem()

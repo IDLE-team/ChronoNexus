@@ -25,11 +25,6 @@ public class HealthPresentor : MonoBehaviour
         InventoryItemManager.manager.OnCharacterLinked += FindHealth;
     }
 
-    private void OnEnable()
-    {
-        FindHealth();
-    }
-
     private void OnDisable()
     {
         _health.Changed -= UpdateValue;

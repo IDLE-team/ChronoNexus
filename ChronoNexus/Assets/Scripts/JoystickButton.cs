@@ -19,8 +19,6 @@ public class JoystickButton : MonoBehaviour
     {
         _button.OnLongClicked += ActivateJoystick;
         _button.OnClicked += StartShoot;
-
-        InventoryItemManager.manager.OnCharacterLinked += SetJoystick;
     }
 
 
@@ -45,6 +43,11 @@ public class JoystickButton : MonoBehaviour
             }
         }
 
+    }
+
+    private void Start()
+    {
+        InventoryItemManager.manager.OnCharacterLinked += SetJoystick;
     }
 
     private PlayerInputActions _input;

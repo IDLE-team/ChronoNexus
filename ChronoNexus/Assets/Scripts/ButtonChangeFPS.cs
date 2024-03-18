@@ -9,6 +9,7 @@ public class ButtonChangeFPS : MonoBehaviour
     private ButtonClickedSetting _buttonSet;
     private void Start()
     {
+        _buttonSet = gameObject.GetComponent<ButtonClickedSetting>();
         _buttonClicked = gameObject.GetComponent<Button>();
         _buttonClicked.onClick.AddListener(Clicked);
     }
