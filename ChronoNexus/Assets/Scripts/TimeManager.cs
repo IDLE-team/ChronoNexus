@@ -99,7 +99,6 @@ public class TimeManager : MonoBehaviour
     }
     public void StopTime()
     {
-        
         IsTimeStopped = true;
         for (var i = 0; i < timeBodies.Count; i++)
         {
@@ -114,6 +113,20 @@ public class TimeManager : MonoBehaviour
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.3f;
         StartCoroutine(ResumeTimeWithDelay());
+    }
+
+    public void StopTimeInfinite() 
+    {
+        IsTimeStopped = true;
+        for (var i = 0; i < timeBodies.Count; i++)
+        {
+            if (timeBodies[i] == null)
+            {
+                timeBodies.RemoveAt(i);
+                continue;
+            }
+            timeBodies[i].SetStopTime();
+        }
     }
     public void SlowTime()
     {

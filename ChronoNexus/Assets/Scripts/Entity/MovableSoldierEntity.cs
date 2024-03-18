@@ -7,8 +7,8 @@ using UnityEngine.AI;
 //[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class MovableSoldierEntity : MovableMeleeEntity
 {
-    private EnemySoldierAttacker _enemySoldierAttacker;
-    public EnemySoldierAttacker EnemySoldierAttacker => _enemySoldierAttacker;
+    private MovableEntitySoldierAttacker _soldierAttacker;
+    public MovableEntitySoldierAttacker SoldierAttacker => _soldierAttacker;
     public MovableSoldierEntityStateAttack RangeAttackState { get; private set; }
     protected override void InitializeStartState()
     {
@@ -43,9 +43,12 @@ public class MovableSoldierEntity : MovableMeleeEntity
     protected override void InitializeParam()
     {
         base.InitializeParam();
-        
-        _enemySoldierAttacker = GetComponent<EnemySoldierAttacker>();
+       
         RangeAttackState = new MovableSoldierEntityStateAttack(this, _stateMachine);
+    }
+    protected override void InitializeIndividualParam()
+    {
+         _soldierAttacker = GetComponent<MovableEntitySoldierAttacker>();
     }
     public override void TargetChaseDistanceSwitch()
     {

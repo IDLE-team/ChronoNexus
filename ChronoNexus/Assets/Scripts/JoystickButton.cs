@@ -1,7 +1,5 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.OnScreen;
-using Zenject;
 
 public class JoystickButton : MonoBehaviour
 {
@@ -10,7 +8,7 @@ public class JoystickButton : MonoBehaviour
     [SerializeField] private СharacterTargetingSystem _targetLock;
     [SerializeField] private PlayerAttacker _attacker;
     [SerializeField] private float _requiredHoldTime;
-    [SerializeField] private WeaponController _weaponController  ;
+    [SerializeField] private WeaponController _weaponController;
     private bool _isTargetLockPerformed;
     private float _holdTimer;
 
@@ -20,21 +18,43 @@ public class JoystickButton : MonoBehaviour
     private void OnEnable()
     {
         _button.OnLongClicked += ActivateJoystick;
-         _button.OnClicked += StartShoot;
-
+        _button.OnClicked += StartShoot;
     }
+
 
     private void OnDisable()
     {
         _button.OnLongClicked -= ActivateJoystick;
-         _button.OnClicked -= StartShoot;
+        _button.OnClicked -= StartShoot;
+
+        InventoryItemManager.manager.OnCharacterLinked -= SetJoystick;
+    }
+
+    private void SetJoystick()
+    {
+        if (!_targetLock)
+        {
+            var player = InventoryItemManager.manager.GetPlayer();
+            if (player)
+            {
+                _targetLock = player.GetComponent<СharacterTargetingSystem>();
+                _attacker = player.GetComponent<PlayerAttacker>();
+                _weaponController = player.GetComponent<WeaponController>();
+            }
+        }
+
+    }
+
+    private void Start()
+    {
+        InventoryItemManager.manager.OnCharacterLinked += SetJoystick;
     }
 
     private PlayerInputActions _input;
     private void StartShoot()
-    { 
+    {
         _attacker.StartFire();
-      // _weaponController.CurrentWeapon.Fire();
+        // _weaponController.CurrentWeapon.Fire();
     }
     public void ActivateJoystick()
     {
@@ -56,7 +76,7 @@ public class JoystickButton : MonoBehaviour
         // _joystick.gameObject.SetActive(false);
         _targetVisualPrefab.SetActive(false);
         _shootVisualPrefab.SetActive(true);
-       // _joystick.enabled = false;
+        // _joystick.enabled = false;
         //_button.enabled = true;
 
         // _button.gameObject.SetActive(true);

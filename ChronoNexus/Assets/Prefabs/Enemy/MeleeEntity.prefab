@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 638957263352529573}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRight3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,15 +62,15 @@ GameObject:
   - component: {fileID: 7909362342652619212}
   - component: {fileID: 6250017016061230154}
   - component: {fileID: 4779211714595691892}
-  - component: {fileID: 1763294592387407871}
   - component: {fileID: 1828662587134324487}
+  - component: {fileID: 5763126614767944207}
   m_Layer: 7
   m_Name: MeleeEntity
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8922547093504286043
 Transform:
   m_ObjectHideFlags: 0
@@ -467,13 +467,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471896154010226229}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 92f366353a9c3d249a6c198fe8bccfa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponFactory: {fileID: 0}
   _rigController: {fileID: 7456845154744906208}
+  _weaponUI: {fileID: 0}
 --- !u!114 &7909362342652619212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,33 +521,15 @@ MonoBehaviour:
   _hitClip: {fileID: 8300000, guid: 2c4b4be36545b8241ba9ac14147378e6, type: 3}
   _hitEffect: {fileID: 6116206638247227540}
   _enemySpawner: {fileID: 0}
+  _equiper: {fileID: 0}
+  _weaponController: {fileID: 0}
   state: 1
+  _isCanTurn: 0
+  _isPatrol: 0
+  _patrolSpeed: 1.5
   _patrolPoints: []
---- !u!114 &1763294592387407871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 471896154010226229}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff14344cbe946f945a294bbe6b192984, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  _attackZone: {fileID: 6910693858748403992}
-  _visualHitEffect: {fileID: 7692200907439779648}
-  _meleeDamage: 10
-  _meleeAttackInterval: 1
-  _minDelayTokenMelee: 0.3
-  _maxDelayTokenMelee: 1
-  _maxMeleeAttackDistance: 2
-  _minMeleeDistanceToTarget: 1
-  _meleeAttackAgentSpeed: 4
-  _defaultAgentSpeed: 1.5
+  _randomMoveMaxDistance: 0
+  _randomMoveSpeed: 1.5
 --- !u!114 &1828662587134324487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -559,6 +542,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f05465b79affb64ba43ea8481435dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5763126614767944207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471896154010226229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fc42205b2a404ab9812543564605b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _meleeWeaponData: {fileID: 0}
+  _attackZone: {fileID: 6910693858748403992}
+  _visualHitEffect: {fileID: 7692200907439779648}
+  _meleeDamage: 10
+  _meleeAttackInterval: 1
+  _minDelayTokenMelee: 0.3
+  _maxDelayTokenMelee: 1
+  _maxMeleeAttackDistance: 1.5
+  _minMeleeDistanceToTarget: 1
+  _meleeAttackAgentSpeed: 4
+  _defaultAgentSpeed: 1.5
 --- !u!1 &485967312136840796
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2723109886824206622}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing33
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,7 +608,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7469027620259907789}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLegRight2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -631,7 +640,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2468604865620427716}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLeftPistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -662,7 +671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3262026745503326423}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftCollarbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,7 +703,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 116743875312505619}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeft1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -726,7 +735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5772549552387880642}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -759,7 +768,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4784576222063023570}
   - component: {fileID: 5428570779617686396}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BladeRig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -807,7 +816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8212429947152312301}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLegLeft1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -839,7 +848,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7550781361158923971}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing43
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -871,7 +880,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8953146876682134222}
   - component: {fileID: 8871117169810124744}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Soldier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,7 +1012,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2289354588362672532}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1034,7 +1043,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5970169510107230581}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightCollarbone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,7 +1075,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3305424686363346129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1098,7 +1107,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3853829878112476232}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigAss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1163,7 +1172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8352572378651135529}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1292,7 +1301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5867124808718950589}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigPistolRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1323,7 +1332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5777634603303027136}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1354,7 +1363,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1229401547543408075}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing42
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1386,7 +1395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4291169930773458671}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigSpine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1418,7 +1427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2866783432996599499}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing33
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1449,7 +1458,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6629180363090127664}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,7 +1490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8780863941650470872}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigSpine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6404,7 +6413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 18778426634796036}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLegRight3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6435,7 +6444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8818088911349308963}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing32
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6467,7 +6476,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8853545385258264785}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeft3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6504,7 +6513,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3119259923599263086}
   - component: {fileID: 6910693858748403992}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6548,7 +6557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7678688332607353544}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6731,7 +6740,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5840630999538612204}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing41
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6763,7 +6772,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4780370550401405184}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLegLeft3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6794,7 +6803,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408149171552354359}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6826,7 +6835,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5653740305927794797}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigSpine3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6862,7 +6871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1646029153372727806}
   - component: {fileID: 7480784435977257378}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BodyAim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6947,7 +6956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5813922502020065846}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing21
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6979,7 +6988,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6120153831473994302}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeft2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7011,7 +7020,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5144906803900025479}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLegRight1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7145,7 +7154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6809667188935031275}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing31
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7177,7 +7186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4477798889453234654}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing43
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7210,7 +7219,7 @@ GameObject:
   - component: {fileID: 8745104139582878467}
   - component: {fileID: 7692200907439779648}
   - component: {fileID: 8894294721286012713}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: slash-white blue bolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7324,7 +7333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2425360845339798417}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7356,7 +7365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3317366816277899174}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7388,7 +7397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7978177417172453474}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigLegLeft2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7421,7 +7430,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8875541793928700906}
   - component: {fileID: 2177876474728807129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HeadAim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7506,7 +7515,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9118986282372325599}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing42
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7538,7 +7547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 848287238826971574}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7570,7 +7579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8890384159932593915}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing13
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7602,7 +7611,7 @@ GameObject:
   m_Component:
   - component: {fileID: 730400448244146681}
   - component: {fileID: 4012667403537998123}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HandAim1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7687,7 +7696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4813175828902181361}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRight2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7719,7 +7728,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2544517393480319600}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7751,7 +7760,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 766574098819791217}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmLeftFing23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7782,7 +7791,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3689573257123274557}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRightFing22
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7814,7 +7823,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8755214912650287766}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7845,7 +7854,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8743719690234345081}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigNeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7877,7 +7886,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 187144260911825673}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RigArmRight1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7977,6 +7986,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pistol
+      objectReference: {fileID: 0}
+    - target: {fileID: 6480348581497395331, guid: a7a052cd1d9714046b8235bb73eb3242,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301082565183161873, guid: a7a052cd1d9714046b8235bb73eb3242,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671276298713169783, guid: a7a052cd1d9714046b8235bb73eb3242,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

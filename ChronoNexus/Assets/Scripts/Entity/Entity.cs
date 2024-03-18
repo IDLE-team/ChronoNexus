@@ -22,7 +22,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
     public bool IsTargetFound { get; set; }
     public ITargetable Target { get; set; }
 
-
     [SerializeField] protected TargetSelection _selection;
     [SerializeField] protected Transform _selfAimTargetTransform;
     public Transform SelfAim => _selfAimTargetTransform;
@@ -81,6 +80,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
 
     protected virtual void InitializeParam()
     {
+        InitializeIndividualParam();
         _stateMachine = new StateMachine();
 
 
@@ -94,7 +94,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         IsTargetFound = false;
 
         DummyState = new EntityStateDummy(this, _stateMachine);
+        
     }
+
+    protected abstract void InitializeIndividualParam();
 
     protected void Start()
     {
