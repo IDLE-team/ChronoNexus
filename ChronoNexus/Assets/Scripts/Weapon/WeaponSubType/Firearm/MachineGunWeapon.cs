@@ -1,8 +1,5 @@
     using Cysharp.Threading.Tasks;
     using UnityEngine;
-using System;
-    using Unity.VisualScripting;
-
     public class MachineGunWeapon : FirearmWeapon
     {
        

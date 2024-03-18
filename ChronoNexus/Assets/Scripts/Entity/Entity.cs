@@ -6,6 +6,7 @@ using UnityEngine;
 
 public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffected, ISeeker
 {
+    public Attacker _Attacker;
     public event Action OnTargetInvalid;
     public event Action OnTimeAffectedDestroy;
     public bool isTimeStopped { get; set; }

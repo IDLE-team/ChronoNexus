@@ -10,7 +10,7 @@ using DG.Tweening;
 public class СharacterTargetingSystem : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
-
+    public LayerMask TargetLayer => _targetLayer;
 
     //[SerializeField] private Joystick _targetJoystick;
     [SerializeField] private Transform _visorPosition;

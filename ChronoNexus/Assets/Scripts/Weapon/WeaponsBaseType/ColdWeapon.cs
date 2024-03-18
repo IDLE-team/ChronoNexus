@@ -1,10 +1,15 @@
+using System;
 using System.Runtime.InteropServices;
+using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
-    public class ColdWeapon : Weapon
+    public abstract class ColdWeapon : Weapon
     {
-
-        public override void Fire(ITargetable target, Transform holder)
+        public float Distance;
+        
+        public override void SetData(WeaponData data, Transform parent)
         {
-            throw new System.NotImplementedException();
+            base.SetData(data, parent);
+            Distance = data.Distance;
         }
     }

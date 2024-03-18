@@ -52,7 +52,8 @@ public class PlayerAttacker : Attacker
     }
     private void OnHit(InputAction.CallbackContext obj)
     {
-        _animator.Attack();
+        StartHit();
+
     }
 
     public void StartFire()
@@ -75,12 +76,18 @@ public class PlayerAttacker : Attacker
         _animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
     }
 
+    public void StartHit()
+    {
+        if (_weaponController.CurrentWeapon == null)
+            return;
+        _animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
+
+    }
     private void Update()
     {
         if (Input.GetKey(KeyCode.M))
         {
             _weaponController.CurrentWeapon.StopFire();
-            Debug.Log("Должен быть стоп");
         }
     }
 

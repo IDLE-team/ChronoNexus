@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class MovableMeleeEntity : MovableEntity
 {
     public MovableMeleeEntityStateAttack MeleeAttackState { get; private set; }
+
     protected override void InitializeStartState()
     {
         switch (state)

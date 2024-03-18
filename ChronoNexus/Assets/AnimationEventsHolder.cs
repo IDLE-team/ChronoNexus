@@ -12,6 +12,11 @@ public class AnimationEventsHolder : MonoBehaviour
         _weaponController.CurrentWeapon.Fire(_character.CharacterTargetingSystem.Target, _character.Transform);
     }
 
+    public void WeaponAreaFire()
+    {
+        _weaponController.CurrentWeapon.AreaFire(_character.CharacterTargetingSystem.TargetLayer);
+    }
+
 
     
     
