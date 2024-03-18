@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class InventoryItemManager : MonoBehaviour
@@ -23,9 +24,9 @@ public class InventoryItemManager : MonoBehaviour
     [SerializeField] private GameObject _granadeInUse;
     [SerializeField] private GameObject _armorInUse;
 
-
-
     private Character _player;
+    [HideInInspector]
+    public UnityAction OnCharacterLinked;
 
     private void OnDrawGizmos()
     {
@@ -41,24 +42,40 @@ public class InventoryItemManager : MonoBehaviour
         {
             Destroy(this);
         }
+        OnCharacterLinked += SetInventoryEquiped;
     }
 
     private void Start()
     {
         _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
-        //if (_cells.Count >= 12) CreateRandomItemsInInventory();
     }
 
     public void SetPlayer(Character player)
     {
         _player = player;
+        SetInventoryEquiped();
+        OnCharacterLinked();
+    }
+
+    public Character GetPlayer()
+    {
+        if (_player)
+        {
+            return _player;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public void SetInventoryEquiped()
     {
+        Debug.LogError(_player);
         if (_player)
         {
             _player.gameObject.GetComponent<Equiper>().EquipWeapon(GetEquipedGun());
+            Debug.LogError("Ёкипирован");
         }
     }
     public Sprite GetSpriteByType(itemType itemType)
@@ -162,7 +179,10 @@ public class InventoryItemManager : MonoBehaviour
         return _gunInUse.GetComponentInChildren<ItemEquipable>().GetData();
     }
 
-
+    private void OnDisable()
+    {
+        OnCharacterLinked -= SetInventoryEquiped;
+    }
 
     public enum itemType
     {

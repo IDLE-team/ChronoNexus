@@ -113,7 +113,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     {
         if (level != 0)
         {
-            InventoryItemManager.manager.SetInventoryEquiped();
+            InventoryItemManager.manager.OnCharacterLinked();
         }
     }
 }

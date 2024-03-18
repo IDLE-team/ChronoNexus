@@ -31,13 +31,12 @@ public class ItemEquipable : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        _inventoryManager = GetComponentInParent<InventoryItemManager>();
         if (_loadFromScene) SetItemBy(_itemType, _rarity, _itemLvl, _mainParam, _itemImageSprite, _weapon);
     }
 
     private void Awake()
     {
-        _inventoryManager = GetComponentInParent<InventoryItemManager>();
+        _inventoryManager = InventoryItemManager.manager;
         _itemButton = GetComponent<Button>();
     }
 
@@ -126,11 +125,6 @@ public class ItemEquipable : MonoBehaviour
 
         _itemImageSprite = itemToCopy.GetSprite();
         _itemImage.sprite = _itemImageSprite;
-    }
-
-    private void SetManager(InventoryItemManager manager)
-    {
-        _inventoryManager = manager;
     }
 
     public void ChangeToEquiped()

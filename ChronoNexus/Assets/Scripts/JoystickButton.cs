@@ -19,22 +19,32 @@ public class JoystickButton : MonoBehaviour
     {
         _button.OnLongClicked += ActivateJoystick;
         _button.OnClicked += StartShoot;
+
+        InventoryItemManager.manager.OnCharacterLinked += SetJoystick;
     }
 
-    private void OnLevelWasLoaded()
-    {
-        _targetLock = FindFirstObjectByType<СharacterTargetingSystem>();
-        if (_targetLock)
-        {
-            _attacker = FindFirstObjectByType<PlayerAttacker>();
-            _weaponController = FindFirstObjectByType<WeaponController>();
-        }
-    }
 
     private void OnDisable()
     {
         _button.OnLongClicked -= ActivateJoystick;
         _button.OnClicked -= StartShoot;
+
+        InventoryItemManager.manager.OnCharacterLinked -= SetJoystick;
+    }
+
+    private void SetJoystick()
+    {
+        if (!_targetLock)
+        {
+            var player = InventoryItemManager.manager.GetPlayer();
+            if (player)
+            {
+                _targetLock = player.GetComponent<СharacterTargetingSystem>();
+                _attacker = player.GetComponent<PlayerAttacker>();
+                _weaponController = player.GetComponent<WeaponController>();
+            }
+        }
+
     }
 
     private PlayerInputActions _input;
