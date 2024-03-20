@@ -13046,6 +13046,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8790988921263375379}
   - component: {fileID: 3089958088176479262}
+  - component: {fileID: 2380826984913454899}
   m_Layer: 0
   m_Name: The Main UI
   m_TagString: Untagged
@@ -13081,6 +13082,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20ea766e4a8154b4fbfbb5a4b6adfe67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2380826984913454899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139003034303756409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d2abacd79700bc428d33dcf4b42078d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemTypeIcons:
+  - {fileID: 21300000, guid: 3c439ffed0c3f164bbd777fc2ab0b90d, type: 3}
+  - {fileID: 21300000, guid: df6e05ea691651742a5e8454cfce4665, type: 3}
+  - {fileID: 21300000, guid: 036c6c3a9e3b01b4a9409e3f039a536a, type: 3}
+  - {fileID: 21300000, guid: c4724f2e623a7db4ba5b9517d3266d32, type: 3}
+  - {fileID: 21300000, guid: 3180eeec78dc47e4fbaf0e3e82200edc, type: 3}
+  _gridLayout: {fileID: 1452614810457738390}
+  _itemPrefab: {fileID: 6093637983021479832, guid: 6e20ee5589b67064da7d81a010b1cbcd,
+    type: 3}
+  _cells:
+  - {fileID: 639511925881833777}
+  - {fileID: 3960292926356803071}
+  - {fileID: 6490444644944371138}
+  - {fileID: 2593979994649407160}
+  - {fileID: 7598005935534559382}
+  - {fileID: 3487469211738642512}
+  - {fileID: 3122791729634605025}
+  - {fileID: 5112959822367409723}
+  - {fileID: 3541846860063549104}
+  - {fileID: 8830888027950811851}
+  - {fileID: 1540384562642614271}
+  - {fileID: 7037706413232028081}
+  _gunInUse: {fileID: 1876319817648458431}
+  _knifeInUse: {fileID: 4418471597665953578}
+  _granadeInUse: {fileID: 741675042443762360}
+  _armorInUse: {fileID: 2170722996054142408}
+  _gunEquiped: {fileID: 0}
 --- !u!1 &2141014164791439084
 GameObject:
   m_ObjectHideFlags: 0
@@ -46225,9 +46265,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3446261016147064843}
   - component: {fileID: 5547656555921335406}
-  - component: {fileID: 9222519567883886659}
   m_Layer: 0
-  m_Name: InventoryManagerSystem
+  m_Name: Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46262,44 +46301,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7968716207267782942}
   m_CullTransparentMesh: 1
---- !u!114 &9222519567883886659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7968716207267782942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2abacd79700bc428d33dcf4b42078d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemTypeIcons:
-  - {fileID: 21300000, guid: 3c439ffed0c3f164bbd777fc2ab0b90d, type: 3}
-  - {fileID: 21300000, guid: df6e05ea691651742a5e8454cfce4665, type: 3}
-  - {fileID: 21300000, guid: 036c6c3a9e3b01b4a9409e3f039a536a, type: 3}
-  - {fileID: 21300000, guid: c4724f2e623a7db4ba5b9517d3266d32, type: 3}
-  - {fileID: 21300000, guid: 3180eeec78dc47e4fbaf0e3e82200edc, type: 3}
-  _gridLayout: {fileID: 1452614810457738390}
-  _itemPrefab: {fileID: 6093637983021479832, guid: 6e20ee5589b67064da7d81a010b1cbcd,
-    type: 3}
-  _cells:
-  - {fileID: 639511925881833777}
-  - {fileID: 3960292926356803071}
-  - {fileID: 6490444644944371138}
-  - {fileID: 2593979994649407160}
-  - {fileID: 7598005935534559382}
-  - {fileID: 3487469211738642512}
-  - {fileID: 3122791729634605025}
-  - {fileID: 5112959822367409723}
-  - {fileID: 3541846860063549104}
-  - {fileID: 8830888027950811851}
-  - {fileID: 1540384562642614271}
-  - {fileID: 7037706413232028081}
-  _gunInUse: {fileID: 1876319817648458431}
-  _knifeInUse: {fileID: 4418471597665953578}
-  _granadeInUse: {fileID: 741675042443762360}
-  _armorInUse: {fileID: 2170722996054142408}
 --- !u!1 &7992857702233114190
 GameObject:
   m_ObjectHideFlags: 0

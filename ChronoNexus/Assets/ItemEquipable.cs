@@ -31,20 +31,15 @@ public class ItemEquipable : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        _inventoryManager = GetComponentInParent<InventoryItemManager>();
         if (_loadFromScene) SetItemBy(_itemType, _rarity, _itemLvl, _mainParam, _itemImageSprite, _weapon);
     }
 
     private void Awake()
     {
-        _inventoryManager = InventoryItemManager.manager;
         _itemButton = GetComponent<Button>();
-    }
-
-    private void Start()
-    {
         _itemButton.onClick.AddListener(SetItem);
     }
-
 
     public void SetItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam, Sprite itemImage)
     {
@@ -55,9 +50,9 @@ public class ItemEquipable : MonoBehaviour
         _mainParam = mainParam;
         _itemImageSprite = itemImage;
 
-        _itemTypeIcon.sprite = _inventoryManager.GetSpriteByType(_itemType);
+        _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
-        _itemRarityCircle.color = _inventoryManager.GetColorByRarity(_rarity);
+        _itemRarityCircle.color = manager.GetColorByRarity(_rarity);
 
         _textItemLvl.text = _itemLvl.ToString();
 
@@ -76,9 +71,9 @@ public class ItemEquipable : MonoBehaviour
 
         _weapon = gunData;
 
-        _itemTypeIcon.sprite = _inventoryManager.GetSpriteByType(_itemType);
+        _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
-        _itemRarityCircle.color = _inventoryManager.GetColorByRarity(_rarity);
+        _itemRarityCircle.color = manager.GetColorByRarity(_rarity);
 
         _textItemLvl.text = _itemLvl.ToString();
 
@@ -94,27 +89,28 @@ public class ItemEquipable : MonoBehaviour
         _itemLvl = Lvl;
         _mainParam = mainParam;
 
-        _itemTypeIcon.sprite = _inventoryManager.GetSpriteByType(_itemType);
+        _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
-        _itemRarityCircle.color = _inventoryManager.GetColorByRarity(_rarity);
+        _itemRarityCircle.color = manager.GetColorByRarity(_rarity);
 
         _textItemLvl.text = _itemLvl.ToString();
 
         _textMainParametr.text = _mainParam.ToString();
 
         _itemImage.sprite = _itemImageSprite;
+
     }
 
     public void SetItemBy(ItemEquipable itemToCopy) // копирование из другого предмета
     {
 
         _itemType = itemToCopy.GetTypeItem();
-        _itemTypeIcon.sprite = _inventoryManager.GetSpriteByType(_itemType);
+        _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
         _weapon = itemToCopy.GetData();
 
         _rarity = itemToCopy.GetRarity();
-        _itemRarityCircle.color = _inventoryManager.GetColorByRarity(_rarity);
+        _itemRarityCircle.color = manager.GetColorByRarity(_rarity);
 
 
         _itemLvl = itemToCopy.GetLvl();
@@ -125,11 +121,14 @@ public class ItemEquipable : MonoBehaviour
 
         _itemImageSprite = itemToCopy.GetSprite();
         _itemImage.sprite = _itemImageSprite;
+
+
     }
 
     public void ChangeToEquiped()
     {
         _isEquiped = true;
+        manager.SetInventoryEquiped();
     }
 
     public void ChangeToUnequiped()
@@ -141,11 +140,14 @@ public class ItemEquipable : MonoBehaviour
     {
         if (!_isEquiped) // to equip inventory
         {
-            _inventoryManager.EquipItem(GetTypeItem(), this);
+            manager.EquipItem(GetTypeItem(), this);
+            manager.SetInventoryEquiped();
         }
         else // to set back to inventory
         {
-            _inventoryManager.TradeParamentrs(this);
+
+            manager.TradeParamentrs(this);
+            manager.SetInventoryEquiped();
         }
     }
 

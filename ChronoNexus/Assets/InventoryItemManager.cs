@@ -25,6 +25,7 @@ public class InventoryItemManager : MonoBehaviour
     [SerializeField] private GameObject _armorInUse;
 
     private Character _player;
+    private WeaponData _gunEquiped;
     [HideInInspector]
     public UnityAction OnCharacterLinked;
 
@@ -32,7 +33,7 @@ public class InventoryItemManager : MonoBehaviour
     {
         _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
     }
-    private void Awake()
+    private void OnEnable()
     {
         if (!manager)
         {
@@ -70,12 +71,13 @@ public class InventoryItemManager : MonoBehaviour
 
     public void SetInventoryEquiped()
     {
+        _gunEquiped = GetEquipedGun();
+        Debug.LogAssertion("да блять");
         if (_player)
         {
-            var getEquip = GetEquipedGun();
-            if (getEquip != null)
+            if (_gunEquiped)
             {
-                _player.gameObject.GetComponent<Equiper>().EquipWeapon(getEquip);
+                _player.gameObject.GetComponent<Equiper>().EquipWeapon(_gunEquiped);
             }
         }
     }
@@ -135,7 +137,7 @@ public class InventoryItemManager : MonoBehaviour
         {
             case itemType.gun:
                 TradeParamentrs(_gunInUse, item);
-                SetInventoryEquiped();
+                
                 return;
             case itemType.knife:
                 TradeParamentrs(_knifeInUse, item);
@@ -147,6 +149,7 @@ public class InventoryItemManager : MonoBehaviour
                 TradeParamentrs(_armorInUse, item);
                 return;
         }
+        SetInventoryEquiped();
     }
 
 
@@ -200,9 +203,11 @@ public class InventoryItemManager : MonoBehaviour
     public WeaponData GetEquipedGun()
     {
         var equiped = _gunInUse.GetComponentInChildren<ItemEquipable>();
+        print(equiped);
         if (equiped)
         {
-            return _gunInUse.GetComponentInChildren<ItemEquipable>()?.GetData();
+            print(equiped);
+            return equiped.GetData();
         }
         else
         {
