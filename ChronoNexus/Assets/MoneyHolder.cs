@@ -18,6 +18,7 @@ public class MoneyHolder : MonoBehaviour
     private void OnDrawGizmos()
     {
         _moneyText = GetComponent<TextMeshProUGUI>();
+        OnMoneyChange();
     }
 
     public void OnMoneyChange()
