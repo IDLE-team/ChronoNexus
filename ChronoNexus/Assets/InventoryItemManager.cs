@@ -18,7 +18,7 @@ public class InventoryItemManager : MonoBehaviour
     [SerializeField]
     private List<HorizontalLayoutGroup> _cells = new List<HorizontalLayoutGroup>();
 
-    [Header("Экипированные предметы")]
+    [Header("Точки Экипировки")]
     [SerializeField] private GameObject _gunInUse;
     [SerializeField] private GameObject _knifeInUse;
     [SerializeField] private GameObject _granadeInUse;
@@ -26,8 +26,11 @@ public class InventoryItemManager : MonoBehaviour
 
     private Character _player;
     private WeaponData _gunEquiped;
+
     [HideInInspector]
     public UnityAction OnCharacterLinked;
+
+    [SerializeField] private MoneyHolder _moneyHolder;
 
     private void OnDrawGizmos()
     {
@@ -72,7 +75,6 @@ public class InventoryItemManager : MonoBehaviour
     public void SetInventoryEquiped()
     {
         _gunEquiped = GetEquipedGun();
-        Debug.LogAssertion("да блять");
         if (_player)
         {
             if (_gunEquiped)
@@ -103,41 +105,40 @@ public class InventoryItemManager : MonoBehaviour
         switch (itemRarity)
         {
             case itemRarity.gray:
-                //return new Color(135, 135, 135, 1);
                 return new Color(0.5283019f, 0.5283019f, 0.5283019f, 1f);
             case itemRarity.green:
-                //return new Color(3, 250, 162, 1);
                 return new Color(0.01176471f, 0.9803922f, 0.6352941f, 1f);
             case itemRarity.purple:
                 return new Color(0.4862745f, 0.4862745f, 0.9882354f, 1f);
-            //return new Color(124, 124, 252, 1);
             case itemRarity.gold:
                 return new Color(0.9882353f, 0.8862745f, 0.01176471f, 1f);
-            //return new Color(252, 226, 3, 1);
             default:
                 return new Color(0.5283019f, 0.5283019f, 0.5283019f, 1f);
         }
     }
 
-    private void CreateRandomItemsInInventory() // тестовая функция
+    public string GetTextByRarity(itemRarity itemRarity)
     {
-        for (int i = 0; i < Random.Range(3, 10); i++)
+        switch (itemRarity)
         {
-            var cell = Instantiate(_itemPrefab, _cells[i].transform);
-            cell.GetComponent<ItemEquipable>().SetItemBy(
-                (itemType)Random.Range(0, 4), (itemRarity)Random.Range(0, 4),
-                Random.Range(1, 10), Random.Range(10, 50));
-            print(cell.GetComponent<ItemEquipable>().GetMainParam());
+            case itemRarity.gray:
+                return "Обычный";
+            case itemRarity.green:
+                return "Необычный";
+            case itemRarity.purple:
+                return "Редкий";
+            case itemRarity.gold:
+                return "Легендарный";
+            default:
+                return "Обычный";
         }
     }
-
     public void EquipItem(itemType itemType, ItemEquipable item)
     {
         switch (itemType)
         {
             case itemType.gun:
                 TradeParamentrs(_gunInUse, item);
-                
                 return;
             case itemType.knife:
                 TradeParamentrs(_knifeInUse, item);
@@ -153,7 +154,6 @@ public class InventoryItemManager : MonoBehaviour
     }
 
 
-
     public void TradeParamentrs(GameObject itemInUse, ItemEquipable next)
     {
         ItemEquipable itemUse = itemInUse.GetComponentInChildren<ItemEquipable>();
@@ -164,6 +164,7 @@ public class InventoryItemManager : MonoBehaviour
             itemUse.ChangeToEquiped();
             next.SetItemBy(item);
             next.ChangeToUnequiped();
+            print(item.name);
             Destroy(item.gameObject);
 
         }
@@ -177,7 +178,17 @@ public class InventoryItemManager : MonoBehaviour
         }
     }
 
-    public void TradeParamentrs(ItemEquipable next)
+    public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
+    {
+        var item = SpawnEmptyItem();
+        item.SetItemBy(next);
+        item.ChangeToUnequiped();
+        next.SetItemBy(item);
+        next.ChangeToEquiped();
+        Destroy(next.gameObject);
+    }
+
+    private ItemEquipable SpawnEmptyItem()
     {
         GameObject itemEmpty = Instantiate(_itemPrefab); ;
         for (int i = 0; i < _cells.Count; i++)
@@ -189,15 +200,12 @@ public class InventoryItemManager : MonoBehaviour
             }
         }
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
+        return itemUseEmpty;
+    }
 
-        var item = Instantiate(itemUseEmpty);
-        itemUseEmpty.SetItemBy(next);
-        itemUseEmpty.ChangeToUnequiped();
-        next.SetItemBy(item);
-        next.ChangeToEquiped();
-        Destroy(item.gameObject);
-        Destroy(next.gameObject);
-
+    public void MakeItemFromShop(ItemData soldItem)
+    {
+        SpawnEmptyItem().SetItemBy(soldItem);
     }
 
     public WeaponData GetEquipedGun()
@@ -207,11 +215,24 @@ public class InventoryItemManager : MonoBehaviour
         if (equiped)
         {
             print(equiped);
-            return equiped.GetData();
+            return equiped.GetDataByType();
         }
         else
         {
             return null;
+        }
+    }
+
+    public bool BuyItem(float itemCost)
+    {
+        if (_moneyHolder.GetMoneyValue() - itemCost >= 0)
+        {
+            _moneyHolder.DecreaseMoneyValue(itemCost);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

@@ -1,3 +1,4 @@
+using NUnit.Framework.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,7 +6,6 @@ using static InventoryItemManager;
 
 public class ItemEquipable : MonoBehaviour
 {
-    private InventoryItemManager _inventoryManager;
 
     [Header("Компоненты настройки предмета")]
     [SerializeField] private Image _itemImage;
@@ -14,16 +14,18 @@ public class ItemEquipable : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _textMainParametr;
     [SerializeField] private TextMeshProUGUI _textItemLvl;
 
+    //[Header("Для установки предмета со сцены")]
+    private itemRarity _rarity;
+    private itemType _itemType;
+    private int _itemLvl;
+    private float _mainParam;
+    private Sprite _itemImageSprite;
+
     [Header("Для установки предмета со сцены")]
     [SerializeField] private bool _loadFromScene = false;
-    [SerializeField] private itemRarity _rarity;
-    [SerializeField] private itemType _itemType;
-    [SerializeField] private int _itemLvl;
-    [SerializeField] private float _mainParam;
-    [SerializeField] private Sprite _itemImageSprite;
+    [SerializeField] private ItemData _itemData;
 
-    [Header("Данные о типе огнестрела (if Gun)")]
-    [SerializeField] private WeaponData _weapon;
+    private WeaponData _weapon; // если пушка
 
     private Button _itemButton;
     [SerializeField]
@@ -31,45 +33,35 @@ public class ItemEquipable : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        _inventoryManager = GetComponentInParent<InventoryItemManager>();
-        if (_loadFromScene) SetItemBy(_itemType, _rarity, _itemLvl, _mainParam, _itemImageSprite, _weapon);
+        if (_loadFromScene)
+        {
+            SetItemBy(_itemData);
+        }
     }
 
     private void Awake()
     {
         _itemButton = GetComponent<Button>();
         _itemButton.onClick.AddListener(SetItem);
+
+        if (_loadFromScene)
+        {
+            SetItemBy(_itemData);
+        }
     }
 
-    public void SetItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam, Sprite itemImage)
+    public void SetGunItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam, Sprite itemImage, ItemData Data)
     {
         // Функция для установки парамеров предмета из базы данных
+
+        _itemData = Data;
         _rarity = rarity;
         _itemType = type;
         _itemLvl = Lvl;
         _mainParam = mainParam;
         _itemImageSprite = itemImage;
 
-        _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
-
-        _itemRarityCircle.color = manager.GetColorByRarity(_rarity);
-
-        _textItemLvl.text = _itemLvl.ToString();
-
-        _textMainParametr.text = _mainParam.ToString();
-
-        _itemImage.sprite = _itemImageSprite;
-    }
-    public void SetItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam, Sprite itemImage, WeaponData gunData) // Если автомат
-    {
-        // Функция для установки парамеров предмета из базы данных
-        _rarity = rarity;
-        _itemType = type;
-        _itemLvl = Lvl;
-        _mainParam = mainParam;
-        _itemImageSprite = itemImage;
-
-        _weapon = gunData;
+        _weapon = _itemData.weaponData;
 
         _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
@@ -80,48 +72,34 @@ public class ItemEquipable : MonoBehaviour
         _textMainParametr.text = _mainParam.ToString();
 
         _itemImage.sprite = _itemImageSprite;
-    }
-    public void SetItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam) // Тестовая функция, удалить после реализации
-    {
-        // Функция для установки парамеров предмета из базы данных
-        _rarity = rarity;
-        _itemType = type;
-        _itemLvl = Lvl;
-        _mainParam = mainParam;
-
-        _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
-
-        _itemRarityCircle.color = manager.GetColorByRarity(_rarity);
-
-        _textItemLvl.text = _itemLvl.ToString();
-
-        _textMainParametr.text = _mainParam.ToString();
-
-        _itemImage.sprite = _itemImageSprite;
-
     }
 
     public void SetItemBy(ItemEquipable itemToCopy) // копирование из другого предмета
     {
+        SetItemBy(itemToCopy.GetItemData());
+    }
 
-        _itemType = itemToCopy.GetTypeItem();
+    public void SetItemBy(ItemData itemToCopy) // копирование из другого предмета
+    {
+        print(itemToCopy.itemType);
+        _itemData = itemToCopy;
+        _itemType = itemToCopy.itemType;
         _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
-        _weapon = itemToCopy.GetData();
+        _weapon = itemToCopy.weaponData; // тут надо будет дописывать - только под оружие сейча
 
-        _rarity = itemToCopy.GetRarity();
-        _itemRarityCircle.color = manager.GetColorByRarity(_rarity);
+        _rarity = itemToCopy.rarity;
+        _itemRarityCircle.color = manager.GetColorByRarity(itemToCopy.rarity);
 
 
-        _itemLvl = itemToCopy.GetLvl();
+        _itemLvl = itemToCopy.itemLvl;
         _textItemLvl.text = _itemLvl.ToString();
 
-        _mainParam = itemToCopy.GetMainParam();
+        _mainParam = itemToCopy.weaponData.Damage; // тоже только под оружие
         _textMainParametr.text = _mainParam.ToString();
 
-        _itemImageSprite = itemToCopy.GetSprite();
+        _itemImageSprite = itemToCopy.itemImageSprite;
         _itemImage.sprite = _itemImageSprite;
-
 
     }
 
@@ -146,7 +124,7 @@ public class ItemEquipable : MonoBehaviour
         else // to set back to inventory
         {
 
-            manager.TradeParamentrs(this);
+            manager.TradeParametersToEmptyFromEquiped(this);
             manager.SetInventoryEquiped();
         }
     }
@@ -172,7 +150,7 @@ public class ItemEquipable : MonoBehaviour
         return _itemImageSprite;
     }
 
-    public WeaponData GetData()
+    public WeaponData GetDataByType()
     {
         switch (_itemType)
         {
@@ -181,6 +159,11 @@ public class ItemEquipable : MonoBehaviour
             default:
                 return null;
         }
+    }
+
+    public ItemData GetItemData()
+    {
+        return _itemData;
     }
 
     public void GetAllParamentrs(out itemType type, out itemRarity rarity, out int lvl, out float mainParam, out Sprite sprite)
