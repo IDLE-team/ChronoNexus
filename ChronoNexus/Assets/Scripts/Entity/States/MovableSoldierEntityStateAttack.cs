@@ -100,7 +100,13 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             _stateMachine.ChangeState(_movableSoldierEntity.ChaseState);
             return;
         }
+<<<<<<< HEAD
         
+=======
+
+        Debug.Log("1 "+_movableSoldierEntity.transform);
+        Debug.Log("2 "+_movableSoldierEntity.Target);      
+>>>>>>> DesignScene
         _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
         base.LogicUpdate();
         

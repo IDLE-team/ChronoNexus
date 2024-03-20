@@ -9,19 +9,26 @@ public class HealthPresentor : MonoBehaviour
 
     private Slider _hpBar;
 
+    private void FindHealth()
+    {
+        _health = InventoryItemManager.manager.GetPlayer().gameObject.GetComponent<Health>();
+        if (_health)
+        {
+            _health.Changed += UpdateValue;
+            _hpBar.maxValue = _health.MaxHealth;
+            UpdateValue(_health.Value);
+        }
+    }
     private void Start()
     {
         _hpBar = GetComponent<Slider>();
-    }
-
-    private void OnEnable()
-    {
-        _health.Changed += UpdateValue;
+        InventoryItemManager.manager.OnCharacterLinked += FindHealth;
     }
 
     private void OnDisable()
     {
         _health.Changed -= UpdateValue;
+        InventoryItemManager.manager.OnCharacterLinked -= FindHealth;
     }
 
     private void UpdateValue(float value)
