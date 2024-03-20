@@ -22,13 +22,13 @@ public class UserInterfaceComponent : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        if (_manager)
-        {
-            _manager.CloseTab(gameObject);
-        }
-    }
+   // private void OnDisable()
+   // {
+   //     if (_manager)
+   //     {
+   //         _manager.CloseTab(gameObject);
+   //     }
+   // }
 
     private void Start()
     {
