@@ -15,7 +15,9 @@ public class BladeWeapon : ColdWeapon
         Collider[] hitEnemies = Physics.OverlapSphere(transform.position, Distance, layerMask);
         foreach (Collider collider in hitEnemies)
         {
-            collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(Damage, true);
+           // collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(Damage, true);
+            collider.gameObject.GetComponent<IFinisherable>()?.StartFinisher();
+
         }
     }
 }

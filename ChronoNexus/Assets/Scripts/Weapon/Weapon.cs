@@ -20,7 +20,6 @@ public abstract class Weapon : MonoBehaviour
     public TextMeshProUGUI WeaponUI;
     
     public float Damage;
-    public float Distance;
     public float FireRate;
     public float _lastFireTime;
 

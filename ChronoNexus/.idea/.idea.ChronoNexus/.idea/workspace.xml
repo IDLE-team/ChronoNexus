@@ -2,39 +2,84 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bd9c2fb-00c3-42b8-9346-e7e81d6d440f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Cold.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Cold/BladeWeapon.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Cold/BladeWeapon.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IFinisherable.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IFinisherable.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChronoNexus/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChronoNexus/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Animation/AnimatorControllers/CharacterAnimatorController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animation/AnimatorControllers/CharacterAnimatorController.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animation/Character/Sword-Attack-R1.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animation/Character/Sword-Attack-R1.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/AnimationEventsHolder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/AnimationEventsHolder.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/WeaponsData/Shotgun.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/WeaponsData/Shotgun.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DownloadedAssets/Low Poly Cyber Ninja Sword/Model/Materials/MAT_Sword_Cyber_Greenway.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DownloadedAssets/Low Poly Cyber Ninja Sword/Model/Materials/MAT_Sword_Cyber_Greenway.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DownloadedAssets/Low Poly Cyber Ninja Sword/Prefabs/Prefab_Sword_Cyber_Greenway.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DownloadedAssets/Low Poly Cyber Ninja Sword/Prefabs/Prefab_Sword_Cyber_Greenway.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Character.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animation/EnemySoldierAnimatorController.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animation/EnemySoldierAnimatorController.controller" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/WeaponsData/Blade.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/WeaponsData/Blade.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/DownloadedAssets/Yurowm/Materials/Sci-Fi_Soldier-body.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DownloadedAssets/Yurowm/Materials/Sci-Fi_Soldier-body.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EnemyAnimationEventsHolder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/EnemyAnimationEventsHolder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiCity/Materials/Misc/FX_Blackhole.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiCity/Materials/Misc/FX_Blackhole.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_B.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_B.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_C.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_C.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_D.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_D.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_E.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_E.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_F.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_01_F.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_B.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_B.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_C.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_C.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_D.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_D.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_E.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_E.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_F.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_02_F.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_B.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_B.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_C.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_C.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_D.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_D.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_E.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_E.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_F.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_03_F.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_B.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_B.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_C.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_C.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_D.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_D.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_E.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_E.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_F.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Material_04_F.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_B.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_B.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_C.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_C.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_D.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_D.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_E.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_E.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_F.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Alts/PolygonScifiSpace_Sign_01_F.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Misc/PolygonScifiSpace_Cockpit_Glass.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Misc/PolygonScifiSpace_Cockpit_Glass.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Misc/PolygonScifiSpace_Material_Glass_Cockpit_Interior.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Misc/PolygonScifiSpace_Material_Glass_Cockpit_Interior.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Misc/PolygonScifiSpace_Material_Grey.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Misc/PolygonScifiSpace_Material_Grey.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Misc/Weapons_Energy.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Materials/Misc/Weapons_Energy.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Models/Collision/Materials/lambert1.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Models/Collision/Materials/lambert1.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Models/Collision/Materials/lambert3.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Models/Collision/Materials/lambert3.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Models/Materials/PolygonSciFiCity_Texture_01_A.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Models/Materials/PolygonSciFiCity_Texture_01_A.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Models/Materials/PolygonSciFiSpace_Texture_03_A.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/Models/Materials/PolygonSciFiSpace_Texture_03_A.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Imported/PolygonSciFiSpace/URP_ExtractMe.unitypackage.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Input/PlayerInputActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Input/PlayerInputActions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Input/PlayerInputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Input/PlayerInputActions.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Materials/Diffuse.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Materials/Diffuse.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials/Diffuse.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials/Diffuse.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials/Diffuse2.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials/Diffuse2.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LowPolyModels/LowPolyMilitary/Models/Static/Gray.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/LowPolyModels/LowPolyMilitary/Models/Static/Gray.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MinigunAnimsetPro/Animations/Materials/DummyMat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MinigunAnimsetPro/Animations/Materials/DummyMat.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/MinigunAnimsetPro/Models/Materials/MinigunMat.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/MinigunAnimsetPro/Models/Materials/MinigunMat.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefab_Sword_Cyber_Greenway.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefab_Sword_Cyber_Greenway.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Bullet Default.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Bullet Default.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Items/TestItem.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Items/TestItem.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/WeaponTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/WeaponTest.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AimRigController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AimRigController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AnimationEventsHolder.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AnimationEventsHolder.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/Character.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterAnimator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/CharacterMovement.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Character/PlayerAttacker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Character/PlayerAttacker.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyMeleeAttacker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyMeleeAttacker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAnimator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/Entity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableMeleeEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableMeleeEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IDamagable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IDamagable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/JoystickButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/JoystickButton.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/Weapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponAnimation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponAnimation.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/MachineGunWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm/MachineGunWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/MachineGunWeapon.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm/MachineGunWeapon.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/PistolWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm/PistolWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/PistolWeapon.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm/PistolWeapon.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/RifleWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm/RifleWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/RifleWeapon.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm/RifleWeapon.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/ShotgunWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm/ShotgunWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/ShotgunWeapon.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Firearm/ShotgunWeapon.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponsBaseType/ColdWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponsBaseType/ColdWeapon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponsBaseType/FirearmWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponsBaseType/FirearmWeapon.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Cold/BladeWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapon/WeaponSubType/Cold/BladeWeapon.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/СharacterTargetingSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/СharacterTargetingSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Drop Shadow.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Drop Shadow.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Outline.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Outline.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/_MK/MKToon/Examples/Scenes/Spectate/Materials/Floor/Materials/LightIcon.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/_MK/MKToon/Examples/Scenes/Spectate/Materials/Floor/Materials/LightIcon.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +95,6 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/FirePositionHolder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/Selection.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -128,6 +172,10 @@
       <workItem from="1710244952416" duration="11081000" />
       <workItem from="1710326464900" duration="1194000" />
       <workItem from="1710343373875" duration="9900000" />
+      <workItem from="1710799976993" duration="8525000" />
+      <workItem from="1710849570109" duration="3529000" />
+      <workItem from="1710876217301" duration="8662000" />
+      <workItem from="1710966641571" duration="6219000" />
     </task>
     <servers />
   </component>

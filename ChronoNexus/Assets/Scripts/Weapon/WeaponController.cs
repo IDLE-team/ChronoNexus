@@ -31,6 +31,7 @@ public class WeaponController : MonoBehaviour
     {
         if(_weaponUI)
             _currentWeapon.SetWeaponUI(_weaponUI);
+        
         SetWeaponAimRig();
     }
 

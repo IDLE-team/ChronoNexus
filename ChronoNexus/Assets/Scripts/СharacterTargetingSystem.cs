@@ -161,6 +161,7 @@ public class СharacterTargetingSystem : MonoBehaviour
         _isEnemyTargeted = true;
     }
 
+
     private void ChooseTarget()
     {
         RaycastHit hit;
@@ -203,25 +204,28 @@ public class СharacterTargetingSystem : MonoBehaviour
             {
                 Target.OnTargetInvalid -= SetEmptyTarget;
             }
-            Target = selectedTarget;
-            Target.SetSelfTarget(true);
-            if (_previousTarget != null)
-                _previousTarget.SetSelfTarget(false);
-
-            _previousTarget = Target;
-            _aimRigController._aimTarget.position = Target.GetTransform().position;
-            _aimRigController._aimTarget.parent = Target.GetTransform();
-
-            _aimRigController.SetSmoothWeight(1);
-
-            Target.OnTargetInvalid += SetEmptyTarget;
-
-            IsLookAt = true;
+            SetTarget(selectedTarget);
         }
-
-
     }
+    public void SetTarget(ITargetable target)
+    {
+        if (target == Target)
+            return;
+        Target = target;
+        Target.SetSelfTarget(true);
+        if (_previousTarget != null)
+            _previousTarget.SetSelfTarget(false);
 
+        _previousTarget = Target;
+        _aimRigController._aimTarget.position = Target.GetTransform().position;
+        _aimRigController._aimTarget.parent = Target.GetTransform();
+
+        _aimRigController.SetSmoothWeight(1);
+
+        Target.OnTargetInvalid += SetEmptyTarget;
+        
+        IsLookAt = true;
+    }
 
     private void SetEmptyTarget()
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffected, ISeeker
+public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITargetable, ITimeAffected, ISeeker
 {
     public Attacker _Attacker;
     public event Action OnTargetInvalid;
@@ -30,6 +30,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
     [SerializeField] protected DebugEnemySpawner _enemySpawner;
     [SerializeField] protected Equiper _equiper;
     [SerializeField] protected WeaponController _weaponController;
+    [SerializeField] protected ParticleSystem _finisherReadyVFX;
+    [SerializeField] protected float _finisherHPTreshold;
     public State state = new State();
     protected EnemyState _startState;
 
@@ -48,10 +50,13 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
     protected bool _isValid = true;
     protected bool _isTarget;
 
+    protected bool _isFinisherReady;
+    
     public static List<GameObject> enemyList = new List<GameObject>();
     public event Action OnDie;
     public event Action OnUIUpdate;
-
+    public event Action OnFinisherReady;
+    public event Action OnFinisherEnded;
     public EntityStateDummy DummyState { get; private set; }
 
     public virtual string CurrentState
@@ -130,6 +135,13 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         _health.Decrease(damage, isCritical);
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
+
+        if (_health.Value <= _finisherHPTreshold)
+        {
+            _isFinisherReady = true;
+            OnFinisherReady?.Invoke();
+            _finisherReadyVFX.Play();
+        }
     }
 
     protected virtual void OnDied()
@@ -139,6 +151,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         _isValid = false;
         _isAlive = false;
 
+        _finisherReadyVFX.Stop();
+        OnFinisherEnded?.Invoke();
         SetSelfTarget(false);
         StopSeek();
 
@@ -158,7 +172,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
 
     protected virtual void Die()
     {
-        _animator.PlayDeathAnimation();
+        if(!_animator.GetAnimationParamStatus("Finisher"))
+            _animator.PlayDeathAnimation();
 
         if (_enemySpawner != null)
         {
@@ -301,4 +316,19 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         MeleeAttack,
         RangeAttack
     };
+
+    public void StartFinisher()
+    {
+       _animator.Finisher();
+       var Player = GameObject.FindWithTag("Player");
+       Vector3 dir = Player.transform.position - transform.position;
+       dir.y = 0;
+       transform.rotation = Quaternion.LookRotation(-dir);
+    }
+
+    public bool GetFinisherableStatus()
+    {
+        return _isFinisherReady;
+    }
+    
 }

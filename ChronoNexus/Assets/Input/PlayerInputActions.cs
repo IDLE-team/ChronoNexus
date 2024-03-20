@@ -46,7 +46,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Hit"",
+                    ""name"": ""Finisher"",
                     ""type"": ""Button"",
                     ""id"": ""a2cfc15d-ea1e-4141-9fba-1038e8b77ea8"",
                     ""expectedControlType"": ""Button"",
@@ -214,7 +214,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Hit"",
+                    ""action"": ""Finisher"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -225,7 +225,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Hit"",
+                    ""action"": ""Finisher"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -404,7 +404,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_Hit = m_Player.FindAction("Hit", throwIfNotFound: true);
+        m_Player_Finisher = m_Player.FindAction("Finisher", throwIfNotFound: true);
         m_Player_TimeStop = m_Player.FindAction("TimeStop", throwIfNotFound: true);
         m_Player_TimeSlow = m_Player.FindAction("TimeSlow", throwIfNotFound: true);
         m_Player_TargetLock = m_Player.FindAction("TargetLock", throwIfNotFound: true);
@@ -478,7 +478,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_Hit;
+    private readonly InputAction m_Player_Finisher;
     private readonly InputAction m_Player_TimeStop;
     private readonly InputAction m_Player_TimeSlow;
     private readonly InputAction m_Player_TargetLock;
@@ -492,7 +492,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction @Hit => m_Wrapper.m_Player_Hit;
+        public InputAction @Finisher => m_Wrapper.m_Player_Finisher;
         public InputAction @TimeStop => m_Wrapper.m_Player_TimeStop;
         public InputAction @TimeSlow => m_Wrapper.m_Player_TimeSlow;
         public InputAction @TargetLock => m_Wrapper.m_Player_TargetLock;
@@ -515,9 +515,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
-            @Hit.started += instance.OnHit;
-            @Hit.performed += instance.OnHit;
-            @Hit.canceled += instance.OnHit;
+            @Finisher.started += instance.OnFinisher;
+            @Finisher.performed += instance.OnFinisher;
+            @Finisher.canceled += instance.OnFinisher;
             @TimeStop.started += instance.OnTimeStop;
             @TimeStop.performed += instance.OnTimeStop;
             @TimeStop.canceled += instance.OnTimeStop;
@@ -549,9 +549,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
-            @Hit.started -= instance.OnHit;
-            @Hit.performed -= instance.OnHit;
-            @Hit.canceled -= instance.OnHit;
+            @Finisher.started -= instance.OnFinisher;
+            @Finisher.performed -= instance.OnFinisher;
+            @Finisher.canceled -= instance.OnFinisher;
             @TimeStop.started -= instance.OnTimeStop;
             @TimeStop.performed -= instance.OnTimeStop;
             @TimeStop.canceled -= instance.OnTimeStop;
@@ -667,7 +667,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
-        void OnHit(InputAction.CallbackContext context);
+        void OnFinisher(InputAction.CallbackContext context);
         void OnTimeStop(InputAction.CallbackContext context);
         void OnTimeSlow(InputAction.CallbackContext context);
         void OnTargetLock(InputAction.CallbackContext context);

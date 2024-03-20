@@ -65,6 +65,8 @@ public class CharacterMovement : MonoBehaviour, ITransformable
     private float _animationStrafeX;
     private float _animationStrafeZ;
 
+    private bool _canMove = true;
+    
     public Transform Transform => transform;
 
     [Inject]
@@ -109,6 +111,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
 
     private void FixedUpdate()
     {
+        if(_canMove)
         Move();
     }
 
@@ -283,6 +286,16 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         }
     }
     */
+    public void LockMove()
+    {
+        _canMove = false;
+        _character.Rigidbody.velocity = Vector3.zero;
+    }
+
+    public void UnlockMove()
+    {
+        _canMove = true;
+    }
     private void OnSpeedSliderValueChanged(float value)
     {
         MoveSpeed = value;
