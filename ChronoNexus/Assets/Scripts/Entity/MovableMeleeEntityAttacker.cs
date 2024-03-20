@@ -3,7 +3,7 @@ using UnityEngine.VFX;
 
 public class MovableMeleeEntityAttacker : Attacker
 {
-    [Header("Melee Attack")]
+    [Header("Range Attack")]
     //protected float _attackTimer;
     [SerializeField] private WeaponData _meleeWeaponData;
 

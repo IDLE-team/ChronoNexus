@@ -2,17 +2,733 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3bd9c2fb-00c3-42b8-9346-e7e81d6d440f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/StationaryEntityState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/StationaryEntityState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/StationaryEntityStateIdle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/StationaryEntityStateIdle.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/StationaryEntityStateRangeAttack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/StationaryEntityStateRangeAttack.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/StationaryEntity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/StationaryEntity.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/StationaryEntityAttacker.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/StationaryEntityAttacker.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ChronoNexus/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ChronoNexus/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/MeleeEntity.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/MeleeEntity.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/RangedEntity.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/RangedEntity.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/10mm Pistol.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/10mm Pistol.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/12 Gauge Automatic Shotgun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/12 Gauge Automatic Shotgun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/357 M-gun Revolver.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/357 M-gun Revolver.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/38 Revolver.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/38 Revolver.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/44 M-gun Revolver.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/44 M-gun Revolver.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/45 Automatic Pistol.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/45 Automatic Pistol.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/50 Automatic Pistol.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/50 Automatic Pistol.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/500 M-gun Revolver.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/500 M-gun Revolver.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/9mm Automatic Pistol.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/9mm Automatic Pistol.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/9mm Heavy Pistol.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/9mm Heavy Pistol.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/AGU Assault Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/AGU Assault Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/BM4 Shotgun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/BM4 Shotgun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Cowboy Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Cowboy Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Czech Machine Pistol 61-608-Extended.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Czech Machine Pistol 61-608-Extended.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Czech Machine Pistol 61-608.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Czech Machine Pistol 61-608.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Field Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Field Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/French Assault Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/French Assault Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Kalash.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Kalash.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/MG5 Submachinegun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/MG5 Submachinegun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Materials/Diffuse.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Materials/Diffuse.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 10 Submachinegun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 10 Submachinegun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 16 Assault Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 16 Assault Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 37 Shotgun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 37 Shotgun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 500 Protector Shotgun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 500 Protector Shotgun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 700 Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 700 Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 82 Heavy Sniper.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 82 Heavy Sniper.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 870 Shotgun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Model 870 Shotgun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/SC Assault Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/SC Assault Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/SDV Sniper Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/SDV Sniper Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Snub-nosed .38 Revolver.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/Snub-nosed .38 Revolver.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/U-Z Machinegun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/U-Z Machinegun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/UMG Submachinegun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/FBX Files/UMG Submachinegun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/10mm Pistol.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/10mm Pistol.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/12 Gauge Automatic Shotgun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/12 Gauge Automatic Shotgun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/357 M-gun revolver.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/357 M-gun revolver.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/38 Revolver.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/38 Revolver.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/44 M-gun revolver.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/44 M-gun revolver.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/45 Automatic Pistol.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/45 Automatic Pistol.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/50 Automatic Pistol.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/50 Automatic Pistol.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/500 M-gun Revolver.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/500 M-gun Revolver.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/9mm Automatic Pistol.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/9mm Automatic Pistol.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/9mm Heavy Pistol.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/9mm Heavy Pistol.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/AGU Assault Rifle.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/AGU Assault Rifle.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/BM4 Shotgun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/BM4 Shotgun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Cowboy Rifle.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Cowboy Rifle.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Czech Machine Pistol.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Czech Machine Pistol.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Field Rifle.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Field Rifle.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/French Assault Rifle.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/French Assault Rifle.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Kalash.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Kalash.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/MG5 Submachinegun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/MG5 Submachinegun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 10 Submachinegun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 10 Submachinegun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 16 Assault Rifle.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 16 Assault Rifle.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 37 Shotgun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 37 Shotgun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 500 Protector Shotgun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 500 Protector Shotgun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 700 Rifle.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 700 Rifle.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 82 Heavy Sniper.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 82 Heavy Sniper.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 870 Shotgun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Model 870 Shotgun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/SC Assault Rifle.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/SC Assault Rifle.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/SDV Sniper.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/SDV Sniper.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Snub-nosed 38 Revolver.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/Snub-nosed 38 Revolver.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/U-Z Machinegun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/U-Z Machinegun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/UMG Submachinegun.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Materials/UMG Submachinegun.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/10mm Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/10mm Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/12 Gauge Automatic Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/12 Gauge Automatic Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/357 M-gun Revolver.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/357 M-gun Revolver.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/38 Revolver.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/38 Revolver.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/44 M-gun Revolver.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/44 M-gun Revolver.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/45 Automatic Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/45 Automatic Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/50 Automatic Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/50 Automatic Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/500 M-gun Revolver.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/500 M-gun Revolver.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/9mm Automatic Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/9mm Automatic Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/9mm Heavy Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/9mm Heavy Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/AGU Assault Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/AGU Assault Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/BM4 Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/BM4 Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Cowboy Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Cowboy Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Czech Machine Pistol Extended.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Czech Machine Pistol Extended.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Czech Machine Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Czech Machine Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Field Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Field Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/French Assault Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/French Assault Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Kalash.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Kalash.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/MG5 Submachinegun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/MG5 Submachinegun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 10 Submachinegun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 10 Submachinegun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 16 Assault Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 16 Assault Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 37 Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 37 Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 500 Protector Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 500 Protector Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 700 Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 700 Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 82 Heavy Sniper Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 82 Heavy Sniper Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 870 Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Model 870 Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/SC Assault Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/SC Assault Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/SDV Sniper Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/SDV Sniper Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Snub-nosed 38 Revolver.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/Snub-nosed 38 Revolver.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/U-Z Submachinegun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/U-Z Submachinegun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/UMG Submachinegun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Prefabs/UMG Submachinegun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/10mm Pistol - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/10mm Pistol - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/10mm Pistol - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/10mm Pistol - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/12 Gauge Automatic Shotgun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/12 Gauge Automatic Shotgun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/12 Gauge Automatic Shotgun - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/12 Gauge Automatic Shotgun - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/357 M-gun Revolver - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/357 M-gun Revolver - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/357 M-gun Revolver - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/357 M-gun Revolver - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/38 Revolver - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/38 Revolver - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/38 Revolver - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/38 Revolver - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/44 M-gun Revolver - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/44 M-gun Revolver - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/44 M-gun Revolver - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/44 M-gun Revolver - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/45 Automatic Pistol - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/45 Automatic Pistol - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/45 Automatic Pistol - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/45 Automatic Pistol - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/50 Automatic Pistol - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/50 Automatic Pistol - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/50 Automatic Pistol - Diffuse_Golden.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/50 Automatic Pistol - Diffuse_Golden.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/50 Automatic Pistol - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/50 Automatic Pistol - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/500 M-gun Revolver - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/500 M-gun Revolver - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/500 M-gun Revolver - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/500 M-gun Revolver - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/9mm Automatic Pistol - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/9mm Automatic Pistol - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/9mm Automatic Pistol - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/9mm Automatic Pistol - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/9mm Heavy Pistol - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/9mm Heavy Pistol - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/9mm Heavy Pistol - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/9mm Heavy Pistol - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/AGU Assault Rifle - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/AGU Assault Rifle - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/AGU Assault Rifle - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/AGU Assault Rifle - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/BM4 Shotgun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/BM4 Shotgun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/BM4 Shotgun - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/BM4 Shotgun - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Cowboy Rifle - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Cowboy Rifle - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Cowboy Rifle - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Cowboy Rifle - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Czech Machine Pistol - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Czech Machine Pistol - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Czech Machine Pistol - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Czech Machine Pistol - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Field Rifle - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Field Rifle - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Field Rifle - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Field Rifle - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/French Assault Rifle - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/French Assault Rifle - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/French Assault Rifle - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/French Assault Rifle - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Kalash - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Kalash - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Kalash - Diffuse_golden.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Kalash - Diffuse_golden.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Kalash - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Kalash - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/MG5 Submachinegun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/MG5 Submachinegun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/MG5 Submachinegun - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/MG5 Submachinegun - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 10 Submachinegun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 10 Submachinegun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 10 Submachinegun - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 10 Submachinegun - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 16 Assault Rifle - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 16 Assault Rifle - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 16 Assault Rifle - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 16 Assault Rifle - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 37 Shotgun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 37 Shotgun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 37 Shotgun - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 37 Shotgun - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 500 Protector Shotgun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 500 Protector Shotgun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 500 Protector Shotgun - Diffuse_Golden.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 500 Protector Shotgun - Diffuse_Golden.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 500 Protector Shotgun - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 500 Protector Shotgun - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 700 Rifle - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 700 Rifle - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 700 Rifle - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 700 Rifle - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 82 Heavy Sniper - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 82 Heavy Sniper - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 82 Heavy Sniper - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 82 Heavy Sniper - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 870 Shotgun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 870 Shotgun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 870 Shotgun - Nomal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Model 870 Shotgun - Nomal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/SC Assault Rifle - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/SC Assault Rifle - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/SC Assault Rifle - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/SC Assault Rifle - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/SDV Sniper - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/SDV Sniper - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/SDV Sniper - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/SDV Sniper - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Snub-Nosed 38 Revolver - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Snub-Nosed 38 Revolver - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Snub-Nosed 38 Revolver - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/Snub-Nosed 38 Revolver - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/U-Z Machinegun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/U-Z Machinegun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/U-Z Machinegun - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/U-Z Machinegun - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/UMG Submachinegun - Diffuse.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/UMG Submachinegun - Diffuse.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/UMG Submachinegun - Normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/Textures/UMG Submachinegun - Normal.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/10mm Pistol.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/10mm Pistol/10mm Pistol (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/10mm Pistol/10mm Pistol (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/10mm Pistol/10mm Pistol.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/10mm Pistol/10mm Pistol.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/10mm Pistol/1_10mm Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/10mm Pistol/1_10mm Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/12 Gauge Automatic Shotgun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/12 Gauge Automatic Shotgun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/12 Gauge Automatic Shotgun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/12 Gauge Automatic Shotgun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/1_12 Gauge Automatic Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/1_12 Gauge Automatic Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/Reload2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/Reload2.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/Zoom-p.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/Zoom-p.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/12 Gauge Automatic Shotgun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/1_357 M-gun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/1_357 M-gun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/357 M-gun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/357 M-gun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/357 M-gun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/357 M-gun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/Reload-357.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/Reload-357.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/357 M-gun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver/1_38 Revolver.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver/1_38 Revolver.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver/38 Revolver (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver/38 Revolver (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver/38 Revolver.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver/38 Revolver.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/38 Revolver/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun/1_44 M-gun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun/1_44 M-gun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun/44 M-gun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun/44 M-gun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun/44 M-gun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun/44 M-gun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/44 M-gun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/45 Automatic Pistol.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/45 Automatic Pistol/1_45 Automatic Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/45 Automatic Pistol/1_45 Automatic Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/45 Automatic Pistol/45 Automatic Pistol (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/45 Automatic Pistol/45 Automatic Pistol (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/45 Automatic Pistol/45 Automatic Pistol.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/45 Automatic Pistol/45 Automatic Pistol.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol/1_50 Automatic Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol/1_50 Automatic Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol/50 Automatic Pistol (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol/50 Automatic Pistol (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol/50 Automatic Pistol.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol/50 Automatic Pistol.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/50 Automatic Pistol/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun/1_500 M-gun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun/1_500 M-gun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun/500 M-gun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun/500 M-gun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun/500 M-gun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun/500 M-gun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/500 M-gun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Automatic Pistol.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Automatic Pistol/1_9mm Automatic Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Automatic Pistol/1_9mm Automatic Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Automatic Pistol/9mm Automatic Pistol (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Automatic Pistol/9mm Automatic Pistol (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Automatic Pistol/9mm Automatic Pistol.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Automatic Pistol/9mm Automatic Pistol.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol/1_9mm Heavy Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol/1_9mm Heavy Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol/9mm Heavy Pistol (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol/9mm Heavy Pistol (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol/9mm Heavy Pistol.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol/9mm Heavy Pistol.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol/9mm Heavy Pistol_Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/9mm Heavy Pistol/9mm Heavy Pistol_Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/1_AGU Assault Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/1_AGU Assault Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/AGU Assault Rifle (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/AGU Assault Rifle (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/AGU Assault Rifle.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/AGU Assault Rifle.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/Crouch.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/Crouch.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/Run.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/Run.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/AGU Assault Rifle/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/1_BM4 Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/1_BM4 Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/BM4 Shotgun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/BM4 Shotgun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/BM4 Shotgun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/BM4 Shotgun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Crouch.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Crouch.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Reload-1 BM4.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Reload-1 BM4.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Reload2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Reload2.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Run.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Run.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Zoom-p.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Zoom-p.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/BM4 Shotgun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/1_Cowboy Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/1_Cowboy Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Cowboy Rifle (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Cowboy Rifle (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Cowboy Rifle.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Cowboy Rifle.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Reload 2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Reload 2.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Zoom-p.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Zoom-p.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Cowboy Rifle/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol/1_Czech Machine Pistol.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol/1_Czech Machine Pistol.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol/Czech Machine Pistol (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol/Czech Machine Pistol (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol/Czech Machine Pistol.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol/Czech Machine Pistol.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Czech Machine Pistol/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle/1_Field Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle/1_Field Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle/Field Rifle (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle/Field Rifle (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle/Field Rifle.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle/Field Rifle.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Field Rifle/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/1_French Assault Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/1_French Assault Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/French Assault Rifle (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/French Assault Rifle (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/French Assault Rifle.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/French Assault Rifle.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/Run.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/Run.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/French Assault Rifle/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/1_Kalash.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/1_Kalash.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/Kalash (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/Kalash (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/Kalash.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/Kalash.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/Run.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/Run.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Kalash/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/1_MG5 Submachinegun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/1_MG5 Submachinegun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/MG5 Submachinegun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/MG5 Submachinegun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/Mg5 Submachinegun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/Mg5 Submachinegun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/Reload.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/Reload.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/Run.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/Run.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/MG5 Submachinegun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/1_Model 10 Submachinegun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/1_Model 10 Submachinegun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Model 10 Submachinegun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Model 10 Submachinegun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Model 10 Submachinegun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Model 10 Submachinegun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Reload.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Reload.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Zoom-p.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Zoom-p.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 10 Submachinegun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/1_Model 16 Assault Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/1_Model 16 Assault Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/Model 16 Assault Rifle (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/Model 16 Assault Rifle (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/Model 16 Assault Rifle.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/Model 16 Assault Rifle.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/Run.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/Run.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 16 Assault Rifle/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun/1_Model 37 Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun/1_Model 37 Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun/Model 37 Shotgun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun/Model 37 Shotgun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun/Model 37 Shotgun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun/Model 37 Shotgun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 37 Shotgun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun/1_M500P Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun/1_M500P Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun/Model 500 Protector Shotgun (Prefab) 1.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun/Model 500 Protector Shotgun (Prefab) 1.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun/Model 500 Protector Shotgun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun/Model 500 Protector Shotgun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 500 Protector Shotgun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/1_Model 700 Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/1_Model 700 Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/Crouch.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/Crouch.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/Model 700 Rifle (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/Model 700 Rifle (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/Model 700 Rifle.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/Model 700 Rifle.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 700 Rifle/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/1_Model 82 Heavy Sniper.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/1_Model 82 Heavy Sniper.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Crouch.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Crouch.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Model 82 Heavy Sniper (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Model 82 Heavy Sniper (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Model 82 Heavy Sniper.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Model 82 Heavy Sniper.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Run.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Run.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 82 Heavy Sniper/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun/1_Model 870 Shotgun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun/1_Model 870 Shotgun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun/Model 870 Shotgun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun/Model 870 Shotgun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun/Model 870 Shotgun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun/Model 870 Shotgun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Model 870 Shotgun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/1_SC Assault Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/1_SC Assault Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/SC Assault Rifle (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/SC Assault Rifle (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/SC Assault Rifle.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/SC Assault Rifle.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/Zoom-p.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/Zoom-p.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SC Assalut Rifle/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle/1_SVD Sniper Rifle.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle/1_SVD Sniper Rifle.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle/SVD Sniper Rifle (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle/SVD Sniper Rifle (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle/SVD Sniper Rifle.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle/SVD Sniper Rifle.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/SVD Sniper Rifle/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Scripts/SniperCrosshair.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Scripts/SniperCrosshair.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/1_Snub-Nosed 38.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/1_Snub-Nosed 38.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Reload-1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Reload-1.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Reload-2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Reload-2.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Run.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Run.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Snub-Nosed 38 (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Snub-Nosed 38 (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Snub-Nosed 38.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Snub-Nosed 38.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Snub-Nosed 38/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/AssaultRifle-Shooting-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/AssaultRifle-Shooting-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Dry-Fire.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Dry-Fire.ogg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol-Reloading.ogg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol-Reloading.ogg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol-Shooting-3.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol-Shooting-3.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol_Shooting-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol_Shooting-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol_Shooting-2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol_Shooting-2.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol_Shooting-4.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Pistol_Shooting-4.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Revolver-Reloading-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Revolver-Reloading-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Revolver-Shooting-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Revolver-Shooting-1.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Revolver-Shooting-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Revolver-Shooting-2.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Rifle-Reload-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Rifle-Reload-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Rifle-Reloading-2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Rifle-Reloading-2.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Rifle-Shooting-1.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Rifle-Shooting-1.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Rifle-Shooting-2.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Rifle-Shooting-2.mp3.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Shotgun-Reload-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Shotgun-Reload-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Shotgun-Shooting-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Shotgun-Shooting-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Shotgun-Shooting-2.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Shotgun-Shooting-2.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Shotgun-Shooting-3.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Shotgun-Shooting-3.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Subachinegun-Reload-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Subachinegun-Reload-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Submachinegun-Shooting-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Submachinegun-Shooting-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Unwield-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Unwield-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Wield-1.wav" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Sounds/Wield-1.wav.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/12 Gauge Automatic Shotgun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/12 Gauge Automatic Shotgun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/45 Automatic Pistol.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/45 Automatic Pistol.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/AGU Assault Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/AGU Assault Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/AGU Assault Rifle1.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/AGU Assault Rifle1.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/BM4 Shotgun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/BM4 Shotgun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/MG5 Submachinegun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/MG5 Submachinegun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials/Diffuse.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials/Diffuse.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials/Diffuse2.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/Materials/Diffuse2.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/SC Assault Rifle.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/SC Assault Rifle.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/U-Z Machinegun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/U-Z Machinegun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/UMG Submachinegun.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/Special Models/Test/UMG Submachinegun.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun/1_U-Z Submachinegun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun/1_U-Z Submachinegun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun/U-Z Submachinegun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun/U-Z Submachinegun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun/U-Z Submachinegun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun/U-Z Submachinegun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/U-Z Submachinegun/Zoom.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun/1_UMG Submachinegun.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun/1_UMG Submachinegun.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun/UMG Submachinegun (Prefab).prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun/UMG Submachinegun (Prefab).prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun/UMG Submachinegun.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun/UMG Submachinegun.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun/Zoom.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Low Poly Mobile Guns Pack/UFPS Compatible guns/UMG Submachinegun/Zoom.txt.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/DebugEnemy.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DebugEnemy.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/Entity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/Entity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableMeleeEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableMeleeEntity.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableSoldierEntity.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableSoldierEntity.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableMeleeEntityAttacker.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/MovableMeleeEntityAttacker.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableMeleeEntityStateAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableMeleeEntityStateAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableSoldierEntityState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableSoldierEntityState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableSoldierEntityStateAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Entity/States/MovableSoldierEntityStateAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/Medium_PipelineAsset_ForwardRenderer.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Medium_PipelineAsset_ForwardRenderer.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,6 +823,9 @@
       <workItem from="1710415819217" duration="1090000" />
       <workItem from="1710417034643" duration="2423000" />
       <workItem from="1710585656670" duration="1976000" />
+      <workItem from="1710777010771" duration="7440000" />
+      <workItem from="1710786913186" duration="741000" />
+      <workItem from="1710841013123" duration="2873000" />
     </task>
     <servers />
   </component>

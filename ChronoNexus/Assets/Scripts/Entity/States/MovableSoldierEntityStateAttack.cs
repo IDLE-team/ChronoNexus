@@ -29,9 +29,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     public override void Enter()
     { 
         base.Enter();
-        Debug.Log(_movableSoldierEntity);
-        Debug.Log(_movableSoldierEntity.SoldierAttacker);
-        Debug.Log(_movableSoldierEntity.SoldierAttacker.MaxRangeAttackDistance);
+        
         _maxDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MaxRangeAttackDistance;
         _minDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MinRangeDistanceToTarget;
         _minDelay = _movableSoldierEntity.SoldierAttacker.MinDelayTokenRange;
@@ -102,9 +100,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             _stateMachine.ChangeState(_movableSoldierEntity.ChaseState);
             return;
         }
-
-        Debug.Log("1 "+_movableSoldierEntity.transform);
-        Debug.Log("2 "+_movableSoldierEntity.Target);
+        
         _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
         base.LogicUpdate();
         
@@ -157,7 +153,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     {
         await UniTask.WaitUntil(() => !_movableSoldierEntity.isTimeSlowed && !_movableSoldierEntity.isTimeStopped);
         _movableSoldierEntity.NavMeshAgent.speed = _shootingAgentSpeed;
-        //Default speed
+        
     }
 
     private void CancelCancelationToken()

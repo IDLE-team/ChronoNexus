@@ -40,6 +40,5 @@ public abstract class MovableSoldierEntityState : IState
     {
         await UniTask.WaitUntil(() => !_movableSoldierEntity.isTimeSlowed && !_movableSoldierEntity.isTimeStopped);
         _movableSoldierEntity.NavMeshAgent.speed = 1.5f;
-        //Default speed
     }
 }

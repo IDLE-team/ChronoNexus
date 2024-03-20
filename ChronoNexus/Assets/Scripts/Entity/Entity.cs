@@ -96,7 +96,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
         
     }
 
-    protected abstract void InitializeIndividualParam();
+    protected virtual void InitializeIndividualParam()
+    {
+        
+    }
 
     protected void Start()
     {
@@ -287,7 +290,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, ITargetable, ITimeAffe
 
     public virtual void TargetFoundReaction()
     {
-
+        
     }
 
     public enum State

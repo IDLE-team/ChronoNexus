@@ -16,13 +16,12 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
     private Vector3 _randomDirection;
     private Vector3 _retreatPosition;
 
-    //Vector3 targetPosition;
     private Quaternion toRotation;
     private CancellationTokenSource cancellationTokenSource;
 
     public MovableMeleeEntityStateAttack(MovableMeleeEntity movableEntity, StateMachine stateMachine) : base(movableEntity, stateMachine)
     {
-        //_remainingDistance = _entity.EntityLogic.RemainingDistanceToRandomPosisiton
+        
     }
 
     public override void Enter()
@@ -119,7 +118,6 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
     {
         await UniTask.WaitUntil(() => !_movableMeleeEntity.isTimeSlowed && !_movableMeleeEntity.isTimeStopped);
         _movableMeleeEntity.NavMeshAgent.speed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
-        //Default speed
     }
 
     private async UniTask MeleeAttackAndRetreat(CancellationToken cancellationToken)
@@ -156,7 +154,6 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.SelfAim.transform.position);
                     _movableMeleeEntity.EndMoveAnimation();
                 }
-                //_movableMeleeEntity.TargetFinder.SetWeight(1);
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested 
@@ -180,14 +177,12 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.SelfAim.transform.position);
                     _movableMeleeEntity.EndMoveAnimation();
                 }
-                //_movableMeleeEntity.TargetFinder.SetWeight(0);
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested)
             {
                 _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.SelfAim.transform.position);
                 _movableMeleeEntity.EndMoveAnimation();
-                //_movableMeleeEntity.TargetFinder.SetWeight(0);
                 await UniTask.Yield();
             }
             
