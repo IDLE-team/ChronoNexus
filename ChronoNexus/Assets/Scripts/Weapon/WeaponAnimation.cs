@@ -1,5 +1,6 @@
 public enum WeaponAnimation
     {
         PistolShoot,
-        RifleShoot
+        RifleShoot,
+        BladeSwing
     }

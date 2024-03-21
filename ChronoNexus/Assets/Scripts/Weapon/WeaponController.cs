@@ -31,6 +31,7 @@ public class WeaponController : MonoBehaviour
     {
         if(_weaponUI)
             _currentWeapon.SetWeaponUI(_weaponUI);
+        
         SetWeaponAimRig();
     }
 
@@ -52,6 +53,10 @@ public class WeaponController : MonoBehaviour
             
             case WeaponSubType.MachineGun:
                 _rigController.SetCurrentRig(1);
+                break;
+            
+            case WeaponSubType.Sword:
+                _rigController.SetCurrentRig(2);
                 break;
         }
     }

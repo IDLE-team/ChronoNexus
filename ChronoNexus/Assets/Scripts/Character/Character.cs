@@ -10,7 +10,7 @@ using Zenject;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CharacterMovement),  typeof(CharacterAnimator))]
 [RequireComponent(typeof(CharacterAudioController))]
-[Fix]
+
 public class Character : MonoBehaviour, IDamagable, ITargetable
 {
     //Я не знаю как лучше сделать, поэтому просто через префаб пока прокидываем точку.
@@ -20,6 +20,9 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
 
     [SerializeField] private LevelController _levelController;
 
+    [SerializeField] private MainButtonController _mainButtonController;
+
+    
     private IOutfitter _outfitter;
     private IHealth _health;
 
@@ -29,9 +32,16 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     public CharacterMovement Movement { get; private set; }
     public CharacterAnimator Animator { get; private set; }
     public СharacterTargetingSystem CharacterTargetingSystem { get; private set; }
+    
+    public Equiper Equiper { get; private set; }
+    
+    public WeaponController WeaponController { get; private set; }
 
+    public MainButtonController MainButtonController => _mainButtonController;
+    
     public AimRigController AimRigController { get; private set; }
     private PlayerAttacker Attacker { get; set; }
+
 
     private bool _isValid = true;
     public Transform Transform => transform;
@@ -39,7 +49,6 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     private void OnEnable()
     {
         _health.Died += Die;
-        
     }
 
     private void OnDisable()
@@ -59,7 +68,8 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         Rigidbody = GetComponent<Rigidbody>();
         AudioController = GetComponent<CharacterAudioController>();
         AimRigController = GetComponent<AimRigController>();
-
+        Equiper = GetComponent<Equiper>();
+        WeaponController = GetComponent<WeaponController>();
 
         InventoryItemManager.manager.SetPlayer(this);
 

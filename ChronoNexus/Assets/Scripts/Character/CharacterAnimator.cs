@@ -16,6 +16,8 @@ public class CharacterAnimator : MonoBehaviour
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private static readonly int ShootHash = Animator.StringToHash("Shoot");
     private static readonly int SitHash = Animator.StringToHash("Sit");
+    private static readonly int FinisherHash = Animator.StringToHash("Finisher");
+
 
     private void Awake()
     {
@@ -42,6 +44,10 @@ public class CharacterAnimator : MonoBehaviour
         _animator.SetTrigger(AttackHash);
     }
 
+    public void Finisher()
+    {
+        _animator.SetTrigger(FinisherHash);
+    }
     public void Fire(int hash)
     {
         _animator.SetTrigger(hash);

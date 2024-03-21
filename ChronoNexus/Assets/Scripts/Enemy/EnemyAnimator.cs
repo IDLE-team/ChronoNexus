@@ -15,16 +15,23 @@ public class EnemyAnimator : MonoBehaviour
     private static readonly int Attack = Animator.StringToHash("Attack");
     private static readonly int Shoot = Animator.StringToHash("Shoot");
 
+    private static readonly int FinisherHash = Animator.StringToHash("Finisher");
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
     }
 
+    public bool GetAnimationParamStatus(string param)
+    {
+        Debug.Log(param);
+        return _animator.GetBool(FinisherHash);
+    }
+    
     public void StartMoveAnimation()
     {
         _animator.SetBool(Moving, true);
     }
-
     public void EndMoveAnimation()
     {
         _animator.SetBool(Moving, false);
@@ -48,7 +55,10 @@ public class EnemyAnimator : MonoBehaviour
     {
         _animator.SetFloat(MoveX, value);
     }
-
+    public void Finisher()
+    {
+        _animator.SetBool(FinisherHash, true);
+    }
     public void StopAnimation()
     {
         _lastSpeed = _animator.speed;

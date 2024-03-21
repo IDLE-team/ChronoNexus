@@ -6,11 +6,9 @@ using UnityEngine;
     public abstract class FirearmWeapon : Weapon
     {
         public float ReloadSpeed;
-        public float FireRate;
         public float ProjectileSpeed;
         public Bullet BulletPrefab;
         public Vector3 _shootDir;
-        public float _lastFireTime;
         public int MaxAmmo;
         public int CurrentAmmo;
 
@@ -27,7 +25,6 @@ using UnityEngine;
         {
             base.SetData(data, parent);
             ReloadSpeed = data.ReloadSpeed;
-            FireRate = data.FireRate;
             MaxAmmo = data.MaxAmmo;
             CurrentAmmo = MaxAmmo;
             BulletPrefab = data.BulletPrefab;

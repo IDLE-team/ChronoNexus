@@ -58,7 +58,6 @@ public class AimRigController : MonoBehaviour
 
     IEnumerator SmootherWeight(float weight)
     {
-      //  bool _smooth = true;
         float elapsedTime = 0;
         while (elapsedTime < _smoothTime)
         {

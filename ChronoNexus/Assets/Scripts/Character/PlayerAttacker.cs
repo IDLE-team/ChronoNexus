@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,10 +19,17 @@ public class PlayerAttacker : Attacker
     
     [SerializeField] private float _damage;
 
+    [SerializeField] private WeaponData _weaponData;
+
+    [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+ //   [SerializeField] private GameObject _virtualCamera;
+
+    
     private PlayerInputActions _input;
     private CharacterAnimator _animator;
     private Vector3 _shootDir;
-
+    
+    
     public float Damage => _damage;
     private bool _canFire = true;
     private bool _resetTimer;
@@ -31,7 +39,7 @@ public class PlayerAttacker : Attacker
     {
         _input = input;
         _input.Player.Fire.performed += OnFire;
-        _input.Player.Hit.performed += OnHit;
+        _input.Player.Finisher.performed += OnFinisher;
 
         _animator = animator;
     }
@@ -50,9 +58,9 @@ public class PlayerAttacker : Attacker
     {
         StartFire();
     }
-    private void OnHit(InputAction.CallbackContext obj)
+    private void OnFinisher(InputAction.CallbackContext obj)
     {
-        _animator.Attack();
+        StartFinisherAttack();
     }
 
     public void StartFire()
@@ -75,12 +83,21 @@ public class PlayerAttacker : Attacker
         _animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
     }
 
+    public void StartFinisherAttack()
+    {
+        if (_weaponController.CurrentWeapon == null)
+            return;
+        _character.Equiper.EquipWeapon(_weaponData);
+
+        _animator.Finisher();
+        
+
+    }
     private void Update()
     {
         if (Input.GetKey(KeyCode.M))
         {
             _weaponController.CurrentWeapon.StopFire();
-            Debug.Log("Должен быть стоп");
         }
     }
 

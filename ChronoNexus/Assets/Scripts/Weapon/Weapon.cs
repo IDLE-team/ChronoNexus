@@ -20,11 +20,17 @@ public abstract class Weapon : MonoBehaviour
     public TextMeshProUGUI WeaponUI;
     
     public float Damage;
+    public float FireRate;
+    public float _lastFireTime;
 
     public bool isFire = true;
     public bool isCoolDown;
     public abstract void Fire(ITargetable target, Transform holder);
 
+    public virtual void AreaFire(LayerMask layerMask)
+    {
+        
+    }
     public void StopFire()
     {
         isFire = false;
@@ -38,6 +44,7 @@ public abstract class Weapon : MonoBehaviour
         WeaponSubType = data.WeaponSubType;
         WeaponSound = data.WeaponSound;
         Damage = data.Damage;
+        FireRate = data.FireRate;
         WeaponAnimation = data.WeaponAnimation;
         WeaponPrefab = Instantiate(data.WeaponPrefab, parent.transform);
         SetAudioSource();

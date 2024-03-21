@@ -10,6 +10,7 @@ public class MovableMeleeEntity : MovableEntity
     private MovableMeleeEntityAttacker _attacker;
     public MovableMeleeEntityAttacker MeleeAttacker => _attacker;
     public MovableMeleeEntityStateAttack MeleeAttackState { get; private set; }
+
     protected override void InitializeStartState()
     {
         switch (state)
