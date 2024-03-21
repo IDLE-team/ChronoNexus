@@ -7,17 +7,12 @@ public class MoneyHolder : MonoBehaviour
 
     private float _moneyValue;
 
-    private void Awake()
+    private void Start()
     {
-        _moneyValue = PlayerPrefs.GetFloat("money");
+        _moneyValue = PlayerPrefs.GetFloat("money",0);
         _moneyText = GetComponent<TextMeshProUGUI>();
         PlayerProfileManager.profile.moneyChanged += OnMoneyChange;
         PlayerProfileManager.profile.moneyChanged += SaveMoney;
-        OnMoneyChange();
-    }
-    private void OnDrawGizmos()
-    {
-        _moneyText = GetComponent<TextMeshProUGUI>();
         OnMoneyChange();
     }
 
