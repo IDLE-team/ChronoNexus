@@ -54,11 +54,13 @@ public class СharacterTargetingSystem : MonoBehaviour
     private PlayerInputActions _input;
 
     [Inject]
-    private void Construct(PlayerInputActions input, CharacterAnimator animator)
+    private void Construct(PlayerInputActions input)
     {
         _input = input;
-        _input.Player.TargetLock.started += OnTargetLockStarted;
-        _input.Player.TargetLock.canceled += OnTargetLockCanceled;
+       // _input.Player.TargetLock.started += OnTargetLockStarted;
+     //   _input.Player.TargetLock.canceled += OnTargetLockCanceled;
+        _input.Player.TargetLockMove.started += OnTargetLockStarted;
+        _input.Player.TargetLockMove.canceled += OnTargetLockCanceled;
 
     }
 
@@ -244,7 +246,7 @@ public class СharacterTargetingSystem : MonoBehaviour
         // _character.Movement.ResetAnimationValues();
 
 
-        if (!_isStickSearch)
+       // if (!_isStickSearch)
             HideTargetPointer();
 
         //_character.Movement.ResetAnimationValues();

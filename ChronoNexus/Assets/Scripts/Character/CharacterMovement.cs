@@ -73,7 +73,6 @@ public class CharacterMovement : MonoBehaviour, ITransformable
     private void Construct(PlayerInputActions input)
     {
         _input = input;
-        _camera = Camera.main;
     }
 
     private void OnEnable() => _input.Enable();
@@ -84,13 +83,14 @@ public class CharacterMovement : MonoBehaviour, ITransformable
 
     private void Start()
     {
-        speedSlider.value = MoveSpeed;
-        speedText.text = speedSlider.value.ToString();
-        speedSlider.onValueChanged.AddListener(OnSpeedSliderValueChanged);
+        _camera = Camera.main;
+      //  speedSlider.value = MoveSpeed;
+      //  speedText.text = speedSlider.value.ToString();
+     //   speedSlider.onValueChanged.AddListener(OnSpeedSliderValueChanged);
 
-        rotationSlider.value = _rotationSpeed;
-        rotationSpeedText.text = rotationSlider.value.ToString();
-        rotationSlider.onValueChanged.AddListener(OnRotationSliderValueChanged);
+      //  rotationSlider.value = _rotationSpeed;
+     //   rotationSpeedText.text = rotationSlider.value.ToString();
+      //  rotationSlider.onValueChanged.AddListener(OnRotationSliderValueChanged);
     }
 
     private void Update()

@@ -18,8 +18,6 @@ public class TimeManager : MonoBehaviour
     public VolumeProfile realTimeVolumeProfile;
     public VolumeProfile timeStopVolumeProfile;
 
-    public Slider debugSlider;
-    public TextMeshProUGUI debugText;
     private float basePitch;
     public bool IsTimeStopped;
     public bool IsTimeSlowed;
@@ -54,12 +52,7 @@ public class TimeManager : MonoBehaviour
 
         SlowTime();
     }
-    private void Start()
-    {
-        debugSlider.value = resumeTimeDelay;
-        debugText.text = debugSlider.value.ToString();
-        debugSlider.onValueChanged.AddListener(OnDebugSliderValueChanged);
-    }
+
     public void AddTimeBody(ITimeBody body)
     {
         timeBodies.Add(body);
@@ -150,7 +143,6 @@ public class TimeManager : MonoBehaviour
     private void OnDebugSliderValueChanged(float value)
     {
         resumeTimeDelay = value;
-        debugText.text = value.ToString();
     }
 
     IEnumerator ResumeTimeWithDelay()

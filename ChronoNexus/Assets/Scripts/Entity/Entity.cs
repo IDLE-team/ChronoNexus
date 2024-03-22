@@ -153,6 +153,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
         _finisherReadyVFX.Stop();
         OnFinisherEnded?.Invoke();
+        _isFinisherReady = false;
+        
         SetSelfTarget(false);
         StopSeek();
 
@@ -317,9 +319,16 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         RangeAttack
     };
 
+    public virtual void ResetValues()
+    {
+        
+    }
+    
     public void StartFinisher()
     {
        _animator.Finisher();
+       _stateMachine.ChangeState(DummyState);
+       ResetValues();
        var Player = GameObject.FindWithTag("Player");
        Vector3 dir = Player.transform.position - transform.position;
        dir.y = 0;

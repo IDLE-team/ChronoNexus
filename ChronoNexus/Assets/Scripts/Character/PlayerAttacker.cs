@@ -26,7 +26,6 @@ public class PlayerAttacker : Attacker
 
     
     private PlayerInputActions _input;
-    private CharacterAnimator _animator;
     private Vector3 _shootDir;
     
     
@@ -35,15 +34,16 @@ public class PlayerAttacker : Attacker
     private bool _resetTimer;
 
     [Inject]
-    private void Construct(PlayerInputActions input, CharacterAnimator animator)
+    private void Construct(PlayerInputActions input/*, CharacterAnimator animator*/)
     {
         _input = input;
         _input.Player.Fire.performed += OnFire;
         _input.Player.Finisher.performed += OnFinisher;
 
-        _animator = animator;
+     //   _animator = animator;
     }
     
+
     private void OnEnable()
     {
         _input.Enable();
@@ -80,7 +80,7 @@ public class PlayerAttacker : Attacker
                 _resetTimer = true;
             }
         }
-        _animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
+        _character.Animator.Fire(Animator.StringToHash(_weaponController.CurrentWeapon.WeaponAnimation.ToString()));
     }
 
     public void StartFinisherAttack()
@@ -89,7 +89,7 @@ public class PlayerAttacker : Attacker
             return;
         _character.Equiper.EquipWeapon(_weaponData);
 
-        _animator.Finisher();
+        _character.Animator.Finisher();
         
 
     }
