@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
-
+using Zenject;
 public class WeaponController : MonoBehaviour
 {
-    [SerializeField]
+    //[SerializeField]
     private WeaponFactory _weaponFactory;
 
     [SerializeField] private AimRigController _rigController;
@@ -14,6 +14,13 @@ public class WeaponController : MonoBehaviour
 
     private Weapon _currentWeapon;
     public Weapon CurrentWeapon => _currentWeapon;
+    
+    [Inject]
+    private void Construct(WeaponFactory weaponFactory)
+    {
+        Debug.Log("WeaponConstruct: " + weaponFactory + "\nName: " + gameObject.name);
+        _weaponFactory = weaponFactory;
+    }
     
     public void ChangeWeapon(WeaponData data, Transform holder)
     {
@@ -23,6 +30,7 @@ public class WeaponController : MonoBehaviour
                 return;
             Destroy(_currentWeapon.gameObject);
         }
+        Debug.Log("WeaponFactory: " + _weaponFactory);
         _currentWeapon = _weaponFactory.CreateWeapon(data, holder);
         SetWeaponPlayerSettings();
     }

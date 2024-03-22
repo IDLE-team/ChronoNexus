@@ -1,31 +1,42 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.OnScreen;
 
-public class JoystickButton : MonoBehaviour
+public class JoystickButton : OnScreenControl, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField] private LongClickButton _button;
     [SerializeField] private HoverJoystick _joystick;
     [SerializeField] private СharacterTargetingSystem _targetLock;
-    [SerializeField] private PlayerAttacker _attacker;
+    //[SerializeField] private PlayerAttacker _attacker;
     [SerializeField] private float _requiredHoldTime;
-    [SerializeField] private WeaponController _weaponController;
     private bool _isTargetLockPerformed;
     private float _holdTimer;
 
     public GameObject _targetVisualPrefab;
     public GameObject _shootVisualPrefab;
 
+    [InputControl(layout = "Button")]
+    [SerializeField]
+    private string m_ControlPath;
+
+    protected override string controlPathInternal
+    {
+        get => m_ControlPath;
+        set => m_ControlPath = value;
+    }
+
     private void OnEnable()
     {
         _button.OnLongClicked += ActivateJoystick;
-        _button.OnClicked += StartShoot;
+        //_button.OnClicked += StartShoot;
     }
 
 
     private void OnDisable()
     {
         _button.OnLongClicked -= ActivateJoystick;
-        _button.OnClicked -= StartShoot;
+      //  _button.OnClicked -= StartShoot;
 
      //   InventoryItemManager.manager.OnCharacterLinked -= SetJoystick;
     }
@@ -38,8 +49,7 @@ public class JoystickButton : MonoBehaviour
             if (player)
             {
                 _targetLock = player.GetComponent<СharacterTargetingSystem>();
-                _attacker = player.GetComponent<PlayerAttacker>();
-                _weaponController = player.GetComponent<WeaponController>();
+            //    _attacker = player.GetComponent<PlayerAttacker>();
             }
         }
 
@@ -51,35 +61,38 @@ public class JoystickButton : MonoBehaviour
     }
 
     private PlayerInputActions _input;
+    /*
     private void StartShoot()
     {
-        _attacker.StartFire();
-        // _weaponController.CurrentWeapon.Fire();
+       // _attacker.StartFire();
+       Debug.Log("StartFire");
+       SendValueToControl(1.0f);
+       SendValueToControl(0.0f);
     }
+    */
     public void ActivateJoystick()
     {
-        // _joystick.gameObject.SetActive(true);
-
-        //_joystick.Initialize(_button.PointerEventData);
         _targetVisualPrefab.SetActive(true);
         _shootVisualPrefab.SetActive(false);
-
-        //_joystick.enabled = true;
-        //_joystick.Initialize(_button.PointerEventData);
-        //_button.enabled = false;
-        //  _button.gameObject.SetActive(false);
-        _targetLock.TurnOnStickSearch();
+        
+      //  _targetLock.TurnOnStickSearch();
     }
 
     public void ActivateButton()
     {
-        // _joystick.gameObject.SetActive(false);
         _targetVisualPrefab.SetActive(false);
         _shootVisualPrefab.SetActive(true);
-        // _joystick.enabled = false;
-        //_button.enabled = true;
+      //  _targetLock.TurnOffStickSearch();
+    }
 
-        // _button.gameObject.SetActive(true);
-        _targetLock.TurnOffStickSearch();
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        SendValueToControl(1.0f);
+        SendValueToControl(0.0f);
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
     }
 }

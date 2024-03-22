@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UIElements;
-
+using Zenject;
 public class AnimationEventsHolder : MonoBehaviour
 {
     [SerializeField] private WeaponController _weaponController;
@@ -19,7 +19,7 @@ public class AnimationEventsHolder : MonoBehaviour
     [SerializeField] private float _finisherOrthographicSize;
     [SerializeField] private float _finisherVignetteIntensity;
 
-    [SerializeField] private GameObject _ui;
+   // [SerializeField] private GameObject _ui;
 
     [SerializeField] private Volume _volume;
     
@@ -27,10 +27,15 @@ public class AnimationEventsHolder : MonoBehaviour
     private float _startVignetteIntensity;
 
     private Vignette _vignette;
-    
+    [Inject]
+    private void Construct(Volume volume)
+    {
+        _volume = volume;
+        _volume.profile.TryGet(out _vignette);
+    }
     private void Start()
     {
-        _volume.profile.TryGet(out _vignette);
+     //   _volume.profile.TryGet(out _vignette);
     }
 
     public void WeaponFire()
@@ -49,7 +54,7 @@ public class AnimationEventsHolder : MonoBehaviour
       //  if (finisherWeapon.Distance < Vector3.Distance(transform.position, _character.CharacterTargetingSystem.Target.GetTransform().position))
          //   return;
          _startOrthographicSize = _virtualCamera.m_Lens.OrthographicSize;
-         _ui.SetActive(false);
+        // _ui.SetActive(false);
          _startVignetteIntensity = _vignette.intensity.value;
          Debug.Log("_startVignetteIntensity: " + _startVignetteIntensity);
          _vignette.intensity.value = _finisherVignetteIntensity;
@@ -72,7 +77,7 @@ public class AnimationEventsHolder : MonoBehaviour
     }
     public void EndFinisher()
     {
-        _ui.SetActive(true);
+      //  _ui.SetActive(true);
         _vignette.intensity.value = _startVignetteIntensity;
         StartCoroutine(SmootherVignette(_startVignetteIntensity));
 

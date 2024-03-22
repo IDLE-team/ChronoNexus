@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -149,6 +150,12 @@ public class MovableEntity : Entity
     public void EndMoveAnimation()
     {
         _animator.EndMoveAnimation();
+    }
+
+    public override void ResetValues()
+    {
+        _navMeshAgent.isStopped = true;
+        Debug.Log("MovableEntityReset");
     }
 
     private void SetLastNavMeshValues()

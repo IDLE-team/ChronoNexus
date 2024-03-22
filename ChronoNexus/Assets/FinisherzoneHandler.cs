@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Zenject;
 public class FinisherzoneHandler : MonoBehaviour
 {
     [SerializeField] private Character _character;
     [SerializeField] private WeaponData _weaponData;
     private Collider _currentTarget;
     private IFinisherable _currentFinisherTarget;
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out _currentFinisherTarget))
@@ -26,6 +27,8 @@ public class FinisherzoneHandler : MonoBehaviour
     }
     private void ActivateFinisherReadyMode()
     {
+        if(!_currentFinisherTarget.GetFinisherableStatus())
+            return;
         _character.MainButtonController.SetFinisherButton();
         _character.CharacterTargetingSystem.SetTarget(_currentTarget.GetComponent<ITargetable>());
     }

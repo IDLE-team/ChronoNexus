@@ -20,7 +20,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
 
     [SerializeField] private LevelController _levelController;
 
-    [SerializeField] private MainButtonController _mainButtonController;
+    private MainButtonController _mainButtonController;
 
     
     private IOutfitter _outfitter;
@@ -46,6 +46,11 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     private bool _isValid = true;
     public Transform Transform => transform;
 
+    [Inject]
+    private void Construct(MainButtonController mainButtonController)
+    {
+        _mainButtonController = mainButtonController;
+    }
     private void OnEnable()
     {
         _health.Died += Die;

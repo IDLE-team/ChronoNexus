@@ -39,7 +39,10 @@ namespace UnityEngine.InputSystem.OnScreen
         {
             if (_pointerDownTimer < _requiredHoldTime)
             {
-                OnClicked?.Invoke();
+                //OnClicked?.Invoke();
+                SendValueToControl(1.0f);
+                SendValueToControl(0.0f);
+                Debug.Log("OnClicked");
             }
             Reset();
         }
@@ -52,6 +55,7 @@ namespace UnityEngine.InputSystem.OnScreen
                 _pointerDownTimer += Time.deltaTime;
                 if (_pointerDownTimer >= _requiredHoldTime)
                 {
+                    Debug.Log("OnLongClicked");
                     OnLongClicked?.Invoke();
                     _pointerDown = false;
                 }

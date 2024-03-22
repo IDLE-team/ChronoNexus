@@ -2,13 +2,15 @@ using UnityEngine;
 using Zenject;
 public class CharacterInstaller : MonoInstaller
 {
-    [SerializeField] private CharacterMovement _characterMovement;
-    [SerializeField] private CharacterAnimator _characterAnimator;
-
+    [SerializeField] private GameObject _player;
+    [SerializeField] private Transform _spawnPoint;
     public override void InstallBindings()
     {
-        Container.Bind<CharacterMovement>().FromInstance(_characterMovement).AsSingle();
-        Container.Bind<CharacterAnimator>().FromInstance(_characterAnimator).AsSingle();
+        GameObject player = Container.InstantiatePrefab(_player);
+        player.transform.position = _spawnPoint.position;
+        
+        Container.Bind<CharacterMovement>().FromInstance(player.GetComponent<PlayerPrefabData>().Character.Movement).AsSingle();
+        Container.Bind<CharacterAnimator>().FromInstance(player.GetComponent<PlayerPrefabData>().Character.Animator).AsSingle();
 
     }
 }
