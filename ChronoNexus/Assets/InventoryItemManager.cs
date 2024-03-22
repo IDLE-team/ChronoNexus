@@ -8,17 +8,17 @@ public class InventoryItemManager : MonoBehaviour
 {
     public static InventoryItemManager manager;
 
-    [Header("Иконки типов предмета")]
+    [Header("РРєРѕРЅРєРё С‚РёРїРѕРІ РїСЂРµРґРјРµС‚Р°")]
     [SerializeField]
     private List<Sprite> _itemTypeIcons = new List<Sprite>();
 
-    [Header("Лэйаут предметов")]
+    [Header("Р›СЌР№Р°СѓС‚ РїСЂРµРґРјРµС‚РѕРІ")]
     [SerializeField] private GameObject _gridLayout;
     [SerializeField] private GameObject _itemPrefab;
     [SerializeField]
     private List<HorizontalLayoutGroup> _cells = new List<HorizontalLayoutGroup>();
 
-    [Header("Точки Экипировки")]
+    [Header("РўРѕС‡РєРё Р­РєРёРїРёСЂРѕРІРєРё")]
     [SerializeField] private GameObject _gunInUse;
     [SerializeField] private GameObject _knifeInUse;
     [SerializeField] private GameObject _granadeInUse;
@@ -122,15 +122,15 @@ public class InventoryItemManager : MonoBehaviour
         switch (itemRarity)
         {
             case itemRarity.gray:
-                return "Обычный";
+                return "РћР±С‹С‡РЅС‹Р№";
             case itemRarity.green:
-                return "Необычный";
+                return "РќРµРѕР±С‹С‡РЅС‹Р№";
             case itemRarity.purple:
-                return "Редкий";
+                return "Р РµРґРєРёР№";
             case itemRarity.gold:
-                return "Легендарный";
+                return "Р›РµРіРµРЅРґР°СЂРЅС‹Р№";
             default:
-                return "Обычный";
+                return "РћР±С‹С‡РЅС‹Р№";
         }
     }
     public void EquipItem(itemType itemType, ItemEquipable item)
@@ -168,7 +168,7 @@ public class InventoryItemManager : MonoBehaviour
             Destroy(item.gameObject);
 
         }
-        else //при установке первого предмета
+        else //РїСЂРё СѓСЃС‚Р°РЅРѕРІРєРµ РїРµСЂРІРѕРіРѕ РїСЂРµРґРјРµС‚Р°
         {
             var itemSet = Instantiate(_itemPrefab, itemInUse.transform);
             var itemSetted = itemSet.GetComponent<ItemEquipable>();
@@ -206,6 +206,10 @@ public class InventoryItemManager : MonoBehaviour
     public void MakeItemFromShop(ItemData soldItem)
     {
         SpawnEmptyItem().SetItemBy(soldItem);
+    }
+    public void AddItem(ItemData ItemData)
+    {
+        SpawnEmptyItem().SetItemBy(ItemData);
     }
 
     public WeaponData GetEquipedGun()

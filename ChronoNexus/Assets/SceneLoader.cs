@@ -24,6 +24,6 @@ public class SceneLoader : MonoBehaviour
 
     private void LoadScene()
     {
-        SceneManager.LoadSceneAsync(_SceneToLoad);
+        SceneManager.LoadSceneAsync(1);
     }
 }

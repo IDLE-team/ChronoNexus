@@ -122,7 +122,7 @@ public class EnemySoldier : Enemy,ISeeker
     protected override void Die()
     {
         _navMeshAgent.velocity = Vector3.zero;
-        _loot.DropLoot();
+        _loot.DropItems();
 
         base.Die();
     }

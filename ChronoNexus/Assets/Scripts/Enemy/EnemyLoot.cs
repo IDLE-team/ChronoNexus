@@ -6,80 +6,71 @@ using System.Linq;
 
 public class EnemyLoot : MonoBehaviour
 {
-    
+    public List<ItemData> items;
+    public List<float> dropChances = new List<float> { 0.2f, 0.3f, 0.4f };//10% шанс ничего не заспавнить
+    public int amountToDrop = 1;
 
-    [Serializable]
-    public class Item
+    public List<InventoryItemManager.itemRarity> possibleQualities = new List<InventoryItemManager.itemRarity> { InventoryItemManager.itemRarity.gray, InventoryItemManager.itemRarity.green, InventoryItemManager.itemRarity.purple };
+    public List<float> qualityChances = new List<float> { 0.8f, 0.15f, 0.05f }; // шанс качества предмета
+
+    public void DropItems()
     {
-        public string name;
-        public Rarity rarity;
-        [Range(0, 100)]
-        public int dropChance;
-        public GameObject prefab;
-        public Color GetRarityColor()
+        for (int i = 0; i < amountToDrop; i++)
         {
-            switch (rarity)
+            ItemData itemToDrop = GetRandomItem();
+            if (itemToDrop != null)
             {
-                case Rarity.Common:
-                    return Color.gray;
-                case Rarity.Uncommon:
-                    return Color.blue;
-                case Rarity.Rare:
-                    return Color.magenta;
-                default:
-                    return Color.white;
+                itemToDrop.rarity = GetRandomQuality();
+                InventoryItemManager.manager.AddItem(itemToDrop);
             }
-        }
-        public enum Rarity
-        {
-            Common,
-            Uncommon,
-            Rare
-        }
-
-    }
-
-    public List<Item> lootTable;
-
-
-    public void DropLoot()
-    {
-        if (lootTable.Count == 0)
-        {
-            Debug.LogWarning("Loot table is empty.");
-            return;
-        }
-
-        Item droppedItem = ChooseRandomItem();
-
-        if (droppedItem != null)
-        {
-            Debug.Log("Dropped item: " + droppedItem.name);
-
-            GameObject prefabItem = Instantiate(droppedItem.prefab, transform.position, Quaternion.identity,transform.parent);
-            prefabItem.GetComponent<Renderer>().material.color = droppedItem.GetRarityColor();
-        }
-        else
-        {
-            Debug.LogWarning("Failed to drop loot.");
         }
     }
 
-    private Item ChooseRandomItem()
+    private ItemData GetRandomItem()
     {
-        int totalChance = lootTable.Sum(item => item.dropChance);
-        int randomValue = Random.Range(0, totalChance);
-
-        foreach (var item in lootTable)
+        float totalChance = 0;
+        foreach (float chance in dropChances)
         {
-            if (randomValue < item.dropChance)
-            {
-                return item;
-            }
-            randomValue -= item.dropChance;
+            totalChance += chance;
         }
 
+        float randomPoint = Random.value * totalChance;//
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (randomPoint < dropChances[i])
+            {
+                return items[i];
+            }
+            else
+            {
+                randomPoint -= dropChances[i];
+            }
+        }
         return null;
     }
-    
+
+    private InventoryItemManager.itemRarity GetRandomQuality()
+    {
+        float totalChance = 0;
+        foreach (float chance in qualityChances)
+        {
+            totalChance += chance;
+        }
+
+        float randomPoint = Random.value * totalChance;
+
+        for (int i = 0; i < possibleQualities.Count; i++)
+        {
+            if (randomPoint < qualityChances[i])
+            {
+                return possibleQualities[i];
+            }
+            else
+            {
+                randomPoint -= qualityChances[i];
+            }
+        }
+        return InventoryItemManager.itemRarity.gray;
+    }
 }

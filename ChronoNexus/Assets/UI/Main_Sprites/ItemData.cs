@@ -11,16 +11,16 @@ public class ItemData : ScriptableObject
     public int itemLvl;
     public Sprite itemImageSprite;
 
-    [Header("Если огнестрел")]
+    [Header("Р•СЃР»Рё РѕРіРЅРµСЃС‚СЂРµР»")]
     public WeaponData weaponData;
 
-    // [Header("Если холодное оружие")]
+    // [Header("Р•СЃР»Рё С…РѕР»РѕРґРЅРѕРµ РѕСЂСѓР¶РёРµ")]
     //public KnifeData knifeData;
 
-    //[Header("Если граната")]
+    //[Header("Р•СЃР»Рё РіСЂР°РЅР°С‚Р°")]
     //public GranadeData granadeData;
 
-    //[Header("Если броня")]
+    //[Header("Р•СЃР»Рё Р±СЂРѕРЅСЏ")]
     //public ArmorData armorData;
 
 }
