@@ -11,7 +11,7 @@ public class PlayerProfileManager : MonoBehaviour
     public UnityAction moneyChanged;
     public UnityAction expChanged;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (!profile)
         {
