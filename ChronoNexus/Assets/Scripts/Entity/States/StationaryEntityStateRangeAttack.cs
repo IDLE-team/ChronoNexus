@@ -45,15 +45,16 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         ammoMaxCount = _stationaryEntity.TurretAttacker.AmmoCount;
         ammoCount = ammoMaxCount;
 
-        _stationaryEntity.Equiper.EquipWeapon(_stationaryEntity.TurretAttacker.RangeWeaponData);
+       // _stationaryEntity.Equiper.EquipWeapon(_stationaryEntity.TurretAttacker.RangeWeaponData);
 
-        if (_stationaryEntity.WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+        /*if (_stationaryEntity.WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
         {
             _firearmWeapon = (FirearmWeapon) _stationaryEntity.WeaponController.CurrentWeapon;
-        }
+        }*/
 
-        _firearmWeapon.OnReload += ReloadingLogicEnter;
+        /*_firearmWeapon.OnReload += ReloadingLogicEnter;
         _firearmWeapon.OnReloadEnd += ReloadingLogicExit;
+        */
 
         _target = _stationaryEntity.Target.GetTransform();
         _targetPosition = _target.localPosition;

@@ -199,6 +199,17 @@ public class InventoryItemManager : MonoBehaviour
             }
         }
     }
+    public void MoveToGeneralInventory(GameObject itemEmpty)
+    {
+        for (int i = 0; i < _cells.Count; i++)
+        {
+            if (!_cells[i].GetComponentInChildren<ItemEquipable>())
+            {
+                itemEmpty.transform.SetParent(_cells[i].transform);
+                break;
+            }
+        }
+    }
     public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
     {
        // var item = SpawnEmptyItem();
@@ -229,6 +240,14 @@ public class InventoryItemManager : MonoBehaviour
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
     }
+    private ItemEquipable SpawnEmptyItem(ItemData ItemData)//говно ебаное всё нахуй снести тут, насрал я
+    {
+        GameObject itemEmpty = Instantiate(_itemPrefab);
+        MoveToGeneralInventory(itemEmpty);
+
+        ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
+        return itemUseEmpty;
+    }
 
     public void MakeItemFromShop(ItemData soldItem)
     {
@@ -236,7 +255,9 @@ public class InventoryItemManager : MonoBehaviour
     }
     public void AddItem(ItemData ItemData)
     {
-        SpawnEmptyItem().SetItemBy(ItemData);
+        ItemEquipable item = SpawnEmptyItem(ItemData);
+        item.SetWithManagerItemBy(ItemData,this);
+        item.GetComponent<Button>().onClick.AddListener(() => item.SetItem());
     }
 
     public WeaponData GetEquipedGun()

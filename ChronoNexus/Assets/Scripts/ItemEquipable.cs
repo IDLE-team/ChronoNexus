@@ -42,6 +42,11 @@ public class ItemEquipable : MonoBehaviour
         Debug.Log("ManagerInjected");
         manager = inventoryItemManager;
     }
+
+    public void AddManager(InventoryItemManager _manager)
+    {
+        manager = _manager;
+    }
     
     /*
     private void OnDrawGizmos()
@@ -98,6 +103,12 @@ public class ItemEquipable : MonoBehaviour
     public void SetItemBy(ItemEquipable itemToCopy) // копирование из другого предмета
     {
         SetItemBy(itemToCopy.GetItemData());
+    }
+
+    public void SetWithManagerItemBy(ItemData itemToCopy,InventoryItemManager _manager) // копирование из другого предмета
+    {
+        manager = _manager;
+        SetItemBy(itemToCopy);
     }
 
     public void SetItemBy(ItemData itemToCopy) // копирование из другого предмета

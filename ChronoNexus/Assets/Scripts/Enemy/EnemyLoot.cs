@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 using System.Linq;
-
+[Fix("24 строка")]
 public class EnemyLoot : MonoBehaviour
 {
     public List<ItemData> items;
@@ -21,7 +21,7 @@ public class EnemyLoot : MonoBehaviour
             if (itemToDrop != null)
             {
                 itemToDrop.rarity = GetRandomQuality();
-                InventoryItemManager.manager.AddItem(itemToDrop);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().InventoryItemManager.AddItem(itemToDrop);
             }
         }
     }
