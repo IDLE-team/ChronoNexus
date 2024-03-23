@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class InventoryItemManager : MonoBehaviour
 {
-  //  public static InventoryItemManager manager;
+    //public static InventoryItemManager manager;
 
     [Header("Иконки типов предмета")]
     [SerializeField]
@@ -41,16 +41,14 @@ public class InventoryItemManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        /*
-        if (!manager)
+        /*if (!manager)
         {
             manager = this;
         }
         else if (manager == this)
         {
             Destroy(this);
-        }
-        */
+        }*/
         OnCharacterLinked += SetInventoryEquiped;
     }
 
