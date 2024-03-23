@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITargetable, ITimeAffected, ISeeker
 {
@@ -73,6 +74,11 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         }
     }
 
+    [Inject]
+    private void Construct()
+    {
+        Debug.Log("Something");
+    }
     protected virtual void Awake()
     {
         InitializeParam();

@@ -9,6 +9,8 @@ public class UserInterfaceManager : MonoBehaviour
     private GameObject _currentTab;
     private GameObject _previousTab;
 
+   // [SerializeField] private GameObject _gameplayUI;
+    
     [SerializeField] private float _duration;
 
     [SerializeField]
@@ -22,7 +24,7 @@ public class UserInterfaceManager : MonoBehaviour
     {
         _isGame = false;
         _currentTab = _startTab;
-        OpenTab(_currentTab,_isGame);
+        //OpenTab(_currentTab,_isGame);
     }
 
     public void OpenTab(GameObject tabToOpen, bool isGame)
@@ -36,7 +38,7 @@ public class UserInterfaceManager : MonoBehaviour
         {
             _black.gameObject.SetActive(true);
         }
-
+       // _gameplayUI.SetActive(false);
         StartCoroutine(OpenTabCor(tabToOpen));
     }
 

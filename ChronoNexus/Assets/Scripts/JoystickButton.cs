@@ -45,12 +45,12 @@ public class JoystickButton : OnScreenControl, IPointerDownHandler, IPointerUpHa
     {
         if (!_targetLock)
         {
-            var player = InventoryItemManager.manager.GetPlayer();
-            if (player)
-            {
-                _targetLock = player.GetComponent<СharacterTargetingSystem>();
+         //   var player = InventoryItemManager.manager.GetPlayer();
+           // if (player)
+         //   {
+         //       _targetLock = player.GetComponent<СharacterTargetingSystem>();
             //    _attacker = player.GetComponent<PlayerAttacker>();
-            }
+          //  }
         }
 
     }
@@ -93,6 +93,6 @@ public class JoystickButton : OnScreenControl, IPointerDownHandler, IPointerUpHa
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        throw new System.NotImplementedException();
+       // throw new System.NotImplementedException();
     }
 }

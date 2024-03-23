@@ -19,12 +19,9 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     [SerializeField] private Slider _hpBar;
 
     [SerializeField] private LevelController _levelController;
-
-    private MainButtonController _mainButtonController;
-
     
     private IOutfitter _outfitter;
-    private IHealth _health;
+    private Health _health;
 
     public Transform AimTarget => _aimTarget;
     public Rigidbody Rigidbody { get; private set; }
@@ -32,25 +29,36 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     public CharacterMovement Movement { get; private set; }
     public CharacterAnimator Animator { get; private set; }
     public СharacterTargetingSystem CharacterTargetingSystem { get; private set; }
+
+    public CharacterEventsHolder CharacterEventsHolder { get; private set; }
+    
+    public Health Health => _health;
     
     public Equiper Equiper { get; private set; }
     
     public WeaponController WeaponController { get; private set; }
-
-    public MainButtonController MainButtonController => _mainButtonController;
+    
     
     public AimRigController AimRigController { get; private set; }
     private PlayerAttacker Attacker { get; set; }
 
 
     private bool _isValid = true;
+    
+    private InventoryItemManager _inventoryItemManager;
+
+    public InventoryItemManager InventoryItemManager => _inventoryItemManager;
+    
     public Transform Transform => transform;
 
     [Inject]
-    private void Construct(MainButtonController mainButtonController)
+    private void Construct(InventoryItemManager itemManager)
     {
-        _mainButtonController = mainButtonController;
+        _inventoryItemManager = itemManager;
+        Debug.Log("Describe to: " + _inventoryItemManager);
     }
+   
+    
     private void OnEnable()
     {
         _health.Died += Die;
@@ -69,6 +77,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         Movement = GetComponent<CharacterMovement>();
         Attacker = GetComponent<PlayerAttacker>();
         CharacterTargetingSystem = GetComponent<СharacterTargetingSystem>();
+        CharacterEventsHolder = GetComponent<CharacterEventsHolder>();
         Animator = GetComponent<CharacterAnimator>();
         Rigidbody = GetComponent<Rigidbody>();
         AudioController = GetComponent<CharacterAudioController>();
@@ -76,13 +85,15 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         Equiper = GetComponent<Equiper>();
         WeaponController = GetComponent<WeaponController>();
 
-        InventoryItemManager.manager.SetPlayer(this);
+    //    InventoryItemManager.manager.SetPlayer(this);
 
     }
     private void Start()
     {
-        _hpBar.maxValue = _health.Value;
-        _hpBar.value = _health.Value;
+        _inventoryItemManager.OnEquiped += Equiper.EquipWeapon;
+
+//        _hpBar.maxValue = _health.Value;
+   //     _hpBar.value = _health.Value;
     }
 
     public void TakeDamage(float damage, bool isCritical)
@@ -126,12 +137,12 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     }
 
     public event Action OnTargetInvalid;
-
+    
     private void OnLevelWasLoaded(int level)
     {
         if (level != 0)
         {
-            InventoryItemManager.manager.OnCharacterLinked();
+         //   InventoryItemManager.manager.OnCharacterLinked();
         }
     }
 }
