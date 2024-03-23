@@ -82,6 +82,7 @@ public class AnimationEventsHolder : MonoBehaviour
         StartCoroutine(SmootherVignette(_startVignetteIntensity));
 
         StartCoroutine(Smoother(_startOrthographicSize));
+        _character.Equiper.EquipWeapon(_character.InventoryItemManager.GetEquipedGun());
         _character.Movement.UnlockMove();
         _character.AimRigController.SetWeight(1);
     }

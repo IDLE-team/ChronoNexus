@@ -1,34 +1,57 @@
+using System;
 using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Zenject;
 public class HealthPresentor : MonoBehaviour
 {
     [SerializeField] private Health _health;
     [SerializeField] private float _duration;
 
     private Slider _hpBar;
-
+    
+    [Inject]
+    private void Construct(Health health)
+    {
+        Debug.Log("Health Construct");
+        _health = health;
+    }
+    /*
     private void FindHealth()
     {
-        _health = InventoryItemManager.manager.GetPlayer().gameObject.GetComponent<Health>();
         if (_health)
         {
             _health.Changed += UpdateValue;
             _hpBar.maxValue = _health.MaxHealth;
             UpdateValue(_health.Value);
         }
-    }
+    }*/
     private void Start()
     {
-        _hpBar = GetComponent<Slider>();
-        InventoryItemManager.manager.OnCharacterLinked += FindHealth;
+        _hpBar = GetComponent<Slider>(); 
+        if (_health)
+        {
+            _health.Changed += UpdateValue;
+           _hpBar.maxValue = _health.MaxHealth;
+            UpdateValue(_health.Value);
+        }
+        //InventoryItemManager.manager.OnCharacterLinked += FindHealth;
+    }
+
+    private void OnEnable()
+    {
+        if (_health)
+        {
+            _health.Changed += UpdateValue;
+
+        }
     }
 
     private void OnDisable()
     {
         _health.Changed -= UpdateValue;
-        InventoryItemManager.manager.OnCharacterLinked -= FindHealth;
+      //  InventoryItemManager.manager.OnCharacterLinked -= FindHealth;
     }
 
     private void UpdateValue(float value)

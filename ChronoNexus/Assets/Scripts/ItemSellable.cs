@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class ItemSellable : MonoBehaviour
 {
@@ -19,7 +20,15 @@ public class ItemSellable : MonoBehaviour
     [SerializeField] private Image _itemRarityCircle;
     [SerializeField] private Image _itemImage;
     [SerializeField] private Button _purchaseButton;
+    [SerializeField] private InventoryItemManager manager;
 
+        
+    [Inject]
+    private void Construct(InventoryItemManager inventoryItemManager)
+    {
+        Debug.Log("ManagerInjected");
+        manager = inventoryItemManager;
+    }
     private void Awake()
     {
         _purchaseButton.onClick.AddListener(Purchase);
@@ -28,8 +37,8 @@ public class ItemSellable : MonoBehaviour
 
     private void Purchase()
     {
-        InventoryItemManager.manager.BuyItem(_itemData.itemCost);
-        InventoryItemManager.manager.MakeItemFromShop(_itemData);
+       manager.BuyItem(_itemData.itemCost);
+       manager.MakeItemFromShop(_itemData);
         gameObject.SetActive(false);
     }
 
@@ -40,16 +49,16 @@ public class ItemSellable : MonoBehaviour
         _itemNameText.text = _itemData.itemName;
         _costText.text = _itemData.itemCost.ToString();
         _itemImage.sprite = _itemData.itemImageSprite;
-        _itemIconType.sprite = InventoryItemManager.manager.GetSpriteByType(_itemData.itemType);
-        _itemRarityCircle.color = InventoryItemManager.manager.GetColorByRarity(_itemData.rarity);
-        _itemRarityText.text = InventoryItemManager.manager.GetTextByRarity(_itemData.rarity);
+        _itemIconType.sprite =manager.GetSpriteByType(_itemData.itemType);
+        _itemRarityCircle.color = manager.GetColorByRarity(_itemData.rarity);
+        _itemRarityText.text = manager.GetTextByRarity(_itemData.rarity);
         switch (_itemData.itemType)
         {
             case InventoryItemManager.itemType.gun:
                 var gun = _itemData.weaponData;
-                _itemParam1.text = "Урон  " + gun.Damage.ToString();
-                _itemParam2.text = "Ск.атаки  " + gun.FireRate.ToString();
-                _itemParam3.text = "Обойма  " + gun.MaxAmmo.ToString();
+                _itemParam1.text = "пїЅпїЅпїЅпїЅ  " + gun.Damage.ToString();
+                _itemParam2.text = "пїЅпїЅ.пїЅпїЅпїЅпїЅпїЅ  " + gun.FireRate.ToString();
+                _itemParam3.text = "пїЅпїЅпїЅпїЅпїЅпїЅ  " + gun.MaxAmmo.ToString();
                 break;
             case InventoryItemManager.itemType.armor:
                 break;

@@ -13,8 +13,10 @@ public class FinisherzoneHandler : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out _currentFinisherTarget))
+        
+        if (other.TryGetComponent(out IFinisherable currentFinisherTarget))
         {
+            _currentFinisherTarget = currentFinisherTarget;
             _currentTarget = other;
             _currentFinisherTarget.OnFinisherEnded += DectivateFinisherReadyMode;
             if (!_currentFinisherTarget.GetFinisherableStatus())
@@ -29,9 +31,11 @@ public class FinisherzoneHandler : MonoBehaviour
     {
         if(!_currentFinisherTarget.GetFinisherableStatus())
             return;
-        _character.MainButtonController.SetFinisherButton();
+        //_character.MainButtonController.SetFinisherButton();
+        _character.CharacterEventsHolder.CallOnFinisherInteractEvent();
         _character.CharacterTargetingSystem.SetTarget(_currentTarget.GetComponent<ITargetable>());
     }
+    
 
     private void DectivateFinisherReadyMode()
     {
@@ -42,13 +46,14 @@ public class FinisherzoneHandler : MonoBehaviour
             _currentTarget = null;
             _currentFinisherTarget = null;
         }
-        _character.MainButtonController.SetShootButton();
+        _character.CharacterEventsHolder.CallOnShootInteractEvent();
+
     }
     private void OnTriggerExit(Collider other)
     {
         if(other != _currentTarget)
             return;
-        Debug.Log("TriggerExit");
+        
         DectivateFinisherReadyMode();
     }
     

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 public class InventoryItemManager : MonoBehaviour
 {
-    public static InventoryItemManager manager;
+  //  public static InventoryItemManager manager;
 
     [Header("Иконки типов предмета")]
     [SerializeField]
@@ -32,12 +33,15 @@ public class InventoryItemManager : MonoBehaviour
 
     [SerializeField] private MoneyHolder _moneyHolder;
 
+    public event Action<WeaponData> OnEquiped;
+    private ItemEquipable itemUse;
     private void OnDrawGizmos()
     {
         _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
     }
     private void OnEnable()
     {
+        /*
         if (!manager)
         {
             manager = this;
@@ -46,6 +50,7 @@ public class InventoryItemManager : MonoBehaviour
         {
             Destroy(this);
         }
+        */
         OnCharacterLinked += SetInventoryEquiped;
     }
 
@@ -75,13 +80,15 @@ public class InventoryItemManager : MonoBehaviour
     public void SetInventoryEquiped()
     {
         _gunEquiped = GetEquipedGun();
-        if (_player)
-        {
+        //if (_player)
+       // {
             if (_gunEquiped)
             {
-                _player.gameObject.GetComponent<Equiper>().EquipWeapon(_gunEquiped);
+              //  _player.gameObject.GetComponent<Equiper>().EquipWeapon(_gunEquiped);
+              Debug.Log("EqipeCalled");
+              OnEquiped?.Invoke(_gunEquiped);
             }
-        }
+       // }
     }
     public Sprite GetSpriteByType(itemType itemType)
     {
@@ -150,55 +157,77 @@ public class InventoryItemManager : MonoBehaviour
                 TradeParamentrs(_armorInUse, item);
                 return;
         }
-        SetInventoryEquiped();
+        //SetInventoryEquiped();
     }
 
 
     public void TradeParamentrs(GameObject itemInUse, ItemEquipable next)
     {
-        ItemEquipable itemUse = itemInUse.GetComponentInChildren<ItemEquipable>();
-        if (itemUse)
+      //  itemUse = itemInUse.GetComponentInChildren<ItemEquipable>();
+       if (itemUse)
         {
-            var item = Instantiate(itemUse);
-            itemUse.SetItemBy(next);
-            itemUse.ChangeToEquiped();
-            next.SetItemBy(item);
-            next.ChangeToUnequiped();
-            print(item.name);
-            Destroy(item.gameObject);
-
+            itemUse.ChangeToUnequiped();
+            MoveToGeneralInventory();
+            next.transform.parent = itemInUse.transform;
+            next.ChangeToEquiped();
+            itemUse = next;
+            // var item = Instantiate(itemUse);
+            //itemUse.SetItemBy(next);
+            //itemUse.ChangeToEquiped();
+            //next.SetItemBy(item);
+            //print(item.name);
+            //Destroy(item.gameObject);
         }
         else //при установке первого предмета
         {
-            var itemSet = Instantiate(_itemPrefab, itemInUse.transform);
-            var itemSetted = itemSet.GetComponent<ItemEquipable>();
-            itemSetted.SetItemBy(next);
-            itemSetted.ChangeToEquiped();
-            Destroy(next.gameObject);
+            next.transform.parent = itemInUse.transform;
+            next.ChangeToEquiped();
+            itemUse = next;
+            //var itemSet = Instantiate(_itemPrefab, itemInUse.transform);
+            //var itemSetted = itemSet.GetComponent<ItemEquipable>();
+            //itemSetted.SetItemBy(next);
+            //Destroy(next.gameObject);
         }
     }
 
-    public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
+    public void MoveToGeneralInventory()
     {
-        var item = SpawnEmptyItem();
-        item.SetItemBy(next);
-        item.ChangeToUnequiped();
-        next.SetItemBy(item);
-        next.ChangeToEquiped();
-        Destroy(next.gameObject);
-    }
-
-    private ItemEquipable SpawnEmptyItem()
-    {
-        GameObject itemEmpty = Instantiate(_itemPrefab); ;
         for (int i = 0; i < _cells.Count; i++)
         {
             if (!_cells[i].GetComponentInChildren<ItemEquipable>())
             {
-                itemEmpty.transform.SetParent(_cells[i].transform);
+                itemUse.transform.SetParent(_cells[i].transform);
                 break;
             }
         }
+    }
+    public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
+    {
+       // var item = SpawnEmptyItem();
+       // item.SetItemBy(next);
+       itemUse.ChangeToUnequiped();
+       // next.SetItemBy(item);
+       MoveToGeneralInventory();
+
+       if (next != itemUse)
+       {
+           next.transform.parent = _gunInUse.transform;
+           next.ChangeToEquiped();
+       }
+       else
+       {
+           // itemUse.transform.parent
+           itemUse = null;
+       }
+       
+       // Destroy(next.gameObject);
+    }
+
+    private ItemEquipable SpawnEmptyItem()
+    {
+        GameObject itemEmpty = Instantiate(_itemPrefab);
+        MoveToGeneralInventory();
+
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
     }

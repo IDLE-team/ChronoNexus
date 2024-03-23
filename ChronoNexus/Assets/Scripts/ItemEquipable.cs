@@ -1,7 +1,10 @@
+using System;
 using NUnit.Framework.Interfaces;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 using static InventoryItemManager;
 
 public class ItemEquipable : MonoBehaviour
@@ -31,6 +34,16 @@ public class ItemEquipable : MonoBehaviour
     [SerializeField]
     private bool _isEquiped;
 
+    private InventoryItemManager manager;
+    
+    [Inject]
+    private void Construct(InventoryItemManager inventoryItemManager)
+    {
+        Debug.Log("ManagerInjected");
+        manager = inventoryItemManager;
+    }
+    
+    /*
     private void OnDrawGizmos()
     {
         if (_loadFromScene)
@@ -38,16 +51,24 @@ public class ItemEquipable : MonoBehaviour
             SetItemBy(_itemData);
         }
     }
-
+*/
     private void Awake()
     {
+        /*
         _itemButton = GetComponent<Button>();
         _itemButton.onClick.AddListener(SetItem);
-
+        */
         if (_loadFromScene)
         {
             SetItemBy(_itemData);
         }
+        
+    }
+
+
+    private void Update()
+    {
+        Debug.Log("ManagerInUpdate: " + manager + " Name: " + gameObject.name);
     }
 
     public void SetGunItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam, Sprite itemImage, ItemData Data)
@@ -84,12 +105,14 @@ public class ItemEquipable : MonoBehaviour
         print(itemToCopy.itemType);
         _itemData = itemToCopy;
         _itemType = itemToCopy.itemType;
-        _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
+     
+        Debug.Log("Manager: " + manager);
+        //_itemTypeIcon.sprite = InventoryItemManager.manager.GetSpriteByType(_itemType);
 
         _weapon = itemToCopy.weaponData; // тут надо будет дописывать - только под оружие сейча
 
         _rarity = itemToCopy.rarity;
-        _itemRarityCircle.color = manager.GetColorByRarity(itemToCopy.rarity);
+       // _itemRarityCircle.color = InventoryItemManager.manager.GetColorByRarity(itemToCopy.rarity);
 
 
         _itemLvl = itemToCopy.itemLvl;
@@ -106,6 +129,7 @@ public class ItemEquipable : MonoBehaviour
     public void ChangeToEquiped()
     {
         _isEquiped = true;
+        Debug.Log(manager);
         manager.SetInventoryEquiped();
     }
 
@@ -114,18 +138,18 @@ public class ItemEquipable : MonoBehaviour
         _isEquiped = false;
     }
 
-    private void SetItem()
+    public void SetItem()
     {
         if (!_isEquiped) // to equip inventory
         {
-            manager.EquipItem(GetTypeItem(), this);
-            manager.SetInventoryEquiped();
+           manager.EquipItem(GetTypeItem(), this);
+           manager.SetInventoryEquiped();
         }
         else // to set back to inventory
         {
 
             manager.TradeParametersToEmptyFromEquiped(this);
-            manager.SetInventoryEquiped();
+           manager.SetInventoryEquiped();
         }
     }
 

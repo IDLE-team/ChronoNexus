@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Zenject;
 
 public class MainButtonController : MonoBehaviour
 {
@@ -11,6 +12,15 @@ public class MainButtonController : MonoBehaviour
 
     private GameObject _currentButton;
 
+    private CharacterEventsHolder _characterEvents;
+    [Inject]
+    private void Construct(CharacterEventsHolder characterEvents)
+    {
+        _characterEvents = characterEvents;
+        _characterEvents.OnFinisherInteract += SetFinisherButton;
+        _characterEvents.OnShootInteract += SetShootButton;
+        _characterEvents.OnInteractionInteract += SetInteractButton;
+    }
     private void Start()
     {
         if(_shootButton)
