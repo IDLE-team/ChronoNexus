@@ -73,12 +73,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
             }
         }
     }
-
-    [Inject]
-    private void Construct()
-    {
-        Debug.Log("Something");
-    }
+    
     protected virtual void Awake()
     {
         InitializeParam();
@@ -145,7 +140,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
 
-        if (_health.Value <= _finisherHPTreshold)
+        if (_health.Value <= _finisherHPTreshold && !_isFinisherReady)
         {
             _isFinisherReady = true;
             OnFinisherReady?.Invoke();
@@ -155,14 +150,15 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void OnDied()
     {
+        Debug.Log("OnDied");
         OnTargetInvalid?.Invoke();
-
+        OnFinisherEnded?.Invoke();
+        _isFinisherReady = false;
         _isValid = false;
         _isAlive = false;
 
         _finisherReadyVFX.Stop();
-        OnFinisherEnded?.Invoke();
-        _isFinisherReady = false;
+
         
         SetSelfTarget(false);
         StopSeek();
@@ -346,6 +342,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     public bool GetFinisherableStatus()
     {
+        if (!_isAlive)
+            return false;
         return _isFinisherReady;
     }
     

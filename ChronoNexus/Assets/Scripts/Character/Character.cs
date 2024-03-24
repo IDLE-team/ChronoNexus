@@ -51,6 +51,8 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     
     public Transform Transform => transform;
 
+    private bool _isInvincible;
+
     [Inject]
     private void Construct(InventoryItemManager itemManager)
     {
@@ -98,7 +100,8 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
 
     public void TakeDamage(float damage, bool isCritical)
     {
-        _health.Decrease(damage, isCritical);
+        if(!_isInvincible)
+            _health.Decrease(damage, isCritical);
     }
 
     public void Die()
@@ -112,7 +115,8 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     {
         Destroy(gameObject);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
-        _levelController.Restart();
+           // _levelController.Restart();
+       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         await UniTask.Yield();
     }
 
@@ -131,6 +135,11 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         return _isValid;
     }
 
+    public void SetInvincible(bool isInvincible)
+    {
+        _isInvincible = isInvincible;
+    }
+    
     public bool GetTargetValid()
     {
         return _isValid;

@@ -83,7 +83,6 @@ public class InventoryItemManager : MonoBehaviour
             if (_gunEquiped)
             {
               //  _player.gameObject.GetComponent<Equiper>().EquipWeapon(_gunEquiped);
-              Debug.Log("EqipeCalled");
               OnEquiped?.Invoke(_gunEquiped);
             }
        // }
@@ -235,7 +234,7 @@ public class InventoryItemManager : MonoBehaviour
     private ItemEquipable SpawnEmptyItem()
     {
         GameObject itemEmpty = Instantiate(_itemPrefab);
-        MoveToGeneralInventory();
+        MoveToGeneralInventory(itemEmpty);
 
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
@@ -251,7 +250,7 @@ public class InventoryItemManager : MonoBehaviour
 
     public void MakeItemFromShop(ItemData soldItem)
     {
-        SpawnEmptyItem().SetItemBy(soldItem);
+        SpawnEmptyItem().SetItemBy(soldItem, this);
     }
     public void AddItem(ItemData ItemData)
     {
@@ -277,6 +276,7 @@ public class InventoryItemManager : MonoBehaviour
 
     public bool BuyItem(float itemCost)
     {
+        return true;
         if (_moneyHolder.GetMoneyValue() - itemCost >= 0)
         {
             _moneyHolder.DecreaseMoneyValue(itemCost);

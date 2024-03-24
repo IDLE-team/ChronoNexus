@@ -35,6 +35,9 @@ public class ItemEquipable : MonoBehaviour
     private bool _isEquiped;
 
     private InventoryItemManager manager;
+
+    [SerializeField]
+    private bool _isSetOnStart;
     
     [Inject]
     private void Construct(InventoryItemManager inventoryItemManager)
@@ -57,6 +60,14 @@ public class ItemEquipable : MonoBehaviour
         }
     }
 */
+    private void Start()
+    {
+        if(_isSetOnStart)
+            SetItem();
+        _itemButton = GetComponent<Button>();
+        _itemButton.onClick.AddListener(() => SetItem());
+    }
+
     private void Awake()
     {
         /*
@@ -67,13 +78,8 @@ public class ItemEquipable : MonoBehaviour
         {
             SetItemBy(_itemData);
         }
+
         
-    }
-
-
-    private void Update()
-    {
-        Debug.Log("ManagerInUpdate: " + manager + " Name: " + gameObject.name);
     }
 
     public void SetGunItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam, Sprite itemImage, ItemData Data)
@@ -118,12 +124,12 @@ public class ItemEquipable : MonoBehaviour
         _itemType = itemToCopy.itemType;
      
         Debug.Log("Manager: " + manager);
-        //_itemTypeIcon.sprite = InventoryItemManager.manager.GetSpriteByType(_itemType);
+            // _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
         _weapon = itemToCopy.weaponData; // тут надо будет дописывать - только под оружие сейча
 
         _rarity = itemToCopy.rarity;
-       // _itemRarityCircle.color = InventoryItemManager.manager.GetColorByRarity(itemToCopy.rarity);
+        // _itemRarityCircle.color = manager.GetColorByRarity(itemToCopy.rarity);
 
 
         _itemLvl = itemToCopy.itemLvl;
@@ -134,7 +140,13 @@ public class ItemEquipable : MonoBehaviour
 
         _itemImageSprite = itemToCopy.itemImageSprite;
         _itemImage.sprite = _itemImageSprite;
+        
+    }
 
+    public void SetItemBy(ItemData itemToCopy, InventoryItemManager inventoryItemManager) // копирование из другого предмета
+    {
+        manager = inventoryItemManager;
+        SetItemBy(itemToCopy);
     }
 
     public void ChangeToEquiped()
