@@ -961,7 +961,7 @@ PrefabInstance:
     - target: {fileID: 5860214011283799826, guid: e60b2a4658c0e3846beac4dec09c4761,
         type: 3}
       propertyPath: m_Name
-      value: Main UI 3
+      value: GameplayUI
       objectReference: {fileID: 0}
     - target: {fileID: 6559212396079122555, guid: e60b2a4658c0e3846beac4dec09c4761,
         type: 3}
@@ -1718,11 +1718,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1244582987}
     m_Modifications:
-    - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
-        type: 3}
-      propertyPath: _enemySpawner
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_Name
@@ -5158,22 +5153,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEntity (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 471896154010226229, guid: c5407b5321105ec46a92a102b846999b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4779211714595691892, guid: c5407b5321105ec46a92a102b846999b,
-        type: 3}
-      propertyPath: _enemySpawner
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5763126614767944207, guid: c5407b5321105ec46a92a102b846999b,
-        type: 3}
-      propertyPath: _meleeWeaponData
-      value: 
-      objectReference: {fileID: 11400000, guid: ea81c6b9e512bc143bbafb77b506f55f,
-        type: 2}
     - target: {fileID: 8922547093504286043, guid: c5407b5321105ec46a92a102b846999b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5452,8 +5431,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 1763044429}
     m_Modifications:
     - target: {fileID: 1185396836400910, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1185396836400910, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1203952878687928, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1203952878687928, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -5464,28 +5451,56 @@ PrefabInstance:
       value: SM_Veh_Armored_Truck_01_Hover
       objectReference: {fileID: 0}
     - target: {fileID: 1344106213341860, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1344106213341860, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496566899140618, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1496566899140618, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1517496420177672, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1517496420177672, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1553542466334572, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1553542466334572, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1587697396415120, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1587697396415120, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1655880230368642, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1655880230368642, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 1788852569292778, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1788852569292778, guid: 9e3d7d4d81beecf44b4a9e5768cd8123, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -6817,12 +6832,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1763044429}
     m_Modifications:
     - target: {fileID: 1697945093344750, guid: 28f2883c42945194b9a7df1e5c8544c5, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697945093344750, guid: 28f2883c42945194b9a7df1e5c8544c5, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 1868297174893950, guid: 28f2883c42945194b9a7df1e5c8544c5, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Crate_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868297174893950, guid: 28f2883c42945194b9a7df1e5c8544c5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1868297174893950, guid: 28f2883c42945194b9a7df1e5c8544c5, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -7336,16 +7359,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1244582987}
     m_Modifications:
-    - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
-        type: 3}
-      propertyPath: _Attacker
-      value: 
-      objectReference: {fileID: 1377012505}
-    - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
-        type: 3}
-      propertyPath: _enemySpawner
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_Name
@@ -7412,18 +7425,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1377012499}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1377012505 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
-    type: 3}
-  m_PrefabInstance: {fileID: 1377012499}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b192d6317b04fea8ab252acb0b18316, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1378466622
 GameObject:
   m_ObjectHideFlags: 0
@@ -7820,22 +7821,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEntity
       objectReference: {fileID: 0}
-    - target: {fileID: 471896154010226229, guid: c5407b5321105ec46a92a102b846999b,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4779211714595691892, guid: c5407b5321105ec46a92a102b846999b,
-        type: 3}
-      propertyPath: _enemySpawner
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5763126614767944207, guid: c5407b5321105ec46a92a102b846999b,
-        type: 3}
-      propertyPath: _meleeWeaponData
-      value: 
-      objectReference: {fileID: 11400000, guid: ea81c6b9e512bc143bbafb77b506f55f,
-        type: 2}
     - target: {fileID: 8922547093504286043, guid: c5407b5321105ec46a92a102b846999b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9918,7 +9903,7 @@ PrefabInstance:
     - target: {fileID: 5860214011283799826, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
       propertyPath: m_Name
-      value: Main UI 2
+      value: PauseUI
       objectReference: {fileID: 0}
     - target: {fileID: 5936140620872860953, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
@@ -11272,11 +11257,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1244582987}
     m_Modifications:
-    - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
-        type: 3}
-      propertyPath: _enemySpawner
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_Name
@@ -15091,11 +15071,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1244582987}
     m_Modifications:
-    - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
-        type: 3}
-      propertyPath: _enemySpawner
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_Name
