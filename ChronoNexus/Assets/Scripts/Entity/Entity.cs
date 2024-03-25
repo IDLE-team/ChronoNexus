@@ -39,7 +39,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected AudioSource _audioSource;
     protected EnemyAnimator _animator;
     protected Rigidbody _rigidbody;
-
+    protected Collider _collider;
     protected EnemyLoot _loot;
     protected TargetFinder _targetFinder;
 
@@ -52,6 +52,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected bool _isTarget;
 
     protected bool _isFinisherReady;
+    
+    
     
     public static List<GameObject> enemyList = new List<GameObject>();
     public event Action OnDie;
@@ -96,6 +98,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _audioSource = GetComponent<AudioSource>();
         _loot = GetComponent<EnemyLoot>();
         _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
 
         IsTargetFound = false;
 
@@ -140,7 +143,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
 
-        if (_health.Value <= _finisherHPTreshold && !_isFinisherReady)
+        if (_health.Value <= _finisherHPTreshold && !_isFinisherReady && _isAlive)
         {
             _isFinisherReady = true;
             OnFinisherReady?.Invoke();
@@ -148,23 +151,25 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         }
     }
 
-    protected virtual void OnDied()
+    protected virtual void Die()
     {
-        Debug.Log("OnDied");
         OnTargetInvalid?.Invoke();
         OnFinisherEnded?.Invoke();
+        OnTimeAffectedDestroy?.Invoke();
+        
         _isFinisherReady = false;
         _isValid = false;
         _isAlive = false;
-
+        
         _finisherReadyVFX.Stop();
 
-        
         SetSelfTarget(false);
         StopSeek();
 
         _stateMachine.ChangeState(DummyState);
 
+        _collider.enabled = false;
+        
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 
@@ -173,12 +178,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
             RealTimeDieWaiter().Forget();
             return;
         }
-
-        Die();
-    }
-
-    protected virtual void Die()
-    {
+        
         if(!_animator.GetAnimationParamStatus("Finisher"))
             _animator.PlayDeathAnimation();
 
@@ -188,14 +188,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         }
 
         OnDie?.Invoke();
+        Destroy(gameObject, 3f);
     }
-
-    public virtual void DieDestroy()
-    {
-        OnTimeAffectedDestroy?.Invoke();
-        Destroy(gameObject, 1f);
-    }
-
 
     public virtual void SetSelfTarget(bool _isActive)
     {
@@ -225,14 +219,14 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected void OnEnable()
     {
-        _health.Died += OnDied;
+        _health.Died += Die;
         _stateMachine.OnStateChanged += UpdateUI;
     }
 
     protected void OnDisable()
     {
         StopSeek();
-        _health.Died -= OnDied;
+        _health.Died -= Die;
         _stateMachine.OnStateChanged -= UpdateUI;
     }
 
@@ -305,7 +299,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected virtual async UniTask RealTimeDieWaiter()
     {
         await UniTask.WaitUntil(() => !isTimeStopped);
-        OnDied();
+        Die();
     }
 
     public virtual void TargetFoundReaction()

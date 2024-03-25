@@ -2268,15 +2268,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -2288,6 +2299,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3490,15 +3512,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
-    - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
-      propertyPath: amountToDrop
-      value: 2
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -3510,6 +3538,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3579,15 +3618,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
-    - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
-      propertyPath: _value
-      value: 30
-      objectReference: {fileID: 0}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3497668499852107910, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4249283580474737139, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419462699215031144, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419462699215031144, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 4419462699215031144, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -3599,10 +3664,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity
       objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
+    - target: {fileID: 6645748708569671951, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.57
+      value: 0.59
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -3612,27 +3688,27 @@ PrefabInstance:
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.59
+      value: 19.34
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.5757191
+      value: -0.057079773
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.8176476
+      value: -0.99836963
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -3642,7 +3718,7 @@ PrefabInstance:
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -109.7
+      value: -186.544
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -3662,15 +3738,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -3682,6 +3769,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3751,15 +3849,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -3771,6 +3880,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7155,15 +7275,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -7175,6 +7306,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7696,15 +7838,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -7716,6 +7869,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10882,21 +11046,43 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_Name
       value: RangedEntity (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14341,7 +14527,7 @@ PrefabInstance:
     - target: {fileID: 5860214011283799826, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
       propertyPath: m_Name
-      value: Main UI 2
+      value: Pause
       objectReference: {fileID: 0}
     - target: {fileID: 5936140620872860953, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
@@ -15896,7 +16082,7 @@ PrefabInstance:
     - target: {fileID: 5860214011283799826, guid: e60b2a4658c0e3846beac4dec09c4761,
         type: 3}
       propertyPath: m_Name
-      value: Main UI 3
+      value: Gameplay
       objectReference: {fileID: 0}
     - target: {fileID: 6559212396079122555, guid: e60b2a4658c0e3846beac4dec09c4761,
         type: 3}
@@ -15951,7 +16137,9 @@ PrefabInstance:
     - target: {fileID: 6768291865696329547, guid: e60b2a4658c0e3846beac4dec09c4761,
         type: 3}
       propertyPath: m_text
-      value: 0.8.2
+      value: '0.8.2P
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 7748932949300319583, guid: e60b2a4658c0e3846beac4dec09c4761,
         type: 3}
@@ -15977,6 +16165,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570473124272099760, guid: e60b2a4658c0e3846beac4dec09c4761,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -73
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570473124272099760, guid: e60b2a4658c0e3846beac4dec09c4761,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -321
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -18662,15 +18860,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -18687,10 +18896,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.47
+      value: -8.26
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -18700,7 +18915,7 @@ PrefabInstance:
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.24
+      value: 14.89
       objectReference: {fileID: 0}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -19902,11 +20117,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0269
+      value: 0.027
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.98
+      value: -9.28
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -25209,15 +25424,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -25229,6 +25455,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -30477,15 +30714,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -30497,6 +30745,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEntity (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -33864,15 +34123,25 @@ PrefabInstance:
       propertyPath: _value
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_Name
       value: RangedEntity (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5846351344388010481, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -41373,15 +41642,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4558356049840029897, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
@@ -41398,6 +41678,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -41707,7 +41993,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.268
+      value: 3.383
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -45457,21 +45743,43 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_Name
       value: RangedEntity (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -45541,21 +45849,43 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
+    - target: {fileID: 501859380451461532, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _weaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 802123635200898693, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: _value
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1321713694580845535, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2807617149845966505, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: amountToDrop
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_Name
       value: RangedEntity (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 5521264282300558190, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6020794980036711696, guid: 63afc36cd9784de4b882916598ada048,
+        type: 3}
+      propertyPath: _rangeWeaponData
+      value: 
+      objectReference: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2,
+        type: 2}
     - target: {fileID: 6902311447071993667, guid: 63afc36cd9784de4b882916598ada048,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -48347,7 +48677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7207042
+      value: 0.71479446
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalScale.y
@@ -48359,7 +48689,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.8913202
+      value: 2.062
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -48367,7 +48697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -12.0829
+      value: -12.0947
       objectReference: {fileID: 0}
     - target: {fileID: 469248, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
       propertyPath: m_LocalRotation.w
