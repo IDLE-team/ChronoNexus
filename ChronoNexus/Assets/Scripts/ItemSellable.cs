@@ -32,6 +32,8 @@ public class ItemSellable : MonoBehaviour
     private void Awake()
     {
         _purchaseButton.onClick.AddListener(Purchase);
+
+        manager = GetComponentInParent<InventoryItemManager>();// поиск менеджера, удалить когда функция констракт будет где-то использоваться
         SetSellableItem();
     }
 

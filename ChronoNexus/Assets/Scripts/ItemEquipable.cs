@@ -1,7 +1,4 @@
-using System;
-using NUnit.Framework.Interfaces;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -31,14 +28,13 @@ public class ItemEquipable : MonoBehaviour
     private WeaponData _weapon; // если пушка
 
     private Button _itemButton;
-    [SerializeField]
     private bool _isEquiped;
 
     private InventoryItemManager manager;
 
     [SerializeField]
-    private bool _isSetOnStart;
-    
+    private bool _isEquipedOnStart;
+
     [Inject]
     private void Construct(InventoryItemManager inventoryItemManager)
     {
@@ -50,36 +46,25 @@ public class ItemEquipable : MonoBehaviour
     {
         manager = _manager;
     }
-    
-    /*
-    private void OnDrawGizmos()
-    {
-        if (_loadFromScene)
-        {
-            SetItemBy(_itemData);
-        }
-    }
-*/
+
     private void Start()
     {
-        if(_isSetOnStart)
+
+        if (_isEquipedOnStart)
+        {
             SetItem();
+        }
         _itemButton = GetComponent<Button>();
         _itemButton.onClick.AddListener(() => SetItem());
     }
 
     private void Awake()
     {
-        /*
-        _itemButton = GetComponent<Button>();
-        _itemButton.onClick.AddListener(SetItem);
-        */
+        manager = GetComponentInParent<InventoryItemManager>();
         if (_loadFromScene)
         {
             SetItemBy(_itemData);
         }
-
-        
     }
 
     public void SetGunItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam, Sprite itemImage, ItemData Data)
@@ -111,7 +96,7 @@ public class ItemEquipable : MonoBehaviour
         SetItemBy(itemToCopy.GetItemData());
     }
 
-    public void SetWithManagerItemBy(ItemData itemToCopy,InventoryItemManager _manager) // копирование из другого предмета
+    public void SetWithManagerItemBy(ItemData itemToCopy, InventoryItemManager _manager) // копирование из другого предмета
     {
         manager = _manager;
         SetItemBy(itemToCopy);
@@ -122,14 +107,14 @@ public class ItemEquipable : MonoBehaviour
         print(itemToCopy.itemType);
         _itemData = itemToCopy;
         _itemType = itemToCopy.itemType;
-     
+
         Debug.Log("Manager: " + manager);
-            // _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
+        _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
         _weapon = itemToCopy.weaponData; // тут надо будет дописывать - только под оружие сейча
 
         _rarity = itemToCopy.rarity;
-        // _itemRarityCircle.color = manager.GetColorByRarity(itemToCopy.rarity);
+        _itemRarityCircle.color = manager.GetColorByRarity(itemToCopy.rarity);
 
 
         _itemLvl = itemToCopy.itemLvl;
@@ -140,7 +125,7 @@ public class ItemEquipable : MonoBehaviour
 
         _itemImageSprite = itemToCopy.itemImageSprite;
         _itemImage.sprite = _itemImageSprite;
-        
+
     }
 
     public void SetItemBy(ItemData itemToCopy, InventoryItemManager inventoryItemManager) // копирование из другого предмета
@@ -165,14 +150,14 @@ public class ItemEquipable : MonoBehaviour
     {
         if (!_isEquiped) // to equip inventory
         {
-           manager.EquipItem(GetTypeItem(), this);
-           manager.SetInventoryEquiped();
+            manager.EquipItem(GetTypeItem(), this);
+            manager.SetInventoryEquiped();
         }
         else // to set back to inventory
         {
 
             manager.TradeParametersToEmptyFromEquiped(this);
-           manager.SetInventoryEquiped();
+            manager.SetInventoryEquiped();
         }
     }
 

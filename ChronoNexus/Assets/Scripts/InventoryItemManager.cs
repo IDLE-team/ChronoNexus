@@ -14,9 +14,8 @@ public class InventoryItemManager : MonoBehaviour
     private List<Sprite> _itemTypeIcons = new List<Sprite>();
 
     [Header("Лэйаут предметов")]
-    [SerializeField] private GameObject _gridLayout;
+    [SerializeField] private GameObject _gridLayoutInventory;
     [SerializeField] private GameObject _itemPrefab;
-    [SerializeField]
     private List<HorizontalLayoutGroup> _cells = new List<HorizontalLayoutGroup>();
 
     [Header("Точки Экипировки")]
@@ -37,7 +36,7 @@ public class InventoryItemManager : MonoBehaviour
     private ItemEquipable itemUse;
     private void OnDrawGizmos()
     {
-        _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
+        _cells = _gridLayoutInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
     }
     private void OnEnable()
     {
@@ -54,7 +53,7 @@ public class InventoryItemManager : MonoBehaviour
 
     private void Start()
     {
-        _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
+        _cells = _gridLayoutInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
     }
 
     public void SetPlayer(Character player)
