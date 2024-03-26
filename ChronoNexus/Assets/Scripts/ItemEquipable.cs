@@ -60,7 +60,7 @@ public class ItemEquipable : MonoBehaviour
 
     private void Awake()
     {
-        manager = GetComponentInParent<InventoryItemManager>();
+    //    manager = GetComponentInParent<InventoryItemManager>();
         if (_loadFromScene)
         {
             SetItemBy(_itemData);
