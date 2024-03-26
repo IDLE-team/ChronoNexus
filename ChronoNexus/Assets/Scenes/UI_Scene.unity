@@ -2444,7 +2444,7 @@ GameObject:
   - component: {fileID: 304681450}
   - component: {fileID: 304681449}
   m_Layer: 0
-  m_Name: InventoryLayout
+  m_Name: Shelter Grid Layout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2792,7 +2792,7 @@ GameObject:
   - component: {fileID: 357798378}
   - component: {fileID: 357798377}
   m_Layer: 0
-  m_Name: InventoryLayout
+  m_Name: Grid Inventory Shelter Layout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16219,6 +16219,7 @@ GameObject:
   - component: {fileID: 3260744197114823681}
   - component: {fileID: 4636751993644678518}
   - component: {fileID: 4181065459293379518}
+  - component: {fileID: 4636751993644678519}
   m_Layer: 0
   m_Name: IconHolder
   m_TagString: Untagged
@@ -19040,7 +19041,7 @@ MonoBehaviour:
   _itemRarityCircle: {fileID: 8922765567948014677}
   _itemImage: {fileID: 8783811041373370832}
   _purchaseButton: {fileID: 4116818911930906796}
-  manager: {fileID: 5941117904199262079}
+  manager: {fileID: 0}
 --- !u!114 &1394036960498846211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34251,6 +34252,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844973145018931745}
   m_CullTransparentMesh: 1
+--- !u!114 &4636751993644678519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844973145018931745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 0}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4648209451650149526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36751,7 +36796,7 @@ MonoBehaviour:
   _itemRarityCircle: {fileID: 3393715430664671883}
   _itemImage: {fileID: 3254611233068936974}
   _purchaseButton: {fileID: 7921003586004659826}
-  manager: {fileID: 5941117904199262079}
+  manager: {fileID: 0}
 --- !u!114 &5188324339578379623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40066,32 +40111,6 @@ RectTransform:
   m_AnchoredPosition: {x: 383, y: -179.27534}
   m_SizeDelta: {x: 2, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5941117904199262079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7986625053074956341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2abacd79700bc428d33dcf4b42078d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemTypeIcons:
-  - {fileID: 21300000, guid: 3c439ffed0c3f164bbd777fc2ab0b90d, type: 3}
-  - {fileID: 21300000, guid: df6e05ea691651742a5e8454cfce4665, type: 3}
-  - {fileID: 21300000, guid: 036c6c3a9e3b01b4a9409e3f039a536a, type: 3}
-  - {fileID: 21300000, guid: c4724f2e623a7db4ba5b9517d3266d32, type: 3}
-  - {fileID: 21300000, guid: 3180eeec78dc47e4fbaf0e3e82200edc, type: 3}
-  _gridLayoutInventory: {fileID: 7444955683291845850}
-  _itemPrefab: {fileID: 6093637983021479832, guid: 6e20ee5589b67064da7d81a010b1cbcd,
-    type: 3}
-  _gunInUse: {fileID: 7598544712191611635}
-  _knifeInUse: {fileID: 5632000119854661478}
-  _granadeInUse: {fileID: 8733472826252509940}
-  _armorInUse: {fileID: 7883137553744328068}
-  _moneyHolder: {fileID: 5216453981334887879}
 --- !u!224 &5943961964936076439
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45740,7 +45759,7 @@ MonoBehaviour:
   _itemRarityCircle: {fileID: 1032789204111012636}
   _itemImage: {fileID: 893790627143306905}
   _purchaseButton: {fileID: 5521655793491218405}
-  manager: {fileID: 5941117904199262079}
+  manager: {fileID: 0}
 --- !u!114 &7404027999194897044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46917,7 +46936,7 @@ MonoBehaviour:
   _itemRarityCircle: {fileID: 196312700108685546}
   _itemImage: {fileID: 39165447982431599}
   _purchaseButton: {fileID: 4633247042469166099}
-  manager: {fileID: 5941117904199262079}
+  manager: {fileID: 0}
 --- !u!224 &7665507120257308296
 RectTransform:
   m_ObjectHideFlags: 0
@@ -48072,8 +48091,9 @@ GameObject:
   m_Component:
   - component: {fileID: 758486131173006431}
   - component: {fileID: 6456136859225846866}
-  - component: {fileID: 5941117904199262079}
   - component: {fileID: 7986625053074956342}
+  - component: {fileID: 7986625053074956343}
+  - component: {fileID: 7986625053074956344}
   m_Layer: 0
   m_Name: Main UI
   m_TagString: Untagged
@@ -48094,7 +48114,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainButtonController: {fileID: 0}
-  _inventoryItemManager: {fileID: 5941117904199262079}
+  _inventoryItemManager: {fileID: 7986625053074956344}
+--- !u!114 &7986625053074956343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986625053074956341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8d0f777b0336a4b94fa8519e710a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _allGameItems:
+  - {fileID: 11400000, guid: 585cb8a7c2b638d43952b87fa3ffcaa9, type: 2}
+  - {fileID: 11400000, guid: 8e31263c1e57e9c48a211c32be674acb, type: 2}
+  - {fileID: 11400000, guid: 00d35fc4db3e56241b25cb129b7b35d7, type: 2}
+  - {fileID: 11400000, guid: c56551982c6eef14faf33edcc86024a9, type: 2}
+--- !u!114 &7986625053074956344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986625053074956341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f1a57db2d1683642ae262fb8950faf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemTypeIcons:
+  - {fileID: 21300000, guid: 3c439ffed0c3f164bbd777fc2ab0b90d, type: 3}
+  - {fileID: 21300000, guid: df6e05ea691651742a5e8454cfce4665, type: 3}
+  - {fileID: 21300000, guid: 036c6c3a9e3b01b4a9409e3f039a536a, type: 3}
+  - {fileID: 21300000, guid: c4724f2e623a7db4ba5b9517d3266d32, type: 3}
+  - {fileID: 21300000, guid: 3180eeec78dc47e4fbaf0e3e82200edc, type: 3}
+  _gridLayoutTabInventory: {fileID: 7444955683291845850}
+  _itemPrefab: {fileID: 6093637983021479832, guid: 6e20ee5589b67064da7d81a010b1cbcd,
+    type: 3}
+  _gunInUse: {fileID: 7598544712191611635}
+  _knifeInUse: {fileID: 5632000119854661478}
+  _granadeInUse: {fileID: 8733472826252509940}
+  _armorInUse: {fileID: 7883137553744328068}
+  _moneyHolder: {fileID: 5216453981334887879}
+  _gridLayoutShelterInventory: {fileID: 357798375}
+  _gridLayoutShelterStorage: {fileID: 304681447}
 --- !u!114 &7988088729426627268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49314,6 +49379,7 @@ GameObject:
   - component: {fileID: 3506360583355876840}
   - component: {fileID: 107836246037571797}
   - component: {fileID: 6533220327846535535}
+  - component: {fileID: 8261941243986414120}
   m_Layer: 0
   m_Name: IconPopUp_Quests
   m_TagString: Untagged
@@ -49321,6 +49387,50 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8261941243986414120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8261941243986414119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 6533220327846535535}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!224 &8266808992247995357
 RectTransform:
   m_ObjectHideFlags: 0
