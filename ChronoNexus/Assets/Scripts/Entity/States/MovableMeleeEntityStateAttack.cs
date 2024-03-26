@@ -24,15 +24,14 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         
     }
 
-    public override void Enter()
+    public override void Enter()//если расстояние начинает увеличиваться, когда удар уже начат, враг начнет движение в сторону цели
     {
         _maxDistanceBetweenTarget = _movableMeleeEntity.MeleeAttacker.MaxMeleeAttackDistance;
         _minDistanceBetweenTarget = _movableMeleeEntity.MeleeAttacker.MinMeleeDistanceToTarget;
         _attackInterval = _movableMeleeEntity.MeleeAttacker.MeleeAttackInterval;
+        _attackingAgentSpeed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
         _minDelay = _movableMeleeEntity.MeleeAttacker.MinDelayTokenMelee;
         _maxDelay = _movableMeleeEntity.MeleeAttacker.MaxDelayTokenMelee;
-        _attackingAgentSpeed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
-        
         
         _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
         
@@ -41,6 +40,12 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         
         cancellationTokenSource = new CancellationTokenSource();
         MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
+        
+        _retreatPosition = _movableMeleeEntity.SelfAim.transform.position + ( _movableMeleeEntity.SelfAim.position - _targetPosition).normalized * ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
+        _retreatPosition = new Vector3(_retreatPosition.x, _movableMeleeEntity.SelfAim.position.y, _retreatPosition.z);
+        
+        _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);
+        
         
         base.Enter();
     }
@@ -85,19 +90,19 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
             _movableMeleeEntity.EndMoveAnimation();
         }
 
-        if (_attackTimer > 0)
+        if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer > 0)
         {
             if (_movableMeleeEntity.isTimeSlowed)
-                _attackTimer -= Time.deltaTime * 0.2f;
+                _movableMeleeEntity.MeleeAttacker.DecreaseAttackTimer(Time.deltaTime * 0.2f);
             else
-                _attackTimer -= Time.deltaTime;
+                _movableMeleeEntity.MeleeAttacker.DecreaseAttackTimer(Time.deltaTime);
         }
 
-        if (_attackTimer <= 0)
+        if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer <= 0)
         {
             _movableMeleeEntity.StartAttackAnimation();
             _movableMeleeEntity.MeleeAttack();
-            _attackTimer = _attackInterval;
+            _movableMeleeEntity.MeleeAttacker.ResetAttackTimer();
         }
 
         base.LogicUpdate();

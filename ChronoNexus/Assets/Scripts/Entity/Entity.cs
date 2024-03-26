@@ -91,9 +91,9 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void InitializeParam()
     {
-        InitializeIndividualParam();
+        
         _stateMachine = new StateMachine();
-
+        
 
         _targetFinder = GetComponent<TargetFinder>();
         _health = GetComponent<Health>();
@@ -105,7 +105,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         IsTargetFound = false;
 
         DummyState = new EntityStateDummy(this, _stateMachine);
-        
+        InitializeIndividualParam();
     }
 
     protected virtual void InitializeIndividualParam()
