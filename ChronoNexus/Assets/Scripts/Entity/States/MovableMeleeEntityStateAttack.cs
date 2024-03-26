@@ -36,13 +36,13 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
         
         _isAttack = true;
-        _movableMeleeEntity.TargetFinder.SetWeight(1);
+        //_movableMeleeEntity.TargetFinder.SetWeight(1);
         
         cancellationTokenSource = new CancellationTokenSource();
         MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
         
         _retreatPosition = _movableMeleeEntity.SelfAim.transform.position + ( _movableMeleeEntity.SelfAim.position - _targetPosition).normalized * ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
-        _retreatPosition = new Vector3(_retreatPosition.x, _movableMeleeEntity.SelfAim.position.y, _retreatPosition.z);
+        _retreatPosition = new Vector3(_retreatPosition.x, _movableMeleeEntity.transform.position.y, _retreatPosition.z);
         
         _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);
         
@@ -56,7 +56,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         
         _movableMeleeEntity.IsTargetFound = false;
         _movableMeleeEntity.NavMeshAgent.speed = 1.5f;
-        _movableMeleeEntity.EndMoveAnimation();
+        // _movableMeleeEntity.EndMoveAnimation();
         
         base.Exit();
     }
@@ -70,12 +70,17 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
             return;
         }
 
-        toRotation = Quaternion.LookRotation(_targetPosition - _movableMeleeEntity.transform.position, Vector3.up);
-        
-        if (_movableMeleeEntity.isTimeSlowed)
-            _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
-        else
-            _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation, toRotation, 6f * Time.deltaTime);
+        toRotation = Quaternion.LookRotation( new Vector3(_targetPosition.x,_movableMeleeEntity.transform.position.y,_targetPosition.z) - _movableMeleeEntity.transform.position, Vector3.up);
+        if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer > 0)
+        {
+            if (_movableMeleeEntity.isTimeSlowed)
+                _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
+                    toRotation, 6f * 0.2f * Time.deltaTime);
+            else
+                _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
+                    toRotation, 6f * Time.deltaTime);
+        }
+
         if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _targetPosition) > _maxDistanceBetweenTarget)
         {
             _stateMachine.ChangeState(_movableMeleeEntity.ChaseState);
@@ -97,11 +102,9 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
             else
                 _movableMeleeEntity.MeleeAttacker.DecreaseAttackTimer(Time.deltaTime);
         }
-
-        if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer <= 0)
+        else
         {
             _movableMeleeEntity.StartAttackAnimation();
-            _movableMeleeEntity.MeleeAttack();
             _movableMeleeEntity.MeleeAttacker.ResetAttackTimer();
         }
 

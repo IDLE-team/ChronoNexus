@@ -70,7 +70,7 @@ public class MovableMeleeEntity : MovableEntity
         }
         else if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= MeleeAttacker.MaxMeleeLungeDistance
                  && Vector3.Distance(SelfAim.position, Target.GetTransform().position) > MeleeAttacker.MaxMeleeAttackDistance
-                 )
+                )
         {
             _stateMachine.ChangeState(MeleeAttackLungeState);
         }
@@ -89,7 +89,7 @@ public class MovableMeleeEntity : MovableEntity
 
     public void MeleeAttack()
     {
-        
+        _animator.PlayAttackAnimation();
     }
     
 }

@@ -73,12 +73,17 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
         }
 
 
-        toRotation = Quaternion.LookRotation(_targetPosition - _movableMeleeEntity.transform.position, Vector3.up);
-
-        /*if (_movableMeleeEntity.isTimeSlowed)
-            _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation, toRotation, 6f * 0.2f * Time.deltaTime);
-        else
-            _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation, toRotation, 6f * Time.deltaTime);*/
+        toRotation = Quaternion.LookRotation( new Vector3(_targetPosition.x,_movableMeleeEntity.transform.position.y,_targetPosition.z) - _movableMeleeEntity.transform.position, Vector3.up);
+        if (!_inSlash)
+        {
+            if (_movableMeleeEntity.isTimeSlowed)
+                _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
+                    toRotation, 6f * 0.2f * Time.deltaTime);
+            else
+                _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
+                    toRotation, 6f * Time.deltaTime);
+        }
+        
         if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _targetPosition) >
             _movableMeleeEntity.MeleeAttacker.MaxMeleeLungeDistance
             || Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _targetPosition) <
