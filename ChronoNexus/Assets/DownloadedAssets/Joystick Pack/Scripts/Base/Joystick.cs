@@ -99,7 +99,7 @@ namespace UnityEngine.InputSystem.OnScreen
             input = (eventData.position - position) / (radius * canvas.scaleFactor);
             FormatInput();
             HandleInput(input.magnitude, input.normalized, radius, cam);
-            handle.anchoredPosition = input * radius * handleRange;
+            handle.anchoredPosition = input * radius * handleRange * 1.1f;
         }
         protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
         {
