@@ -71,19 +71,11 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
             _stateMachine.ChangeState(_movableMeleeEntity.RandomMoveState);
             return;
         }
+        toRotation =
+                     Quaternion.LookRotation(
+                         new Vector3(_targetPosition.x, _movableMeleeEntity.transform.position.y, _targetPosition.z) -
+                         _movableMeleeEntity.transform.position, Vector3.up);
 
-
-        toRotation = Quaternion.LookRotation( new Vector3(_targetPosition.x,_movableMeleeEntity.transform.position.y,_targetPosition.z) - _movableMeleeEntity.transform.position, Vector3.up);
-        if (!_inSlash)
-        {
-            if (_movableMeleeEntity.isTimeSlowed)
-                _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
-                    toRotation, 6f * 0.2f * Time.deltaTime);
-            else
-                _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
-                    toRotation, 6f * Time.deltaTime);
-        }
-        
         if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _targetPosition) >
             _movableMeleeEntity.MeleeAttacker.MaxMeleeLungeDistance
             || Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _targetPosition) <
@@ -93,6 +85,17 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
             _stateMachine.ChangeState(_movableMeleeEntity.ChaseState);
             return;
         }
+
+
+        
+
+        if (_movableMeleeEntity.isTimeSlowed)
+            _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
+                toRotation, 6f * 0.2f * Time.deltaTime);
+        else
+            _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
+                toRotation, 6f * Time.deltaTime);
+
 
         /*if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _retreatPosition) > 0.2f)
         {
@@ -126,7 +129,7 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
                 () =>
                 {
                     _inSlash = false;
-                    _movableMeleeEntity.EndMoveAnimation();
+                    _movableMeleeEntity.EntityAnimator.PlayLurgeAnimation();
                 });
             _navMeshAgent.SetDestination(_movableMeleeEntity.transform.position + newPosition);
             _movableMeleeEntity.transform.rotation = toRotation;

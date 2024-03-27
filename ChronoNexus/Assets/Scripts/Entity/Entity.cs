@@ -38,6 +38,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected AudioSource _audioSource;
     protected EnemyAnimator _animator;
+    public EnemyAnimator EntityAnimator => _animator;
     protected Rigidbody _rigidbody;
 
     protected EnemyLoot _loot;

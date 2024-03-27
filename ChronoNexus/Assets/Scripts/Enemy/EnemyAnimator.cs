@@ -13,6 +13,7 @@ public class EnemyAnimator : MonoBehaviour
     private static readonly int MoveY = Animator.StringToHash("MoveY");
 
     private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int Lurge = Animator.StringToHash("Lurge");
     private static readonly int Shoot = Animator.StringToHash("Shoot");
 
     private static readonly int FinisherHash = Animator.StringToHash("Finisher");
@@ -35,6 +36,10 @@ public class EnemyAnimator : MonoBehaviour
     public void EndMoveAnimation()
     {
         _animator.SetBool(Moving, false);
+    }
+    public void PlayLurgeAnimation()
+    {
+        _animator.SetTrigger(Lurge);
     }
 
     public void PlayDeathAnimation()
@@ -63,13 +68,11 @@ public class EnemyAnimator : MonoBehaviour
     {
         _lastSpeed = _animator.speed;
         _animator.speed = 0;
-        Debug.Log("Должна была смениться скорость");
     }
     public void SlowAnimation()
     {
         _lastSpeed = _animator.speed;
         _animator.speed = 0.3f;
-        //Debug.Log("Должна была смениться скорость");
     }
     public void ContinueAnimation()
     {
