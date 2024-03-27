@@ -59,7 +59,6 @@ public class AnimationEventsHolder : MonoBehaviour
          _startOrthographicSize = _virtualCamera.m_Lens.OrthographicSize;
         // _ui.SetActive(false);
          _startVignetteIntensity = _vignette.intensity.value;
-         Debug.Log("_startVignetteIntensity: " + _startVignetteIntensity);
          _vignette.intensity.value = _finisherVignetteIntensity;
         WeaponAreaFire();
         StartCoroutine(SmootherVignette(_finisherVignetteIntensity));

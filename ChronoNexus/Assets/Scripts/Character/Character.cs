@@ -57,7 +57,6 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     private void Construct(InventoryItemManager itemManager)
     {
         _inventoryItemManager = itemManager;
-        Debug.Log("Describe to: " + _inventoryItemManager);
     }
    
     

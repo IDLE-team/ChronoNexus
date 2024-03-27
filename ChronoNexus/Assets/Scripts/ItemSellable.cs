@@ -26,7 +26,6 @@ public class ItemSellable : MonoBehaviour
     [Inject]
     private void Construct(InventoryItemManager inventoryItemManager)
     {
-        Debug.Log("ManagerInjected");
         manager = inventoryItemManager;
     }
     private void Awake()

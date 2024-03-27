@@ -31,7 +31,6 @@ public class InventoryItemManager : MonoBehaviour
 
     [HideInInspector]
     protected UnityAction OnCharacterLinked;
-    protected UnityAction OnInventoryChanged;
 
     [SerializeField] protected MoneyHolder _moneyHolder;
 
@@ -43,15 +42,10 @@ public class InventoryItemManager : MonoBehaviour
         OnCharacterLinked += SetInventoryEquiped;
 
     }
-    private void Awake()
-    {
-        DeleteInventory();
-    }
     private void Start()
     {
-        OnInventoryChanged += SaveInventory;
         _cellsInventory = _gridLayoutTabInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
-        LoadInventory();
+
     }
 
     public void SetPlayer(Character player)
@@ -168,7 +162,7 @@ public class InventoryItemManager : MonoBehaviour
             next.ChangeToEquiped();
             itemUse = next;
         }
-        OnInventoryChanged();
+
     }
 
     public void MoveToGeneralInventory()
@@ -182,21 +176,21 @@ public class InventoryItemManager : MonoBehaviour
                 break;
             }
         }
-        OnInventoryChanged();
+
     }
-    public void MoveToGeneralInventory(GameObject itemEmpty)
+    public void MoveToInventory(GameObject itemEmpty, List<HorizontalLayoutGroup> cellGroup)
     {
-        for (int i = 0; i < _cellsInventory.Count; i++)
+        for (int i = 0; i < cellGroup.Count; i++)
         {
-            print(i);
-            if (!_cellsInventory[i].GetComponentInChildren<ItemEquipable>())
+            if (!cellGroup[i].GetComponentInChildren<ItemEquipable>())
             {
-                itemEmpty.transform.SetParent(_cellsInventory[i].transform);
+                itemEmpty.transform.SetParent(cellGroup[i].transform);
                 break;
             }
         }
         OnCharacterLinked();
     }
+
     public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
     {
 
@@ -212,63 +206,61 @@ public class InventoryItemManager : MonoBehaviour
         {
             itemUse = null;
         }
-        OnInventoryChanged();
     }
 
     public void SaveInventory()
     {
-        var saveString = "";
+        string saveString = "";
         for (int i = 0; i < _cellsInventory.Count; i++)
         {
             var item = _cellsInventory[i].GetComponentInChildren<ItemEquipable>();
             if (item == null)
             {
-                saveString.TrimEnd();
+                saveString = saveString.Trim();
                 break;
             }
+
             saveString += ItemDataManager.itemManager.GetIndexByItemData(item.GetItemData()).ToString() + " ";
         }
-
         PlayerPrefs.SetString("inventoryMain", saveString);
+
+        print(saveString);
+        print(saveString.Length);
+        print(saveString.TrimEnd(' ').Length);
     }
 
-    public void LoadInventory() // только на старте
+    
+
+    protected void LoadInventory(List<HorizontalLayoutGroup> cellGroup)
     {
-
-        SetLoadInventory();
-
-    }
-
-    private void SetLoadInventory()
-    {
-        var savedData = PlayerPrefs.GetString("inventoryMain", "");
+        var savedData = PlayerPrefs.GetString("inventoryMain","");
+        if (savedData.Length == 0) return;
         var listOfItems = savedData.Split(' ');
         List<int> items = new List<int>();
-        for (int i = 0; i < listOfItems.Length - 1; i++)
+        for (int i = 0; i < listOfItems.Length; i++)
         {
-            print(listOfItems[i]);
             items.Add(Convert.ToInt32(listOfItems[i]));
         }
         for (int i = 0; i < items.Count; i++)
         {
             var data = ItemDataManager.itemManager.GetItemDataByIndex(items[i]);
-            AddItem(data);
+            AddItem(data, cellGroup) ;
         }
     }
 
-    public void DeleteInventory() // не трогать если жизнь дорога
+    public void DeleteInventory(GameObject _inventoryLayoutGameObject) // не трогать если жизнь дорога
     {
-        var invent = _gridLayoutTabInventory.GetComponentsInChildren<ItemEquipable>();
+        var invent = _inventoryLayoutGameObject.GetComponentsInChildren<ItemEquipable>();
         foreach (var item in invent)
         {
             Destroy(item.gameObject);
         }
     }
 
-    private ItemEquipable SpawnEmptyItem()
+    protected ItemEquipable SpawnEmptyItem(List<HorizontalLayoutGroup> cellGroup)
     {
         GameObject itemEmpty = Instantiate(_itemPrefab);
-        MoveToGeneralInventory(itemEmpty);
+        MoveToInventory(itemEmpty,cellGroup);
 
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
@@ -276,23 +268,31 @@ public class InventoryItemManager : MonoBehaviour
 
     public void MakeItemFromShop(ItemData soldItem)
     {
-        SpawnEmptyItem().SetItemBy(soldItem, this);
-        OnInventoryChanged();
+        //SpawnEmptyItem(_cellsInventory).SetItemBy(soldItem, this);
+        var line = PlayerPrefs.GetString("inventoryMain","");
+        line += line.Length==0? ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString() : " " + ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString();
+        PlayerPrefs.SetString("inventoryMain", line);
+        print(PlayerPrefs.GetString("inventoryMain") + " Из плеерпрефса после покупки !");
     }
+
+    public ItemEquipable AddItem(ItemData ItemData, List<HorizontalLayoutGroup> cellGroup)
+    {
+        ItemEquipable item = SpawnEmptyItem(cellGroup);
+        item.SetItemBy(ItemData, this);
+        return item;
+    }
+
     public void AddItem(ItemData ItemData)
     {
-        ItemEquipable item = SpawnEmptyItem();
+        ItemEquipable item = SpawnEmptyItem(_cellsInventory);
         item.SetItemBy(ItemData, this);
-        OnInventoryChanged();
     }
 
     public WeaponData GetEquipedGun()
     {
         var equiped = _gunInUse.GetComponentInChildren<ItemEquipable>();
-        print(equiped);
         if (equiped)
         {
-            print(equiped);
             return equiped.GetDataByType();
         }
         else
@@ -318,7 +318,6 @@ public class InventoryItemManager : MonoBehaviour
     private void OnDisable()
     {
         OnCharacterLinked -= SetInventoryEquiped;
-        OnInventoryChanged -= SaveInventory;
     }
 
     public enum itemType

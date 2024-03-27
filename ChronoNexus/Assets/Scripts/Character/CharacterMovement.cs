@@ -236,7 +236,6 @@ public class CharacterMovement : MonoBehaviour, ITransformable
     [Delete] //Не подходит по ответственности
     public void ResetAnimationValues()
     {
-        print("Reset Animations Values");
         _animationStrafeX = 0;
         _animationStrafeZ = 0;
         _character.Animator.StrafeX(0);
