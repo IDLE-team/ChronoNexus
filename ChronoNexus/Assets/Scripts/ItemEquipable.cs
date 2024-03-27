@@ -163,6 +163,11 @@ public class ItemEquipable : MonoBehaviour
                     manager.SetInventoryEquiped();
                 }
             }
+            else // на уровне
+            {
+                manager.EquipItem(GetTypeItem(), this);
+                manager.SetInventoryEquiped();
+            }
         }
         else // to set back to inventory
         {
