@@ -44,7 +44,6 @@ public class HubIventoryManager : InventoryItemManager
         List<int> items = new List<int>();
         for (int i = 0; i < listOfItems.Length; i++)
         {
-            print(listOfItems[i] + " бля айтем ебучий " + i);
             items.Add(Convert.ToInt32(listOfItems[i]));
         }
         for (int i = 0; i < items.Count; i++)

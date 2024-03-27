@@ -223,17 +223,13 @@ public class InventoryItemManager : MonoBehaviour
             saveString += ItemDataManager.itemManager.GetIndexByItemData(item.GetItemData()).ToString() + " ";
         }
         PlayerPrefs.SetString("inventoryMain", saveString);
-
-        print(saveString);
-        print(saveString.Length);
-        print(saveString.TrimEnd(' ').Length);
     }
 
-    
+
 
     protected void LoadInventory(List<HorizontalLayoutGroup> cellGroup)
     {
-        var savedData = PlayerPrefs.GetString("inventoryMain","");
+        var savedData = PlayerPrefs.GetString("inventoryMain", "");
         if (savedData.Length == 0) return;
         var listOfItems = savedData.Split(' ');
         List<int> items = new List<int>();
@@ -244,7 +240,7 @@ public class InventoryItemManager : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             var data = ItemDataManager.itemManager.GetItemDataByIndex(items[i]);
-            AddItem(data, cellGroup) ;
+            AddItem(data, cellGroup);
         }
     }
 
@@ -260,7 +256,7 @@ public class InventoryItemManager : MonoBehaviour
     protected ItemEquipable SpawnEmptyItem(List<HorizontalLayoutGroup> cellGroup)
     {
         GameObject itemEmpty = Instantiate(_itemPrefab);
-        MoveToInventory(itemEmpty,cellGroup);
+        MoveToInventory(itemEmpty, cellGroup);
 
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
@@ -268,11 +264,9 @@ public class InventoryItemManager : MonoBehaviour
 
     public void MakeItemFromShop(ItemData soldItem)
     {
-        //SpawnEmptyItem(_cellsInventory).SetItemBy(soldItem, this);
-        var line = PlayerPrefs.GetString("inventoryMain","");
-        line += line.Length==0? ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString() : " " + ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString();
+        var line = PlayerPrefs.GetString("inventoryMain", "");
+        line += line.Length == 0 ? ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString() : " " + ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString();
         PlayerPrefs.SetString("inventoryMain", line);
-        print(PlayerPrefs.GetString("inventoryMain") + " Из плеерпрефса после покупки !");
     }
 
     public ItemEquipable AddItem(ItemData ItemData, List<HorizontalLayoutGroup> cellGroup)
