@@ -69,11 +69,9 @@ public class MovableEntity : Entity
 
     protected override void InitializeParam()
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-        
         base.InitializeParam();
 
-        
+        _navMeshAgent = GetComponent<NavMeshAgent>();
 
         RandomMoveState = new MovableEntityStateRandomMove(this, _stateMachine);
         PatrolState = new MovableEntityStatePatrol(this, _stateMachine);
@@ -86,23 +84,18 @@ public class MovableEntity : Entity
     {
     }
 
-    protected override void OnDied()
+    protected override void Die()
     {
+        
         _navMeshAgent.velocity = Vector3.zero;
         _navMeshAgent.speed = 0;
         _navMeshAgent.angularSpeed = 0;
-
-        _navMeshAgent.isStopped = true;
-        base.OnDied();
-    }
-
-    protected override void Die()
-    {
-        _navMeshAgent.velocity = Vector3.zero;
         _loot.DropItems();
 
+        _navMeshAgent.isStopped = true;
         base.Die();
     }
+    
 
     public override void RealTimeAction()
     {

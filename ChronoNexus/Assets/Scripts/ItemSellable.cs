@@ -32,6 +32,8 @@ public class ItemSellable : MonoBehaviour
     private void Awake()
     {
         _purchaseButton.onClick.AddListener(Purchase);
+
+        manager = GetComponentInParent<InventoryItemManager>();// поиск менеджера, удалить когда функция констракт будет где-то использоваться
         SetSellableItem();
     }
 
@@ -39,7 +41,8 @@ public class ItemSellable : MonoBehaviour
     {
        manager.BuyItem(_itemData.itemCost);
        manager.MakeItemFromShop(_itemData);
-        gameObject.SetActive(false);
+       
+       gameObject.SetActive(false);
     }
 
     private void SetSellableItem()
@@ -56,9 +59,9 @@ public class ItemSellable : MonoBehaviour
         {
             case InventoryItemManager.itemType.gun:
                 var gun = _itemData.weaponData;
-                _itemParam1.text = "����  " + gun.Damage.ToString();
-                _itemParam2.text = "��.�����  " + gun.FireRate.ToString();
-                _itemParam3.text = "������  " + gun.MaxAmmo.ToString();
+                _itemParam1.text = "Урон  " + gun.Damage.ToString();
+                _itemParam2.text = "Ск.Атаки  " + gun.FireRate.ToString();
+                _itemParam3.text = "Обойма  " + gun.MaxAmmo.ToString();
                 break;
             case InventoryItemManager.itemType.armor:
                 break;

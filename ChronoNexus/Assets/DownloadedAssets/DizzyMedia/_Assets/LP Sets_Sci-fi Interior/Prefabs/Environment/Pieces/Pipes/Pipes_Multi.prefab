@@ -25,12 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3403146521942404923}
+  serializedVersion: 2
   m_LocalRotation: {x: -0.0024807153, y: -0.002727538, z: -0.7071015, w: -0.7071025}
   m_LocalPosition: {x: 0.263, y: 0, z: -4.643}
   m_LocalScale: {x: 6, y: 6, z: 46.502056}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6515923876318434013}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 89.578, y: 90, z: 180}
 --- !u!33 &3403146521942404926
 MeshFilter:
@@ -51,10 +52,14 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +84,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6515923876318434010
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,6 +94,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6515923876318434013}
+  - component: {fileID: 8322792382406228187}
   m_Layer: 0
   m_Name: Pipes_Multi
   m_TagString: Untagged
@@ -102,11 +109,33 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6515923876318434010}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3403146521942404924}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8322792382406228187
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6515923876318434010}
+  m_Material: {fileID: 13400000, guid: 549d2fbd40c107f46aec9205d4482723, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.8474047, y: 0.5588587, z: 6.369307}
+  m_Center: {x: -0.9237024, y: 0.22057073, z: 0.12526359}

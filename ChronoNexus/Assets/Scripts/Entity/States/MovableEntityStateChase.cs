@@ -29,7 +29,7 @@ public class MovableEntityStateChase : MovableEntityState
 
     public override void LogicUpdate()
     {
-        _movableEntity.TargetChaseDistanceSwitch();
+        TargetChaseDistanceSwitch();
 
         base.LogicUpdate();
     }
@@ -43,9 +43,19 @@ public class MovableEntityStateChase : MovableEntityState
             return;
         }
 
-        _movableEntity.AgentDestinationSet();
+        AgentDestinationSet();
 
         base.PhysicsUpdate();
+    }
+
+    protected virtual void AgentDestinationSet()
+    {
+        _movableEntity.AgentDestinationSet();
+    }
+
+    protected virtual void TargetChaseDistanceSwitch()
+    {
+        _movableEntity.TargetChaseDistanceSwitch();
     }
 
     protected override void TargetFoundReaction()

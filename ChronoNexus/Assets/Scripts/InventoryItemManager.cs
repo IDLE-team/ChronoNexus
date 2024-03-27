@@ -14,9 +14,8 @@ public class InventoryItemManager : MonoBehaviour
     private List<Sprite> _itemTypeIcons = new List<Sprite>();
 
     [Header("Лэйаут предметов")]
-    [SerializeField] private GameObject _gridLayout;
+    [SerializeField] private GameObject _gridLayoutInventory;
     [SerializeField] private GameObject _itemPrefab;
-    [SerializeField]
     private List<HorizontalLayoutGroup> _cells = new List<HorizontalLayoutGroup>();
 
     [Header("Точки Экипировки")]
@@ -37,7 +36,7 @@ public class InventoryItemManager : MonoBehaviour
     private ItemEquipable itemUse;
     private void OnDrawGizmos()
     {
-        _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
+        _cells = _gridLayoutInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
     }
     private void OnEnable()
     {
@@ -54,7 +53,7 @@ public class InventoryItemManager : MonoBehaviour
 
     private void Start()
     {
-        _cells = _gridLayout.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
+        _cells = _gridLayoutInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
     }
 
     public void SetPlayer(Character player)
@@ -83,7 +82,6 @@ public class InventoryItemManager : MonoBehaviour
             if (_gunEquiped)
             {
               //  _player.gameObject.GetComponent<Equiper>().EquipWeapon(_gunEquiped);
-              Debug.Log("EqipeCalled");
               OnEquiped?.Invoke(_gunEquiped);
             }
        // }
@@ -235,7 +233,7 @@ public class InventoryItemManager : MonoBehaviour
     private ItemEquipable SpawnEmptyItem()
     {
         GameObject itemEmpty = Instantiate(_itemPrefab);
-        MoveToGeneralInventory();
+        MoveToGeneralInventory(itemEmpty);
 
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
@@ -251,7 +249,7 @@ public class InventoryItemManager : MonoBehaviour
 
     public void MakeItemFromShop(ItemData soldItem)
     {
-        SpawnEmptyItem().SetItemBy(soldItem);
+        SpawnEmptyItem().SetItemBy(soldItem, this);
     }
     public void AddItem(ItemData ItemData)
     {
@@ -277,6 +275,7 @@ public class InventoryItemManager : MonoBehaviour
 
     public bool BuyItem(float itemCost)
     {
+        return true;
         if (_moneyHolder.GetMoneyValue() - itemCost >= 0)
         {
             _moneyHolder.DecreaseMoneyValue(itemCost);

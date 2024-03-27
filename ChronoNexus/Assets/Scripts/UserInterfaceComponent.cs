@@ -1,3 +1,4 @@
+using System.Collections;
 using Zenject;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,7 +38,7 @@ public class UserInterfaceComponent : MonoBehaviour
             _manager = GetComponentInParent<UserInterfaceManager>();
         }
 
-        
         _backButton?.onClick.AddListener(_manager.BackTab);
     }
+    
 }

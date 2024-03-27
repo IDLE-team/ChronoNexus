@@ -20,6 +20,8 @@ public class MainButtonController : MonoBehaviour
         _characterEvents.OnFinisherInteract += SetFinisherButton;
         _characterEvents.OnShootInteract += SetShootButton;
         _characterEvents.OnInteractionInteract += SetInteractButton;
+        _characterEvents.OnHideInteract += HideInteractButton;
+        
     }
     private void Start()
     {
@@ -64,6 +66,9 @@ public class MainButtonController : MonoBehaviour
         _currentButton.SetActive(false);
         _currentButton = _interactButton;
         _currentButton.SetActive(true);
-
+    }
+    public void HideInteractButton()
+    {
+        _currentButton.SetActive(false);
     }
 }

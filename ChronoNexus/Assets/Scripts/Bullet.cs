@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 public class Bullet : MonoBehaviour, ITimeAffected
 {
     [SerializeField] private LayerMask _obstacleLayerMask;
-
+    [SerializeField] private LayerMask _targetLayerMask;
     private Vector3 _shootDir;
     
     private float _damage;
@@ -60,9 +60,14 @@ public class Bullet : MonoBehaviour, ITimeAffected
         //   return;
         //}
         
-        if ((_obstacleLayerMask.value & (1 << other.transform.gameObject.layer)) > 0)
+        if ((_obstacleLayerMask.value & (1 << other.gameObject.layer)) > 0)
         {
             Destroy(gameObject);
+            return;
+        }
+        if (!((_targetLayerMask.value & (1 << other.gameObject.layer)) > 0))
+        {
+            Debug.Log("Соответсвует");
             return;
         }
         if (!other.TryGetComponent<IDamagable>(out var target))

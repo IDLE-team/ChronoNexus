@@ -53,6 +53,9 @@ public class AnimationEventsHolder : MonoBehaviour
         ColdWeapon finisherWeapon = _weaponController.CurrentWeapon as ColdWeapon;
       //  if (finisherWeapon.Distance < Vector3.Distance(transform.position, _character.CharacterTargetingSystem.Target.GetTransform().position))
          //   return;
+         _character.SetInvincible(true);
+
+         _character.CharacterEventsHolder.CallOnHideInteractEvent();
          _startOrthographicSize = _virtualCamera.m_Lens.OrthographicSize;
         // _ui.SetActive(false);
          _startVignetteIntensity = _vignette.intensity.value;
@@ -80,9 +83,11 @@ public class AnimationEventsHolder : MonoBehaviour
       //  _ui.SetActive(true);
         _vignette.intensity.value = _startVignetteIntensity;
         StartCoroutine(SmootherVignette(_startVignetteIntensity));
-
+        _character.SetInvincible(false);
         StartCoroutine(Smoother(_startOrthographicSize));
         _character.Equiper.EquipWeapon(_character.InventoryItemManager.GetEquipedGun());
+        _character.CharacterEventsHolder.CallOnShootInteractEvent();
+
         _character.Movement.UnlockMove();
         _character.AimRigController.SetWeight(1);
     }
