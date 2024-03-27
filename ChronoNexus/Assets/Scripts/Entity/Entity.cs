@@ -139,6 +139,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     {
         if (!_isAlive)
             return;
+        
 
         _health.Decrease(damage, isCritical);
         DamageEffect();

@@ -84,6 +84,19 @@ public class MovableEntity : Entity
     {
     }
 
+    public override void TakeDamage(float damage, bool isCritical)
+    {
+        if (Target == null)
+        {
+            _navMeshAgent.isStopped = true;
+            Quaternion rotation = Quaternion.Euler(new Vector3(0,1,0) * 180f);
+
+            transform.rotation *= rotation;
+            _navMeshAgent.isStopped = false;
+        }
+        base.TakeDamage(damage, isCritical);
+    }
+
     protected override void Die()
     {
         
@@ -182,6 +195,16 @@ public class MovableEntity : Entity
     {
         if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) >
             12f) //view distance or check last point
-            _stateMachine.ChangeState(RandomMoveState);
+        {
+            if (_isPatrol && _patrolPoints.Length != 0) 
+            {
+                _stateMachine.ChangeState(PatrolState);
+            }
+            else
+            {
+                _stateMachine.ChangeState(RandomMoveState);
+            }
+        }
+            
     }
 }

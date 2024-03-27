@@ -60,14 +60,14 @@ public class MovableMeleeEntity : MovableEntity
         {
             _stateMachine.ChangeState(RandomMoveState);
         }
-        else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= MeleeAttacker.AttackZone.Radius) // or attack range
+        else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= MeleeAttacker.MaxMeleeAttackDistance) // or attack range
         {
             _stateMachine.ChangeState(MeleeAttackState);
         }
     }
     public override void AgentDestinationSet()
     {
-        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > MeleeAttacker.AttackZone.Radius)
+        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > MeleeAttacker.MaxMeleeAttackDistance)
         {
             _navMeshAgent.SetDestination(Target.GetTransform().position);
         }

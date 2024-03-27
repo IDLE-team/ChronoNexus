@@ -32,8 +32,8 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         _minDistanceBetweenTarget = _movableMeleeEntity.MeleeAttacker.MinMeleeDistanceToTarget;
         _attackInterval = _movableMeleeEntity.MeleeAttacker.MeleeAttackInterval;
         _attackingAgentSpeed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
-        _minDelay = _movableMeleeEntity.MeleeAttacker.MinDelayTokenMelee;
-        _maxDelay = _movableMeleeEntity.MeleeAttacker.MaxDelayTokenMelee;
+        _minDelay = 0.1f;
+        _maxDelay = 0.1f;
 
         _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
 
@@ -42,14 +42,15 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
 
         cancellationTokenSource = new CancellationTokenSource();
         MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
-
-        _retreatPosition = _movableMeleeEntity.SelfAim.transform.position +
+        _minDelay = _movableMeleeEntity.MeleeAttacker.MinDelayTokenMelee;
+        _maxDelay = _movableMeleeEntity.MeleeAttacker.MaxDelayTokenMelee;
+        /*_retreatPosition = _movableMeleeEntity.SelfAim.transform.position +
                            (_movableMeleeEntity.SelfAim.position - _targetPosition).normalized *
-                           ((_minDistanceBetweenTarget + _maxDistanceBetweenTarget) / 2);
+                           (_minDistanceBetweenTarget );
         _retreatPosition =
             new Vector3(_retreatPosition.x, _movableMeleeEntity.transform.position.y, _retreatPosition.z);
 
-        _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);
+        _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);*/
 
 
         base.Enter();

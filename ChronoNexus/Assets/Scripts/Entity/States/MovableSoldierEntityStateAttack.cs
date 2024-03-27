@@ -27,20 +27,20 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     }
 
     public override void Enter()
-    { 
+    {
         base.Enter();
-        
+
         _maxDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MaxRangeAttackDistance;
         _minDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MinRangeDistanceToTarget;
         _minDelay = _movableSoldierEntity.SoldierAttacker.MinDelayTokenRange;
         _maxDelay = _movableSoldierEntity.SoldierAttacker.MaxDelayTokenRange;
         _shootingAgentSpeed = _movableSoldierEntity.SoldierAttacker.RangeAttackAgentSpeed;
-        
+
         _movableSoldierEntity.Equiper.EquipWeapon(_movableSoldierEntity.SoldierAttacker.RangeWeaponData);
-        
+
         if (_movableSoldierEntity.WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
         {
-            _firearmWeapon = (FirearmWeapon)_movableSoldierEntity.WeaponController.CurrentWeapon;
+            _firearmWeapon = (FirearmWeapon) _movableSoldierEntity.WeaponController.CurrentWeapon;
         }
 
         _target = _movableSoldierEntity.Target.GetTransform();
@@ -56,7 +56,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
         _cancellationTokenSource = new CancellationTokenSource();
         ShootAndRetreat(_cancellationTokenSource.Token).Forget();
-        
+
     }
 
     public override void Exit()
@@ -82,16 +82,23 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             return;
         }
 
-        _toRotation = Quaternion.LookRotation(_targetPosition - _movableSoldierEntity.transform.transform.position,
-            Vector3.up);
-        
+
         if (_movableSoldierEntity.isTimeSlowed)
         {
-            TimeSlowedLogicUpdate();
+            if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
+            {
+                _movableSoldierEntity.transform.rotation = Quaternion.Slerp(_movableSoldierEntity.transform.rotation,
+                    CalculateRotation(), 6f * 0.2f * Time.deltaTime);
+            }
+
         }
         else
         {
-            TimeDefaultLogicUpdate();
+            if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
+            {
+                _movableSoldierEntity.transform.rotation = Quaternion.Slerp(_movableSoldierEntity.transform.rotation,
+                    CalculateRotation(), 6f * Time.deltaTime);
+            }
         }
 
         if (Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _targetPosition) >
@@ -100,34 +107,37 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             _stateMachine.ChangeState(_movableSoldierEntity.ChaseState);
             return;
         }
+
+        if (Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _retreatPosition)<0.2f && !_firearmWeapon.IsReloading)
+        {
+            _movableSoldierEntity.EndMoveAnimation();
+        }
+        else
+        {
+            _movableSoldierEntity.StartMoveAnimation();
+        }
+
         _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
         base.LogicUpdate();
-        
+
     }
 
-    private void TimeSlowedLogicUpdate()
+    private Quaternion CalculateRotation()
     {
-        if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
-        {
-            _movableSoldierEntity.transform.rotation = Quaternion.Slerp(_movableSoldierEntity.transform.rotation,
-                _toRotation, 6f * 0.2f * Time.deltaTime);
-        }
-    }
-
-    private void TimeDefaultLogicUpdate()
-    {
-        if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
-        {
-            _movableSoldierEntity.transform.rotation = Quaternion.Slerp(_movableSoldierEntity.transform.rotation,
-                _toRotation, 6f * Time.deltaTime);
-        }
+        Quaternion toRotation = Quaternion.LookRotation(_targetPosition - _movableSoldierEntity.SelfAim.position,
+            Vector3.up);
+        toRotation.x = 0f;
+        toRotation.z = 0f;
+        return toRotation;
     }
 
     private void ReloadingLogicEnter()
-    {
-        _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.SelfAim.transform.position);
-        _movableSoldierEntity.TargetFinder.SetWeight(0);
+    { 
         _movableSoldierEntity.EndMoveAnimation();
+        _movableSoldierEntity.EntityAnimator.PlayReloadAnimation();
+        _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.transform.position);
+        _movableSoldierEntity.TargetFinder.SetWeight(0);
+        
     }
 
     private void ReloadingLogicExit()
@@ -152,7 +162,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     {
         await UniTask.WaitUntil(() => !_movableSoldierEntity.isTimeSlowed && !_movableSoldierEntity.isTimeStopped);
         _movableSoldierEntity.NavMeshAgent.speed = _shootingAgentSpeed;
-        
+
     }
 
     private void CancelCancelationToken()
@@ -190,7 +200,9 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
                 {
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_retreatPosition);
                     if (_movableSoldierEntity.isTimeSlowed) _movableSoldierEntity.NavMeshAgent.speed = 0.1f;
-                    else _movableSoldierEntity.NavMeshAgent.speed = _movableSoldierEntity.SoldierAttacker.DefaultAgentSpeed;
+                    else
+                        _movableSoldierEntity.NavMeshAgent.speed =
+                            _movableSoldierEntity.SoldierAttacker.DefaultAgentSpeed;
                     _movableSoldierEntity.StartMoveAnimation();
                 }
                 else

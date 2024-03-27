@@ -16,10 +16,10 @@ public class MovableEntitySoldierAttacker : MovableMeleeEntityAttacker
 
     [SerializeField] private float _rangeAttackAgentSpeed = 2f;
     
-    [SerializeField] private int _ammoCount = 8;
+    private int _ammoCount = 8;
 
-    [SerializeField] private Transform _bulletStartPosition;
-    [SerializeField] private Bullet _prefabBullet;
+     private Transform _bulletStartPosition;
+     private Bullet _prefabBullet;
 
     private Bullet _bullet;
     private Vector3 _bulletDirection;

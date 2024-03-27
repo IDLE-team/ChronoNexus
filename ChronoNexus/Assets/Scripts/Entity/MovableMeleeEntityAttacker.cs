@@ -3,7 +3,7 @@ using UnityEngine.VFX;
 
 public class MovableMeleeEntityAttacker : Attacker
 {
-    [Header("Range Attack")]
+    [Header("Melee Attack")]
     //protected float _attackTimer;
     [SerializeField] private WeaponData _meleeWeaponData;
 
@@ -23,7 +23,11 @@ public class MovableMeleeEntityAttacker : Attacker
 
     [SerializeField] protected float _meleeAttackAgentSpeed = 4f;
     [SerializeField] protected float _defaultAgentSpeed = 1.5f;
+    [SerializeField] protected float _maxMeleeLungeDistance = 4f;
+     protected float _meleeAttackTimer = 0f;
 
+     public float MeleeAttackTimer => _meleeAttackTimer;
+    public float MaxMeleeLungeDistance => _maxMeleeLungeDistance;
     public float MeleeAttackInterval => _meleeAttackInterval;
     public float MinDelayTokenMelee => _minDelayTokenMelee;
     public float MaxDelayTokenMelee => _maxDelayTokenMelee;
@@ -34,7 +38,16 @@ public class MovableMeleeEntityAttacker : Attacker
 
     public WeaponData MeleeWeaponData => _meleeWeaponData;
 
+    public void DecreaseAttackTimer(float value)
+    {
+        _meleeAttackTimer -= value;
+    }
 
+    public void ResetAttackTimer()
+    {
+        _meleeAttackTimer = _meleeAttackInterval;
+        
+    }
     [UsedInAnimator]
     public void Hit()
     {
