@@ -21,7 +21,8 @@ public class TargetFinder : MonoBehaviour
     private Transform _target;
     public ITargetable Target;
 
-    [SerializeField] AimRigController _aimRigController;
+    private AimRigController _aimRigController;
+    private EntityTargeting _entityTargeting;
     
 
     private CancellationTokenSource cancellationTokenSource;
@@ -32,6 +33,12 @@ public class TargetFinder : MonoBehaviour
     private void Awake()
     {
         TryGetComponent(out _seeker);
+    }
+
+    private void Start()
+    {
+        _aimRigController = GetComponent<AimRigController>();
+        _entityTargeting = GetComponent<EntityTargeting>();
     }
 
     private void Update()
@@ -108,6 +115,7 @@ public class TargetFinder : MonoBehaviour
             
             _seeker.Target = target;
             Target = target;
+            _entityTargeting.SetTargetParent(Target.GetTransform());
             _seeker.IsTargetFound = true;
         }
     }

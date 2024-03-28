@@ -23,8 +23,8 @@ public class MovableMeleeEntityAttacker : Attacker
 
     [SerializeField] protected float _meleeAttackAgentSpeed = 4f;
     [SerializeField] protected float _defaultAgentSpeed = 1.5f;
-    [SerializeField] protected float _maxMeleeLungeDistance = 4f;
-     protected float _meleeAttackTimer = 0f;
+    protected float _maxMeleeLungeDistance = 4f;
+    protected float _meleeAttackTimer = 0f;
 
      public float MeleeAttackTimer => _meleeAttackTimer;
     public float MaxMeleeLungeDistance => _maxMeleeLungeDistance;

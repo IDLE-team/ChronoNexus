@@ -69,7 +69,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         _firearmWeapon.OnReloadEnd -= ReloadingLogicExit;
         if (!_movableSoldierEntity.isTimeSlowed && !_movableSoldierEntity.isTimeStopped)
             _movableSoldierEntity.NavMeshAgent.speed = 1.5f;
-        _movableSoldierEntity.EndMoveAnimation();
+        _movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
         base.Exit();
     }
 
@@ -108,13 +108,14 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             return;
         }
 
-        if (Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _retreatPosition)<0.2f && !_firearmWeapon.IsReloading)
+        Debug.Log(Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _retreatPosition));
+        if (Vector3.Distance(_movableSoldierEntity.SelfAim.position, _retreatPosition)<0.2f)
         {
-            _movableSoldierEntity.EndMoveAnimation();
+            _movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
         }
         else
         {
-            _movableSoldierEntity.StartMoveAnimation();
+            _movableSoldierEntity.EntityAnimator.SetMoveAnimation(true);
         }
 
         _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
@@ -132,9 +133,10 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     }
 
     private void ReloadingLogicEnter()
-    { 
-        _movableSoldierEntity.EndMoveAnimation();
-        _movableSoldierEntity.EntityAnimator.PlayReloadAnimation();
+    {
+        _retreatPosition = _movableSoldierEntity.SelfAim.position;
+        _movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
+        _movableSoldierEntity.EntityAnimator.SetReloadAnimation(true);
         _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.transform.position);
         _movableSoldierEntity.TargetFinder.SetWeight(0);
         
@@ -142,8 +144,10 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
     private void ReloadingLogicExit()
     {
+        
+        _movableSoldierEntity.EntityAnimator.SetReloadAnimation(false);
         _movableSoldierEntity.TargetFinder.SetWeight(1);
-        _movableSoldierEntity.StartMoveAnimation();
+        _movableSoldierEntity.EntityAnimator.SetMoveAnimation(true);
     }
 
     public override void PhysicsUpdate()
@@ -203,12 +207,12 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
                     else
                         _movableSoldierEntity.NavMeshAgent.speed =
                             _movableSoldierEntity.SoldierAttacker.DefaultAgentSpeed;
-                    _movableSoldierEntity.StartMoveAnimation();
+                    
                 }
                 else
                 {
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.SelfAim.transform.position);
-                    _movableSoldierEntity.EndMoveAnimation();
+                    
                 }
 
                 _movableSoldierEntity.TargetFinder.SetWeight(1);
@@ -233,12 +237,12 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_retreatPosition);
                     if (_movableSoldierEntity.isTimeSlowed) _movableSoldierEntity.NavMeshAgent.speed = 0.2f;
                     else _movableSoldierEntity.NavMeshAgent.speed = _shootingAgentSpeed;
-                    _movableSoldierEntity.StartMoveAnimation();
+                    
                 }
                 else
                 {
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.SelfAim.transform.position);
-                    _movableSoldierEntity.EndMoveAnimation();
+                    
                 }
 
                 _movableSoldierEntity.TargetFinder.SetWeight(1);
@@ -248,7 +252,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             {
                 _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.SelfAim.transform.position);
                 _movableSoldierEntity.TargetFinder.SetWeight(0);
-                _movableSoldierEntity.EndMoveAnimation();
+                
                 await UniTask.Yield();
             }
         }

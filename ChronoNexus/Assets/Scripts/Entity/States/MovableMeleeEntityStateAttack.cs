@@ -98,11 +98,11 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
 
         if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _retreatPosition) > 0.2f)
         {
-            _movableMeleeEntity.StartMoveAnimation();
+            _movableMeleeEntity.EntityAnimator.SetMoveAnimation(true);
         }
         else
         {
-            _movableMeleeEntity.EndMoveAnimation();
+            _movableMeleeEntity.EntityAnimator.SetMoveAnimation(false);
         }
 
         if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer > 0)
@@ -171,12 +171,10 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                 {
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);
                     _movableMeleeEntity.NavMeshAgent.speed = _attackingAgentSpeed;
-                    _movableMeleeEntity.StartMoveAnimation();
                 }
                 else
                 {
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.SelfAim.transform.position);
-                    _movableMeleeEntity.EndMoveAnimation();
                 }
 
                 await UniTask.Yield();
@@ -198,12 +196,10 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                 {
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);
                     _movableMeleeEntity.NavMeshAgent.speed = _attackingAgentSpeed;
-                    _movableMeleeEntity.StartMoveAnimation();
                 }
                 else
                 {
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.SelfAim.transform.position);
-                    _movableMeleeEntity.EndMoveAnimation();
                 }
 
                 await UniTask.Yield();
@@ -211,7 +207,6 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
             else if (!cancellationToken.IsCancellationRequested)
             {
                 _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.SelfAim.transform.position);
-                _movableMeleeEntity.EndMoveAnimation();
                 await UniTask.Yield();
             }
 

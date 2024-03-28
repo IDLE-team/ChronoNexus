@@ -58,7 +58,7 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
         _movableMeleeEntity.NavMeshAgent.isStopped = false;
         _movableMeleeEntity.IsTargetFound = false;
         _movableMeleeEntity.NavMeshAgent.speed = 1.5f;
-        _movableMeleeEntity.EndMoveAnimation();
+        _movableMeleeEntity.EntityAnimator.SetMoveAnimation(false);
 
         base.Exit();
     }
@@ -116,7 +116,7 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
 
         if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer <= 0 || !_inSlash)
         {
-            _movableMeleeEntity.StartMoveAnimation();
+            _movableMeleeEntity.EntityAnimator.SetMoveAnimation(true);
             _movableMeleeEntity.MeleeAttacker.ResetAttackTimer();
             _movableMeleeEntity.StartAttackAnimation();
             //bottom anim

@@ -172,12 +172,12 @@ public class EnemySoldier : Enemy,ISeeker
 
     public void StartMoveAnimation()
     {
-        _animator.StartMoveAnimation();
+        
     }
 
     public void EndMoveAnimation()
     {
-        _animator.EndMoveAnimation();
+        
     }
 
     public void StartAttackAnimation()

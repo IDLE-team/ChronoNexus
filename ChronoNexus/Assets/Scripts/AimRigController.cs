@@ -16,7 +16,6 @@ public class AimRigController : MonoBehaviour
     private float prevWeight;
     public Transform _aimTarget;
     private IEnumerator coroutine;
-    [SerializeField] private List<MultiAimConstraint> _constraints = new List<MultiAimConstraint>();
 
 
     private void Start()

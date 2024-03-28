@@ -22,7 +22,7 @@ public class MovableEntityStatePatrol : MovableEntityState
     {
         //_patrolPoints = _movableEntity.PatrolPoints;
         _movableEntity.StartSeek();
-        _movableEntity.StartMoveAnimation();
+        _movableEntity.EntityAnimator.SetMoveAnimation(true);
 
         _destination = _patrolPoints[0];
 
@@ -33,7 +33,7 @@ public class MovableEntityStatePatrol : MovableEntityState
 
     public override void Exit()
     {
-        _movableEntity.EndMoveAnimation();
+        _movableEntity.EntityAnimator.SetMoveAnimation(false);
         _movableEntity.StopSeek();
 
         base.Exit();

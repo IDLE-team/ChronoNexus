@@ -150,15 +150,7 @@ public class MovableEntity : Entity
         base.SlowTimeAction();
     }
 
-    public void StartMoveAnimation()
-    {
-        _animator.StartMoveAnimation();
-    }
-
-    public void EndMoveAnimation()
-    {
-        _animator.EndMoveAnimation();
-    }
+    
 
     public override void ResetValues()
     {
@@ -182,12 +174,10 @@ public class MovableEntity : Entity
         if (Vector3.Distance(SelfAim.transform.position, Target.GetTransform().position) <= 1.5f)
         {
             _navMeshAgent.SetDestination(SelfAim.transform.position);
-            EndMoveAnimation();
         }
         else
         {
             _navMeshAgent.SetDestination(Target.GetTransform().position);
-            StartMoveAnimation();
         }
     }
 

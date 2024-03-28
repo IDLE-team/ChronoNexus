@@ -40,15 +40,11 @@ public abstract class MovableEntityState : IState
     {
         if (_movableEntity.IsTargetFound)
         {
-            TargetFoundReaction();
+            _movableEntity.TargetFoundReaction();
             return;
         }
     }
 
-    protected virtual void TargetFoundReaction()
-    {
-        _movableEntity.TargetFoundReaction();
-    }
     
     protected virtual async UniTask TimeWaiter()
     {

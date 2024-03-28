@@ -15,7 +15,7 @@ public class EnemyAnimator : MonoBehaviour
     private static readonly int Attack = Animator.StringToHash("Attack");
     private static readonly int Lurge = Animator.StringToHash("Lurge");
     private static readonly int Shoot = Animator.StringToHash("Shoot");
-    private static readonly int Reload = Animator.StringToHash("Reload");
+    private static readonly int ReloadHash = Animator.StringToHash("Reload");
 
     private static readonly int FinisherHash = Animator.StringToHash("Finisher");
 
@@ -30,21 +30,17 @@ public class EnemyAnimator : MonoBehaviour
         return _animator.GetBool(FinisherHash);
     }
     
-    public void StartMoveAnimation()
+    public void SetMoveAnimation(bool value)
     {
-        _animator.SetBool(Moving, true);
-    }
-    public void EndMoveAnimation()
-    {
-        _animator.SetBool(Moving, false);
+        _animator.SetBool(Moving, value);
     }
     public void PlayLurgeAnimation()
     {
         _animator.SetTrigger(Lurge);
     }
-    public void PlayReloadAnimation()
+    public void SetReloadAnimation(bool value)
     {
-        _animator.SetTrigger(Reload);
+        _animator.SetBool(ReloadHash, value);
     }
 
     public void PlayDeathAnimation()

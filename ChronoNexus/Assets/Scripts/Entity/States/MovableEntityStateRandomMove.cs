@@ -20,7 +20,7 @@ public  class MovableEntityStateRandomMove : MovableEntityState
         _distance = _movableEntity.RandomMoveMaxDistance;
             
         _movableEntity.StartSeek();
-        _movableEntity.StartMoveAnimation();
+        _movableEntity.EntityAnimator.SetMoveAnimation(true);
         
         _destination = GetRandomDirection();
         
@@ -31,7 +31,7 @@ public  class MovableEntityStateRandomMove : MovableEntityState
 
     public override void Exit()
     {
-        _movableEntity.EndMoveAnimation();
+        _movableEntity.EntityAnimator.SetMoveAnimation(false);
         _movableEntity.StopSeek();
         
         base.Exit();

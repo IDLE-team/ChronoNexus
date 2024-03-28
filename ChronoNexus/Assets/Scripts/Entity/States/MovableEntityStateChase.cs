@@ -17,7 +17,7 @@ public class MovableEntityStateChase : MovableEntityState
     public override void Enter()
     {
         _movableEntity.StopSeek();
-        _movableEntity.StartMoveAnimation();
+        _movableEntity.EntityAnimator.SetMoveAnimation(true);
 
         base.Enter();
     }
@@ -29,7 +29,7 @@ public class MovableEntityStateChase : MovableEntityState
 
     public override void LogicUpdate()
     {
-        TargetChaseDistanceSwitch();
+        _movableEntity.TargetChaseDistanceSwitch();
 
         base.LogicUpdate();
     }
@@ -43,23 +43,9 @@ public class MovableEntityStateChase : MovableEntityState
             return;
         }
 
-        AgentDestinationSet();
+        _movableEntity.AgentDestinationSet();
 
         base.PhysicsUpdate();
     }
 
-    protected virtual void AgentDestinationSet()
-    {
-        _movableEntity.AgentDestinationSet();
-    }
-
-    protected virtual void TargetChaseDistanceSwitch()
-    {
-        _movableEntity.TargetChaseDistanceSwitch();
-    }
-
-    protected override void TargetFoundReaction()
-    {
-        //empty
-    }
 }

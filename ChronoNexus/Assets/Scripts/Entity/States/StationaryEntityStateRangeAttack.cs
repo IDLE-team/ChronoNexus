@@ -32,7 +32,8 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
     private Quaternion _toRotation;
     private CancellationTokenSource _cancellationTokenSource;
 
-    public StationaryEntityStateRangeAttack(StationaryEntity stationaryEntity, StateMachine stateMachine) : base(stationaryEntity, stateMachine)
+    public StationaryEntityStateRangeAttack(StationaryEntity stationaryEntity, StateMachine stateMachine) : base(
+        stationaryEntity, stateMachine)
     {
 
     }
@@ -45,7 +46,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         ammoMaxCount = _stationaryEntity.TurretAttacker.AmmoCount;
         ammoCount = ammoMaxCount;
 
-       // _stationaryEntity.Equiper.EquipWeapon(_stationaryEntity.TurretAttacker.RangeWeaponData);
+        // _stationaryEntity.Equiper.EquipWeapon(_stationaryEntity.TurretAttacker.RangeWeaponData);
 
         /*if (_stationaryEntity.WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
         {
@@ -81,25 +82,25 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
             return;
         }
 
-        Vector3 selfPos = new Vector3(_stationaryEntity.transform.position.x,_targetPosition.y,_stationaryEntity.transform.position.z);
+        Vector3 selfPos = new Vector3(_stationaryEntity.transform.position.x, _targetPosition.y,
+            _stationaryEntity.transform.position.z);
         _toRotation = Quaternion.LookRotation(_targetPosition - selfPos, Vector3.up);
 
         if (_stationaryEntity.isTimeSlowed)
         {
             _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation,
                 _toRotation, 6f * 0.2f * Time.deltaTime);
-                //TimeSlowedLogicUpdate();
+            //TimeSlowedLogicUpdate();
         }
         else
-        
-        {_stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation,
-                         _toRotation, 6f * Time.deltaTime);
+        {
+            _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation,
+                _toRotation, 6f * Time.deltaTime);
             //TimeDefaultLogicUpdate();
         }
 
         if (Vector3.Distance(_stationaryEntity.SelfAim.transform.position, _targetPosition) > _maxAttackDistance)
         {
-            
             _stateMachine.ChangeState(_stationaryEntity.IdleState);
             return;
         }
@@ -135,6 +136,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
                 _isReloading = true;
             }
         }
+
         if (reloadTimer >= 0f && _isReloading)
         {
             if (_stationaryEntity.isTimeSlowed)
@@ -150,6 +152,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         {
             _isReloading = false;
         }
+
         base.LogicUpdate();
 
     }

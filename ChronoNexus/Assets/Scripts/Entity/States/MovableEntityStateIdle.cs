@@ -12,7 +12,7 @@ public class MovableEntityStateIdle : MovableEntityState
 
     public override void Enter()
     {
-        _movableEntity.EndMoveAnimation();
+        _movableEntity.EntityAnimator.SetMoveAnimation(false);
         _movableEntity.StartSeek();
         base.Enter();
     }
