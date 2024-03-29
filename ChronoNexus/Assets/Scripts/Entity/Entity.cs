@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
@@ -110,6 +111,12 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected virtual void InitializeIndividualParam()
     {
         
+    }
+
+    public virtual void RotateTo(Transform target)
+    {
+        //Vector3 targetPos = new Vector3()
+        transform.DOLookAt(new Vector3(target.position.x,transform.position.y,target.position.z),1f);
     }
 
     protected void Start()
