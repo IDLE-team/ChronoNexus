@@ -23,6 +23,7 @@ public class TargetFinder : MonoBehaviour
 
     private AimRigController _aimRigController;
     private EntityTargeting _entityTargeting;
+    [SerializeField]private GameObject _foundEffect;
     
 
     private CancellationTokenSource cancellationTokenSource;
@@ -117,6 +118,8 @@ public class TargetFinder : MonoBehaviour
             Target = target;
             _entityTargeting.SetTargetParent(Target.GetTransform());
             _seeker.IsTargetFound = true;
+            _foundEffect.SetActive(true);
+            //восклицательный знак
         }
     }
 
