@@ -35,10 +35,11 @@ public class ItemEquipable : MonoBehaviour
     [SerializeField]
     private bool _isEquipedOnStart;
 
+    private bool _isInShelter;
+
     [Inject]
     private void Construct(InventoryItemManager inventoryItemManager)
     {
-        Debug.Log("ManagerInjected");
         manager = inventoryItemManager;
     }
 
@@ -60,7 +61,7 @@ public class ItemEquipable : MonoBehaviour
 
     private void Awake()
     {
-    //    manager = GetComponentInParent<InventoryItemManager>();
+        //    manager = GetComponentInParent<InventoryItemManager>();
         if (_loadFromScene)
         {
             SetItemBy(_itemData);
@@ -96,19 +97,11 @@ public class ItemEquipable : MonoBehaviour
         SetItemBy(itemToCopy.GetItemData());
     }
 
-    public void SetWithManagerItemBy(ItemData itemToCopy, InventoryItemManager _manager) // копирование из другого предмета
-    {
-        manager = _manager;
-        SetItemBy(itemToCopy);
-    }
-
     public void SetItemBy(ItemData itemToCopy) // копирование из другого предмета
     {
-        print(itemToCopy.itemType);
         _itemData = itemToCopy;
         _itemType = itemToCopy.itemType;
 
-        Debug.Log("Manager: " + manager);
         _itemTypeIcon.sprite = manager.GetSpriteByType(_itemType);
 
         _weapon = itemToCopy.weaponData; // тут надо будет дописывать - только под оружие сейча
@@ -137,7 +130,6 @@ public class ItemEquipable : MonoBehaviour
     public void ChangeToEquiped()
     {
         _isEquiped = true;
-        Debug.Log(manager);
         manager.SetInventoryEquiped();
     }
 
@@ -150,15 +142,47 @@ public class ItemEquipable : MonoBehaviour
     {
         if (!_isEquiped) // to equip inventory
         {
-            manager.EquipItem(GetTypeItem(), this);
-            manager.SetInventoryEquiped();
+            if (HubIventoryManager.manager) // если в хабе
+            {
+                if (HubIventoryManager.manager.ShelterActiveSelf())
+                {
+                    if (!_isInShelter) //поставить в хранилище
+                    {
+                        HubIventoryManager.manager.MoveToShelter(_itemData, gameObject);
+                        print("ѕоставил в хранилище");
+                    }
+                    else //поставить в обратно в инвентарь
+                    {
+                        HubIventoryManager.manager.MoveBackFromShelter(_itemData, gameObject);
+                    }
+                }
+
+                else // на уровне
+                {
+                    manager.EquipItem(GetTypeItem(), this);
+                    manager.SetInventoryEquiped();
+                }
+            }
+            else // на уровне
+            {
+                manager.EquipItem(GetTypeItem(), this);
+                manager.SetInventoryEquiped();
+            }
         }
         else // to set back to inventory
         {
-
             manager.TradeParametersToEmptyFromEquiped(this);
             manager.SetInventoryEquiped();
         }
+    }
+
+    public void SetShelter() //устанавливать бул переменную на подгрузке хранилища, функци€ нужна только дл€ одного дела
+    {
+        _isInShelter = true;
+    }
+    public void SetBoolFromShelterToInventory()
+    {
+        _isInShelter = false;
     }
 
     public itemType GetTypeItem()

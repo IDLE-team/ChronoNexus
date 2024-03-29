@@ -11,49 +11,41 @@ public class InventoryItemManager : MonoBehaviour
 
     [Header("Иконки типов предмета")]
     [SerializeField]
-    private List<Sprite> _itemTypeIcons = new List<Sprite>();
+    protected List<Sprite> _itemTypeIcons = new List<Sprite>();
 
-    [Header("Лэйаут предметов")]
-    [SerializeField] private GameObject _gridLayoutInventory;
-    [SerializeField] private GameObject _itemPrefab;
-    private List<HorizontalLayoutGroup> _cells = new List<HorizontalLayoutGroup>();
+    [Header("Лэйауты предметов")]
+    [SerializeField] protected GameObject _gridLayoutTabInventory;
+
+
+    [SerializeField] protected GameObject _itemPrefab;
+    protected List<HorizontalLayoutGroup> _cellsInventory = new List<HorizontalLayoutGroup>();
 
     [Header("Точки Экипировки")]
-    [SerializeField] private GameObject _gunInUse;
-    [SerializeField] private GameObject _knifeInUse;
-    [SerializeField] private GameObject _granadeInUse;
-    [SerializeField] private GameObject _armorInUse;
+    [SerializeField] protected GameObject _gunInUse;
+    [SerializeField] protected GameObject _knifeInUse;
+    [SerializeField] protected GameObject _granadeInUse;
+    [SerializeField] protected GameObject _armorInUse;
 
-    private Character _player;
-    private WeaponData _gunEquiped;
+    protected Character _player;
+    protected WeaponData _gunEquiped;
 
     [HideInInspector]
-    public UnityAction OnCharacterLinked;
+    protected UnityAction OnCharacterLinked;
 
-    [SerializeField] private MoneyHolder _moneyHolder;
+    [SerializeField] protected MoneyHolder _moneyHolder;
 
     public event Action<WeaponData> OnEquiped;
-    private ItemEquipable itemUse;
-    private void OnDrawGizmos()
-    {
-        _cells = _gridLayoutInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
-    }
+
+    protected ItemEquipable itemUse;
     private void OnEnable()
     {
-        /*if (!manager)
-        {
-            manager = this;
-        }
-        else if (manager == this)
-        {
-            Destroy(this);
-        }*/
         OnCharacterLinked += SetInventoryEquiped;
-    }
 
+    }
     private void Start()
     {
-        _cells = _gridLayoutInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
+        _cellsInventory = _gridLayoutTabInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
+
     }
 
     public void SetPlayer(Character player)
@@ -77,14 +69,12 @@ public class InventoryItemManager : MonoBehaviour
     public void SetInventoryEquiped()
     {
         _gunEquiped = GetEquipedGun();
-        //if (_player)
-       // {
-            if (_gunEquiped)
-            {
-              //  _player.gameObject.GetComponent<Equiper>().EquipWeapon(_gunEquiped);
-              OnEquiped?.Invoke(_gunEquiped);
-            }
-       // }
+
+        if (_gunEquiped)
+        {
+            //  _player.gameObject.GetComponent<Equiper>().EquipWeapon(_gunEquiped);
+            OnEquiped?.Invoke(_gunEquiped);
+        }
     }
     public Sprite GetSpriteByType(itemType itemType)
     {
@@ -153,95 +143,120 @@ public class InventoryItemManager : MonoBehaviour
                 TradeParamentrs(_armorInUse, item);
                 return;
         }
-        //SetInventoryEquiped();
     }
 
 
     public void TradeParamentrs(GameObject itemInUse, ItemEquipable next)
     {
-      //  itemUse = itemInUse.GetComponentInChildren<ItemEquipable>();
-       if (itemUse)
+        if (itemUse)
         {
             itemUse.ChangeToUnequiped();
             MoveToGeneralInventory();
             next.transform.parent = itemInUse.transform;
             next.ChangeToEquiped();
             itemUse = next;
-            // var item = Instantiate(itemUse);
-            //itemUse.SetItemBy(next);
-            //itemUse.ChangeToEquiped();
-            //next.SetItemBy(item);
-            //print(item.name);
-            //Destroy(item.gameObject);
         }
         else //при установке первого предмета
         {
             next.transform.parent = itemInUse.transform;
             next.ChangeToEquiped();
             itemUse = next;
-            //var itemSet = Instantiate(_itemPrefab, itemInUse.transform);
-            //var itemSetted = itemSet.GetComponent<ItemEquipable>();
-            //itemSetted.SetItemBy(next);
-            //Destroy(next.gameObject);
         }
+
     }
 
     public void MoveToGeneralInventory()
     {
-        for (int i = 0; i < _cells.Count; i++)
+        for (int i = 0; i < _cellsInventory.Count; i++)
         {
-            if (!_cells[i].GetComponentInChildren<ItemEquipable>())
+
+            if (!_cellsInventory[i].GetComponentInChildren<ItemEquipable>())
             {
-                itemUse.transform.SetParent(_cells[i].transform);
+                itemUse.transform.SetParent(_cellsInventory[i].transform);
                 break;
             }
         }
+
     }
-    public void MoveToGeneralInventory(GameObject itemEmpty)
+    public void MoveToInventory(GameObject itemEmpty, List<HorizontalLayoutGroup> cellGroup)
     {
-        for (int i = 0; i < _cells.Count; i++)
+        for (int i = 0; i < cellGroup.Count; i++)
         {
-            if (!_cells[i].GetComponentInChildren<ItemEquipable>())
+            if (!cellGroup[i].GetComponentInChildren<ItemEquipable>())
             {
-                itemEmpty.transform.SetParent(_cells[i].transform);
+                itemEmpty.transform.SetParent(cellGroup[i].transform);
                 break;
             }
         }
+        OnCharacterLinked();
     }
+
     public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
     {
-       // var item = SpawnEmptyItem();
-       // item.SetItemBy(next);
-       itemUse.ChangeToUnequiped();
-       // next.SetItemBy(item);
-       MoveToGeneralInventory();
 
-       if (next != itemUse)
-       {
-           next.transform.parent = _gunInUse.transform;
-           next.ChangeToEquiped();
-       }
-       else
-       {
-           // itemUse.transform.parent
-           itemUse = null;
-       }
-       
-       // Destroy(next.gameObject);
+        itemUse.ChangeToUnequiped();
+        MoveToGeneralInventory();
+
+        if (next != itemUse)
+        {
+            next.transform.parent = _gunInUse.transform;
+            next.ChangeToEquiped();
+        }
+        else
+        {
+            itemUse = null;
+        }
     }
 
-    private ItemEquipable SpawnEmptyItem()
+    public void SaveInventory()
     {
-        GameObject itemEmpty = Instantiate(_itemPrefab);
-        MoveToGeneralInventory(itemEmpty);
+        string saveString = "";
+        for (int i = 0; i < _cellsInventory.Count; i++)
+        {
+            var item = _cellsInventory[i].GetComponentInChildren<ItemEquipable>();
+            if (item == null)
+            {
+                saveString = saveString.Trim();
+                break;
+            }
 
-        ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
-        return itemUseEmpty;
+            saveString += ItemDataManager.itemManager.GetIndexByItemData(item.GetItemData()).ToString() + " ";
+        }
+        PlayerPrefs.SetString("inventoryMain", saveString);
     }
-    private ItemEquipable SpawnEmptyItem(ItemData ItemData)//говно ебаное всё нахуй снести тут, насрал я
+
+
+
+    protected void LoadInventory(List<HorizontalLayoutGroup> cellGroup)
+    {
+        var savedData = PlayerPrefs.GetString("inventoryMain", "");
+        if (savedData.Length == 0) return;
+        var listOfItems = savedData.Split(' ');
+        List<int> items = new List<int>();
+        for (int i = 0; i < listOfItems.Length; i++)
+        {
+            items.Add(Convert.ToInt32(listOfItems[i]));
+        }
+        for (int i = 0; i < items.Count; i++)
+        {
+            var data = ItemDataManager.itemManager.GetItemDataByIndex(items[i]);
+            AddItem(data, cellGroup);
+        }
+    }
+
+    public void DeleteInventory(GameObject _inventoryLayoutGameObject) // не трогать если жизнь дорога
+    {
+        var invent = _inventoryLayoutGameObject.GetComponentsInChildren<ItemEquipable>();
+        foreach (var item in invent)
+        {
+            Destroy(item.gameObject);
+        }
+    }
+
+    protected ItemEquipable SpawnEmptyItem(List<HorizontalLayoutGroup> cellGroup)
     {
         GameObject itemEmpty = Instantiate(_itemPrefab);
-        MoveToGeneralInventory(itemEmpty);
+        MoveToInventory(itemEmpty, cellGroup);
 
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
@@ -249,22 +264,29 @@ public class InventoryItemManager : MonoBehaviour
 
     public void MakeItemFromShop(ItemData soldItem)
     {
-        SpawnEmptyItem().SetItemBy(soldItem, this);
+        var line = PlayerPrefs.GetString("inventoryMain", "");
+        line += line.Length == 0 ? ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString() : " " + ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString();
+        PlayerPrefs.SetString("inventoryMain", line);
     }
+
+    public ItemEquipable AddItem(ItemData ItemData, List<HorizontalLayoutGroup> cellGroup)
+    {
+        ItemEquipable item = SpawnEmptyItem(cellGroup);
+        item.SetItemBy(ItemData, this);
+        return item;
+    }
+
     public void AddItem(ItemData ItemData)
     {
-        ItemEquipable item = SpawnEmptyItem(ItemData);
-        item.SetWithManagerItemBy(ItemData,this);
-        item.GetComponent<Button>().onClick.AddListener(() => item.SetItem());
+        ItemEquipable item = SpawnEmptyItem(_cellsInventory);
+        item.SetItemBy(ItemData, this);
     }
 
     public WeaponData GetEquipedGun()
     {
         var equiped = _gunInUse.GetComponentInChildren<ItemEquipable>();
-        print(equiped);
         if (equiped)
         {
-            print(equiped);
             return equiped.GetDataByType();
         }
         else
