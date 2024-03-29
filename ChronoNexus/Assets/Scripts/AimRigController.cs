@@ -25,7 +25,8 @@ public class AimRigController : MonoBehaviour
 
     public void SetWeight(float weight)
     {
-        _currentRig.weight = weight;
+        SetSmoothWeight(weight);
+        //_currentRig.weight = weight;
     }
 
     public void SetSmoothWeight(float weight)
