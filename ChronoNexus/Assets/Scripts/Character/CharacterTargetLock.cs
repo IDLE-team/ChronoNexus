@@ -159,10 +159,10 @@ public class CharacterTargetLock : MonoBehaviour
         Vector3 cameraDirection = Camera.main.transform.forward;
         cameraDirection = new Vector3(cameraDirection.x, 0, cameraDirection.z).normalized;
 
-        // Вычисляем угол между вектором направления к цели и вектором отклонения джойстика
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         float angle = Vector3.SignedAngle(enemyDirection, stickDirection, Vector3.up);
 
-        // Вычисляем знак угла на основе положения цели относительно камеры
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         float sign = Mathf.Sign(Vector3.Dot(cameraDirection, Vector3.Cross(stickDirection, enemyDirection)));
 
         angle *= sign;
@@ -187,7 +187,6 @@ public class CharacterTargetLock : MonoBehaviour
             DebugTestUniTask = Random.Range(0, 10);
             if (LookTarget != null && Vector3.Distance(LookTarget.transform.position, transform.position) > _radius)
             {
-                Debug.Log(Vector3.Distance(LookTarget.transform.position, transform.position));
                 LookTarget.GetComponent<ITargetable>().SetSelfTarget(false);
                 SetEmptyTarget();
             }

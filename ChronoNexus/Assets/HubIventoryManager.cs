@@ -8,7 +8,7 @@ public class HubIventoryManager : InventoryItemManager
 {
     public static HubIventoryManager manager;
 
-    [Header("Хранилища для хаба")]
+    [Header("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ")]
     [SerializeField] private GameObject _gridLayoutShelterInventory;
     [SerializeField] private GameObject _gridLayoutShelterStorage;
 
@@ -23,7 +23,7 @@ public class HubIventoryManager : InventoryItemManager
             manager = this;
         else if (manager == this) Destroy(gameObject);
 
-        OnCharacterLinked += SetInventoryEquiped;
+        //OnCharacterLinked += SetInventoryEquiped;
 
         _isShelterOpened = false;
     }
@@ -70,7 +70,7 @@ public class HubIventoryManager : InventoryItemManager
         PlayerPrefs.SetString("shelterStorage", saveString);
     }
 
-    public void SaveInventoryDouble() // для дубликата инвентаря
+    public void SaveInventoryDouble() // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     {
         string saveString = "";
         for (int i = 0; i < _cellsShelterInventory.Count; i++)
@@ -136,7 +136,7 @@ public class HubIventoryManager : InventoryItemManager
 
     private void OnDisable()
     {
-        OnCharacterLinked -= SetInventoryEquiped;
+      //  OnCharacterLinked -= SetInventoryEquiped;
     }
 
 }

@@ -26,7 +26,7 @@ public class EnemyAnimator : MonoBehaviour
 
     public bool GetAnimationParamStatus(string param)
     {
-        Debug.Log(param);
+       // Debug.Log(param);
         return _animator.GetBool(FinisherHash);
     }
     

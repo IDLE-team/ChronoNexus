@@ -41,14 +41,12 @@ public class TimeManager : MonoBehaviour
     {
         if(IsTimeStopped || IsTimeSlowed)
             return;
-        Debug.Log("Нажатие");
         StopTime();
     }
     private void OnSlowTimePerformed(InputAction.CallbackContext obj)
     {
         if(IsTimeStopped || IsTimeSlowed)
             return;
-        Debug.Log("Нажатие");
 
         SlowTime();
     }
@@ -60,7 +58,6 @@ public class TimeManager : MonoBehaviour
     public void RemoveTimeBody(ITimeBody body)
     {
         timeBodies.Remove(body);
-        Debug.Log("�������");
     }
     private void Awake()
     {
@@ -129,7 +126,6 @@ public class TimeManager : MonoBehaviour
             if (timeBodies[i] == null)
             {
                 timeBodies.RemoveAt(i);
-                Debug.Log("Убрало" + timeBodies[i]);
                 continue;
             }
             Debug.Log(timeBodies[i]);

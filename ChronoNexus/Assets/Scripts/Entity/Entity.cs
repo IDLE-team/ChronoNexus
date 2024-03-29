@@ -90,9 +90,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected virtual void InitializeParam()
     {
         InitializeIndividualParam();
+        
+        enemyList.Add(gameObject);
+
         _stateMachine = new StateMachine();
-
-
         _targetFinder = GetComponent<TargetFinder>();
         _health = GetComponent<Health>();
         _animator = GetComponent<EnemyAnimator>();
@@ -115,7 +116,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected void Start()
     {
         _isAlive = true;
-        enemyList.Add(gameObject);
         InitializeStartState();
     }
 

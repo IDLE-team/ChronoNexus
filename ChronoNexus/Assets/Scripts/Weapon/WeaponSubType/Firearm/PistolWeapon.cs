@@ -17,7 +17,6 @@
                 Reload();
                 return;
             }
-Debug.Log("Target: " + target);
             if (target != null)
             {
                 //if(target.GetTargetSelected())

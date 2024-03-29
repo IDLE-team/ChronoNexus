@@ -29,8 +29,8 @@ public class InventoryItemManager : MonoBehaviour
     protected Character _player;
     protected WeaponData _gunEquiped;
 
-    [HideInInspector]
-    protected UnityAction OnCharacterLinked;
+   // [HideInInspector]
+    //protected UnityAction OnCharacterLinked;
 
     [SerializeField] protected MoneyHolder _moneyHolder;
 
@@ -39,7 +39,7 @@ public class InventoryItemManager : MonoBehaviour
     protected ItemEquipable itemUse;
     private void OnEnable()
     {
-        OnCharacterLinked += SetInventoryEquiped;
+       // OnCharacterLinked += SetInventoryEquiped;
 
     }
     private void Start()
@@ -51,7 +51,7 @@ public class InventoryItemManager : MonoBehaviour
     public void SetPlayer(Character player)
     {
         _player = player;
-        OnCharacterLinked();
+       // OnCharacterLinked();
     }
 
     public Character GetPlayer()
@@ -188,7 +188,7 @@ public class InventoryItemManager : MonoBehaviour
                 break;
             }
         }
-        OnCharacterLinked();
+      //  OnCharacterLinked();
     }
 
     public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
@@ -311,7 +311,7 @@ public class InventoryItemManager : MonoBehaviour
 
     private void OnDisable()
     {
-        OnCharacterLinked -= SetInventoryEquiped;
+       // OnCharacterLinked -= SetInventoryEquiped;
     }
 
     public enum itemType
