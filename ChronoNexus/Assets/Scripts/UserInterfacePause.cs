@@ -18,7 +18,7 @@ public class UserInterfacePause : MonoBehaviour
     {
         if (_isGame)
         {
-            TimeManager.instance.ContinueTime();
+           // TimeManager.instance.ContinueTime();
         }
     }
 
@@ -26,7 +26,7 @@ public class UserInterfacePause : MonoBehaviour
     {
         if (_isGame)
         {
-            TimeManager.instance.StopTimeInfinite();
+        //    TimeManager.instance.StopTimeInfinite();
         }
     }
 
