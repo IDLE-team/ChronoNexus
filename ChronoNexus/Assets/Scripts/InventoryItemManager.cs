@@ -274,7 +274,6 @@ public class InventoryItemManager : MonoBehaviour
         if (gun)
         {
             PlayerPrefs.SetInt("gun", ItemDataManager.itemManager.GetIndexByItemData(gun.GetItemData()));
-            print("Сохранил пушку + " + ItemDataManager.itemManager.GetIndexByItemData(gun.GetItemData()));
         }
         else
         {

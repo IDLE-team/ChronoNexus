@@ -39,8 +39,6 @@ public class SceneLoader : MonoBehaviour
     {
         int kills = _levelStatTracker.GetKilledEnemyAmount();
         float time = _levelStatTracker.GetLevelWalkthroughTime();
-        Debug.Log("BeforeKills: " + kills);
-        Debug.Log("BeforeTime: " + TimeSpan.FromSeconds(time).ToString(@"mm\:ss\:ff"));
         string data = "Kills- " + kills + "; Time- " + TimeSpan.FromSeconds(time).ToString(@"mm\:ss\:ff") + "; Cleared- " + true;
         PlayerPrefs.SetString(_currentLevelName, data);
     }
