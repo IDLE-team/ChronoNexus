@@ -256,8 +256,8 @@ public class InventoryItemManager : MonoBehaviour
 
     public void LoadGun() // call on inventory open
     {
-        var savedData = PlayerPrefs.GetInt("gun", 0);
-        if (savedData == 0) return;
+        var savedData = PlayerPrefs.GetInt("gun", -1);
+        if (savedData == -1) return;
 
         GameObject itemEmpty = Instantiate(_itemPrefab);
         var item = itemEmpty.GetComponent<ItemEquipable>();
@@ -265,6 +265,7 @@ public class InventoryItemManager : MonoBehaviour
         itemEmpty.transform.SetParent(_gunInUse.transform);
         itemUse = item;
         item.ChangeToEquiped();
+        
     }
 
     public void SaveGun() // call on inventory close
@@ -277,15 +278,15 @@ public class InventoryItemManager : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("gun", 0); // empty item
+            PlayerPrefs.SetInt("gun", -1); // empty item
         }
 
     }
 
     protected void LoadKnife()
     {
-        var savedData = PlayerPrefs.GetInt("knife", 0);
-        if (savedData == 0) return;
+        var savedData = PlayerPrefs.GetInt("knife", -1);
+        if (savedData == -1) return;
 
         GameObject itemEmpty = Instantiate(_itemPrefab);
         itemEmpty.transform.SetParent(_gunInUse.transform);
@@ -341,10 +342,10 @@ public class InventoryItemManager : MonoBehaviour
 
     public WeaponData GetEquipedGun()
     {
-        var equiped = _gunInUse.GetComponentInChildren<ItemEquipable>();
-        if (equiped)
+        var equiped = PlayerPrefs.GetInt("gun",-1);
+        if (equiped!=-1)
         {
-            return equiped.GetDataByType();
+            return ItemDataManager.itemManager.GetItemDataByIndex(equiped).weaponData;
         }
         else
         {

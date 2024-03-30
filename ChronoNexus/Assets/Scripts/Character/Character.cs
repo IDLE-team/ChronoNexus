@@ -92,6 +92,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     private void Start()
     {
         _inventoryItemManager.OnEquiped += Equiper.EquipWeapon;
+        Equiper.EquipWeapon(_inventoryItemManager.GetEquipedGun());
 
 //        _hpBar.maxValue = _health.Value;
    //     _hpBar.value = _health.Value;

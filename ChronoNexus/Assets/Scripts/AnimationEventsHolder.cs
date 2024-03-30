@@ -84,6 +84,9 @@ public class AnimationEventsHolder : MonoBehaviour
         _character.SetInvincible(false);
         StartCoroutine(Smoother(_startOrthographicSize));
         _character.Equiper.EquipWeapon(_character.InventoryItemManager.GetEquipedGun());
+        print(_character.Equiper + "эквипер");
+        print(_character.InventoryItemManager + "iten манагер");
+        print(_character.InventoryItemManager.GetEquipedGun().WeaponName + "веапон нейм через энд финишер");
         _character.CharacterEventsHolder.CallOnShootInteractEvent();
 
         _character.Movement.UnlockMove();
