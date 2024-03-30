@@ -12580,6 +12580,7 @@ GameObject:
   - component: {fileID: 6757801400756693516}
   - component: {fileID: 7160552050952934676}
   - component: {fileID: 6378367483184857460}
+  - component: {fileID: 7857717777859183510}
   m_Layer: 0
   m_Name: InventoryTab
   m_TagString: Untagged
@@ -12660,6 +12661,19 @@ MonoBehaviour:
   _granadeInUse: {fileID: 1579609286192864423}
   _armorInUse: {fileID: 708772369379482697}
   _moneyHolder: {fileID: 0}
+--- !u!114 &7857717777859183510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5957731164330497745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac87aa2a09e5d9346a3d991674cebd82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 6378367483184857460}
 --- !u!1 &5968354973424508614
 GameObject:
   m_ObjectHideFlags: 0
@@ -18271,7 +18285,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d23c1edd6dfc1b459f459904406e7dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _SceneToLoad: UI_Scene
+  _sceneToLoad: 
+  _transition: {fileID: 0}
+  _transitionTime: 1
+  _currentLevelName: 
+  _levelStatTracker: {fileID: 0}
 --- !u!1 &7856471894664807082
 GameObject:
   m_ObjectHideFlags: 0

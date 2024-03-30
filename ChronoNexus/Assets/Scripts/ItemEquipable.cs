@@ -97,7 +97,7 @@ public class ItemEquipable : MonoBehaviour
         SetItemBy(itemToCopy.GetItemData());
     }
 
-    public void SetItemBy(ItemData itemToCopy) // копирование из другого предмета
+    private void SetItemBy(ItemData itemToCopy) // копирование из другого предмета
     {
         _itemData = itemToCopy;
         _itemType = itemToCopy.itemType;
@@ -149,7 +149,6 @@ public class ItemEquipable : MonoBehaviour
                     if (!_isInShelter) //поставить в хранилище
                     {
                         HubIventoryManager.manager.MoveToShelter(_itemData, gameObject);
-                        print("Поставил в хранилище");
                     }
                     else //поставить в обратно в инвентарь
                     {
@@ -231,4 +230,8 @@ public class ItemEquipable : MonoBehaviour
         sprite = _itemImageSprite;
     }
 
+    public void SetEqipedOnLoad()
+    {
+        _isEquiped = true;
+    }
 }

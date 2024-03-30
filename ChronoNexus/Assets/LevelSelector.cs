@@ -40,7 +40,7 @@ public class LevelSelector : MonoBehaviour
             if(GetRequiredLevelCleared())
                 Unlock();
         }
-        Debug.Log("isOn: " + _levelToggleButton.isOn);
+        //Debug.Log("isOn: " + _levelToggleButton.isOn);
     }
 
     private void OnDisable()
@@ -89,7 +89,6 @@ public class LevelSelector : MonoBehaviour
                         if (key == "Cleared")
                         {
                             bool cleared = bool.Parse(value);
-                            Debug.Log("Last level cleared: " + cleared);
                             return cleared;
                         }
                     }
@@ -120,16 +119,16 @@ public class LevelSelector : MonoBehaviour
                         case "Kills":
                              _kills = int.Parse(value);
                              _killsText.text = "Убийств\n" + _kills;
-                            Debug.Log("Kills: " + _kills);
+                            //Debug.Log("Kills: " + _kills);
                             break;
                         case "Time":
                             TimeSpan time = TimeSpan.ParseExact(value, @"mm\:ss\:ff", CultureInfo.InvariantCulture);
                             _timeText.text = "Время\n" + time.ToString(@"mm\:ss\:ff");
-                            Debug.Log("Time: " + time.ToString(@"mm\:ss\:ff"));
+                            //Debug.Log("Time: " + time.ToString(@"mm\:ss\:ff"));
                             break;
                         case "Cleared":
                             _cleared = bool.Parse(value);
-                            Debug.Log("Cleared: " + _cleared);
+                            //Debug.Log("Cleared: " + _cleared);
                             break;
                     }
                 }

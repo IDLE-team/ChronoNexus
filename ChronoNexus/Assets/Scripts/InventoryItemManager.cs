@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class InventoryItemManager : MonoBehaviour
@@ -29,7 +28,7 @@ public class InventoryItemManager : MonoBehaviour
     protected Character _player;
     protected WeaponData _gunEquiped;
 
-   // [HideInInspector]
+    // [HideInInspector]
     //protected UnityAction OnCharacterLinked;
 
     [SerializeField] protected MoneyHolder _moneyHolder;
@@ -39,7 +38,7 @@ public class InventoryItemManager : MonoBehaviour
     protected ItemEquipable itemUse;
     private void OnEnable()
     {
-       // OnCharacterLinked += SetInventoryEquiped;
+        // OnCharacterLinked += SetInventoryEquiped;
 
     }
     private void Start()
@@ -51,7 +50,7 @@ public class InventoryItemManager : MonoBehaviour
     public void SetPlayer(Character player)
     {
         _player = player;
-       // OnCharacterLinked();
+        // OnCharacterLinked();
     }
 
     public Character GetPlayer()
@@ -165,6 +164,16 @@ public class InventoryItemManager : MonoBehaviour
 
     }
 
+    public void InventoryMainOpened()
+    {
+        LoadInventory(_cellsInventory);
+    }
+
+    public void DeleteInventoryStorage()
+    {
+        DeleteInventory(_gridLayoutTabInventory);
+    }
+
     public void MoveToGeneralInventory()
     {
         for (int i = 0; i < _cellsInventory.Count; i++)
@@ -188,7 +197,7 @@ public class InventoryItemManager : MonoBehaviour
                 break;
             }
         }
-      //  OnCharacterLinked();
+        //  OnCharacterLinked();
     }
 
     public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
@@ -223,6 +232,7 @@ public class InventoryItemManager : MonoBehaviour
             saveString += ItemDataManager.itemManager.GetIndexByItemData(item.GetItemData()).ToString() + " ";
         }
         PlayerPrefs.SetString("inventoryMain", saveString);
+
     }
 
 
@@ -244,13 +254,60 @@ public class InventoryItemManager : MonoBehaviour
         }
     }
 
-    public void DeleteInventory(GameObject _inventoryLayoutGameObject) // не трогать если жизнь дорога
+    public void LoadGun() // call on inventory open
+    {
+        var savedData = PlayerPrefs.GetInt("gun", 0);
+        if (savedData == 0) return;
+
+        GameObject itemEmpty = Instantiate(_itemPrefab);
+        var item = itemEmpty.GetComponent<ItemEquipable>();
+        item.SetItemBy(ItemDataManager.itemManager.GetItemDataByIndex(savedData),this);
+        itemEmpty.transform.SetParent(_gunInUse.transform);
+        itemUse = item;
+        item.ChangeToEquiped();
+    }
+
+    public void SaveGun() // call on inventory close
+    {
+        var gun = _gunInUse.GetComponentInChildren<ItemEquipable>();
+        if (gun)
+        {
+            PlayerPrefs.SetInt("gun", ItemDataManager.itemManager.GetIndexByItemData(gun.GetItemData()));
+            print("Сохранил пушку + " + ItemDataManager.itemManager.GetIndexByItemData(gun.GetItemData()));
+        }
+        else
+        {
+            PlayerPrefs.SetInt("gun", 0); // empty item
+        }
+
+    }
+
+    protected void LoadKnife()
+    {
+        var savedData = PlayerPrefs.GetInt("knife", 0);
+        if (savedData == 0) return;
+
+        GameObject itemEmpty = Instantiate(_itemPrefab);
+        itemEmpty.transform.SetParent(_gunInUse.transform);
+
+        SetInventoryEquiped();
+    }
+
+
+    public void DeleteInventory(GameObject _inventoryLayoutGameObject) // literally deletes whole inventory, don't touch
     {
         var invent = _inventoryLayoutGameObject.GetComponentsInChildren<ItemEquipable>();
         foreach (var item in invent)
         {
             Destroy(item.gameObject);
         }
+
+    }
+
+    public void DeleteEquiped()
+    {
+        var gun = _gunInUse.GetComponentInChildren<ItemEquipable>();
+        if (gun) Destroy(gun.gameObject);
     }
 
     protected ItemEquipable SpawnEmptyItem(List<HorizontalLayoutGroup> cellGroup)
@@ -311,7 +368,7 @@ public class InventoryItemManager : MonoBehaviour
 
     private void OnDisable()
     {
-       // OnCharacterLinked -= SetInventoryEquiped;
+        // OnCharacterLinked -= SetInventoryEquiped;
     }
 
     public enum itemType

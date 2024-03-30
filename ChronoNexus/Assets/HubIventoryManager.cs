@@ -8,7 +8,6 @@ public class HubIventoryManager : InventoryItemManager
 {
     public static HubIventoryManager manager;
 
-    [Header("��������� ��� ����")]
     [SerializeField] private GameObject _gridLayoutShelterInventory;
     [SerializeField] private GameObject _gridLayoutShelterStorage;
 
@@ -68,9 +67,10 @@ public class HubIventoryManager : InventoryItemManager
             saveString += ItemDataManager.itemManager.GetIndexByItemData(item.GetItemData()).ToString() + " ";
         }
         PlayerPrefs.SetString("shelterStorage", saveString);
+
     }
 
-    public void SaveInventoryDouble() // ��� ��������� ���������
+    public void SaveInventoryDouble() 
     {
         string saveString = "";
         for (int i = 0; i < _cellsShelterInventory.Count; i++)
@@ -86,6 +86,8 @@ public class HubIventoryManager : InventoryItemManager
         }
 
         PlayerPrefs.SetString("inventoryMain", saveString);
+
+        SaveGun();
     }
 
     public void MoveToShelter(ItemData item, GameObject itemGameObject)
@@ -113,10 +115,6 @@ public class HubIventoryManager : InventoryItemManager
         _isShelterOpened = true;
     }
 
-    public void InventoryMainOpened()
-    {
-        LoadInventory(_cellsInventory);
-    }
     public bool ShelterActiveSelf()
     {
         return _isShelterOpened;
@@ -127,11 +125,6 @@ public class HubIventoryManager : InventoryItemManager
         _isShelterOpened = false;
         DeleteInventory(_gridLayoutShelterInventory);
         DeleteInventory(_gridLayoutShelterStorage);
-    }
-
-    public void DeleteInventoryStorage()
-    {
-        DeleteInventory(_gridLayoutTabInventory);
     }
 
     private void OnDisable()
