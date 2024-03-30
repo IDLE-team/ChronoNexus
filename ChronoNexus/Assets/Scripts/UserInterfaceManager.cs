@@ -24,7 +24,7 @@ public class UserInterfaceManager : MonoBehaviour
     {
         _isGame = false;
         _currentTab = _startTab;
-        //OpenTab(_currentTab,_isGame);
+        OpenTab(_currentTab,_isGame);
     }
 
     public void OpenTab(GameObject tabToOpen, bool isGame)

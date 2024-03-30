@@ -90,7 +90,6 @@ public class MovableEntity : Entity
         {
             _navMeshAgent.isStopped = true;
             Quaternion rotation = Quaternion.Euler(new Vector3(0,1,0) * 180f);
-
             transform.rotation *= rotation;
             _navMeshAgent.isStopped = false;
         }
@@ -149,13 +148,11 @@ public class MovableEntity : Entity
 
         base.SlowTimeAction();
     }
-
     
 
     public override void ResetValues()
     {
         _navMeshAgent.isStopped = true;
-        Debug.Log("MovableEntityReset");
     }
 
     private void SetLastNavMeshValues()

@@ -26211,7 +26211,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -26232,7 +26232,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -26359,6 +26359,7 @@ MonoBehaviour:
   _viewRadius: 10
   _findDelay: 0.1
   canSeeTarget: 0
+  _foundEffect: {fileID: 0}
 --- !u!114 &1693252193952019309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26550,7 +26551,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponController: {fileID: 5625958911623089761}
-  _enemy: {fileID: 0}
   _finisherVFX: {fileID: 6004592735243170829}
   _finisherFinalVFX: {fileID: 2519250068977087535}
 --- !u!114 &2996151980609016159

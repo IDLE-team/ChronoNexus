@@ -15,24 +15,36 @@
                 Reload();
                 return;
             }
-            _lastFireTime = Time.time;
             isFire = true;
             FireBurst(target, holder).Forget();
         }
         async UniTask FireBurst(ITargetable target, Transform holder)
         {
+            bool isTargetNotNull = false;
+
+            if (target != null)
+            {
+                isTargetNotNull = true;
+                Debug.Log("True");
+            }
+
             while (isFire == true && CurrentAmmo > 0)
             {
                 PlayWeaponAudio();
-                if (target != null)
+                if (target != null )
                 {
                     if(target.GetTargetSelected())
                         _shootDir = ((target.GetTransform().position - WeaponPrefab.transform.position).normalized);
                     else
-                        _shootDir = holder.forward;
+                    {
+                        StopFire();
+                        return;
+                    }
+                       // _shootDir = holder.forward;
                 }
                 else
                 {
+
                     _shootDir = holder.forward;
                 }
                 var bullet = Instantiate(BulletPrefab, FirePosition.position, Quaternion.LookRotation(_shootDir));
@@ -40,7 +52,8 @@
                 CurrentAmmo--;
                 UpdateUIWeaponValues();
                 Debug.Log("isFire: " + isFire);
-                await UniTask.Delay((int) (0.1f * 1000));
+                _lastFireTime = Time.time;
+                await UniTask.Delay((int) (FireRate * 1000));
             }
 
             if (CurrentAmmo <= 0)

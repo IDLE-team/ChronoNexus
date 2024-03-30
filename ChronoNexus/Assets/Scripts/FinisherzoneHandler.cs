@@ -13,7 +13,6 @@ public class FinisherzoneHandler : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        
         if (other.TryGetComponent(out IFinisherable currentFinisherTarget))
         {
             _currentFinisherTarget = currentFinisherTarget;

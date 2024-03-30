@@ -5,14 +5,14 @@ using UnityEngine;
 public class EnemyAnimationEventsHolder : MonoBehaviour
 {
     [SerializeField] private WeaponController _weaponController;
-    [SerializeField] private EnemyHumanoid _enemy;
+ //   [SerializeField] private EnemyHumanoid _enemy;
     [SerializeField] private ParticleSystem _finisherVFX;
     [SerializeField] private ParticleSystem _finisherFinalVFX;
 
-    public void WeaponFire()
-    {
-        _weaponController.CurrentWeapon.Fire(_enemy.TargetFinder.Target, _enemy.transform);
-    }
+   // public void WeaponFire()
+  //  {
+   //     _weaponController.CurrentWeapon.Fire(_enemy.TargetFinder.Target, _enemy.transform);
+  //  }
 
     public void PlayFinisherVFX()
     {

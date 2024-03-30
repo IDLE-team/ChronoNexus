@@ -76,6 +76,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
             return;
         }
 
+        
         toRotation =
             Quaternion.LookRotation(
                 new Vector3(_targetPosition.x, _movableMeleeEntity.transform.position.y, _targetPosition.z) -
