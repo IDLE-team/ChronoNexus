@@ -61,6 +61,7 @@ public class SceneLoader : MonoBehaviour
 
     private void LoadScene()
     {
-        SceneManager.LoadSceneAsync(_sceneToLoad);
+        if(_sceneToLoad != null &&  _sceneToLoad != "" && _sceneToLoad != " " )
+            SceneManager.LoadSceneAsync(_sceneToLoad);
     }
 }
