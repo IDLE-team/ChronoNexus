@@ -354,7 +354,6 @@ public class InventoryItemManager : MonoBehaviour
 
     public bool BuyItem(float itemCost)
     {
-        return true;
         if (_moneyHolder.GetMoneyValue() - itemCost >= 0)
         {
             _moneyHolder.DecreaseMoneyValue(itemCost);

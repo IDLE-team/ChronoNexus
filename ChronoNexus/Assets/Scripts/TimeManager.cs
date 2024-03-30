@@ -25,6 +25,7 @@ public class TimeManager : MonoBehaviour
     public float resumeTimeDelay;
 
     private PlayerInputActions _input;
+    private float audioVolume;
 
     [Inject]
     private void Construct(PlayerInputActions input)
@@ -70,6 +71,11 @@ public class TimeManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void Start()
+    {
+        audioVolume = audioSource.volume;
+    }
     public void ContinueTime()
     {
         IsTimeStopped = false;
@@ -86,6 +92,7 @@ public class TimeManager : MonoBehaviour
         audioSource.pitch = basePitch;
 
         postProcessVolume.profile = realTimeVolumeProfile;
+        audioSource.volume = audioVolume;
     }
     public void StopTime()
     {
@@ -102,6 +109,7 @@ public class TimeManager : MonoBehaviour
         postProcessVolume.profile = timeStopVolumeProfile;
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.3f;
+        
         StartCoroutine(ResumeTimeWithDelay());
     }
 
@@ -117,6 +125,10 @@ public class TimeManager : MonoBehaviour
             }
             timeBodies[i].SetStopTime();
         }
+        postProcessVolume.profile = timeStopVolumeProfile;
+        basePitch = audioSource.pitch;
+        audioSource.pitch = 0.3f;
+        audioSource.volume = 0;
     }
     public void SlowTime()
     {
