@@ -73,11 +73,12 @@ public class ItemEquipable : MonoBehaviour
         // Функция для установки парамеров предмета из базы данных
 
         _itemData = Data;
-        _rarity = rarity;
-        _itemType = type;
-        _itemLvl = Lvl;
-        _mainParam = mainParam;
-        _itemImageSprite = itemImage;
+
+        _rarity = _itemData.rarity;
+        _itemType = _itemData.itemType;
+        _itemLvl = _itemData.itemLvl;
+        _mainParam = _itemData.weaponData.Damage;
+        _itemImageSprite = _itemData.itemImageSprite;
 
         _weapon = _itemData.weaponData;
 

@@ -11,6 +11,7 @@ public class TabLoadInventory : MonoBehaviour
         inventoryManager.LoadGun();
     }
 
+
     private void OnDisable()
     {
         inventoryManager.SaveInventory();

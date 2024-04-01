@@ -279,7 +279,7 @@ public class InventoryItemManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("gun", -1); // empty item
         }
-
+        
     }
 
     protected void LoadKnife()

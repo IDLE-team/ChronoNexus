@@ -21,9 +21,9 @@ public class LevelHolder : MonoBehaviour
 
     public void XpChange()
     {
-        var lvl = PlayerPrefs.GetFloat("lvl",1);
+        var lvl = PlayerPrefs.GetFloat("lvl", 1) + 1;
         _slider.maxValue = Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl;
-        _slider.DOValue(PlayerPrefs.GetFloat("xp",0), 1f);
-        _levelText.text = lvl.ToString();
+        _slider.DOValue(PlayerPrefs.GetFloat("xp", 0), 1f);
+        _levelText.text = (lvl - 1).ToString();
     }
 }
