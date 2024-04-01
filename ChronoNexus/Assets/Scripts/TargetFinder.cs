@@ -92,6 +92,8 @@ public class TargetFinder : MonoBehaviour
     {
         if (_isSeeking == false)
             return;
+        if(this == null)
+            return;
         var results = new Collider[30];
         var size = Physics.OverlapSphereNonAlloc(transform.position, ViewRadius, results, _targetMask);
         for (var i = 0; i < size; i++)

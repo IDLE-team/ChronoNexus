@@ -103,6 +103,9 @@ public class MovableEntity : Entity
     protected override void Die()
     {
         
+        _animator.SetMoveAnimation(false);
+        _animator.SetReloadAnimation(false);
+        
         _navMeshAgent.velocity = Vector3.zero;
         _navMeshAgent.speed = 0;
         _navMeshAgent.angularSpeed = 0;
