@@ -40,6 +40,9 @@ public class MovableEntity : Entity
     public MovableEntityStateRandomMove RandomMoveState { get; private set; }
     public MovableEntityStateChase ChaseState { get; private set; }
     public MovableEntityStatePatrol PatrolState { get; private set; }
+    
+    
+    
 
     protected override void InitializeStartState()
     {

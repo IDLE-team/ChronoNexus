@@ -8,10 +8,10 @@ public class TargetFinder : MonoBehaviour
     [SerializeField] private LayerMask _obstacleMask;
     [SerializeField] private LayerMask _targetMask;
 
-    [SerializeField][Range(0, 360)] private float _viewAngle;
-    [SerializeField][Min(0)] private float _viewRadius;
+    [SerializeField] [Range(0, 360)] private float _viewAngle;
+    [SerializeField] [Min(0)] private float _viewRadius;
 
-    [SerializeField][Min(0.1f)] private float _findDelay;
+    [SerializeField] [Min(0.1f)] private float _findDelay;
     public float ViewAngle => _viewAngle;
     public float ViewRadius => _viewRadius;
 
@@ -23,12 +23,12 @@ public class TargetFinder : MonoBehaviour
 
     private AimRigController _aimRigController;
     private EntityTargeting _entityTargeting;
-    [SerializeField]private GameObject _foundEffect;
-    
+    [SerializeField] private GameObject _foundEffect;
+
 
     private CancellationTokenSource cancellationTokenSource;
     private CancellationToken cancellationToken;
-
+    public event Action<ITargetable> OnTargetFinded;
     private bool _isSeeking;
 
     private void Awake()
@@ -44,7 +44,7 @@ public class TargetFinder : MonoBehaviour
 
     private void Update()
     {
-       // Debug.Log(cancellationToken.IsCancellationRequested);
+        // Debug.Log(cancellationToken.IsCancellationRequested);
     }
 
     private void OnEnable()
@@ -84,6 +84,7 @@ public class TargetFinder : MonoBehaviour
             await UniTask.Delay(TimeSpan.FromSeconds(delay));
             FindVisibleTargets();
         }
+
         await UniTask.Yield();
     }
 
@@ -101,7 +102,7 @@ public class TargetFinder : MonoBehaviour
                 continue;
             if (!results[i].TryGetComponent<ITargetable>(out ITargetable target))
             {
-               continue;
+                continue;
             }
 
             _target = results[i].GetComponent<ITargetable>().GetTransform();
@@ -114,13 +115,21 @@ public class TargetFinder : MonoBehaviour
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;
             
-            _seeker.Target = target;
-            Target = target;
-            _entityTargeting.SetTargetParent(Target.GetTransform());
-            _seeker.IsTargetFound = true;
-            _foundEffect.SetActive(true);
-            //восклицательный знак
+            if (target != null)
+                OnTargetFinded?.Invoke(target);
+
+            SetTarget(target);
+
         }
+    }
+
+    public void SetTarget(ITargetable target)
+    {
+        _seeker.Target = target;
+        Target = target;
+        _entityTargeting.SetTargetParent(Target.GetTransform());
+        _seeker.IsTargetFound = true;
+        _foundEffect.SetActive(true);
     }
 
     private void OnDestroy()
@@ -135,9 +144,9 @@ public class TargetFinder : MonoBehaviour
         {
             _aimRigController.SetWeight(value);
         }
-        
+
     }
-    
+
 
 #if UNITY_EDITOR
 
@@ -147,6 +156,7 @@ public class TargetFinder : MonoBehaviour
         {
             angleInDegrees += transform.eulerAngles.y;
         }
+
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
