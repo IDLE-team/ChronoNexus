@@ -14,9 +14,12 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] private float _transitionTime = 1f;
     [SerializeField] private string _currentLevelName;
     [SerializeField] private LevelStatTracker _levelStatTracker;
+    [SerializeField] private WinScreen _winScreen;
     private void Start()
     {
         _currentLevelName = SceneManager.GetActiveScene().name;
+        _levelStatTracker = gameObject.GetComponent<LevelStatTracker>();
+        _winScreen = FindFirstObjectByType<WinScreen>();
     }
 
     public void SetScene(string scene)
@@ -31,7 +34,7 @@ public class SceneLoader : MonoBehaviour
             
             //PlayerPrefs.SetInt(_currentLevelName, 1);
             SaveLevelData();
-            SceneToLoad();
+            _winScreen.SetScreen(_levelStatTracker,this);
 
         }
     }
