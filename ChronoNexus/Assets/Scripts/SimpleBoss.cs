@@ -10,10 +10,9 @@ public class SimpleBoss : MonoBehaviour
     private bool _doorWasOpen;
     private void Update()
     {
-        if(boss== null && !_doorWasOpen)
+        if( boss == null)
         {
             doortrigger.GetComponent<DoorTrigger>().UnlockDoor();
-            _doorWasOpen = true;    
         }
     }
 }

@@ -67,7 +67,6 @@ public class Bullet : MonoBehaviour, ITimeAffected
         }
         if (!((_targetLayerMask.value & (1 << other.gameObject.layer)) > 0))
         {
-            Debug.Log("Соответсвует");
             return;
         }
         if (!other.TryGetComponent<IDamagable>(out var target))

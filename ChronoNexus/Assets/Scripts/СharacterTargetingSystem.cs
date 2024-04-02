@@ -169,15 +169,12 @@ public class СharacterTargetingSystem : MonoBehaviour
         RaycastHit hit;
         if (_targets.Count <= 0)
         {
-            //   _sphereCastThickness = _startSphereCastThickness;
-            Debug.Log("NoTargets");
             return;
         }
 
         Vector2 inputDirection = ReadTargetMoveInput();
         if (inputDirection == Vector2.zero)
         {
-            Debug.Log("Zero");
             return;
         }
         Vector3 stickDirection = new Vector3(inputDirection.x, 0f, inputDirection.y).normalized;
@@ -231,8 +228,6 @@ public class СharacterTargetingSystem : MonoBehaviour
 
     private void SetEmptyTarget()
     {
-        Debug.Log("SetEmptyCalled");
-        //_aimRigController._aimTarget.SetParent(null, true);
         _aimRigController._aimTarget.position = _forwardPlayerAim.transform.position;
         _aimRigController._aimTarget.parent = _forwardPlayerAim;
         _aimRigController.SetSmoothWeight(0);
@@ -276,7 +271,7 @@ public class СharacterTargetingSystem : MonoBehaviour
 
         while (_shouldFindTarget)
         {
-            DebugTestUniTask = Random.Range(0, 10);
+            //  DebugTestUniTask = Random.Range(0, 10);
 
             if (Target != null && Vector3.Distance(Target.GetTransform().position, transform.position) > _radius)
             {

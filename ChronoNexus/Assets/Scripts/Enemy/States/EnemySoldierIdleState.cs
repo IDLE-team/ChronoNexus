@@ -17,7 +17,6 @@ public class EnemySoldierIdleState : EnemySoldierState
     {
         if (_enemy.IsTargetFound)
         {
-            Debug.Log(_enemy.ChaseState);
             _stateMachine.ChangeState(_enemy.ChaseState);
             
             return;

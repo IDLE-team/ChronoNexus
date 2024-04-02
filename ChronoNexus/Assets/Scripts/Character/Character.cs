@@ -57,7 +57,6 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     private void Construct(InventoryItemManager itemManager)
     {
         _inventoryItemManager = itemManager;
-        Debug.Log("Describe to: " + _inventoryItemManager);
     }
    
     
@@ -87,15 +86,12 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         Equiper = GetComponent<Equiper>();
         WeaponController = GetComponent<WeaponController>();
 
-    //    InventoryItemManager.manager.SetPlayer(this);
-
     }
     private void Start()
     {
         _inventoryItemManager.OnEquiped += Equiper.EquipWeapon;
+        Equiper.EquipWeapon(_inventoryItemManager.GetEquipedGun());
 
-//        _hpBar.maxValue = _health.Value;
-   //     _hpBar.value = _health.Value;
     }
 
     public void TakeDamage(float damage, bool isCritical)
@@ -115,7 +111,6 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     {
         Destroy(gameObject);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
-           // _levelController.Restart();
        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         await UniTask.Yield();
     }
@@ -147,11 +142,4 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
 
     public event Action OnTargetInvalid;
     
-    private void OnLevelWasLoaded(int level)
-    {
-        if (level != 0)
-        {
-         //   InventoryItemManager.manager.OnCharacterLinked();
-        }
-    }
 }

@@ -25,8 +25,8 @@ public class AimRigController : MonoBehaviour
 
     public void SetWeight(float weight)
     {
-        SetSmoothWeight(weight);
-        //_currentRig.weight = weight;
+        //SetSmoothWeight(weight);
+        _currentRig.weight = weight;
     }
 
     public void SetSmoothWeight(float weight)
@@ -54,6 +54,10 @@ public class AimRigController : MonoBehaviour
         SetWeight(0);
         _currentRig = _rigList[rigID];
         SetWeight(_previousRigWeight);
+        if (rigID == 2)
+        {
+            SetWeight(0);
+        }
     }
 
     IEnumerator SmootherWeight(float weight)

@@ -57,9 +57,7 @@ public class AnimationEventsHolder : MonoBehaviour
 
          _character.CharacterEventsHolder.CallOnHideInteractEvent();
          _startOrthographicSize = _virtualCamera.m_Lens.OrthographicSize;
-        // _ui.SetActive(false);
          _startVignetteIntensity = _vignette.intensity.value;
-         Debug.Log("_startVignetteIntensity: " + _startVignetteIntensity);
          _vignette.intensity.value = _finisherVignetteIntensity;
         WeaponAreaFire();
         StartCoroutine(SmootherVignette(_finisherVignetteIntensity));
@@ -86,6 +84,9 @@ public class AnimationEventsHolder : MonoBehaviour
         _character.SetInvincible(false);
         StartCoroutine(Smoother(_startOrthographicSize));
         _character.Equiper.EquipWeapon(_character.InventoryItemManager.GetEquipedGun());
+        print(_character.Equiper + "эквипер");
+        print(_character.InventoryItemManager + "iten манагер");
+        print(_character.InventoryItemManager.GetEquipedGun().WeaponName + "веапон нейм через энд финишер");
         _character.CharacterEventsHolder.CallOnShootInteractEvent();
 
         _character.Movement.UnlockMove();

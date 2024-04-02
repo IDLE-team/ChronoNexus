@@ -25,7 +25,6 @@ public class EnemyIdleState : EnemyHumanoidState
 
     protected virtual void StateReactionToTarget()
     {
-        Debug.Log(_enemy.ChaseState);
         _stateMachine.ChangeState(_enemy.ChaseState);
     }
 

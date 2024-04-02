@@ -9268,6 +9268,7 @@ GameObject:
   - component: {fileID: 5337895074573650797}
   - component: {fileID: 8228622584852013812}
   - component: {fileID: 6324889751225025188}
+  - component: {fileID: 3291128377994212656}
   m_Layer: 6
   m_Name: Character
   m_TagString: Player
@@ -9362,7 +9363,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9131697651019852562}
-  m_Material: {fileID: 13400000, guid: 5aa44e917b339474ea0f7241a74bb314, type: 2}
+  m_Material: {fileID: 13400000, guid: ad8237e73acf12d4b877d6e9e3058936, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -9799,7 +9800,6 @@ MonoBehaviour:
   - {fileID: 9129995258604214706}
   _smoothTime: 1
   _aimTarget: {fileID: 0}
-  _constraints: []
 --- !u!114 &8228622584852013812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9867,6 +9867,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigController: {fileID: 5337895074573650797}
   _weaponUI: {fileID: 0}
+--- !u!114 &3291128377994212656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9131697651019852562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed2d679b7826ce4ca5b8f3e2b7de415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9164188871834560957
 GameObject:
   m_ObjectHideFlags: 0

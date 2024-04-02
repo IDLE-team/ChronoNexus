@@ -25,6 +25,7 @@ public class TimeManager : MonoBehaviour
     public float resumeTimeDelay;
 
     private PlayerInputActions _input;
+    private float audioVolume;
 
     [Inject]
     private void Construct(PlayerInputActions input)
@@ -41,14 +42,12 @@ public class TimeManager : MonoBehaviour
     {
         if(IsTimeStopped || IsTimeSlowed)
             return;
-        Debug.Log("Нажатие");
         StopTime();
     }
     private void OnSlowTimePerformed(InputAction.CallbackContext obj)
     {
         if(IsTimeStopped || IsTimeSlowed)
             return;
-        Debug.Log("Нажатие");
 
         SlowTime();
     }
@@ -60,7 +59,6 @@ public class TimeManager : MonoBehaviour
     public void RemoveTimeBody(ITimeBody body)
     {
         timeBodies.Remove(body);
-        Debug.Log("�������");
     }
     private void Awake()
     {
@@ -72,6 +70,11 @@ public class TimeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        audioVolume = audioSource.volume;
     }
     public void ContinueTime()
     {
@@ -89,6 +92,7 @@ public class TimeManager : MonoBehaviour
         audioSource.pitch = basePitch;
 
         postProcessVolume.profile = realTimeVolumeProfile;
+        audioSource.volume = audioVolume;
     }
     public void StopTime()
     {
@@ -105,6 +109,7 @@ public class TimeManager : MonoBehaviour
         postProcessVolume.profile = timeStopVolumeProfile;
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.3f;
+        
         StartCoroutine(ResumeTimeWithDelay());
     }
 
@@ -120,6 +125,10 @@ public class TimeManager : MonoBehaviour
             }
             timeBodies[i].SetStopTime();
         }
+        postProcessVolume.profile = timeStopVolumeProfile;
+        basePitch = audioSource.pitch;
+        audioSource.pitch = 0.3f;
+        audioSource.volume = 0;
     }
     public void SlowTime()
     {
@@ -129,7 +138,6 @@ public class TimeManager : MonoBehaviour
             if (timeBodies[i] == null)
             {
                 timeBodies.RemoveAt(i);
-                Debug.Log("Убрало" + timeBodies[i]);
                 continue;
             }
             Debug.Log(timeBodies[i]);

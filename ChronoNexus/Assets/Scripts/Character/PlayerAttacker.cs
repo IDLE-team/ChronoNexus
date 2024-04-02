@@ -88,6 +88,7 @@ public class PlayerAttacker : Attacker
         if (_weaponController.CurrentWeapon == null)
             return;
         _character.Equiper.EquipWeapon(_weaponData);
+        _character.AimRigController.SetWeight(0);
 
         _character.Animator.Finisher();
         

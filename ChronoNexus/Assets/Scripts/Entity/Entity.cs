@@ -91,9 +91,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected virtual void InitializeParam()
     {
         InitializeIndividualParam();
+        
+        enemyList.Add(gameObject);
+
         _stateMachine = new StateMachine();
-
-
         _targetFinder = GetComponent<TargetFinder>();
         _health = GetComponent<Health>();
         _animator = GetComponent<EnemyAnimator>();
@@ -122,7 +123,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected void Start()
     {
         _isAlive = true;
-        enemyList.Add(gameObject);
         InitializeStartState();
     }
 
@@ -165,7 +165,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         OnTargetInvalid?.Invoke();
         OnFinisherEnded?.Invoke();
         OnTimeAffectedDestroy?.Invoke();
-        
+
         _isFinisherReady = false;
         _isValid = false;
         _isAlive = false;
@@ -197,6 +197,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         }
 
         OnDie?.Invoke();
+        enemyList.Remove(gameObject);
         Destroy(gameObject, 3f);
     }
 
@@ -247,7 +248,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected virtual void OnDestroy()
     {
         OnTimeAffectedDestroy?.Invoke();
-        enemyList.Remove(gameObject);
     }
 
     public virtual void RealTimeAction()
@@ -341,6 +341,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
        Vector3 dir = Player.transform.position - transform.position;
        dir.y = 0;
        transform.rotation = Quaternion.LookRotation(-dir);
+       _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+       _rigidbody.velocity = Vector3.zero;
     }
 
     public bool GetFinisherableStatus()

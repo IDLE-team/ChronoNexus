@@ -7,24 +7,23 @@ public class LevelHolder : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private Slider _slider;
 
+    [Header("Для значений из таблицы баланса уровней")]
+    [SerializeField] private float _xpMeanLvl = 50;
+    [SerializeField] private float _xpStepMean = 15;
+    [SerializeField] private float _xpToNextBase = 150;
+
+    //значения должны совпадать с WinScreen
+
     private void Start()
     {
-        _slider.maxValue = PlayerPrefs.GetFloat("lvl") * 100;
-        _slider.value = PlayerPrefs.GetFloat("exp");
-        _levelText.text = PlayerPrefs.GetFloat("lvl").ToString();
-
-        PlayerProfileManager.profile.expChanged += OnExpChanged;
+        XpChange();
     }
 
-    private void OnExpChanged()
+    public void XpChange()
     {
-        var exp = PlayerPrefs.GetFloat("exp");
-        var lvl = PlayerPrefs.GetFloat("lvl");
-        _slider.DOValue(exp, 0.7f);
-        if (exp > lvl * 100)
-        {
-            PlayerPrefs.SetFloat("lvl", lvl + 1);
-            PlayerPrefs.SetFloat("exp", exp - (lvl + 1)*100);
-        }
+        var lvl = PlayerPrefs.GetFloat("lvl", 1) + 1;
+        _slider.maxValue = Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl;
+        _slider.DOValue(PlayerPrefs.GetFloat("xp", 0), 1f);
+        _levelText.text = (lvl - 1).ToString();
     }
 }

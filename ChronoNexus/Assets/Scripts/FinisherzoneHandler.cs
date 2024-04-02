@@ -13,7 +13,6 @@ public class FinisherzoneHandler : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        
         if (other.TryGetComponent(out IFinisherable currentFinisherTarget))
         {
             _currentFinisherTarget = currentFinisherTarget;
@@ -29,7 +28,6 @@ public class FinisherzoneHandler : MonoBehaviour
     }
     private void ActivateFinisherReadyMode()
     {
-        Debug.Log(_currentFinisherTarget.GetFinisherableStatus());
         if(!_currentFinisherTarget.GetFinisherableStatus())
             return;
         //_character.MainButtonController.SetFinisherButton();
