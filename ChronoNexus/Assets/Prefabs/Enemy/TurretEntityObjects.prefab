@@ -145,7 +145,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.7720177, y: 2.7720187, z: 2.7720177}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7537753733628713262}
@@ -169,7 +169,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.9
+  m_Radius: 1
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -405,6 +405,21 @@ PrefabInstance:
       propertyPath: _aimTarget
       value: 
       objectReference: {fileID: 9059450337948701072}
+    - target: {fileID: 4364479259741229785, guid: 68b8879edd75ca247b9d48f503fb63f5,
+        type: 3}
+      propertyPath: _rangeAttackInterval
+      value: 0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364479259741229785, guid: 68b8879edd75ca247b9d48f503fb63f5,
+        type: 3}
+      propertyPath: _maxRangeAttackDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364479259741229785, guid: 68b8879edd75ca247b9d48f503fb63f5,
+        type: 3}
+      propertyPath: _minRangeDistanceToTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4498659141011382404, guid: 68b8879edd75ca247b9d48f503fb63f5,
         type: 3}
       propertyPath: m_Mesh

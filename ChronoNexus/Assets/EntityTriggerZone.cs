@@ -14,7 +14,6 @@ public class EntityTriggerZone : MonoBehaviour
     {
         if (other.tag == "Player" && _entity.Target != other.GetComponent<ITargetable>())
         {
-            Debug.Log(other.transform.position);
             _entity.RotateTo(other.transform);
         }
     }
@@ -22,7 +21,6 @@ public class EntityTriggerZone : MonoBehaviour
     {
         if (other.tag == "Player" && _entity.Target != other.GetComponent<ITargetable>())
         {
-            Debug.Log(other.transform.position);
             _entity.RotateTo(other.transform);
         }
     }

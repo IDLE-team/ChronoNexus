@@ -117,10 +117,11 @@ public class TargetFinder : MonoBehaviour
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;
             
+            SetTarget(target);
             if (target != null)
                 OnTargetFinded?.Invoke(target);
 
-            SetTarget(target);
+            
 
         }
     }

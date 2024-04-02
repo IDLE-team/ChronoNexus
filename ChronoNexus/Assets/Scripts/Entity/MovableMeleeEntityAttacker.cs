@@ -68,6 +68,5 @@ public class MovableMeleeEntityAttacker : Attacker
     {
         _visualHitEffect.gameObject.SetActive(true);
         _visualHitEffect.Play();
-        //_enemy.AudioController.PlayHitSound();
     }
 }
