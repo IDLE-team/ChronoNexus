@@ -108,7 +108,6 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             return;
         }
 
-        Debug.Log(Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _retreatPosition));
         if (Vector3.Distance(_movableSoldierEntity.SelfAim.position, _retreatPosition)<0.2f)
         {
             _movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);

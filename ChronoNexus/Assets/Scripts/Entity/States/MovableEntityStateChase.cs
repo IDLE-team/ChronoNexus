@@ -47,5 +47,11 @@ public class MovableEntityStateChase : MovableEntityState
 
         base.PhysicsUpdate();
     }
+    protected override async UniTask TimeWaiter()
+    {
+        await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
+        _movableEntity.NavMeshAgent.speed = _movableEntity.ChaseSpeed;
+        //Default speed
+    }
 
 }

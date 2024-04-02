@@ -12,7 +12,7 @@ public class EntityGroupManager : MonoBehaviour
     [Serializable]
     public class Group
     {
-        public List<MovableEntity> _movableEntities;
+        public List<Entity> _movableEntities;
     }
 
     public void CallTargetSetToGroup(ITargetable target)

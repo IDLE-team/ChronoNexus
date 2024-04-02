@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,7 +29,15 @@ public class MovableEntity : Entity
 
     public float RandomMoveSpeed => _randomMoveSpeed;
 
-    [Header("Chase parameters")] public NavMeshAgent NavMeshAgent => _navMeshAgent;
+    [Header("Chase parameters")] [SerializeField]
+    protected float _maxChaseDistance = 12f;
+
+    public float MaxChaseDistance => _maxChaseDistance;
+    [SerializeField] protected float _chaseSpeed = 3.5f;
+
+    public float ChaseSpeed => _chaseSpeed;
+
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
     protected NavMeshAgent _navMeshAgent;
 
@@ -40,9 +49,7 @@ public class MovableEntity : Entity
     public MovableEntityStateRandomMove RandomMoveState { get; private set; }
     public MovableEntityStateChase ChaseState { get; private set; }
     public MovableEntityStatePatrol PatrolState { get; private set; }
-    
-    
-    
+
 
     protected override void InitializeStartState()
     {
@@ -91,21 +98,18 @@ public class MovableEntity : Entity
     {
         if (Target == null)
         {
-            _navMeshAgent.isStopped = true;
-            Quaternion rotation = Quaternion.Euler(new Vector3(0,1,0) * 180f);
-
-            transform.rotation *= rotation;
-            _navMeshAgent.isStopped = false;
+            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f)* transform.rotation, 0.5f);
         }
+
         base.TakeDamage(damage, isCritical);
     }
 
     protected override void Die()
     {
-        
+
         _animator.SetMoveAnimation(false);
         _animator.SetReloadAnimation(false);
-        
+
         _navMeshAgent.velocity = Vector3.zero;
         _navMeshAgent.speed = 0;
         _navMeshAgent.angularSpeed = 0;
@@ -114,7 +118,7 @@ public class MovableEntity : Entity
         _navMeshAgent.isStopped = true;
         base.Die();
     }
-    
+
 
     public override void RealTimeAction()
     {
@@ -156,12 +160,10 @@ public class MovableEntity : Entity
         base.SlowTimeAction();
     }
 
-    
 
     public override void ResetValues()
     {
         _navMeshAgent.isStopped = true;
-        Debug.Log("MovableEntityReset");
     }
 
     private void SetLastNavMeshValues()
@@ -190,9 +192,9 @@ public class MovableEntity : Entity
     public virtual void TargetChaseDistanceSwitch()
     {
         if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) >
-            12f) //view distance or check last point
+            MaxChaseDistance) //view distance or check last point
         {
-            if (_isPatrol && _patrolPoints.Length != 0) 
+            if (_isPatrol && _patrolPoints.Length != 0)
             {
                 _stateMachine.ChangeState(PatrolState);
             }
@@ -201,6 +203,6 @@ public class MovableEntity : Entity
                 _stateMachine.ChangeState(RandomMoveState);
             }
         }
-            
+
     }
 }
