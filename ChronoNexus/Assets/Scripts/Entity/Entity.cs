@@ -116,8 +116,17 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     public virtual void RotateTo(Transform target)
     {
-        //Vector3 targetPos = new Vector3()
-        transform.DOLookAt(new Vector3(target.position.x,transform.position.y,target.position.z),1f);
+        float _duration = 1f;
+        if (isTimeStopped)
+        {
+            return;
+        }
+
+        if (isTimeSlowed)
+        {
+            _duration *= 8;
+        }
+        transform.DOLookAt(new Vector3(target.position.x,transform.position.y,target.position.z),_duration);
     }
 
     protected void Start()

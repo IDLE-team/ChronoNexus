@@ -109,13 +109,14 @@ public class MovableEntity : Entity
 
         _animator.SetMoveAnimation(false);
         _animator.SetReloadAnimation(false);
-
+        _navMeshAgent.SetDestination(transform.position);
+        _navMeshAgent.isStopped = true;
         _navMeshAgent.velocity = Vector3.zero;
         _navMeshAgent.speed = 0;
         _navMeshAgent.angularSpeed = 0;
         _loot.DropItems();
 
-        _navMeshAgent.isStopped = true;
+        
         base.Die();
     }
 
