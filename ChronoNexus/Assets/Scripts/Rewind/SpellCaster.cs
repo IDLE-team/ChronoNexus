@@ -18,12 +18,12 @@ public class SpellCaster : MonoBehaviour
 
     private void OnCastSpellKeyPressed(InputAction.CallbackContext obj)
     {
-        //_input.Player.TimeRewind.started -= OnCastSpellKeyPressed;
+      //  _input.Player.TimeRewind.started -= OnCastSpellKeyPressed;
 
         if (!_recallSpell.IsApplied)
         {
-           // _input.Player.RewindCancel.started += OnCastCanceledKeyPressed;
-           // _input.Player.RewindApply.started += OnCastAppliedKeyPressed;
+        //    _input.Player.RewindCancel.started += OnCastCanceledKeyPressed;
+       //     _input.Player.RewindApply.started += OnCastAppliedKeyPressed;
 
             _recallSpell.StartCast();
             OnCastAppliedKeyPressed(obj);
@@ -47,7 +47,7 @@ public class SpellCaster : MonoBehaviour
 
     private void OnCastCanceledKeyPressed(InputAction.CallbackContext obj)
     {
-       // _input.Player.RewindCancel.started -= OnCastCanceledKeyPressed;
+      //  _input.Player.RewindCancel.started -= OnCastCanceledKeyPressed;
        // _input.Player.RewindApply.started -= OnCastAppliedKeyPressed;
 
         _recallSpell.CastCanceled += OnCastCanceled;
