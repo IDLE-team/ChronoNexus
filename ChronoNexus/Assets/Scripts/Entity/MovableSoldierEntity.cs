@@ -68,6 +68,12 @@ public class MovableSoldierEntity : MovableMeleeEntity
             _navMeshAgent.SetDestination(Target.GetTransform().position);
         }
     }
+    protected override void Die()
+    {
+
+        
+        base.Die();
+    }
 
     
 }

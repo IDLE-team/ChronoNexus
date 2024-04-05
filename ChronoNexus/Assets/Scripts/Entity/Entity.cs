@@ -38,10 +38,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected EnemyState _startState;
 
     protected AudioSource _audioSource;
-    protected EnemyAnimator _animator;
-    public EnemyAnimator EntityAnimator => _animator;
+    protected EntityAnimator _animator;
+    public EntityAnimator EntityAnimator => _animator;
     protected Rigidbody _rigidbody;
-    protected Collider _collider;
+    [SerializeField]protected Collider _collider;
     protected EnemyLoot _loot;
     protected TargetFinder _targetFinder;
 
@@ -97,11 +97,15 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _stateMachine = new StateMachine();
         _targetFinder = GetComponent<TargetFinder>();
         _health = GetComponent<Health>();
-        _animator = GetComponent<EnemyAnimator>();
+        _animator = GetComponent<EntityAnimator>();
         _audioSource = GetComponent<AudioSource>();
         _loot = GetComponent<EnemyLoot>();
         _rigidbody = GetComponent<Rigidbody>();
-        _collider = GetComponent<Collider>();
+        if (_collider == null)
+        {
+            _collider = GetComponent<Collider>();
+        }
+        
 
         IsTargetFound = false;
 
