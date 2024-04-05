@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 6687099177626969372}
   - component: {fileID: 5908757207430520562}
   - component: {fileID: 8817398653478703305}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: TRIGGERZONE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -415,6 +415,16 @@ PrefabInstance:
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
       value: 
       objectReference: {fileID: 9194290913602633307}
+    - target: {fileID: 859417139143854482, guid: 9829667c6040be741b83243f73697f45,
+        type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 859417139143854482, guid: 9829667c6040be741b83243f73697f45,
+        type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1331437954064526791, guid: 9829667c6040be741b83243f73697f45,
         type: 3}
       propertyPath: _foundEffect
@@ -431,6 +441,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -2124705421725058983, guid: 6f6f79d138091fd479616da743d1dd36,
         type: 3}
+    - target: {fileID: 2786683092911804276, guid: 9829667c6040be741b83243f73697f45,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.12
+      objectReference: {fileID: 0}
     - target: {fileID: 4397266503105051290, guid: 9829667c6040be741b83243f73697f45,
         type: 3}
       propertyPath: m_Data.m_SourceObjects.m_Item0.transform
