@@ -6,14 +6,20 @@ using UnityEngine;
 
 public class EntityTriggerZone : MonoBehaviour
 {
-    [SerializeField] private LayerMask _layer;
     [SerializeField] private Entity _entity;
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && _entity.Target != other.GetComponent<ITargetable>())
+        Debug.Log("ВХОД");
+        Debug.Log(other.gameObject);
+        if (other.CompareTag("Player") && _entity.Target != other.GetComponent<ITargetable>())
         {
+            _entity.RotateTo(other.transform);
+        }
+        else if (other.CompareTag("Bullet") && _entity.Target == null)
+        {
+            Debug.Log("Вращение");
             _entity.RotateTo(other.transform);
         }
     }

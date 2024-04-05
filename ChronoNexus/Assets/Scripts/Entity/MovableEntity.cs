@@ -96,10 +96,7 @@ public class MovableEntity : Entity
 
     public override void TakeDamage(float damage, bool isCritical)
     {
-        if (Target == null)
-        {
-            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f)* transform.rotation, 0.5f);
-        }
+        
 
         base.TakeDamage(damage, isCritical);
     }

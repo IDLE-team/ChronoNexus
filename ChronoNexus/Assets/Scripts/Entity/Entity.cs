@@ -159,7 +159,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     {
         if (!_isAlive)
             return;
-        
+        if (Target == null)
+        {
+            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f)* transform.rotation, 0.5f);
+        }
 
         _health.Decrease(damage, isCritical);
         DamageEffect();
