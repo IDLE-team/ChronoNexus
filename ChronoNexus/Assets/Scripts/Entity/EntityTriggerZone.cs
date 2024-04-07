@@ -11,15 +11,12 @@ public class EntityTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("ВХОД");
-        Debug.Log(other.gameObject);
         if (other.CompareTag("Player") && _entity.Target != other.GetComponent<ITargetable>())
         {
             _entity.RotateTo(other.transform);
         }
         else if (other.CompareTag("Bullet") && _entity.Target == null)
         {
-            Debug.Log("Вращение");
             _entity.RotateTo(other.transform);
         }
     }
