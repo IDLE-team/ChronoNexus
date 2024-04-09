@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class InventoryItemManager : MonoBehaviour
@@ -28,29 +29,24 @@ public class InventoryItemManager : MonoBehaviour
     protected Character _player;
     protected WeaponData _gunEquiped;
 
-    // [HideInInspector]
-    //protected UnityAction OnCharacterLinked;
-
     [SerializeField] protected MoneyHolder _moneyHolder;
 
     public event Action<WeaponData> OnEquiped;
 
     protected ItemEquipable itemUse;
-    private void OnEnable()
-    {
-        // OnCharacterLinked += SetInventoryEquiped;
 
-    }
     private void Start()
     {
         _cellsInventory = _gridLayoutTabInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
-
     }
 
+    private void Update()
+    {
+        SortInventory();
+    }
     public void SetPlayer(Character player)
     {
         _player = player;
-        // OnCharacterLinked();
     }
 
     public Character GetPlayer()
@@ -71,7 +67,6 @@ public class InventoryItemManager : MonoBehaviour
 
         if (_gunEquiped)
         {
-            //  _player.gameObject.GetComponent<Equiper>().EquipWeapon(_gunEquiped);
             OnEquiped?.Invoke(_gunEquiped);
         }
     }
@@ -164,6 +159,17 @@ public class InventoryItemManager : MonoBehaviour
 
     }
 
+    public void TradeParamentrsSort(ItemEquipable first, ItemEquipable next)
+    {
+        var item = first;
+        first.SetItemBy(next);
+        next.SetItemBy(item);
+    }
+    public void TradeParamentrsSort(Transform place, GameObject itemEquipable)
+    {
+        itemEquipable.transform.parent = place.transform;
+    }
+
     public void InventoryMainOpened()
     {
         LoadInventory(_cellsInventory);
@@ -197,7 +203,7 @@ public class InventoryItemManager : MonoBehaviour
                 break;
             }
         }
-        //  OnCharacterLinked();
+
     }
 
     public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
@@ -261,11 +267,11 @@ public class InventoryItemManager : MonoBehaviour
 
         GameObject itemEmpty = Instantiate(_itemPrefab);
         var item = itemEmpty.GetComponent<ItemEquipable>();
-        item.SetItemBy(ItemDataManager.itemManager.GetItemDataByIndex(savedData),this);
+        item.SetItemBy(ItemDataManager.itemManager.GetItemDataByIndex(savedData), this);
         itemEmpty.transform.SetParent(_gunInUse.transform);
         itemUse = item;
         item.ChangeToEquiped();
-        
+
     }
 
     public void SaveGun() // call on inventory close
@@ -279,7 +285,6 @@ public class InventoryItemManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("gun", -1); // empty item
         }
-        
     }
 
     protected void LoadKnife()
@@ -304,6 +309,29 @@ public class InventoryItemManager : MonoBehaviour
 
     }
 
+    public void SortInventory(List<HorizontalLayoutGroup> cells)
+    {
+        for (int i = 1; i < cells.Count; i++)
+        {
+            if (cells[i].gameObject.GetComponentInChildren<ItemEquipable>()) // if cell with item
+            {
+                if (!cells[i - 1].gameObject.GetComponentInChildren<ItemEquipable>()) // if no item on left
+                {
+                    TradeParamentrsSort(cells[i - 1].transform, cells[i].gameObject.GetComponentInChildren<ItemEquipable>().gameObject);
+                }
+            }
+            else // if cell empty
+            {
+                continue;
+            }
+        }
+    }
+
+    public void SortInventory()
+    {
+        SortInventory(_cellsInventory);
+    }
+
     public void DeleteEquiped()
     {
         var gun = _gunInUse.GetComponentInChildren<ItemEquipable>();
@@ -317,6 +345,7 @@ public class InventoryItemManager : MonoBehaviour
 
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
+
     }
 
     public void MakeItemFromShop(ItemData soldItem)
@@ -341,8 +370,8 @@ public class InventoryItemManager : MonoBehaviour
 
     public WeaponData GetEquipedGun()
     {
-        var equiped = PlayerPrefs.GetInt("gun",-1);
-        if (equiped!=-1)
+        var equiped = PlayerPrefs.GetInt("gun", -1);
+        if (equiped != -1)
         {
             return ItemDataManager.itemManager.GetItemDataByIndex(equiped).weaponData;
         }
@@ -363,11 +392,6 @@ public class InventoryItemManager : MonoBehaviour
         {
             return false;
         }
-    }
-
-    private void OnDisable()
-    {
-        // OnCharacterLinked -= SetInventoryEquiped;
     }
 
     public enum itemType

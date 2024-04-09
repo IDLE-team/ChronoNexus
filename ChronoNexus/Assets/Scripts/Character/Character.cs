@@ -1,14 +1,12 @@
 using Cysharp.Threading.Tasks;
 using System;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(CharacterMovement),  typeof(CharacterAnimator))]
+[RequireComponent(typeof(CharacterMovement), typeof(CharacterAnimator))]
 [RequireComponent(typeof(CharacterAudioController))]
 
 public class Character : MonoBehaviour, IDamagable, ITargetable
@@ -19,7 +17,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     [SerializeField] private Slider _hpBar;
 
     [SerializeField] private LevelController _levelController;
-    
+
     private IOutfitter _outfitter;
     private Health _health;
 
@@ -31,24 +29,24 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     public СharacterTargetingSystem CharacterTargetingSystem { get; private set; }
 
     public CharacterEventsHolder CharacterEventsHolder { get; private set; }
-    
+
     public Health Health => _health;
-    
+
     public Equiper Equiper { get; private set; }
-    
+
     public WeaponController WeaponController { get; private set; }
-    
-    
+
+
     public AimRigController AimRigController { get; private set; }
     private PlayerAttacker Attacker { get; set; }
 
 
     private bool _isValid = true;
-    
+
     private InventoryItemManager _inventoryItemManager;
 
     public InventoryItemManager InventoryItemManager => _inventoryItemManager;
-    
+
     public Transform Transform => transform;
 
     private bool _isInvincible;
@@ -58,8 +56,8 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     {
         _inventoryItemManager = itemManager;
     }
-   
-    
+
+
     private void OnEnable()
     {
         _health.Died += Die;
@@ -96,7 +94,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
 
     public void TakeDamage(float damage, bool isCritical)
     {
-        if(!_isInvincible)
+        if (!_isInvincible)
             _health.Decrease(damage, isCritical);
     }
 
@@ -111,7 +109,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     {
         Destroy(gameObject);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
-       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+       // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         await UniTask.Yield();
     }
 
@@ -134,12 +132,12 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     {
         _isInvincible = isInvincible;
     }
-    
+
     public bool GetTargetValid()
     {
         return _isValid;
     }
 
     public event Action OnTargetInvalid;
-    
+
 }
