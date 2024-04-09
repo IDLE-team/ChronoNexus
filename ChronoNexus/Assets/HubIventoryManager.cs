@@ -21,9 +21,6 @@ public class HubIventoryManager : InventoryItemManager
         if (manager == null)
             manager = this;
         else if (manager == this) Destroy(gameObject);
-
-        //OnCharacterLinked += SetInventoryEquiped;
-
         _isShelterOpened = false;
     }
 
@@ -33,6 +30,11 @@ public class HubIventoryManager : InventoryItemManager
 
         _cellsShelterInventory = _gridLayoutShelterInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
         _cellsShelterStorage = _gridLayoutShelterStorage.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
+    }
+
+    private void Update()
+    {
+        SortInventory();
     }
 
     protected void LoadInventoryShelter()
