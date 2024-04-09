@@ -57,7 +57,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -81,7 +81,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2, z: 2}
+  m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5776499894343959923
 MonoBehaviour:
@@ -156,6 +156,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7668923357426485198}
+    - targetCorrespondingSourceObject: {fileID: 1416722638032424, guid: 9806e8e91f17e534291605ec5b47e5f1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3523287422406796236}
   m_SourcePrefab: {fileID: 100100000, guid: 9806e8e91f17e534291605ec5b47e5f1, type: 3}
 --- !u!4 &8821427026621014729 stripped
 Transform:
@@ -190,3 +194,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5361428, y: 0.10123533, z: 0.3872522}
   m_Center: {x: -0.00000022351742, y: 0.050617665, z: -0.035146482}
+--- !u!114 &3523287422406796236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8825155944523263937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4efd00113b669ab4ab860fd84cd10a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 35, z: 0}
+  rotationSwitchTime: 8
+  movementSwitchTime: 2
+  slowDownFactor: 0.05
+  movementSpeed: 0.1
