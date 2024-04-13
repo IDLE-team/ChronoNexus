@@ -12,8 +12,10 @@ public class CharacterInstaller : MonoInstaller
         health = player.GetComponent<PlayerPrefabData>().Character.Health;
         Container.Bind<CharacterMovement>().FromInstance(player.GetComponent<PlayerPrefabData>().Character.Movement).AsSingle();
         Container.Bind<CharacterAnimator>().FromInstance(player.GetComponent<PlayerPrefabData>().Character.Animator).AsSingle();
+        var eventsHolder = player.GetComponent<PlayerPrefabData>().Character.CharacterEventsHolder;
+        Debug.Log(eventsHolder);
         Container.Bind<CharacterEventsHolder>().FromInstance(player.GetComponent<PlayerPrefabData>().Character.CharacterEventsHolder).AsSingle();
-        Container.Bind<Health>().FromInstance(player.GetComponent<PlayerPrefabData>().Character.Health).AsSingle();
+        Container.Bind<Health>().FromInstance(player.GetComponent<PlayerPrefabData>().Character.Health).AsSingle().Lazy();
 
 
     }

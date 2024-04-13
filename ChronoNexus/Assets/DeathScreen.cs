@@ -9,14 +9,14 @@ public class DeathScreen : MonoBehaviour
     [SerializeField] private Button _buttonBackToMenu;
     [SerializeField] private Button _buttonTryAgain;
 
-    [SerializeField] private Slider _HeroSlider;
+    [SerializeField] private Health _heroHealth;
 
     private void Start()
     {
         _buttonBackToMenu.onClick.AddListener(BackToMenu);
         _buttonTryAgain.onClick.AddListener(RestartLevel);
-
-        _HeroSlider.onValueChanged.AddListener(CheckDeath);
+        _heroHealth.Died += Death;
+        // _HeroSlider.onValueChanged.AddListener(CheckDeath);
     }
     public void RestartLevel()
     {
