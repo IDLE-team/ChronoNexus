@@ -16,6 +16,10 @@ public class EnemyLoot : MonoBehaviour
 
     public void DropItems()
     {
+        if (ItemPrefab == null || items.Count == 0 || dropChances.Count == 0||amountToDrop==0||possibleQualities.Count==0||qualityChances.Count==0) 
+        {
+            return;
+        }
         for (int i = 0; i < amountToDrop; i++)
         {
             ItemData itemToDrop = GetRandomItem();
