@@ -49,7 +49,7 @@ public class RecallSpellMediator: IDisposable
     private void OnCastApplied(Transform rewindObjectTransform)
     {
 
-      //  _timerView.Show(rewindObjectTransform);
+        _timerView.Show(rewindObjectTransform);
 
     }
 
@@ -60,6 +60,6 @@ public class RecallSpellMediator: IDisposable
 
     private void OnCastPerformed(Transform rewindObjectTransform)
     {
-      //  _timerView.Hide();
+        _timerView.Hide();
     }
 }

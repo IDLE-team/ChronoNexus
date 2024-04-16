@@ -5,7 +5,7 @@ public class BladeWeapon : ColdWeapon
     {
     }
 
-    public override void AreaFire(LayerMask layerMask)
+    public override void AreaFire(LayerMask layerMask, int animID)
     {
    //     if (Time.time - _lastFireTime < FireRate)
      //   {
@@ -16,7 +16,7 @@ public class BladeWeapon : ColdWeapon
         foreach (Collider collider in hitEnemies)
         {
            // collider.gameObject.GetComponent<IDamagable>()?.TakeDamage(Damage, true);
-            collider.gameObject.GetComponent<IFinisherable>()?.StartFinisher();
+            collider.gameObject.GetComponent<IFinisherable>()?.StartFinisher(animID);
 
         }
     }

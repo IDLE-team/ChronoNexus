@@ -25,7 +25,7 @@
             if (target != null)
             {
                 isTargetNotNull = true;
-                Debug.Log("True");
+        //        Debug.Log("True");
             }
 
             while (isFire == true && CurrentAmmo > 0)
@@ -51,7 +51,7 @@
                 bullet.Initialize(_shootDir, Damage, ProjectileSpeed);
                 CurrentAmmo--;
                 UpdateUIWeaponValues();
-                Debug.Log("isFire: " + isFire);
+           //     Debug.Log("isFire: " + isFire);
                 _lastFireTime = Time.time;
                 await UniTask.Delay((int) (FireRate * 1000));
             }

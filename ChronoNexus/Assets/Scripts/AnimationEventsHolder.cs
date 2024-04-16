@@ -43,9 +43,9 @@ public class AnimationEventsHolder : MonoBehaviour
         _weaponController.CurrentWeapon.Fire(_character.CharacterTargetingSystem.Target, _character.Transform);
     }
 
-    public void WeaponAreaFire()
+    public void WeaponAreaFire(int id)
     {
-        _weaponController.CurrentWeapon.AreaFire(_character.CharacterTargetingSystem.TargetLayer);
+        _weaponController.CurrentWeapon.AreaFire(_character.CharacterTargetingSystem.TargetLayer, id);
     }
 
     public void StartFinisher()
@@ -59,7 +59,7 @@ public class AnimationEventsHolder : MonoBehaviour
          _startOrthographicSize = _virtualCamera.m_Lens.OrthographicSize;
          _startVignetteIntensity = _vignette.intensity.value;
          _vignette.intensity.value = _finisherVignetteIntensity;
-        WeaponAreaFire();
+        WeaponAreaFire(_character.Animator.CurrentFinisherID);
         StartCoroutine(SmootherVignette(_finisherVignetteIntensity));
         StartCoroutine(Smoother(_finisherOrthographicSize));
         _character.Movement.LockMove();
@@ -84,9 +84,9 @@ public class AnimationEventsHolder : MonoBehaviour
         _character.SetInvincible(false);
         StartCoroutine(Smoother(_startOrthographicSize));
         _character.Equiper.EquipWeapon(_character.InventoryItemManager.GetEquipedGun());
-        print(_character.Equiper + "эквипер");
-        print(_character.InventoryItemManager + "iten манагер");
-        print(_character.InventoryItemManager.GetEquipedGun().WeaponName + "веапон нейм через энд финишер");
+       // print(_character.Equiper + "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+       // print(_character.InventoryItemManager + "iten пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+      //  print(_character.InventoryItemManager.GetEquipedGun().WeaponName + "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         _character.CharacterEventsHolder.CallOnShootInteractEvent();
 
         _character.Movement.UnlockMove();

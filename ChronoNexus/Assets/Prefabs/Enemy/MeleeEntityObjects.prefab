@@ -292,9 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7f618849ce365b45bea8af02100ba37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _layer:
-    serializedVersion: 2
-    m_Bits: 64
   _entity: {fileID: 6524451754183168470}
 --- !u!54 &6214197162929286072
 Rigidbody:
@@ -647,24 +644,24 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 2081728393440100021, guid: d7584372616a7c6429e3dcf607bc4a8a,
         type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 128
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081728393440100021, guid: d7584372616a7c6429e3dcf607bc4a8a,
+        type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2081728393440100021, guid: d7584372616a7c6429e3dcf607bc4a8a,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2484889576793462250, guid: d7584372616a7c6429e3dcf607bc4a8a,
         type: 3}
       propertyPath: _foundEffect
       value: 
       objectReference: {fileID: 6418566776651569693}
-    - target: {fileID: 2996151980609016159, guid: d7584372616a7c6429e3dcf607bc4a8a,
-        type: 3}
-      propertyPath: _chaseSpeed
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2996151980609016159, guid: d7584372616a7c6429e3dcf607bc4a8a,
-        type: 3}
-      propertyPath: _randomMoveSpeed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3835036904426095130, guid: d7584372616a7c6429e3dcf607bc4a8a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -719,6 +716,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEntity
+      objectReference: {fileID: 0}
+    - target: {fileID: 4930560909162048316, guid: d7584372616a7c6429e3dcf607bc4a8a,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 00628103e8928994995ae8ef6a6d52bc, type: 2}
+    - target: {fileID: 4930560909162048316, guid: d7584372616a7c6429e3dcf607bc4a8a,
+        type: 3}
+      propertyPath: m_UseSpriteMesh
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6134567175191511462, guid: d7584372616a7c6429e3dcf607bc4a8a,
         type: 3}

@@ -111,6 +111,7 @@ public class MovableEntity : Entity
         _navMeshAgent.velocity = Vector3.zero;
         _navMeshAgent.speed = 0;
         _navMeshAgent.angularSpeed = 0;
+        _navMeshAgent.enabled = false;
         _loot.DropItems();
 
         

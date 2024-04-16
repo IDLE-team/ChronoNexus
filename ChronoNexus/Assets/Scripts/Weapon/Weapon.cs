@@ -27,7 +27,7 @@ public abstract class Weapon : MonoBehaviour
     public bool isCoolDown;
     public abstract void Fire(ITargetable target, Transform holder);
 
-    public virtual void AreaFire(LayerMask layerMask)
+    public virtual void AreaFire(LayerMask layerMask, int animID)
     {
         
     }

@@ -62,9 +62,10 @@ public class EntityAnimator : MonoBehaviour
     {
         _animator.SetFloat(MoveX, value);
     }
-    public void Finisher()
+    public void Finisher(int id)
     {
         _animator.SetBool(FinisherHash, true);
+        _animator.SetInteger("FinisherID", id);
     }
     public void StopAnimation()
     {

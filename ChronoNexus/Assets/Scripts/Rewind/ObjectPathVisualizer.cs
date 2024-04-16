@@ -82,6 +82,7 @@ public class ObjectPathVisualizer : MonoBehaviour
             if (i % _intervalBetweenVisualisableObjects == 0)
             {
                 GameObject visualisableObject = Instantiate(_visualisableObjectPrefab, point.Position, point.Rotation, null);
+                visualisableObject.transform.localScale = gameObject.transform.localScale;
                // visualisableObject.gameObject.layer = layer;
                 _visualisableObjectInstances.Add(visualisableObject);
             }

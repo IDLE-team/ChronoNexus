@@ -44,6 +44,8 @@ public class RecallSpellInstaller : MonoInstaller
     {
 
         Container.Bind<RecallSpell>().AsSingle();
+        
+      //  Container.Bind<Timer>().FromInstance(_timer).AsSingle();
 
         Container.Bind<RecallSpellConfig>().FromInstance(_recallSpellConfig).AsSingle();
 

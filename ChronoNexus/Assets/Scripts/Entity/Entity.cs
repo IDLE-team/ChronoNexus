@@ -32,7 +32,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     [SerializeField] protected DebugEnemySpawner _enemySpawner;
     [SerializeField] protected Equiper _equiper;
     [SerializeField] protected WeaponController _weaponController;
-    [SerializeField] protected ParticleSystem _finisherReadyVFX;
+    [SerializeField] protected GameObject _finisherReady;
     [SerializeField] protected float _finisherHPTreshold;
     public State state = new State();
     protected EnemyState _startState;
@@ -49,6 +49,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected Health _health;
     protected StateMachine _stateMachine;
 
+    public bool IsAlive => _isAlive;
+    
     protected bool _isAlive;
     protected bool _isValid = true;
     protected bool _isTarget;
@@ -64,17 +66,15 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     public event Action OnFinisherEnded;
     public EntityStateDummy DummyState { get; private set; }
 
-    public virtual string CurrentState
+    public virtual IState CurrentState
     {
         get
         {
-            switch (_stateMachine.CurrentState)
-            {
-                case EnemyDummyState:
-                    return State.Dummy.ToString();
-                default:
-                    return " ";
-            }
+            return _stateMachine.CurrentState;
+            //switch (_stateMachine.CurrentState)
+            // {
+
+            //}
         }
     }
     
@@ -172,12 +172,13 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         {
             _isFinisherReady = true;
             OnFinisherReady?.Invoke();
-            _finisherReadyVFX.Play();
+            _finisherReady.SetActive(true);
         }
     }
 
     protected virtual void Die()
     {
+        Debug.Log("Die");
         OnTargetInvalid?.Invoke();
         OnFinisherEnded?.Invoke();
         OnTimeAffectedDestroy?.Invoke();
@@ -185,8 +186,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _isFinisherReady = false;
         _isValid = false;
         _isAlive = false;
-        
-        _finisherReadyVFX.Stop();
+
+        _finisherReady.SetActive(false);
 
         SetSelfTarget(false);
         StopSeek();
@@ -348,10 +349,11 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         
     }
     
-    public void StartFinisher()
+    public void StartFinisher(int id)
     {
-       _animator.Finisher();
+       _animator.Finisher(id);
        _stateMachine.ChangeState(DummyState);
+       _finisherReady.SetActive(false);
        ResetValues();
        var Player = GameObject.FindWithTag("Player");
        Vector3 dir = Player.transform.position - transform.position;

@@ -15,7 +15,7 @@ public class WeaponController : MonoBehaviour
     [Inject]
     private void Construct(WeaponFactory weaponFactory)
     {
-        Debug.Log("WeaponConstruct: " + weaponFactory + "\nName: " + gameObject.name);
+        //Debug.Log("WeaponConstruct: " + weaponFactory + "\nName: " + gameObject.name);
         _weaponFactory = weaponFactory;
     }
 
@@ -23,12 +23,11 @@ public class WeaponController : MonoBehaviour
     {
         if (_currentWeapon && data)
         {
-            print(data + " ‰‡Ú‡ ‡‡‡‡");
             if (_currentWeapon.WeaponName == data.WeaponName)
                 return;
             Destroy(_currentWeapon.gameObject);
         }
-        Debug.Log("WeaponFactory: " + _weaponFactory);
+       // Debug.Log("WeaponFactory: " + _weaponFactory);
         _currentWeapon = _weaponFactory.CreateWeapon(data, holder);
         SetWeaponPlayerSettings();
     }

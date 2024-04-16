@@ -35,14 +35,12 @@ public class RecallSpell
 
        // _aimTarget = aimTarget;
        _caster = GameObject.Find("Character").GetComponent<CharacterMovement>();
-       Debug.Log("InitCaset: " + _caster);
+      // Debug.Log("InitCaset: " + _caster);
 
     }
 
     public void StartCast()
     {
-        
-
         Collider[] colliders = Physics.OverlapSphere(_caster.Transform.position, _config.Radius, _config.SpellInteractableLayerMask);
 
         foreach (Collider collider in colliders)

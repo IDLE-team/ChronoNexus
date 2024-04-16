@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CharacterAnimator : MonoBehaviour
 {
     //TODO подумать насчёт суффикса "Hash"
     private Animator _animator;
-
+    
+    private int _currentFinisherID;
+    public int CurrentFinisherID => _currentFinisherID;
+    
     private static readonly int StrafeHash = Animator.StringToHash("Strafe");
     private static readonly int StrafeXHash = Animator.StringToHash("StrafeX");
     private static readonly int StrafeZHash = Animator.StringToHash("StrafeZ");
@@ -47,7 +52,10 @@ public class CharacterAnimator : MonoBehaviour
     public void Finisher()
     {
         _animator.SetTrigger(FinisherHash);
+        _currentFinisherID = Random.Range(0, 7);
+        _animator.SetInteger("FinisherID",_currentFinisherID );
     }
+
     public void Fire(int hash)
     {
         _animator.SetTrigger(hash);

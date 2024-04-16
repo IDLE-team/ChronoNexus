@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _name;
     [SerializeField] private TextMeshProUGUI _requirments;
+    [SerializeField] private TextMeshProUGUI _requirmentsProgress;
     [SerializeField] private TextMeshProUGUI _expReward;
     [SerializeField] private TextMeshProUGUI _curReward;
     [SerializeField] private TextMeshProUGUI _itemReward;
 
+    [SerializeField] private Slider _progressSlider;
+
+    [SerializeField] private GameObject _completeScreen;
+    
     [SerializeField] private GameObject _expHolder;
     [SerializeField] private GameObject _curHolder;
     [SerializeField] private GameObject _itemHolder;
@@ -19,12 +25,20 @@ public class QuestUI : MonoBehaviour
     
     public void SetData(QuestData questData)
     {
-        Debug.Log("SetStarted");
         _questData = questData;
         
         _name.text = questData.questName;
         _requirments.text = questData.requirements;
+        _requirmentsProgress.text = questData.questProgress + " / " + questData.questRequirments;
+        _progressSlider.maxValue = questData.questRequirments;
+        _progressSlider.value = questData.questProgress;
 
+        if (questData.isComlete)
+        {
+            _completeScreen.SetActive(true);
+        }
+        
+        
         for (int i = 0; i < _questData.rewardTypes.Count; i++)
         {
             switch (_questData.rewardTypes[i])

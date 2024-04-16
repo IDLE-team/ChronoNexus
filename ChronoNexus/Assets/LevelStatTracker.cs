@@ -12,11 +12,12 @@ public class LevelStatTracker : MonoBehaviour
     [SerializeField] private int _startEnemyAmount;
 
     [SerializeField] private int _kills;
+    
     private void Start()
     {
         _startTime = Time.realtimeSinceStartup;
         _startEnemyAmount = Entity.enemyList.Count;
-        Debug.Log("StartEnemyAmount: " + _startEnemyAmount);
+
     }
 
     public float GetLevelWalkthroughTime()

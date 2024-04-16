@@ -20,4 +20,12 @@ public class QuestData : ScriptableObject
     public int itemReward;
 
     public int questProgress;
+
+    public bool isComlete;
+
+    public void ResetProgress()
+    {
+        questProgress = 0;
+        isComlete = false;
+    }
 }

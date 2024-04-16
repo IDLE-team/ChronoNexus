@@ -61,6 +61,7 @@ public class MovableMeleeEntity : MovableEntity
         }
         else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= MeleeAttacker.MaxMeleeAttackDistance) // or attack range
         {
+
             _stateMachine.ChangeState(MeleeAttackState);
         }
     }

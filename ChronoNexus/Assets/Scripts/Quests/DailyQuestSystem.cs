@@ -46,12 +46,12 @@ public class DailyQuestSystem : MonoBehaviour
     {
         for (int i = 0; i < _maxQuestsPerDay; i++)
         {
-            Debug.Log("i: " + i);
-            Debug.Log("quests.Count: " + quests.Count);
+        //    Debug.Log("i: " + i);
+        //    Debug.Log("quests.Count: " + quests.Count);
 
             if (i > quests.Count-1)
             {
-                Debug.Log("Break");
+         //       Debug.Log("Break");
                 break;
             }
 
@@ -131,11 +131,31 @@ public class DailyQuestSystem : MonoBehaviour
     public void UpdateProgress(int amount)
     {
 
-        GiveReward();
+      //  GiveReward();
         GenerateNewQuest();
     }
 
-    void GiveReward()
+    public void GiveReward(QuestData questData)
     {
+        for (int i = 0; i < questData.rewardTypes.Count; i++)
+        {
+            switch (questData.rewardTypes[i])
+            {
+                case QuestData.RewardType.Currency:
+                    Debug.Log("Reward Currency: " + questData.currencyReward);
+                    var startCur = PlayerPrefs.GetFloat("money");
+                    PlayerPrefs.SetFloat("money", startCur + questData.currencyReward);
+                    
+                    break;
+                case QuestData.RewardType.Experience:
+                    Debug.Log("Reward Experience: " + questData.experienceReward);
+                    var startXp = PlayerPrefs.GetFloat("xp");
+                    PlayerPrefs.SetFloat("xp", startXp + questData.experienceReward);
+                    break;
+                case QuestData.RewardType.Item:
+                    Debug.Log("Reward Item: " + questData.itemReward);
+                    break;
+            }
+        }
     }
 }
