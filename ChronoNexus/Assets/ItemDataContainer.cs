@@ -12,6 +12,8 @@ public class ItemDataContainer : MonoBehaviour
         _itemData = itemData;
     }
     public ItemData _itemData;
+    public ItemDataColorSet _itemDataColorSet;
+    
 
     private void OnTriggerEnter(Collider other)
     {
