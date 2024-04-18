@@ -8,7 +8,7 @@ using Zenject;
 
 public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITargetable, ITimeAffected, ISeeker
 {
-    public Attacker _Attacker;
+    [HideInInspector] public Attacker _Attacker;
     public event Action OnTargetInvalid;
     public event Action OnTimeAffectedDestroy;
     public bool isTimeStopped { get; set; }
@@ -23,7 +23,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     public event Action OnSeekEnd;
     public bool IsTargetFound { get; set; }
     public ITargetable Target { get; set; }
-
+    protected EnemyAnimationEventsHolder _entityAnimationEventsHolder;
     [SerializeField] protected TargetSelection _selection;
     [SerializeField] protected Transform _selfAimTargetTransform;
     public Transform SelfAim => _selfAimTargetTransform;
@@ -35,49 +35,48 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     [SerializeField] protected GameObject _finisherReady;
     [SerializeField] protected float _finisherHPTreshold;
     public State state = new State();
-    protected EnemyState _startState;
+    protected EntityState _startState;
 
     protected AudioSource _audioSource;
     protected EntityAnimator _animator;
     public EntityAnimator EntityAnimator => _animator;
     protected Rigidbody _rigidbody;
-    [SerializeField]protected Collider _collider;
-    protected EnemyLoot _loot;
+    [SerializeField] protected Collider _collider;
+    protected EntityLoot _loot;
     protected TargetFinder _targetFinder;
-
+    protected bool _isRotating = false;
+    public bool IsRotating => _isRotating;
     public TargetFinder TargetFinder => _targetFinder;
     protected Health _health;
     protected StateMachine _stateMachine;
 
     public bool IsAlive => _isAlive;
-    
+
     protected bool _isAlive;
+
     protected bool _isValid = true;
+
     protected bool _isTarget;
 
     protected bool _isFinisherReady;
-    
-    
-    
+
+
     public static List<GameObject> enemyList = new List<GameObject>();
+
+
     public event Action OnDie;
     public event Action OnUIUpdate;
     public event Action OnFinisherReady;
     public event Action OnFinisherEnded;
+
+
     public EntityStateDummy DummyState { get; private set; }
 
     public virtual IState CurrentState
     {
-        get
-        {
-            return _stateMachine.CurrentState;
-            //switch (_stateMachine.CurrentState)
-            // {
-
-            //}
-        }
+        get { return _stateMachine.CurrentState; }
     }
-    
+
     protected virtual void Awake()
     {
         InitializeParam();
@@ -91,7 +90,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected virtual void InitializeParam()
     {
         InitializeIndividualParam();
-        
+
         enemyList.Add(gameObject);
 
         _stateMachine = new StateMachine();
@@ -99,28 +98,29 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _health = GetComponent<Health>();
         _animator = GetComponent<EntityAnimator>();
         _audioSource = GetComponent<AudioSource>();
-        _loot = GetComponent<EnemyLoot>();
+        _loot = GetComponent<EntityLoot>();
         _rigidbody = GetComponent<Rigidbody>();
         if (_collider == null)
         {
             _collider = GetComponent<Collider>();
         }
-        
+
 
         IsTargetFound = false;
 
         DummyState = new EntityStateDummy(this, _stateMachine);
-        
+
     }
 
     protected virtual void InitializeIndividualParam()
     {
-        
+
     }
 
     public virtual void RotateTo(Transform target)
     {
         float _duration = 1f;
+
         if (isTimeStopped)
         {
             return;
@@ -130,7 +130,17 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         {
             _duration *= 8;
         }
-        transform.DOLookAt(new Vector3(target.position.x,transform.position.y,target.position.z),_duration);
+
+        if (_isRotating)
+        {
+            return;
+            
+        }
+
+        _isRotating = true;
+        transform.DOLookAt(new Vector3(target.position.x, transform.position.y, target.position.z), _duration)
+            .OnComplete(
+                () => { _isRotating = false; });
     }
 
     protected void Start()
@@ -159,9 +169,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     {
         if (!_isAlive)
             return;
-        if (Target == null)
+        if (Target == null && CurrentState != DummyState && !_isRotating)
         {
-            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f)* transform.rotation, 0.5f);
+            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f) * transform.rotation, 1f);
+            //_targetFinder.SetTarget();
         }
 
         _health.Decrease(damage, isCritical);
@@ -178,7 +189,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void Die()
     {
-        Debug.Log("Die");
+
         OnTargetInvalid?.Invoke();
         OnFinisherEnded?.Invoke();
         OnTimeAffectedDestroy?.Invoke();
@@ -195,7 +206,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _stateMachine.ChangeState(DummyState);
 
         _collider.enabled = false;
-        
+
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 
@@ -204,8 +215,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
             RealTimeDieWaiter().Forget();
             return;
         }
-        
-        if(!_animator.GetAnimationParamStatus("Finisher"))
+
+        if (!_animator.GetAnimationParamStatus("Finisher"))
             _animator.PlayDeathAnimation();
 
         if (_enemySpawner != null)
@@ -213,6 +224,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
             _enemySpawner.UpdateSliderValue();
         }
 
+        _loot.DropItems();
         OnDie?.Invoke();
         enemyList.Remove(gameObject);
         Destroy(gameObject, 3f);
@@ -283,6 +295,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         if (gameObject != null)
         {
             isTimeStopped = true;
+            Debug.Log("StopTimeEntity");
             _animator.StopAnimation();
         }
     }
@@ -292,7 +305,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         if (gameObject != null)
         {
             isTimeSlowed = true;
-
+            Debug.Log("SlowTimeEntity");
             _animator.SlowAnimation();
         }
     }
@@ -330,7 +343,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     public virtual void TargetFoundReaction()
     {
-        
+
     }
 
     public enum State
@@ -346,21 +359,21 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     public virtual void ResetValues()
     {
-        
+
     }
-    
+
     public void StartFinisher(int id)
     {
-       _animator.Finisher(id);
-       _stateMachine.ChangeState(DummyState);
-       _finisherReady.SetActive(false);
-       ResetValues();
-       var Player = GameObject.FindWithTag("Player");
-       Vector3 dir = Player.transform.position - transform.position;
-       dir.y = 0;
-       transform.rotation = Quaternion.LookRotation(-dir);
-       _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-       _rigidbody.velocity = Vector3.zero;
+        _animator.Finisher(id);
+        _stateMachine.ChangeState(DummyState);
+        _finisherReady.SetActive(false);
+        ResetValues();
+        var Player = GameObject.FindWithTag("Player");
+        Vector3 dir = Player.transform.position - transform.position;
+        dir.y = 0;
+        transform.rotation = Quaternion.LookRotation(-dir);
+        _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+        _rigidbody.velocity = Vector3.zero;
     }
 
     public bool GetFinisherableStatus()
@@ -369,5 +382,5 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
             return false;
         return _isFinisherReady;
     }
-    
+
 }

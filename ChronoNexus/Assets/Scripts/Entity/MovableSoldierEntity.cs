@@ -68,9 +68,41 @@ public class MovableSoldierEntity : MovableMeleeEntity
             _navMeshAgent.SetDestination(Target.GetTransform().position);
         }
     }
+    public override void StopTimeAction()
+    {
+        if (gameObject != null)
+        {
+            if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+            {
+                FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
+                Debug.Log("STOP FIRE ON STOP");
+                _firearmWeapon.StopFire();
+            }
+        }
+        base.StopTimeAction();
+    }
+
+    public override void SlowTimeAction()
+    {
+        if (gameObject != null)
+        {
+            if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+            {
+                FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
+                Debug.Log("STOP FIRE ON SLOW");
+                
+            }
+        }
+        base.SlowTimeAction();
+    }
     protected override void Die()
     {
-
+        if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+        {
+            FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
+            Debug.Log("STOP FIRE ON DIE");
+            _firearmWeapon.StopFire();
+        }
         
         base.Die();
     }

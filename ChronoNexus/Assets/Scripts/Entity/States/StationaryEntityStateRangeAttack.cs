@@ -23,6 +23,9 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
     private float reloadTimer = 0;
     private float reloadInterval = 3f;
 
+    private float _setTargetOnAim = 0.5f;
+    private float _setTargetOnAimTemp = 0.5f;
+
     private bool _isReloading = false;
 
     private int ammoCount;
@@ -41,7 +44,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
     public override void Enter()
     {
         base.Enter();
-
+        _setTargetOnAimTemp = _setTargetOnAim;
         shootingInterval = _stationaryEntity.TurretAttacker.RangedAttackInterval;
         ammoMaxCount = _stationaryEntity.TurretAttacker.AmmoCount;
         ammoCount = ammoMaxCount;
@@ -61,7 +64,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         _targetPosition = _target.localPosition;
 
         _isAttack = true;
-
+        _cancellationTokenSource = new CancellationTokenSource();
         _stationaryEntity.OnDie += CancelCancelationToken;
     }
 
@@ -85,19 +88,22 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         Vector3 selfPos = new Vector3(_stationaryEntity.transform.position.x, _targetPosition.y,
             _stationaryEntity.transform.position.z);
         _toRotation = Quaternion.LookRotation(_targetPosition - selfPos, Vector3.up);
-
         if (_stationaryEntity.isTimeSlowed)
         {
-            _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation,
-                _toRotation, 6f * 0.2f * Time.deltaTime);
-            //TimeSlowedLogicUpdate();
+            _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation, _toRotation, 6f * 0.2f * Time.deltaTime);
         }
         else
         {
-            _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation,
-                _toRotation, 6f * Time.deltaTime);
-            //TimeDefaultLogicUpdate();
+            _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation, _toRotation, 6f * Time.deltaTime);
         }
+
+        if (Quaternion.Angle(_stationaryEntity.transform.rotation, _toRotation) <
+            10f) 
+        {
+            ShootLogic();
+        }
+
+        ReloadLogic();
 
         if (Vector3.Distance(_stationaryEntity.SelfAim.transform.position, _targetPosition) > _maxAttackDistance)
         {
@@ -107,6 +113,13 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
 
         //_firearmWeapon.Fire(_stationaryEntity.Target, _stationaryEntity.transform);
 
+
+        base.LogicUpdate();
+
+    }
+
+    private void ShootLogic()
+    {
         if (!_isReloading)
         {
             if (_stationaryEntity.isTimeSlowed)
@@ -137,6 +150,11 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
             }
         }
 
+        
+    }
+
+    private void ReloadLogic()
+    {
         if (reloadTimer >= 0f && _isReloading)
         {
             if (_stationaryEntity.isTimeSlowed)
@@ -151,27 +169,6 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         else if (_isReloading)
         {
             _isReloading = false;
-        }
-
-        base.LogicUpdate();
-
-    }
-
-    private void TimeSlowedLogicUpdate()
-    {
-        if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
-        {
-            _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation,
-                _toRotation, 6f * 0.2f * Time.deltaTime);
-        }
-    }
-
-    private void TimeDefaultLogicUpdate()
-    {
-        if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
-        {
-            _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation,
-                _toRotation, 6f * Time.deltaTime);
         }
     }
 

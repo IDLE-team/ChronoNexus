@@ -26,7 +26,7 @@ public class CharacterTargetLock : MonoBehaviour
     public float DebugTestUniTask;
     public bool IsLookAt { get; private set; }
 
-    private List<GameObject> _targets => Enemy.enemyList;
+    private List<GameObject> _targets => Entity.enemyList;
 
     private Transform _previousTarget;
 

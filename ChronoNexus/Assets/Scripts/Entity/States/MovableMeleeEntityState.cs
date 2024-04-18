@@ -40,6 +40,5 @@ public abstract class MovableMeleeEntityState : IState
     {
         await UniTask.WaitUntil(() => !_movableMeleeEntity.isTimeSlowed && !_movableMeleeEntity.isTimeStopped);
         _movableMeleeEntity.NavMeshAgent.speed = 1.5f;
-        //Default speed
     }
 }
