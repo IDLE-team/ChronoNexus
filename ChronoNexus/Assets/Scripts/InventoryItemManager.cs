@@ -68,6 +68,7 @@ public class InventoryItemManager : MonoBehaviour
         if (_gunEquiped)
         {
             OnEquiped?.Invoke(_gunEquiped);
+            SaveGun();
         }
     }
     public Sprite GetSpriteByType(itemType itemType)
