@@ -11,19 +11,17 @@ public class EntityTriggerZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(_entity.CurrentState);
         if (!_entity.IsAlive || _entity.CurrentState == _entity.DummyState)
         {
             gameObject.GetComponent<Collider>().enabled = false;
             return;
         }
-
-        if (_entity.IsRotating)
+        if (_entity.IsRotating || _entity.isTimeStopped || _entity.isTimeSlowed)
         {
             return;
         }
         
-        if (other.CompareTag("Player") && _entity.Target != other.GetComponent<ITargetable>()) 
+        if (other.CompareTag("Player") && _entity.Target != other.GetComponent<ITargetable>())  
         {
             _entity.//TargetFinder.SetTarget(other.GetComponent<ITargetable>());
                 RotateTo(other.transform);

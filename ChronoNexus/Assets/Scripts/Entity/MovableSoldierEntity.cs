@@ -72,11 +72,13 @@ public class MovableSoldierEntity : MovableMeleeEntity
     {
         if (gameObject != null)
         {
-            if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+            if (WeaponController.CurrentWeapon)
             {
-                FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
-                Debug.Log("STOP FIRE ON STOP");
-                _firearmWeapon.StopFire();
+                if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+                {
+                    FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
+                    _firearmWeapon.StopFire();
+                }
             }
         }
         base.StopTimeAction();
@@ -89,8 +91,7 @@ public class MovableSoldierEntity : MovableMeleeEntity
             if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
             {
                 FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
-                Debug.Log("STOP FIRE ON SLOW");
-                
+
             }
         }
         base.SlowTimeAction();
@@ -100,7 +101,6 @@ public class MovableSoldierEntity : MovableMeleeEntity
         if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
         {
             FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
-            Debug.Log("STOP FIRE ON DIE");
             _firearmWeapon.StopFire();
         }
         

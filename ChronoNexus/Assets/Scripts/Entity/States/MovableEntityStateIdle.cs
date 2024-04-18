@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
@@ -29,7 +30,11 @@ public class MovableEntityStateIdle : MovableEntityState
         
         base.LogicUpdate();
     }
-
+    protected override async UniTask TimeWaiter()
+    {
+        await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
+        _movableEntity.NavMeshAgent.speed = _movableEntity.ChaseSpeed;
+    }
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
