@@ -5,7 +5,6 @@ using UnityEngine;
 public class TutorialController : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _deactivationObjects;
-
     public void StartControllerWork()
     {
         for (int i = 0; i < _deactivationObjects.Count; i++)
@@ -20,6 +19,7 @@ public class TutorialController : MonoBehaviour
         {
             _deactivationObjects[i].SetActive(true);
         }
+        gameObject.SetActive(false);
     }
     
 }

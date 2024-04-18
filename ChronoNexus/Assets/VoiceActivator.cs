@@ -1,11 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialZone : MonoBehaviour
+public class VoiceActivator : MonoBehaviour
 {
-    [SerializeField] private GameObject _tutorialScreen;
+    [SerializeField] private AudioClip _voiceClip;
+    [SerializeField] private AudioSource _voiceSource;
     
     private bool _wasActivated;
     private void OnTriggerEnter(Collider other)
@@ -14,11 +14,10 @@ public class TutorialZone : MonoBehaviour
         {
             if (!_wasActivated)
             {
-                _tutorialScreen.SetActive(true);
-                _tutorialScreen.GetComponent<TutorialController>().StartControllerWork();
+                _voiceSource.clip = _voiceClip;
+                _voiceSource.Play();
                 _wasActivated = true;
             }
         }
     }
-    
 }
