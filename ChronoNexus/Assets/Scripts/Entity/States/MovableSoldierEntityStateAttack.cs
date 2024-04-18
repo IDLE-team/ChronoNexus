@@ -108,7 +108,6 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             return;
         }
 
-        // Debug.Log(Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _retreatPosition));
         if (Vector3.Distance(_movableSoldierEntity.SelfAim.position, _retreatPosition)<0.2f)
         {
             _movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
@@ -139,12 +138,10 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         _movableSoldierEntity.EntityAnimator.SetReloadAnimation(true);
         _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.transform.position);
         _movableSoldierEntity.TargetFinder.SetWeight(0);
-        
     }
 
     private void ReloadingLogicExit()
     {
-        
         _movableSoldierEntity.EntityAnimator.SetReloadAnimation(false);
         _movableSoldierEntity.TargetFinder.SetWeight(1);
         _movableSoldierEntity.EntityAnimator.SetMoveAnimation(true);

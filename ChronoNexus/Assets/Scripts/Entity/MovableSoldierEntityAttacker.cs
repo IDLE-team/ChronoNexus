@@ -35,12 +35,4 @@ public class MovableEntitySoldierAttacker : MovableMeleeEntityAttacker
     
     public WeaponData RangeWeaponData => _rangeWeaponData;
     
-    /*
-    public void Shoot(Vector3 target)
-    {
-        _bulletDirection = (target - _bulletStartPosition.position).normalized;
-        _bullet = Instantiate(_prefabBullet,_bulletStartPosition.position, Quaternion.LookRotation(_bulletDirection));
-        _bullet.Initialize(_bulletDirection, 10, 20f);
-    }
-    */
 }

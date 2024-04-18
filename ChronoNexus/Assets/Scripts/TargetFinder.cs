@@ -118,8 +118,7 @@ public class TargetFinder : MonoBehaviour
                 continue;
             
             SetTarget(target);
-            if (target != null)
-                OnTargetFinded?.Invoke(target);
+            
 
             
 
@@ -128,11 +127,19 @@ public class TargetFinder : MonoBehaviour
 
     public void SetTarget(ITargetable target)
     {
+        if (target == Target)
+        {
+            return;
+        }
+        if (_isSeeking == false)
+            return;
         _seeker.Target = target;
         Target = target;
         _entityTargeting.SetTargetParent(Target.GetTransform());
         _seeker.IsTargetFound = true;
         _foundEffect.SetActive(true);
+        if (target != null)
+            OnTargetFinded?.Invoke(target);
     }
 
     private void OnDestroy()

@@ -12,7 +12,7 @@ public class DebugEnemySpawner : MonoBehaviour
     [SerializeField] private TMP_Dropdown enemyTypeDropdown;
     [SerializeField] private int maxEnemies = 20;
 
-    public List<GameObject> enemyList => Enemy.enemyList;
+    public List<GameObject> enemyList => Entity.enemyList;
 
     private Vector3 _spawnPosition;
     private int currentEnemies => enemyList.Count;
@@ -63,40 +63,25 @@ public class DebugEnemySpawner : MonoBehaviour
 
             var enemy = Instantiate(enemyPrefab, _spawnPosition, Quaternion.identity);
             enemy.name = "Enemy " + i;
-            var enemyScript = enemy.GetComponent<Enemy>();
+            var enemyScript = enemy.GetComponent<Entity>();
 
 
             switch (enemyDropdown.value)
             {
                 case 0:
-                    enemyScript.state = Enemy.State.Dummy;// InitializeSpawner(this, enemyScript.DummyState);
+                    enemyScript.state = Entity.State.Dummy;// InitializeSpawner(this, enemyScript.DummyState);
                     break;
 
                 case 1:
-                    enemyScript.state = Enemy.State.Idle;
+                    enemyScript.state = Entity.State.Idle;
                     break;
 
                 case 2:
-                    enemyScript.state = Enemy.State.Patrol;
+                    enemyScript.state = Entity.State.Patrol;
                     break;
             }
 
-            switch (enemyTypeDropdown.value)
-            {
-                case 0:
-                    enemyScript.enemyType = Enemy.EnemyType.Stormtrooper;
-                    break;
-
-                case 1:
-                    enemyScript.enemyType = Enemy.EnemyType.Guard;
-                    break;
-
-                case 2:
-                    enemyScript.enemyType = Enemy.EnemyType.Juggernaut;
-                    break;
-            }
-
-            // enemyList.Add(enemy);
+            
         }
     }
 

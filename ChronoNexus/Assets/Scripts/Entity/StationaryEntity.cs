@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class StationaryEntity : Entity
 {
+    [SerializeField]private GameObject smokeVFX;
+    [SerializeField]private GameObject fireVFX;
+    
     private StationaryEntityAttacker _attacker;
     public StationaryEntityAttacker TurretAttacker => _attacker;
 
@@ -29,6 +32,13 @@ public class StationaryEntity : Entity
                 _stateMachine.Initialize(DummyState);
                 break;
         }
+    }
+
+    protected override void Die()
+    {
+        smokeVFX.SetActive(true);
+        fireVFX.SetActive(true);
+        base.Die();
     }
 
     protected override void InitializeParam()
