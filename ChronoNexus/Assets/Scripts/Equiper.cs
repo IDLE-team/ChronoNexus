@@ -12,7 +12,8 @@ public class Equiper : MonoBehaviour
 
     public void EquipWeapon(WeaponData weapon)
     {
-        _weaponController.ChangeWeapon(weapon, _holderTransform);
+        if(weapon != null)
+            _weaponController.ChangeWeapon(weapon, _holderTransform);
     }
     public void EquipColdWeapon(ColdWeapon weapon)
     {

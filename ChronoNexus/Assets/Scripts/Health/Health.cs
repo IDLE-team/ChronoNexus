@@ -41,7 +41,11 @@ public class Health : MonoBehaviour, IHealth
         }
         Changed?.Invoke(_value);
     }
-
+    public void Increase(float value)
+    {
+        _value += value;
+        Changed?.Invoke(_value);
+    }
     public void SetHealth(string value)
     {
         if (value == null || value == " ")

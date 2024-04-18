@@ -98,12 +98,15 @@ public class MovableSoldierEntity : MovableMeleeEntity
     }
     protected override void Die()
     {
-        if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+        if (WeaponController.CurrentWeapon != null)
         {
-            FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
-            _firearmWeapon.StopFire();
+            if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+            {
+                FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
+                _firearmWeapon.StopFire();
+            }
         }
-        
+
         base.Die();
     }
 

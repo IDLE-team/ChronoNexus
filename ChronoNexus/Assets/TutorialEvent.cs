@@ -26,6 +26,7 @@ public class TutorialEvent : MonoBehaviour
     private void FinisherEvent()
     {
         _tutorialFinisherScreen.SetActive(true);
+        _damagable.Increase(999999);
         _tutorialFinisherScreen.GetComponent<TutorialController>().StartControllerWork();
     }
 
