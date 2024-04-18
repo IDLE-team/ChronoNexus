@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5645151221783942732}
   - component: {fileID: 312167436362600941}
   - component: {fileID: 5776499894343959923}
+  - component: {fileID: 6235975355180785047}
   m_Layer: 0
   m_Name: ItemObject
   m_TagString: Untagged
@@ -95,7 +96,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4db3120d1e37d418d61e5c51a5e55b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemData: {fileID: 0}
+  _itemData: {fileID: 11400000, guid: 00d35fc4db3e56241b25cb129b7b35d7, type: 2}
+  _itemDataColorSet: {fileID: 6235975355180785047}
+--- !u!114 &6235975355180785047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769639272446497629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 247d7317e4be0694b805713bb4a4c569, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GrayMaterial: {fileID: 2100000, guid: a6067b0ac2751b3429d1733a82da2a8a, type: 2}
+  GreenMaterial: {fileID: 2100000, guid: 938ee39f25f2f9b4da483f015caa4ce6, type: 2}
+  PurpleMaterial: {fileID: 2100000, guid: 54901df4ce8062348a50d771de9e4001, type: 2}
+  GoldMaterial: {fileID: 2100000, guid: f66bf76dd4bb670498fbc70e90d225b6, type: 2}
+  Renderers:
+  - {fileID: 8804474624808225229}
+  - {fileID: 8802338900122066863}
 --- !u!1001 &8826008614455583209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -161,6 +182,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3523287422406796236}
   m_SourcePrefab: {fileID: 100100000, guid: 9806e8e91f17e534291605ec5b47e5f1, type: 3}
+--- !u!23 &8802338900122066863 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23776412268330566, guid: 9806e8e91f17e534291605ec5b47e5f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 8826008614455583209}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8804474624808225229 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23519753969281060, guid: 9806e8e91f17e534291605ec5b47e5f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 8826008614455583209}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8821427026621014729 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4584096255640352, guid: 9806e8e91f17e534291605ec5b47e5f1,
@@ -183,10 +216,10 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 257
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
