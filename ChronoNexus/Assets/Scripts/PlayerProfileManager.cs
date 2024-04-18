@@ -46,6 +46,11 @@ public class PlayerProfileManager : MonoBehaviour
         {
             PlayerPrefs.GetFloat("exp");
         }
+
+        if (!PlayerPrefs.HasKey("inventoryMain"))
+        {
+            PlayerPrefs.SetString("inventoryMain", "2");
+        }
     }
 
     public void OnMoneyChange()
