@@ -11,7 +11,6 @@ public class MovableEntityStateChase : MovableEntityState
     public MovableEntityStateChase(MovableEntity movableEntity, StateMachine stateMachine) : base(movableEntity,
         stateMachine)
     {
-        //_remainingDistance = _entity.EntityLogic.RemainingDistanceToRandomPosisiton
     }
 
     public override void Enter()
@@ -39,7 +38,7 @@ public class MovableEntityStateChase : MovableEntityState
     {
         if (_movableEntity.Target == null)
         {
-            _stateMachine.ChangeState(_movableEntity.DummyState);//
+            _stateMachine.ChangeState(_movableEntity.DummyState);
             return;
         }
 
@@ -47,5 +46,9 @@ public class MovableEntityStateChase : MovableEntityState
 
         base.PhysicsUpdate();
     }
-
+    protected override async UniTask TimeWaiter()
+    {
+        await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
+        _movableEntity.NavMeshAgent.speed = _movableEntity.ChaseSpeed;
+    }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4726751047989802256}
   - component: {fileID: 5672360473946228659}
   - component: {fileID: 3767215856496138578}
+  - component: {fileID: 2133001595147786359}
   m_Layer: 0
   m_Name: LevelEnd
   m_TagString: Untagged
@@ -90,6 +91,19 @@ MonoBehaviour:
   _currentTime: 0
   _startEnemyAmount: 0
   _kills: 0
+--- !u!114 &2133001595147786359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4139839378720684482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da41c30acfac7149963746db934426c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _levelStatTracker: {fileID: 3767215856496138578}
 --- !u!1001 &4018258722795939725
 PrefabInstance:
   m_ObjectHideFlags: 0

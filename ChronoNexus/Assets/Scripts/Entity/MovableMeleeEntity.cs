@@ -41,7 +41,6 @@ public class MovableMeleeEntity : MovableEntity
     protected override void InitializeParam()
     {
         base.InitializeParam();
-            //
         MeleeAttackState = new MovableMeleeEntityStateAttack(this, _stateMachine);
     }
 
@@ -62,6 +61,7 @@ public class MovableMeleeEntity : MovableEntity
         }
         else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= MeleeAttacker.MaxMeleeAttackDistance) // or attack range
         {
+
             _stateMachine.ChangeState(MeleeAttackState);
         }
     }
@@ -69,7 +69,6 @@ public class MovableMeleeEntity : MovableEntity
     {
         if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > MeleeAttacker.MaxMeleeAttackDistance)
         {
-            Debug.Log("GoToDist");
             _navMeshAgent.SetDestination(Target.GetTransform().position);
         }
     }

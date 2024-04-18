@@ -100,7 +100,7 @@ public class LevelSelector : MonoBehaviour
     public void LoadData(string levelName)
     {
         string data = PlayerPrefs.GetString(levelName);
-        Debug.Log(data);
+            // Debug.Log(data);
         if (!string.IsNullOrEmpty(data))
         {
             string[] parts = data.Split(';');

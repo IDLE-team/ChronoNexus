@@ -20,7 +20,6 @@ public class MovableEntityStatePatrol : MovableEntityState
 
     public override void Enter()
     {
-        //_patrolPoints = _movableEntity.PatrolPoints;
         _movableEntity.StartSeek();
         _movableEntity.EntityAnimator.SetMoveAnimation(true);
 

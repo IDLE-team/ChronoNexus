@@ -27,6 +27,6 @@ public class StateUIUpdater : MonoBehaviour
     }
     private void UpdateStateUI()
     {
-        _textMesh.text = _entity.CurrentState.ToUpper();
+        //_textMesh.text = _entity.CurrentState.ToUpper();
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 public interface IFinisherable
 {
-    public void StartFinisher();
+    public void StartFinisher(int id);
     public bool GetFinisherableStatus();
 
     public event Action OnFinisherReady;

@@ -7,7 +7,7 @@ using Zenject;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CharacterMovement), typeof(CharacterAnimator))]
-[RequireComponent(typeof(CharacterAudioController))]
+[RequireComponent(typeof(CharacterAudioController), typeof(Health))]
 
 public class Character : MonoBehaviour, IDamagable, ITargetable
 {
@@ -19,22 +19,27 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     [SerializeField] private LevelController _levelController;
 
     private IOutfitter _outfitter;
-    private Health _health;
 
     public Transform AimTarget => _aimTarget;
+        
+    [SerializeField]  private Health _health;
+    public Health Health => _health;
     public Rigidbody Rigidbody { get; private set; }
     public CharacterAudioController AudioController { get; private set; }
     public CharacterMovement Movement { get; private set; }
     public CharacterAnimator Animator { get; private set; }
-    public СharacterTargetingSystem CharacterTargetingSystem { get; private set; }
+    
+    [SerializeField] private СharacterTargetingSystem _characterTargetingSystem;
+    public СharacterTargetingSystem CharacterTargetingSystem => _characterTargetingSystem;
 
-    public CharacterEventsHolder CharacterEventsHolder { get; private set; }
+    [SerializeField] private CharacterEventsHolder _сharacterEventsHolder;
+    public CharacterEventsHolder CharacterEventsHolder => _сharacterEventsHolder;
 
-    public Health Health => _health;
-
-    public Equiper Equiper { get; private set; }
-
-    public WeaponController WeaponController { get; private set; }
+    [SerializeField] private Equiper _equiper;
+    public Equiper Equiper => _equiper;
+    
+    [SerializeField] private WeaponController _weaponController;
+    public WeaponController WeaponController => _weaponController;
 
 
     public AimRigController AimRigController { get; private set; }
@@ -73,17 +78,17 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         //TODO прокинуть через Zenject
         //_outfitter = GetComponent<Outfitter>();
         _health = GetComponent<Health>();
+      //  _сharacterEventsHolder = GetComponent<CharacterEventsHolder>();
+      //  Debug.Log("CharacterEventsHolderInit: " + CharacterEventsHolder);
         Movement = GetComponent<CharacterMovement>();
         Attacker = GetComponent<PlayerAttacker>();
-        CharacterTargetingSystem = GetComponent<СharacterTargetingSystem>();
-        CharacterEventsHolder = GetComponent<CharacterEventsHolder>();
+        _characterTargetingSystem = GetComponent<СharacterTargetingSystem>();
         Animator = GetComponent<CharacterAnimator>();
         Rigidbody = GetComponent<Rigidbody>();
         AudioController = GetComponent<CharacterAudioController>();
         AimRigController = GetComponent<AimRigController>();
-        Equiper = GetComponent<Equiper>();
-        WeaponController = GetComponent<WeaponController>();
-
+        _equiper = GetComponent<Equiper>();
+        _weaponController = GetComponent<WeaponController>();
     }
     private void Start()
     {

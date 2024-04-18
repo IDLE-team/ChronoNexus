@@ -6,6 +6,7 @@ using System.Linq;
 [Fix("24 строка")]
 public class EnemyLoot : MonoBehaviour
 {
+    public GameObject ItemPrefab;
     public List<ItemData> items;
     public List<float> dropChances = new List<float> { 0.2f, 0.3f, 0.4f };//10% шанс ничего не заспавнить
     public int amountToDrop = 1;
@@ -15,13 +16,21 @@ public class EnemyLoot : MonoBehaviour
 
     public void DropItems()
     {
+        if (ItemPrefab == null || items.Count == 0 || dropChances.Count == 0||amountToDrop==0||possibleQualities.Count==0||qualityChances.Count==0) 
+        {
+            return;
+        }
         for (int i = 0; i < amountToDrop; i++)
         {
             ItemData itemToDrop = GetRandomItem();
             if (itemToDrop != null)
             {
                 itemToDrop.rarity = GetRandomQuality();
-                GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().InventoryItemManager.AddItem(itemToDrop);
+                GameObject itemObj = Instantiate(ItemPrefab,transform.position,transform.rotation);
+                itemObj.transform.SetParent(null);
+                itemObj.GetComponent<ItemDataContainer>()._itemData = itemToDrop;
+                
+                //GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().InventoryItemManager.AddItem(itemToDrop);
             }
         }
     }

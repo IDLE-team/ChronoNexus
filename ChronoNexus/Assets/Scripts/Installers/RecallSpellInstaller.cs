@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Zenject;
@@ -44,6 +44,8 @@ public class RecallSpellInstaller : MonoInstaller
     {
 
         Container.Bind<RecallSpell>().AsSingle();
+        
+      //  Container.Bind<Timer>().FromInstance(_timer).AsSingle();
 
         Container.Bind<RecallSpellConfig>().FromInstance(_recallSpellConfig).AsSingle();
 

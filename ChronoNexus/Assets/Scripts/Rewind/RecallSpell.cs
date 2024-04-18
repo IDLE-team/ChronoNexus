@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class RecallSpell 
 {
@@ -23,18 +24,19 @@ public class RecallSpell
     private bool _isApplied;
     
     public bool IsApplied { get { return _isApplied; } }
-
-    public RecallSpell(RecallSpellConfig recallSpellConfig, PauseHandler pauseHandler, Timer timer, CharacterMovement caster)
+    
+    public RecallSpell(RecallSpellConfig recallSpellConfig, /*PauseHandler pauseHandler,*/ Timer timer /*CharacterMovement caster*/)
     {
         _config = recallSpellConfig;
-        _pauseHandler = pauseHandler;
+       // _pauseHandler = pauseHandler;
 
         _timer = timer;
         _timer.Set(recallSpellConfig.SecondsToRecord, recallSpellConfig.SecondsToRecord);
 
        // _aimTarget = aimTarget;
+       _caster = GameObject.Find("Character").GetComponent<CharacterMovement>();
+      // Debug.Log("InitCaset: " + _caster);
 
-        _caster = caster;
     }
 
     public void StartCast()
@@ -53,7 +55,7 @@ public class RecallSpell
             }
         }
 
-        _pauseHandler.SetPause(true);
+      //  _pauseHandler.SetPause(true);
 
        // _aimTarget.Enable(_findedInteractors);
      //   _aimTarget.TargetDetected += OnTargetDetected;
@@ -90,7 +92,7 @@ public class RecallSpell
 
         //_findedInteractors.Clear();
 
-        _pauseHandler.SetPause(false);
+       // _pauseHandler.SetPause(false);
 
       //  _selectedInteractor.Activate(_config.TimeRewindLayer);
 
@@ -127,7 +129,7 @@ public class RecallSpell
 
             _findedInteractors.Clear();
 
-            _pauseHandler.SetPause(false);
+         //   _pauseHandler.SetPause(false);
 
          //   _aimTarget.Disable();
 
