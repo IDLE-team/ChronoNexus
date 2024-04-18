@@ -16,6 +16,9 @@ public class TabLoadInventory : MonoBehaviour
     {
         inventoryManager.SaveInventory();
         inventoryManager.SaveGun();
+        
+        inventoryManager.LoadGun();
+        
         inventoryManager.DeleteInventoryStorage();
         inventoryManager.DeleteEquiped();
     }
