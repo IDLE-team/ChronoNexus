@@ -7,8 +7,8 @@ public class TabLoadInventory : MonoBehaviour
 
     private void OnEnable()
     {
-        inventoryManager.InventoryMainOpened();
         inventoryManager.LoadGun();
+        inventoryManager.InventoryMainOpened();
     }
 
 
@@ -17,7 +17,7 @@ public class TabLoadInventory : MonoBehaviour
         inventoryManager.SaveInventory();
         inventoryManager.SaveGun();
         
-        inventoryManager.LoadGun();
+        //inventoryManager.LoadGun();
         
         inventoryManager.DeleteInventoryStorage();
         inventoryManager.DeleteEquiped();

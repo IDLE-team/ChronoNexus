@@ -295,7 +295,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         if (gameObject != null)
         {
             isTimeStopped = true;
-            Debug.Log("StopTimeEntity");
             _animator.StopAnimation();
         }
     }
@@ -305,7 +304,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         if (gameObject != null)
         {
             isTimeSlowed = true;
-            Debug.Log("SlowTimeEntity");
             _animator.SlowAnimation();
         }
     }

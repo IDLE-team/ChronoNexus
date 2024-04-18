@@ -10,13 +10,6 @@ public class Equiper : MonoBehaviour
     [SerializeField] private WeaponData _weaponData;
     [SerializeField] private Transform _holderTransform;
 
-        
-    private void Start()
-    {
-        if(!gameObject.CompareTag("Player"))
-            EquipWeapon(_weaponData);
-    }
-
     public void EquipWeapon(WeaponData weapon)
     {
         _weaponController.ChangeWeapon(weapon, _holderTransform);
