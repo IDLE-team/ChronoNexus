@@ -34,7 +34,8 @@ public class SceneLoader : MonoBehaviour
             
             //PlayerPrefs.SetInt(_currentLevelName, 1);
             SaveLevelData();
-            _winScreen.SetScreen(_levelStatTracker,this);
+            if (_winScreen != null)
+                _winScreen.SetScreen(_levelStatTracker,this);
 
         }
     }

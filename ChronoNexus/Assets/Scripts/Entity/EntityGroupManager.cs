@@ -13,7 +13,7 @@ public class EntityGroupManager : MonoBehaviour
     [Serializable]
     public class Group
     {
-        public bool _IsTargetFounded;
+        [HideInInspector]public bool _IsTargetFounded;
         public List<Entity> _movableEntities;
     }
 
@@ -21,15 +21,18 @@ public class EntityGroupManager : MonoBehaviour
 
     public void CallTargetSetToGroup(ITargetable target)
     {
-
-        //найти группу и активировать ивенты
         foreach (Group _movableEntitiesGroup in _movableEntitiesGroups)
         {
             foreach (Entity _movableEntity in _movableEntitiesGroup._movableEntities)
             {
+                if (_movableEntity == null)
+                {
+                    continue;
+                }
+
                 if (_movableEntity.TargetFinder.Target == target)
                 {
-                    Debug.Log("Группа - "+_movableEntitiesGroup);
+                    Debug.Log("Группа - " + _movableEntitiesGroup);
                     _group = _movableEntitiesGroup;
                     _movableEntitiesGroup._IsTargetFounded = true;
                     TargetGroupSet(target);
@@ -45,13 +48,18 @@ public class EntityGroupManager : MonoBehaviour
     {
         foreach (Entity _movableEntity in _group._movableEntities)
         {
+            if (_movableEntity == null)
+            {
+                continue;
+            }
+
             if (_movableEntity.TargetFinder.Target == target)
             {
                 continue;
             }
+
             _movableEntity.TargetFinder.SetTarget(target);
         }
-
     }
 
     private void Start()
@@ -60,6 +68,10 @@ public class EntityGroupManager : MonoBehaviour
         {
             foreach (Entity _movableEntity in _movableEntitiesGroup._movableEntities)
             {
+                if (_movableEntity == null)
+                {
+                    continue;
+                }
                 _movableEntity.TargetFinder.OnTargetFinded += CallTargetSetToGroup;
             }
         }
@@ -71,6 +83,10 @@ public class EntityGroupManager : MonoBehaviour
         {
             foreach (Entity _movableEntity in _movableEntitiesGroup._movableEntities)
             {
+                if (_movableEntity == null)
+                {
+                    continue;
+                }
                 _movableEntity.TargetFinder.OnTargetFinded -= CallTargetSetToGroup;
             }
         }

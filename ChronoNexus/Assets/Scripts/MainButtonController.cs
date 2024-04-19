@@ -11,6 +11,7 @@ public class MainButtonController : MonoBehaviour
     [SerializeField] private GameObject _interactButton;
 
     private GameObject _currentButton;
+    public GameObject CurrentButton => _currentButton;
 
     private CharacterEventsHolder _characterEvents;
     [Inject]

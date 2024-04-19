@@ -6,11 +6,11 @@ public class EntityLoot : MonoBehaviour
 {
     public GameObject ItemPrefab;
     public List<ItemData> items;
-    public List<float> dropChances = new List<float> { 0.2f, 0.3f, 0.4f };//10% шанс ничего не заспавнить
+    public List<float> dropChances = new List<float> { 0.2f, 0.3f, 0.4f };
     public int amountToDrop = 1;
 
     public List<InventoryItemManager.itemRarity> possibleQualities = new List<InventoryItemManager.itemRarity> { InventoryItemManager.itemRarity.gray, InventoryItemManager.itemRarity.green, InventoryItemManager.itemRarity.purple };
-    public List<float> qualityChances = new List<float> { 0.8f, 0.15f, 0.05f }; // шанс качества предмета
+    public List<float> qualityChances = new List<float> { 0.8f, 0.15f, 0.5f }; 
 
     public void DropItems()
     {
@@ -21,14 +21,15 @@ public class EntityLoot : MonoBehaviour
         for (int i = 0; i < amountToDrop; i++)
         {
             ItemData itemToDrop = GetRandomItem();
+            
             if (itemToDrop != null)
             {
                 itemToDrop.rarity = GetRandomQuality();
                 GameObject itemObj = Instantiate(ItemPrefab,transform.position,transform.rotation);
                 itemObj.transform.SetParent(null);
-                itemObj.GetComponent<ItemDataContainer>()._itemData = itemToDrop;
-                
-                //GameObject.FindGameObjectWithTag("Player").GetComponent<Character>().InventoryItemManager.AddItem(itemToDrop);
+                ItemDataContainer _itemDataContainer = itemObj.GetComponent<ItemDataContainer>();
+                _itemDataContainer._itemData = itemToDrop;
+                _itemDataContainer._itemDataColorSet.SetColor(itemToDrop.rarity);
             }
         }
     }
@@ -40,12 +41,16 @@ public class EntityLoot : MonoBehaviour
         {
             totalChance += chance;
         }
-
-        float randomPoint = Random.value * totalChance;//
-
+        Debug.Log(totalChance);
+        float randomPoint = Random.Range(0,100) * totalChance;
+        Debug.Log(randomPoint);
+        if (randomPoint == 0)
+        {
+            return null;
+        }
         for (int i = 0; i < items.Count; i++)
         {
-            if (randomPoint < dropChances[i])
+            if (randomPoint < dropChances[i]*100)
             {
                 return items[i];
             }
@@ -54,6 +59,7 @@ public class EntityLoot : MonoBehaviour
                 randomPoint -= dropChances[i];
             }
         }
+        Debug.Log("RETURN NULL");
         return null;
     }
 
@@ -65,11 +71,11 @@ public class EntityLoot : MonoBehaviour
             totalChance += chance;
         }
 
-        float randomPoint = Random.value * totalChance;
+        float randomPoint = Random.Range(0,100) * totalChance;
 
         for (int i = 0; i < possibleQualities.Count; i++)
         {
-            if (randomPoint < qualityChances[i])
+            if (randomPoint < qualityChances[i]*100)
             {
                 return possibleQualities[i];
             }

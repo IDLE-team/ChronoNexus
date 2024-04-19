@@ -283,6 +283,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     {
         if (gameObject != null)
         {
+            if (Target == null)
+            {
+                StartSeek();
+            }
             isTimeStopped = false;
             isTimeSlowed = false;
 
@@ -294,6 +298,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     {
         if (gameObject != null)
         {
+            StopSeek();
             isTimeStopped = true;
             _animator.StopAnimation();
         }

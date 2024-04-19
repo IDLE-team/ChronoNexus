@@ -36,12 +36,26 @@ public class Health : MonoBehaviour, IHealth
             
         if (_value <= 0)
         {
-            _value = 0;
-            Died?.Invoke();
+            Die();
+            return;
         }
         Changed?.Invoke(_value);
     }
 
+    public void Die()
+    {
+        _value = 0;
+
+        Changed?.Invoke(_value);
+
+        Died?.Invoke();
+
+    }
+    public void Increase(float value)
+    {
+        _value += value;
+        Changed?.Invoke(_value);
+    }
     public void SetHealth(string value)
     {
         if (value == null || value == " ")

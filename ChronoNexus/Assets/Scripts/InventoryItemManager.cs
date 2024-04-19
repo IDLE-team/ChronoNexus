@@ -157,7 +157,7 @@ public class InventoryItemManager : MonoBehaviour
             next.ChangeToEquiped();
             itemUse = next;
         }
-
+        SaveGun();
     }
 
     public void TradeParamentrsSort(ItemEquipable first, ItemEquipable next)

@@ -11,7 +11,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
 
     private Transform _target;
     private Vector3 _targetPosition;
-    private float _maxAttackDistance = 8f;
+    private float _maxAttackDistance = 12f;
     private float _minAttackDistance;
     private bool _isAttack = false;
 
@@ -43,6 +43,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
 
     public override void Enter()
     {
+        Debug.Log("RangeStatEnterState");
         base.Enter();
         _setTargetOnAimTemp = _setTargetOnAim;
         shootingInterval = _stationaryEntity.TurretAttacker.RangedAttackInterval;
@@ -69,7 +70,8 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
     }
 
     public override void Exit()
-    {
+    {        Debug.Log("RangeStatExitState");
+
         _isAttack = false;
         _stationaryEntity.IsTargetFound = false;
         _stationaryEntity.OnDie -= CancelCancelationToken;
@@ -81,6 +83,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         if (_stationaryEntity.Target == null)
         {
             _cancellationTokenSource.Cancel();
+            Debug.Log("Target");
             _stateMachine.ChangeState(_stationaryEntity.IdleState);
             return;
         }
@@ -107,6 +110,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
 
         if (Vector3.Distance(_stationaryEntity.SelfAim.transform.position, _targetPosition) > _maxAttackDistance)
         {
+            Debug.Log("DistanceExit");
             _stateMachine.ChangeState(_stationaryEntity.IdleState);
             return;
         }
