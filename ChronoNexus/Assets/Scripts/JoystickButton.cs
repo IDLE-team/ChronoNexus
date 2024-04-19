@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.Layouts;
@@ -10,6 +11,7 @@ public class JoystickButton : OnScreenControl, IPointerDownHandler, IPointerUpHa
     [SerializeField] private СharacterTargetingSystem _targetLock;
     //[SerializeField] private PlayerAttacker _attacker;
     [SerializeField] private float _requiredHoldTime;
+    [SerializeField] private MainButtonController _mainButtonController;
     private bool _isTargetLockPerformed;
     private float _holdTimer;
 
@@ -29,6 +31,9 @@ public class JoystickButton : OnScreenControl, IPointerDownHandler, IPointerUpHa
     private void OnEnable()
     {
         _button.OnLongClicked += ActivateJoystick;
+        if (_mainButtonController != null)
+            if(_mainButtonController.CurrentButton != gameObject)
+                gameObject.SetActive(false);
         //_button.OnClicked += StartShoot;
     }
 

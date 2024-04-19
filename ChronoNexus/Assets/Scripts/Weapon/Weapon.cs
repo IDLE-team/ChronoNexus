@@ -23,7 +23,7 @@ public abstract class Weapon : MonoBehaviour
     public float FireRate;
     public float _lastFireTime;
 
-    public bool isFire = true;
+    public bool isFire = false;
     public bool isCoolDown;
     public abstract void Fire(ITargetable target, Transform holder);
 

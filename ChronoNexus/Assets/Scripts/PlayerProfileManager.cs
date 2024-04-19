@@ -49,7 +49,7 @@ public class PlayerProfileManager : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("inventoryMain"))
         {
-            PlayerPrefs.SetString("inventoryMain", "2");
+            PlayerPrefs.SetString("inventoryMain", "");
         }
     }
 
