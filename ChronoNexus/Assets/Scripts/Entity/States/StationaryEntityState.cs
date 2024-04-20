@@ -17,7 +17,7 @@ public abstract class StationaryEntityState : IState
 
     public virtual void Enter()
     {
-        
+        TimeWaiter().Forget();
     }
 
     public virtual void LogicUpdate()
@@ -34,17 +34,9 @@ public abstract class StationaryEntityState : IState
     {
         
     }
-    
-    protected virtual void CheckTarget()
+    protected virtual async UniTask TimeWaiter()
     {
-        if (_stationaryEntity.IsTargetFound)
-        {
-            TargetFoundReaction();
-            return;
-        }
-    }
-    protected virtual void TargetFoundReaction()
-    {
-        _stationaryEntity.TargetFoundReaction();
+        await UniTask.WaitUntil(() => !_stationaryEntity.isTimeSlowed && !_stationaryEntity.isTimeStopped);
+        
     }
 }
