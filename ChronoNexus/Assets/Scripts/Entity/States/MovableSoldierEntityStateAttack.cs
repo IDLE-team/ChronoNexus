@@ -28,8 +28,6 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
     public override void Enter()
     {
-        base.Enter();
-
         _maxDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MaxRangeAttackDistance;
         _minDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MinRangeDistanceToTarget;
         _minDelay = _movableSoldierEntity.SoldierAttacker.MinDelayTokenRange;
@@ -42,7 +40,6 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         {
             _firearmWeapon = (FirearmWeapon) _movableSoldierEntity.WeaponController.CurrentWeapon;
         }
-
         _target = _movableSoldierEntity.Target.GetTransform();
         _targetPosition = _target.localPosition;
 
@@ -56,6 +53,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
         _cancellationTokenSource = new CancellationTokenSource();
         ShootAndRetreat(_cancellationTokenSource.Token).Forget();
+        base.Enter();
 
     }
 
@@ -116,7 +114,6 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         {
             _movableSoldierEntity.EntityAnimator.SetMoveAnimation(true);
         }
-
         _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
         base.LogicUpdate();
 

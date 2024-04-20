@@ -264,7 +264,12 @@ public class InventoryItemManager : MonoBehaviour
     public void LoadGun() // call on inventory open
     {
         var savedData = PlayerPrefs.GetInt("gun", -1);
-        if (savedData == -1) return;
+
+        if (savedData == -1)
+        {
+              PlayerPrefs.SetInt("gun", 2);
+              savedData =PlayerPrefs.GetInt("gun", 2);
+        };
 
         GameObject itemEmpty = Instantiate(_itemPrefab);
         var item = itemEmpty.GetComponent<ItemEquipable>();

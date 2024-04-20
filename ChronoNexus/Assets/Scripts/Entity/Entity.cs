@@ -365,7 +365,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     }
 
-    public void StartFinisher(int id)
+    public virtual void StartFinisher(int id)
     {
         _animator.Finisher(id);
         _stateMachine.ChangeState(DummyState);

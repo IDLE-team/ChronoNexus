@@ -92,14 +92,9 @@ public class MovableEntity : Entity
 
     protected override void InitializeIndividualParam()
     {
-    }
-
-    public override void TakeDamage(float damage, bool isCritical)
-    {
         
-
-        base.TakeDamage(damage, isCritical);
     }
+
 
     protected override void Die()
     {

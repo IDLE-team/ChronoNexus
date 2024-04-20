@@ -90,7 +90,7 @@ public class MovableSoldierEntity : MovableMeleeEntity
         {
             if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
             {
-                FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
+                //FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
 
             }
         }
@@ -104,10 +104,30 @@ public class MovableSoldierEntity : MovableMeleeEntity
             {
                 FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
                 _firearmWeapon.StopFire();
+                _targetFinder.SetWeight(0);
             }
         }
 
         base.Die();
+    }
+    public override void TakeDamage(float damage, bool isCritical)
+    {
+        
+
+        base.TakeDamage(damage, isCritical);
+    }
+    public override void StartFinisher(int id)
+    {
+        if (WeaponController.CurrentWeapon != null)
+        {
+            if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
+            {
+                FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
+                _firearmWeapon.StopFire();
+                _targetFinder.SetWeight(0);
+            }
+        }
+        base.StartFinisher(id);
     }
 
     

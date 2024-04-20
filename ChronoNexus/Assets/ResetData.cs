@@ -9,8 +9,7 @@ public class ResetData : MonoBehaviour
 
     public void DeleteData()
     {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.SetInt("gun", 2);
+        PlayerPrefs.DeleteAll(); 
         Restart();
     }
 

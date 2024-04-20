@@ -44,7 +44,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
     public override void Enter()
     {
         Debug.Log("RangeStatEnterState");
-        base.Enter();
+        
         _setTargetOnAimTemp = _setTargetOnAim;
         shootingInterval = _stationaryEntity.TurretAttacker.RangedAttackInterval;
         ammoMaxCount = _stationaryEntity.TurretAttacker.AmmoCount;
@@ -67,6 +67,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         _isAttack = true;
         _cancellationTokenSource = new CancellationTokenSource();
         _stationaryEntity.OnDie += CancelCancelationToken;
+        base.Enter();
     }
 
     public override void Exit()
