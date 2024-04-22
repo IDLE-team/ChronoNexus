@@ -56,5 +56,6 @@ public class StationaryEntity : Entity
     {
         Debug.Log("TargetFounded");
         _stateMachine.ChangeState(RangeAttackState);
+        base.TargetFoundReaction();
     }
 }

@@ -20,7 +20,10 @@ public class StationaryEntityStateIdle : StationaryEntityState
 
     public override void LogicUpdate()
     {
-        CheckTarget();
+        if (_stationaryEntity.IsTargetFound)
+        {
+            _stationaryEntity.TargetFoundReaction();
+        }
         base.LogicUpdate();
     }
 

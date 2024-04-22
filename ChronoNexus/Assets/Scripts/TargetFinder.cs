@@ -116,13 +116,18 @@ public class TargetFinder : MonoBehaviour
             var dstToTarget = Vector3.Distance(transform.position, _target.position);
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;
-            
+            Debug.Log(target+" TARGETFINDER");
             SetTarget(target);
             
 
             
 
         }
+    }
+
+    public void ResetTarget()
+    {
+        Target = null;
     }
 
     public void SetTarget(ITargetable target)

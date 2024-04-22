@@ -49,6 +49,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         shootingInterval = _stationaryEntity.TurretAttacker.RangedAttackInterval;
         ammoMaxCount = _stationaryEntity.TurretAttacker.AmmoCount;
         ammoCount = ammoMaxCount;
+        _maxAttackDistance = _stationaryEntity.TurretAttacker.MaxRangeAttackDistance;
 
         // _stationaryEntity.Equiper.EquipWeapon(_stationaryEntity.TurretAttacker.RangeWeaponData);
 
@@ -71,10 +72,13 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
     }
 
     public override void Exit()
-    {        Debug.Log("RangeStatExitState");
-
+    {
         _isAttack = false;
+        _stationaryEntity.TargetFinder.ResetTarget();
+        _stationaryEntity.Target = null;
         _stationaryEntity.IsTargetFound = false;
+        //ВНИМАНИЕ ЭТО СДЕЛАНО ДЛЯ ФИКСА ПРОВЕРКИ УСТАНОВКИ ДЛЯ ГРУПП В ТАРГЕТ ФАЙНДЕРЕ
+        
         _stationaryEntity.OnDie -= CancelCancelationToken;
         base.Exit();
     }
@@ -84,13 +88,11 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         if (_stationaryEntity.Target == null)
         {
             _cancellationTokenSource.Cancel();
-            Debug.Log("Target");
             _stateMachine.ChangeState(_stationaryEntity.IdleState);
             return;
         }
 
-        Vector3 selfPos = new Vector3(_stationaryEntity.transform.position.x, _targetPosition.y,
-            _stationaryEntity.transform.position.z);
+        Vector3 selfPos = new Vector3(_stationaryEntity.transform.position.x, _targetPosition.y, _stationaryEntity.transform.position.z);
         _toRotation = Quaternion.LookRotation(_targetPosition - selfPos, Vector3.up);
         if (_stationaryEntity.isTimeSlowed)
         {
@@ -101,8 +103,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
             _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation, _toRotation, 6f * Time.deltaTime);
         }
 
-        if (Quaternion.Angle(_stationaryEntity.transform.rotation, _toRotation) <
-            10f) 
+        if (Quaternion.Angle(_stationaryEntity.transform.rotation, _toRotation) < 10f) 
         {
             ShootLogic();
         }
@@ -111,9 +112,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
 
         if (Vector3.Distance(_stationaryEntity.SelfAim.transform.position, _targetPosition) > _maxAttackDistance)
         {
-            Debug.Log("DistanceExit");
             _stateMachine.ChangeState(_stationaryEntity.IdleState);
-            return;
         }
 
         //_firearmWeapon.Fire(_stationaryEntity.Target, _stationaryEntity.transform);

@@ -64,9 +64,9 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         _movableSoldierEntity.TargetFinder.SetWeight(0);
         _movableSoldierEntity.OnDie -= CancelCancelationToken;
         _firearmWeapon.OnReload -= ReloadingLogicEnter;
-        _firearmWeapon.OnReloadEnd -= ReloadingLogicExit;
+        _firearmWeapon.OnReloadEnd -= ReloadingLogicExit;/*
         if (!_movableSoldierEntity.isTimeSlowed && !_movableSoldierEntity.isTimeStopped)
-            _movableSoldierEntity.NavMeshAgent.speed = 1.5f;
+            _movableSoldierEntity.NavMeshAgent.speed = 1.5f;*/
         _movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
         base.Exit();
     }
