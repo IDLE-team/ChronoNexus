@@ -7,7 +7,7 @@ using UnityEngine;
 public class StationaryEntity : Entity
 {
     [SerializeField]private GameObject smokeVFX;
-    [SerializeField]private GameObject fireVFX;
+   // [SerializeField]private GameObject fireVFX;
     
     private StationaryEntityAttacker _attacker;
     public StationaryEntityAttacker TurretAttacker => _attacker;
@@ -37,7 +37,7 @@ public class StationaryEntity : Entity
     protected override void Die()
     {
         smokeVFX.SetActive(true);
-        fireVFX.SetActive(true);
+    //    fireVFX.SetActive(true);
         base.Die();
     }
 

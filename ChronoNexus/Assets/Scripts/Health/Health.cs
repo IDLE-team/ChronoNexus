@@ -6,14 +6,20 @@ using Random = UnityEngine.Random;
 public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] private float _value;
+    [SerializeField] private TMP_InputField _healthSetter;
+    
     private float _maxHealth;
     public float MaxHealth => _maxHealth;
-    [SerializeField] private TMP_InputField _healthSetter;
     public float Value => _value;
 
     public event Action Died;
 
     public event Action<float> Changed;
+
+    private bool _isInvinsible;
+
+    public bool IsInvincible => _isInvinsible;
+    
     private void OnEnable()
     {
         _maxHealth = _value;
@@ -28,8 +34,14 @@ public class Health : MonoBehaviour, IHealth
             _healthSetter.onEndEdit.AddListener(SetHealth);
     }
 
+    public void SetInvincible(bool isInvincible)
+    {
+        _isInvinsible = isInvincible;
+    }
     public void Decrease(float value, bool isCritical)
     {
+        if(_isInvinsible)
+            return;
         _value -= value;
  
          DamagePopup.Create(transform.position, (int)value, isCritical);

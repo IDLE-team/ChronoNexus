@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using Zenject;
 public class FinisherzoneHandler : MonoBehaviour
 {
@@ -27,7 +28,9 @@ public class FinisherzoneHandler : MonoBehaviour
         }
     }
     private void ActivateFinisherReadyMode()
-    {
+    {   
+        if(_currentFinisherTarget.Equals(null))
+            return;
         if(!_currentFinisherTarget.GetFinisherableStatus())
             return;
         //_character.MainButtonController.SetFinisherButton();

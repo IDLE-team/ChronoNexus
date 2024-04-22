@@ -116,6 +116,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""f28e2e1a-d8eb-4d8c-9764-b897e2a86ce0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -327,6 +336,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""RewindApply"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c98289f-428b-4c91-b0d3-c5b8fa61088c"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b260aafe-d4e2-4ae2-88a1-41524fe8253d"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -412,6 +443,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_TimeRewind = m_Player.FindAction("TimeRewind", throwIfNotFound: true);
         m_Player_RewindCancel = m_Player.FindAction("RewindCancel", throwIfNotFound: true);
         m_Player_RewindApply = m_Player.FindAction("RewindApply", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_TargetLockActivator = m_UI.FindAction("TargetLockActivator", throwIfNotFound: true);
@@ -486,6 +518,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_TimeRewind;
     private readonly InputAction m_Player_RewindCancel;
     private readonly InputAction m_Player_RewindApply;
+    private readonly InputAction m_Player_Dash;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -500,6 +533,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @TimeRewind => m_Wrapper.m_Player_TimeRewind;
         public InputAction @RewindCancel => m_Wrapper.m_Player_RewindCancel;
         public InputAction @RewindApply => m_Wrapper.m_Player_RewindApply;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -539,6 +573,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RewindApply.started += instance.OnRewindApply;
             @RewindApply.performed += instance.OnRewindApply;
             @RewindApply.canceled += instance.OnRewindApply;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -573,6 +610,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @RewindApply.started -= instance.OnRewindApply;
             @RewindApply.performed -= instance.OnRewindApply;
             @RewindApply.canceled -= instance.OnRewindApply;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -675,6 +715,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnTimeRewind(InputAction.CallbackContext context);
         void OnRewindCancel(InputAction.CallbackContext context);
         void OnRewindApply(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

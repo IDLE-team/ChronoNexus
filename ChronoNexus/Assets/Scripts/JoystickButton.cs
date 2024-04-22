@@ -34,6 +34,7 @@ public class JoystickButton : OnScreenControl, IPointerDownHandler, IPointerUpHa
         if (_mainButtonController != null)
             if(_mainButtonController.CurrentButton != gameObject)
                 gameObject.SetActive(false);
+        ActivateButton();
         //_button.OnClicked += StartShoot;
     }
 

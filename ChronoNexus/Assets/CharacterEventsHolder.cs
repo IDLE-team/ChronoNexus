@@ -10,6 +10,8 @@ public class CharacterEventsHolder : MonoBehaviour
     public event Action OnInteractionInteract;
     public event Action OnHideInteract;
     
+    public event Action OnShowAdditional;
+    public event Action OnHideAdditional;
     public void CallOnFinisherInteractEvent()
     {
         OnFinisherInteract?.Invoke();
@@ -27,5 +29,15 @@ public class CharacterEventsHolder : MonoBehaviour
     public void CallOnHideInteractEvent()
     {
         OnHideInteract?.Invoke();
+    }
+
+    public void CallOnHideAdditionalEvent()
+    {
+        OnHideAdditional?.Invoke();
+    }
+    
+    public void CallOnShowAdditionalEvent()
+    {
+        OnShowAdditional?.Invoke();
     }
 }

@@ -22,6 +22,7 @@ public class CharacterAnimator : MonoBehaviour
     private static readonly int ShootHash = Animator.StringToHash("Shoot");
     private static readonly int SitHash = Animator.StringToHash("Sit");
     private static readonly int FinisherHash = Animator.StringToHash("Finisher");
+    private static readonly int DashHash = Animator.StringToHash("Dash");
 
 
     private void Awake()
@@ -63,5 +64,11 @@ public class CharacterAnimator : MonoBehaviour
     public void Sit(bool value)
     {
         _animator.SetBool(SitHash, value);
+    }
+
+    public void Dash(bool value)
+    {
+        _animator.SetBool(DashHash, value);
+
     }
 }

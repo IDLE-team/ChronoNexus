@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.OnScreen;
 using Zenject;
 
 public class MainButtonController : MonoBehaviour
@@ -9,6 +10,9 @@ public class MainButtonController : MonoBehaviour
     [SerializeField] private GameObject _shootButton;
     [SerializeField] private GameObject _finisherButton;
     [SerializeField] private GameObject _interactButton;
+
+    [SerializeField] private List<GameObject> _additionalButtons = new List<GameObject>();
+
 
     private GameObject _currentButton;
     public GameObject CurrentButton => _currentButton;
@@ -22,6 +26,8 @@ public class MainButtonController : MonoBehaviour
         _characterEvents.OnShootInteract += SetShootButton;
         _characterEvents.OnInteractionInteract += SetInteractButton;
         _characterEvents.OnHideInteract += HideInteractButton;
+        _characterEvents.OnHideAdditional += HideAdditionalButtons;
+        _characterEvents.OnShowAdditional += ShowAdditionalButtons;
         
     }
     private void Start()
@@ -71,5 +77,21 @@ public class MainButtonController : MonoBehaviour
     public void HideInteractButton()
     {
         _currentButton.SetActive(false);
+    }
+
+    public void HideAdditionalButtons()
+    {
+        for (int i = 0; i < _additionalButtons.Count; i++)
+        {
+            _additionalButtons[i].GetComponent<OnScreenButton>().enabled = false;
+               // SetActive(false);
+        }
+    }
+    public void ShowAdditionalButtons()
+    {
+        for (int i = 0; i < _additionalButtons.Count; i++)
+        {
+            _additionalButtons[i].GetComponent<OnScreenButton>().enabled = true;
+        }
     }
 }

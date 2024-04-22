@@ -39,10 +39,13 @@ public class PlayerAttacker : Attacker
         _input = input;
         _input.Player.Fire.performed += OnFire;
         _input.Player.Finisher.performed += OnFinisher;
-
-     //   _animator = animator;
     }
-    
+
+    private void OnDestroy()
+    {
+        _input.Player.Fire.performed -= OnFire;
+        _input.Player.Finisher.performed -= OnFinisher;
+    }
 
     private void OnEnable()
     {

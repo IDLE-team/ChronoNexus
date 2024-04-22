@@ -55,6 +55,7 @@ public class AnimationEventsHolder : MonoBehaviour
          //   return;
          _character.SetInvincible(true);
 
+         _character.CharacterEventsHolder.CallOnHideAdditionalEvent();
          _character.CharacterEventsHolder.CallOnHideInteractEvent();
          _startOrthographicSize = _virtualCamera.m_Lens.OrthographicSize;
          _startVignetteIntensity = _vignette.intensity.value;
@@ -87,10 +88,12 @@ public class AnimationEventsHolder : MonoBehaviour
        // print(_character.Equiper + "�������");
        // print(_character.InventoryItemManager + "iten �������");
       //  print(_character.InventoryItemManager.GetEquipedGun().WeaponName + "������ ���� ����� ��� �������");
+      _character.CharacterEventsHolder.CallOnShowAdditionalEvent();
         _character.CharacterEventsHolder.CallOnShootInteractEvent();
 
+
         _character.Movement.UnlockMove();
-        _character.AimRigController.SetWeight(1);
+      //  _character.AimRigController.SetWeight(1);
     }
     
     IEnumerator Smoother(float lastValue)
