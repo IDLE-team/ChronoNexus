@@ -34,7 +34,8 @@ public class JoystickButton : OnScreenControl, IPointerDownHandler, IPointerUpHa
         if (_mainButtonController != null)
             if(_mainButtonController.CurrentButton != gameObject)
                 gameObject.SetActive(false);
-        ActivateButton();
+        _button.Reset();
+
         //_button.OnClicked += StartShoot;
     }
 
@@ -80,12 +81,14 @@ public class JoystickButton : OnScreenControl, IPointerDownHandler, IPointerUpHa
     {
         _targetVisualPrefab.SetActive(true);
         _shootVisualPrefab.SetActive(false);
-        
+        Debug.Log("ActivateJoystick");
+
       //  _targetLock.TurnOnStickSearch();
     }
 
     public void ActivateButton()
     {
+        Debug.Log("ActivateButton");
         _targetVisualPrefab.SetActive(false);
         _shootVisualPrefab.SetActive(true);
       //  _targetLock.TurnOffStickSearch();

@@ -68,6 +68,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     public event Action OnUIUpdate;
     public event Action OnFinisherReady;
     public event Action OnFinisherEnded;
+    public event Action OnFinisherInvalid;
 
 
     public EntityStateDummy DummyState { get; private set; }
@@ -193,7 +194,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         OnTargetInvalid?.Invoke();
         OnFinisherEnded?.Invoke();
         OnTimeAffectedDestroy?.Invoke();
-
+        OnFinisherInvalid?.Invoke();
         _isFinisherReady = false;
         _isValid = false;
         _isAlive = false;

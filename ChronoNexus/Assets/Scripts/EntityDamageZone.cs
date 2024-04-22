@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityDamageZone : MonoBehaviour, IDamagable,IFinisherable
+public class EntityDamageZone : MonoBehaviour, IDamagable, IFinisherable
 {
 
     [SerializeField]private Entity _entity;
     
-
     public void TakeDamage(float damage, bool isCritical)
     {
         _entity.TakeDamage(damage,isCritical);
@@ -26,4 +25,5 @@ public class EntityDamageZone : MonoBehaviour, IDamagable,IFinisherable
 
     public event Action OnFinisherReady;
     public event Action OnFinisherEnded;
+    public event Action OnFinisherInvalid;
 }

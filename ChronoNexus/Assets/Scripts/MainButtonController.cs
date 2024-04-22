@@ -83,7 +83,7 @@ public class MainButtonController : MonoBehaviour
     {
         for (int i = 0; i < _additionalButtons.Count; i++)
         {
-            _additionalButtons[i].GetComponent<OnScreenButton>().enabled = false;
+            //_additionalButtons[i].GetComponent<OnScreenButton>().enabled = false;
                // SetActive(false);
         }
     }
@@ -91,7 +91,7 @@ public class MainButtonController : MonoBehaviour
     {
         for (int i = 0; i < _additionalButtons.Count; i++)
         {
-            _additionalButtons[i].GetComponent<OnScreenButton>().enabled = true;
+           // _additionalButtons[i].GetComponent<OnScreenButton>().enabled = true;
         }
     }
 }

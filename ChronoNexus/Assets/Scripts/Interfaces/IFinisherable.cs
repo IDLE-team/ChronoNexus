@@ -8,4 +8,6 @@ public interface IFinisherable
     public event Action OnFinisherReady;
     public event Action OnFinisherEnded;
 
+    public event Action OnFinisherInvalid;
+
 }

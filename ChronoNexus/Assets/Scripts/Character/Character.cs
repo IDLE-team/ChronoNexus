@@ -11,7 +11,6 @@ using Zenject;
 
 public class Character : MonoBehaviour, IDamagable, ITargetable
 {
-    //Я не знаю как лучше сделать, поэтому просто через префаб пока прокидываем точку.
     [SerializeField] private Transform _aimTarget;
 
     [SerializeField] private Slider _hpBar;
@@ -76,10 +75,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     private void Awake()
     {
         //TODO прокинуть через Zenject
-        //_outfitter = GetComponent<Outfitter>();
         _health = GetComponent<Health>();
-      //  _сharacterEventsHolder = GetComponent<CharacterEventsHolder>();
-      //  Debug.Log("CharacterEventsHolderInit: " + CharacterEventsHolder);
         Movement = GetComponent<CharacterMovement>();
         Attacker = GetComponent<PlayerAttacker>();
         _characterTargetingSystem = GetComponent<СharacterTargetingSystem>();
@@ -114,7 +110,6 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     {
         Destroy(gameObject);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
-       // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         await UniTask.Yield();
     }
 

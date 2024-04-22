@@ -29,7 +29,7 @@ public class FinisherzoneHandler : MonoBehaviour
     }
     private void ActivateFinisherReadyMode()
     {   
-        if(_currentFinisherTarget.Equals(null))
+        if(_currentFinisherTarget == null)
             return;
         if(!_currentFinisherTarget.GetFinisherableStatus())
             return;

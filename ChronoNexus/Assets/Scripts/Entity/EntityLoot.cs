@@ -41,9 +41,9 @@ public class EntityLoot : MonoBehaviour
         {
             totalChance += chance;
         }
-        Debug.Log(totalChance);
+        //Debug.Log(totalChance);
         float randomPoint = Random.Range(0,100) * totalChance;
-        Debug.Log(randomPoint);
+       // Debug.Log(randomPoint);
         if (randomPoint == 0)
         {
             return null;

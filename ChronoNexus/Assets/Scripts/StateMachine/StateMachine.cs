@@ -15,7 +15,6 @@ public class StateMachine
 
     public void ChangeState(IState newState)
     {
-        Debug.Log("CHANGESTATE " + " SOMEONE");
         CurrentState.Exit();
         CurrentState = newState;
         newState.Enter();

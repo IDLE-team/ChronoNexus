@@ -61,7 +61,7 @@ namespace UnityEngine.InputSystem.OnScreen
         }
 
         [Fix]
-        private void Reset()
+        public void Reset()
         {
             _pointerDown = false;
             _pointerUp = false;

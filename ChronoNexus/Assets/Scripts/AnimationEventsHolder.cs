@@ -65,6 +65,8 @@ public class AnimationEventsHolder : MonoBehaviour
         StartCoroutine(Smoother(_finisherOrthographicSize));
         _character.Movement.LockMove();
         _character.AimRigController.SetWeight(0);
+        if(_character.CharacterTargetingSystem.Target == null)
+            EndFinisher();
         Vector3 dir = _character.CharacterTargetingSystem.Target.GetTransform().position - transform.position;
         dir.y = 0;
         transform.rotation = Quaternion.LookRotation(dir);
