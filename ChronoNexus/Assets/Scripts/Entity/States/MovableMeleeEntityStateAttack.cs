@@ -61,6 +61,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         _isAttack = false;
 
         _movableMeleeEntity.IsTargetFound = false;
+        _movableMeleeEntity.TargetFinder.ResetTarget();
         _movableMeleeEntity.NavMeshAgent.speed = 1.5f;
         // _movableMeleeEntity.EndMoveAnimation();
 

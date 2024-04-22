@@ -61,6 +61,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     {
         _isAttack = false;
         _movableSoldierEntity.IsTargetFound = false;
+        _movableSoldierEntity.TargetFinder.ResetTarget();
         _movableSoldierEntity.TargetFinder.SetWeight(0);
         _movableSoldierEntity.OnDie -= CancelCancelationToken;
         _firearmWeapon.OnReload -= ReloadingLogicEnter;

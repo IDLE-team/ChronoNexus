@@ -23,7 +23,9 @@ public class MovableEntityStateChase : MovableEntityState
 
     public override void Exit()
     {
+        
         _movableEntity.IsTargetFound = false;
+        _movableEntity.TargetFinder.ResetTarget();
     }
 
     public override void LogicUpdate()
