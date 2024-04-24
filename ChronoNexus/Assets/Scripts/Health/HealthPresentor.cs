@@ -1,15 +1,19 @@
 using System;
 using Cysharp.Threading.Tasks;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using DG;
 public class HealthPresentor : MonoBehaviour
 {
     [SerializeField] private Health _health;
     [SerializeField] private float _duration;
+    [SerializeField] private TextMeshProUGUI _hpCount;
 
     private Slider _hpBar;
+    private float _hpUI;
     
     [Inject]
     private void Construct(Health health)
@@ -57,11 +61,13 @@ public class HealthPresentor : MonoBehaviour
     private void UpdateValue(float value)
     {
         AnimateSlider(value).Forget();
+        _hpUI = value;
     }
 
     private async UniTaskVoid AnimateSlider(float targetValue)
     {
         float startValue = _hpBar.value;
+        float startUIConterValue = _hpUI;
         float time = 0f;
 
         while (time < _duration)
@@ -69,6 +75,8 @@ public class HealthPresentor : MonoBehaviour
             time += Time.deltaTime;
             float t = Mathf.Clamp01(time / _duration);
             _hpBar.value = Mathf.Lerp(startValue, targetValue, t);
+            _hpUI = Mathf.Lerp(startUIConterValue, targetValue, t);
+            _hpCount.text = Mathf.RoundToInt(_hpUI).ToString();
             await UniTask.Yield();
         }
     }
