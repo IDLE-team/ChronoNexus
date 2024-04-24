@@ -1159,7 +1159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4284b9d1ac6c443478eab28271812738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timerView: {fileID: 0}
+  _timerView: {fileID: 1714890478}
   _weaponFactory: {fileID: 8880613786789259918, guid: 16f8045f447793b4b9e608125c8f1908,
     type: 3}
   _settinsPrefabData: {fileID: 1693758322}
@@ -28290,12 +28290,12 @@ PrefabInstance:
     - target: {fileID: 2274749472212776617, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.33422711
+      value: -0.33422714
       objectReference: {fileID: 0}
     - target: {fileID: 2274749472212776617, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.1627909
+      value: 0.16279094
       objectReference: {fileID: 0}
     - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
@@ -28315,17 +28315,17 @@ PrefabInstance:
     - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000029802322
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000029802322
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
+        type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000044703484
+      value: 0.000000029802322
       objectReference: {fileID: 0}
     - target: {fileID: 4289404732796140614, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
@@ -33761,6 +33761,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1711702908}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1714890478 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3352193012462031471, guid: e60b2a4658c0e3846beac4dec09c4761,
+    type: 3}
+  m_PrefabInstance: {fileID: 585141932}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e701d73ffa3d64c896ccbb1137c62f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1721096724
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35204,6 +35216,7 @@ MonoBehaviour:
   IsTimeStopped: 0
   IsTimeSlowed: 0
   resumeTimeDelay: 4
+  _timeManipulationCam: {fileID: 0}
 --- !u!1001 &1814586848
 PrefabInstance:
   m_ObjectHideFlags: 0
