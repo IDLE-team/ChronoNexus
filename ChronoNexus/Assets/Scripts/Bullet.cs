@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour, ITimeAffected
 {
     [SerializeField] private LayerMask _obstacleLayerMask;
     [SerializeField] private LayerMask _targetLayerMask;
+    [SerializeField]  private Collider _collider;
     private Vector3 _shootDir;
     
     private float _damage;
@@ -27,6 +28,7 @@ public class Bullet : MonoBehaviour, ITimeAffected
         _shootDir = shootDirection;
         _moveSpeed = speed;
     }
+    
 
     private void Start()
     {
@@ -40,7 +42,7 @@ public class Bullet : MonoBehaviour, ITimeAffected
         {
             CanBeAffected = true;
         }
-        if (CanBeAffected && TimeManager.instance.IsTimeStopped && !isTimeStopped)
+        if (CanBeAffected && isTimeStopped)
         {
             return;
         }
@@ -59,7 +61,8 @@ public class Bullet : MonoBehaviour, ITimeAffected
         //    Destroy(gameObject);
         //   return;
         //}
-        
+        if(isTimeStopped)
+            return;
         if ((_obstacleLayerMask.value & (1 << other.gameObject.layer)) > 0)
         {
             Destroy(gameObject);
@@ -87,12 +90,16 @@ public class Bullet : MonoBehaviour, ITimeAffected
 
     public void RealTimeAction()
     {
+        _collider.enabled = true;
+
         isTimeStopped = false;
         isTimeSlowed = false;
     }
 
     public void StopTimeAction()
     {
+        Debug.Log("StopTime");
+        _collider.enabled = false;
         isTimeStopped = true;
     }
 

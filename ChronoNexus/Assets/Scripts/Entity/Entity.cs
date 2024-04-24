@@ -329,6 +329,11 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         return _selfAimTargetTransform;
     }
 
+    public GameObject GetTargetGameObject()
+    {
+        return gameObject;
+    }
+
     public bool GetTargetSelected()
     {
         return _isTarget;

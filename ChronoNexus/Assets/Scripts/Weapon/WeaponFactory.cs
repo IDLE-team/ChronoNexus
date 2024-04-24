@@ -43,7 +43,11 @@ public class WeaponFactory : MonoBehaviour
                 blade.SetData(data, weaponHolder.transform);
                 weapon = blade;
                 break;
-            
+            case WeaponSubType.Finisher:
+                var finisher = weaponHolder.AddComponent<FinisherWeapon>();
+                finisher.SetData(data, weaponHolder.transform);
+                weapon = finisher;
+                break;
             default:
                var defaultWeapon = weaponHolder.AddComponent<PistolWeapon>();
                defaultWeapon.SetData(data, weaponHolder.transform);

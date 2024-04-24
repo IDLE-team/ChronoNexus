@@ -31,6 +31,12 @@ public abstract class Weapon : MonoBehaviour
     {
         
     }
+
+    public virtual void Finisher(ITargetable target, int animID)
+    {
+
+    }
+
     public void StopFire()
     {
         isFire = false;

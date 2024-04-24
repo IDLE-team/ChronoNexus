@@ -43,9 +43,9 @@ public class AnimationEventsHolder : MonoBehaviour
         _weaponController.CurrentWeapon.Fire(_character.CharacterTargetingSystem.Target, _character.Transform);
     }
 
-    public void WeaponAreaFire(int id)
+    public void WeaponFinisherFire(int id)
     {
-        _weaponController.CurrentWeapon.AreaFire(_character.CharacterTargetingSystem.TargetLayer, id);
+        _weaponController.CurrentWeapon.Finisher(_character.CharacterTargetingSystem.Target, id);
     }
 
     public void StartFinisher()
@@ -60,7 +60,10 @@ public class AnimationEventsHolder : MonoBehaviour
          _startOrthographicSize = _virtualCamera.m_Lens.OrthographicSize;
          _startVignetteIntensity = _vignette.intensity.value;
          _vignette.intensity.value = _finisherVignetteIntensity;
-        WeaponAreaFire(_character.Animator.CurrentFinisherID);
+         List<ITimeBody> soloTimeBodyList = new List<ITimeBody>();
+         soloTimeBodyList.Add( _character.CharacterTargetingSystem.Target.GetTargetGameObject().GetComponent<ITimeBody>());
+         TimeManager.instance.StopTimeForAllExcept(soloTimeBodyList, -1);
+        WeaponFinisherFire(_character.Animator.CurrentFinisherID);
         StartCoroutine(SmootherVignette(_finisherVignetteIntensity));
         StartCoroutine(Smoother(_finisherOrthographicSize));
         _character.Movement.LockMove();
@@ -82,6 +85,7 @@ public class AnimationEventsHolder : MonoBehaviour
     public void EndFinisher()
     {
       //  _ui.SetActive(true);
+      TimeManager.instance.ContinueTime();
         _vignette.intensity.value = _startVignetteIntensity;
         StartCoroutine(SmootherVignette(_startVignetteIntensity));
         _character.SetInvincible(false);

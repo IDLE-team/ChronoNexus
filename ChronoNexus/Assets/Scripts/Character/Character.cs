@@ -123,6 +123,11 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         return _aimTarget;
     }
 
+    public GameObject GetTargetGameObject()
+    {
+        return gameObject;
+    }
+
     public bool GetTargetSelected()
     {
         return _isValid;

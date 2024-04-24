@@ -22,8 +22,6 @@ public class PlayerAttacker : Attacker
     [SerializeField] private WeaponData _weaponData;
 
     [SerializeField] private CinemachineVirtualCamera _virtualCamera;
- //   [SerializeField] private GameObject _virtualCamera;
-
     
     private PlayerInputActions _input;
     private Vector3 _shootDir;

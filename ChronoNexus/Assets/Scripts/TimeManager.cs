@@ -27,13 +27,14 @@ public class TimeManager : MonoBehaviour
     private PlayerInputActions _input;
     private float audioVolume;
 
+    [SerializeField] private GameObject _timeManipulationCam;
+    
     [Inject]
     private void Construct(PlayerInputActions input)
     {
         _input = input;
         _input.Player.TimeStop.performed += OnStopTimePerformed;
         _input.Player.TimeSlow.performed += OnSlowTimePerformed;
-
     }
 
     private List<ITimeBody> timeBodies = new List<ITimeBody>();
@@ -92,10 +93,19 @@ public class TimeManager : MonoBehaviour
         audioSource.pitch = basePitch;
 
         postProcessVolume.profile = realTimeVolumeProfile;
+        _timeManipulationCam.SetActive(false);
+
         audioSource.volume = audioVolume;
+    }
+
+   public void ContinueTimeForSingle(ITimeBody timeBody)
+    {
+        timeBody.SetRealTime();
     }
     public void StopTime()
     {
+        if(IsTimeStopped)
+            return;
         IsTimeStopped = true;
         for (var i = 0; i < timeBodies.Count; i++)
         {
@@ -106,15 +116,46 @@ public class TimeManager : MonoBehaviour
             }
             timeBodies[i].SetStopTime();
         }
+        _timeManipulationCam.SetActive(true);
         postProcessVolume.profile = timeStopVolumeProfile;
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.3f;
         
         StartCoroutine(ResumeTimeWithDelay());
     }
-
-    public void StopTimeInfinite() 
+    public void StopTimeForAllExcept(List<ITimeBody> nonStopTimeBody, float durationTime)
     {
+        if (IsTimeStopped)
+        {
+            ContinueTimeForSingle(nonStopTimeBody[0]);
+            return;
+        }
+
+        IsTimeStopped = true;
+        List<ITimeBody> filteredTimeBodiesList = timeBodies.FindAll(i => !nonStopTimeBody.Contains(i));
+        for (var i = 0; i < filteredTimeBodiesList.Count; i++)
+        {
+            if (filteredTimeBodiesList[i] == null)
+            {
+                filteredTimeBodiesList.RemoveAt(i);
+                continue;
+            }
+            filteredTimeBodiesList[i].SetStopTime();
+        }
+        _timeManipulationCam.SetActive(true);
+
+        postProcessVolume.profile = timeStopVolumeProfile;
+        basePitch = audioSource.pitch;
+        audioSource.pitch = 0.3f;
+        if(durationTime < 0)
+            return;
+        StartCoroutine(ResumeTimeWithDelay(durationTime));
+
+    }
+    public void StopTimeInfinite() 
+    {       
+        if(IsTimeStopped)
+            return;
         IsTimeStopped = true;
         for (var i = 0; i < timeBodies.Count; i++)
         {
@@ -125,6 +166,8 @@ public class TimeManager : MonoBehaviour
             }
             timeBodies[i].SetStopTime();
         }
+        _timeManipulationCam.SetActive(true);
+
         postProcessVolume.profile = timeStopVolumeProfile;
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.3f;
@@ -152,10 +195,15 @@ public class TimeManager : MonoBehaviour
     {
         resumeTimeDelay = value;
     }
-
+    
     IEnumerator ResumeTimeWithDelay()
     {
         yield return new WaitForSeconds(resumeTimeDelay);
+        ContinueTime();
+    }
+    IEnumerator ResumeTimeWithDelay(float resumeDelay)
+    {
+        yield return new WaitForSeconds(resumeDelay);
         ContinueTime();
     }
 }

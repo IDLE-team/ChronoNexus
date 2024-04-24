@@ -63,6 +63,9 @@ public class WeaponController : MonoBehaviour
             case WeaponSubType.Sword:
                 _rigController.SetCurrentRig(2);
                 break;
+            case WeaponSubType.Finisher:
+                _rigController.SetCurrentRig(2);
+                break;
         }
     }
 

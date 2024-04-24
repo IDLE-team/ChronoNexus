@@ -70,7 +70,7 @@ PlayerSettings:
   disableDepthAndStencilBuffers: 0
   androidStartInFullscreen: 1
   androidRenderOutsideSafeArea: 1
-  androidUseSwappy: 1
+  androidUseSwappy: 0
   androidBlitType: 2
   androidResizableWindow: 0
   androidDefaultWindowWidth: 1920
@@ -139,9 +139,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
-  bundleVersion: 0.8.5F
-  preloadedAssets:
-  - {fileID: 11400000, guid: e9beb437d8cfbcd4f8da5d9fddbd9c86, type: 2}
+  bundleVersion: 0.8.8
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -753,18 +752,18 @@ PlayerSettings:
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   scriptingDefineSymbols:
-    Android: STARTER_ASSETS_PACKAGES_CHECKED;USE_CINEMACHINE;USE_NEW_INPUT;TMP_PRESENT
-    Bratwurst: 
-    EmbeddedLinux: 
-    GameCoreXboxOne: 
-    Nintendo Switch: 
-    PS4: 
-    PS5: 
-    QNX: 
-    Standalone: STARTER_ASSETS_PACKAGES_CHECKED;USE_CINEMACHINE;USE_NEW_INPUT;TMP_PRESENT
-    WebGL: USE_NEW_INPUT;TMP_PRESENT
-    XboxOne: 
-    tvOS: 
+    Android: STARTER_ASSETS_PACKAGES_CHECKED;USE_CINEMACHINE;USE_NEW_INPUT;TMP_PRESENT;UNITY_POST_PROCESSING_STACK_V2
+    Bratwurst: UNITY_POST_PROCESSING_STACK_V2
+    EmbeddedLinux: UNITY_POST_PROCESSING_STACK_V2
+    GameCoreXboxOne: UNITY_POST_PROCESSING_STACK_V2
+    Nintendo Switch: UNITY_POST_PROCESSING_STACK_V2
+    PS4: UNITY_POST_PROCESSING_STACK_V2
+    PS5: UNITY_POST_PROCESSING_STACK_V2
+    QNX: UNITY_POST_PROCESSING_STACK_V2
+    Standalone: STARTER_ASSETS_PACKAGES_CHECKED;USE_CINEMACHINE;USE_NEW_INPUT;TMP_PRESENT;UNITY_POST_PROCESSING_STACK_V2
+    WebGL: USE_NEW_INPUT;TMP_PRESENT;UNITY_POST_PROCESSING_STACK_V2
+    XboxOne: UNITY_POST_PROCESSING_STACK_V2
+    tvOS: UNITY_POST_PROCESSING_STACK_V2
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

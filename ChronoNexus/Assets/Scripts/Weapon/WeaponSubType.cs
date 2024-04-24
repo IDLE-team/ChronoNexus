@@ -5,5 +5,6 @@ public enum WeaponSubType
         Shotgun,
         MachineGun,
         Sword,
+        Finisher,
         Grenade
     }

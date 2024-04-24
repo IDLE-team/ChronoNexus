@@ -25,13 +25,14 @@ public class TargetFollow : MonoBehaviour, ITimeAffected
 
     void Update()
     {
+        
         if (_isStopped)
            return;
 
         if (!followTween.IsPlaying())
            followTween.Play();
-       
-       followTween.ChangeEndValue(target.position,  followSpeed, true);
+       if(gameObject != null)
+        followTween.ChangeEndValue(target.position,  followSpeed, true);
     }
     public void RealTimeAction()
     {

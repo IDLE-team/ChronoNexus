@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5734645210874101528}
   - component: {fileID: 5831336922552092434}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,8 @@ GameObject:
   - component: {fileID: 643650584383905918}
   - component: {fileID: -5424543803000646982}
   - component: {fileID: 3669826307443937433}
-  m_Layer: 0
+  - component: {fileID: -1033587021918320587}
+  m_Layer: 13
   m_Name: PlayerBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -188,7 +189,20 @@ MonoBehaviour:
   _targetLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  _collider: {fileID: 643650584383905918}
   TimeBeforeAffectedTimer: 0.05
+--- !u!114 &-1033587021918320587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6995691736350787518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f05465b79affb64ba43ea8481435dc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2539687967015881716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -203,19 +217,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1238843893459588, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1540588367011230, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1700654917114306, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1809025296285686, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4836675779974994, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_LocalScale.x

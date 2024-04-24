@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -22,6 +23,11 @@ public class TimeBody : MonoBehaviour, ITimeBody
     private void OnDisable()
     {
         _timeAffectedBody.OnTimeAffectedDestroy -= RemoveFromTimeManager;
+    }
+
+    private void OnDestroy()
+    {
+        RemoveFromTimeManager();
     }
 
     private IEnumerator TimeManagerWaiter()
@@ -64,6 +70,8 @@ public class TimeBody : MonoBehaviour, ITimeBody
     public void AddToTimeManager()
     {
         TimeManager.instance.AddTimeBody(this);
+        if(TimeManager.instance.IsTimeStopped)
+            SetStopTime();
     }
     public void RemoveFromTimeManager()
     {
