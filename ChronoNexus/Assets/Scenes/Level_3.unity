@@ -13638,6 +13638,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3587318432317777662, guid: c870d98aad14d4342b8441c727806dc3,
+        type: 3}
+      propertyPath: _transition
+      value: 
+      objectReference: {fileID: 727576774}
     - target: {fileID: 3773127064436339480, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -13862,6 +13867,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8565370878199321875, guid: c870d98aad14d4342b8441c727806dc3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1647866181}
+    - target: {fileID: 8565370878199321875, guid: c870d98aad14d4342b8441c727806dc3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 8787114825036755268, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
@@ -39363,7 +39378,7 @@ Transform:
   m_GameObject: {fileID: 1542452552}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.341, y: 2.61, z: 0}
+  m_LocalPosition: {x: -0.4947, y: 2.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49958,7 +49973,7 @@ MonoBehaviour:
   - {fileID: 1039368024}
   _explodePoint: {fileID: 0}
   _explode: {fileID: 537034168}
-  force: 100000
+  force: 80000
 --- !u!1001 &2016427757
 PrefabInstance:
   m_ObjectHideFlags: 0
