@@ -31,6 +31,7 @@ public class ButtonCoolDownCounter : MonoBehaviour
 
     public void StartCoolDown(float time)
     {
+        Debug.Log("CoolDown");
         StartCoroutine(CoolDown(time));
     }
 

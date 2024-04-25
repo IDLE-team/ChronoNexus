@@ -20,6 +20,8 @@ public class EntityLoot : MonoBehaviour
         }
         for (int i = 0; i < amountToDrop; i++)
         {
+            Debug.Log("Amount: " + amountToDrop);
+            Debug.Log("i " + i);
             ItemData itemToDrop = GetRandomItem();
             
             if (itemToDrop != null)

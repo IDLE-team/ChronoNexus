@@ -56,6 +56,7 @@ public class Health : MonoBehaviour, IHealth
 
     public void Die()
     {
+        Debug.Log("HealthDie");
         _value = 0;
 
         Changed?.Invoke(_value);

@@ -193,7 +193,9 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void Die()
     {
-
+        if(!_isAlive)
+            return;
+        Debug.Log("Death");
         if (_isFinisherKill)
             _buffLoot.DropBuff();
         
