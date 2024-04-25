@@ -1243,7 +1243,7 @@ PrefabInstance:
     - target: {fileID: 4155764736166186941, guid: 3525de7394cea474c968d42607a0e80f,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4155764736192902009, guid: 3525de7394cea474c968d42607a0e80f,
         type: 3}
@@ -1293,6 +1293,12 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!198 &7516495230123179931 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4155764736166186940, guid: 3525de7394cea474c968d42607a0e80f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5900782674161643559}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7516495230123179941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4155764736166186882, guid: 3525de7394cea474c968d42607a0e80f,
@@ -1532,6 +1538,11 @@ PrefabInstance:
       propertyPath: _value
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 5808072498656417639, guid: 3c31498842d764242b6a889d6a8dc8ef,
+        type: 3}
+      propertyPath: _healEffect
+      value: 
+      objectReference: {fileID: 7516495230123179931}
     - target: {fileID: 5836617061806427767, guid: 3c31498842d764242b6a889d6a8dc8ef,
         type: 3}
       propertyPath: m_Effectors.Array.data[2].m_Transform

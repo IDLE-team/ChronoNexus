@@ -4104,6 +4104,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 677996274543775272, guid: c870d98aad14d4342b8441c727806dc3,
+        type: 3}
+      propertyPath: _heroHealth
+      value: 
+      objectReference: {fileID: 1937708106}
+    - target: {fileID: 677996274543775272, guid: c870d98aad14d4342b8441c727806dc3,
+        type: 3}
+      propertyPath: _sceneLoader
+      value: 
+      objectReference: {fileID: 71403311}
     - target: {fileID: 826194019308236254, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -14884,6 +14894,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6567902, guid: 3845c7234a0ed4843ba4e38e2404f54d, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15026,11 +15040,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4119468656422405663, guid: e60b2a4658c0e3846beac4dec09c4761,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -334
-      objectReference: {fileID: 0}
     - target: {fileID: 4435064265325836960, guid: e60b2a4658c0e3846beac4dec09c4761,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -15076,6 +15085,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gameplay
       objectReference: {fileID: 0}
+    - target: {fileID: 6205890577660742161, guid: e60b2a4658c0e3846beac4dec09c4761,
+        type: 3}
+      propertyPath: _coolDownHolder
+      value: 
+      objectReference: {fileID: 2052809090}
     - target: {fileID: 6354524410919905408, guid: e60b2a4658c0e3846beac4dec09c4761,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -16150,6 +16164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0e1c975c610dd4c886c92f6d1531a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stoptimeCooldown: 0
   audioSource: {fileID: 515895643}
   postProcessVolume: {fileID: 1378466623}
   realTimeVolumeProfile: {fileID: 11400000, guid: 040b6ac900af03841bf2897bec3521e4,
@@ -16500,7 +16515,7 @@ PrefabInstance:
     - target: {fileID: 8813418106770933131, guid: 69945ee198f54034790f52b30bc0ea16,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -14,7 +14,7 @@ public class TweenBreathing : MonoBehaviour
 
     IEnumerator StartThroughTime()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f); 
         transform.DOMoveY(transform.position.y + 0.1f, 0.5f).SetEase(Ease.InOutSine).SetLoops(-1, LoopType.Yoyo);
 
     }
