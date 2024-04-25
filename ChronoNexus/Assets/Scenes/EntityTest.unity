@@ -34163,7 +34163,7 @@ PrefabInstance:
     - target: {fileID: 2274749472212776617, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.1627909
+      value: 0.16279091
       objectReference: {fileID: 0}
     - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
@@ -43225,6 +43225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0e1c975c610dd4c886c92f6d1531a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stoptimeCooldown: 0
   audioSource: {fileID: 2080850030}
   postProcessVolume: {fileID: 748981824}
   realTimeVolumeProfile: {fileID: 11400000, guid: 040b6ac900af03841bf2897bec3521e4,
@@ -43234,6 +43235,7 @@ MonoBehaviour:
   IsTimeStopped: 0
   IsTimeSlowed: 0
   resumeTimeDelay: 4
+  _timeManipulationCam: {fileID: 0}
 --- !u!114 &1824418371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46874,11 +46876,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 984402865}
     m_Modifications:
-    - target: {fileID: 225616618689935817, guid: d7e72dabaad0c454c9252a63c96a5ff0,
-        type: 3}
-      propertyPath: _maxRangeAttackDistance
-      value: 13
-      objectReference: {fileID: 0}
     - target: {fileID: 3380813324157574864, guid: d7e72dabaad0c454c9252a63c96a5ff0,
         type: 3}
       propertyPath: m_LocalPosition.x
