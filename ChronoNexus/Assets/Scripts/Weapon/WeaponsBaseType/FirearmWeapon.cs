@@ -53,14 +53,19 @@ using UnityEngine;
             IsReloading = false;
             UpdateUIWeaponValues();
             CallReloadEventEnded();
+
             await UniTask.Yield();
         }
         protected void CallReloadEvent()
         {
+            if(ReloadUI != null)
+                ReloadUI.SetActive(true);
             OnReload?.Invoke();
         }
         protected void CallReloadEventEnded()
         {
+            if(ReloadUI != null)
+                ReloadUI.SetActive(false);
             OnReloadEnd?.Invoke();
         }
         private void SetFirePosition()

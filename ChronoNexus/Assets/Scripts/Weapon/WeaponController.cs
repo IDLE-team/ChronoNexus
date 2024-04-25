@@ -8,6 +8,7 @@ public class WeaponController : MonoBehaviour
 
     [SerializeField] private AimRigController _rigController;
     [SerializeField] private TextMeshProUGUI _weaponUI;
+    [SerializeField] private GameObject _reloadUI;
 
     private Weapon _currentWeapon;
     public Weapon CurrentWeapon => _currentWeapon;
@@ -19,6 +20,11 @@ public class WeaponController : MonoBehaviour
         _weaponFactory = weaponFactory;
     }
 
+    public void ClearWeapon()
+    {
+        if(_currentWeapon != null)
+            Destroy(_currentWeapon.gameObject);
+    }
     public void ChangeWeapon(WeaponData data, Transform holder)
     {
         if (_currentWeapon && data)
@@ -34,10 +40,11 @@ public class WeaponController : MonoBehaviour
 
     private void SetWeaponPlayerSettings()
     {
-        if (_weaponUI)
-            _currentWeapon.SetWeaponUI(_weaponUI);
+        if (_weaponUI && _reloadUI)
+            _currentWeapon.SetWeaponUI(_weaponUI, _reloadUI);
+        if(_reloadUI)
 
-        SetWeaponAimRig();
+            SetWeaponAimRig();
     }
 
     private void SetWeaponAimRig()

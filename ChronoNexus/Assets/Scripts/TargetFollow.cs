@@ -31,8 +31,8 @@ public class TargetFollow : MonoBehaviour, ITimeAffected
 
         if (!followTween.IsPlaying())
            followTween.Play();
-       if(gameObject != null)
-        followTween.ChangeEndValue(target.position,  followSpeed, true);
+       if(gameObject != null && target != null)
+         followTween.ChangeEndValue(target.position,  followSpeed, true);
     }
     public void RealTimeAction()
     {

@@ -7,7 +7,7 @@ public class Health : MonoBehaviour, IHealth
 {
     [SerializeField] private float _value;
     [SerializeField] private TMP_InputField _healthSetter;
-    
+    [SerializeField] private ParticleSystem _healEffect;
     private float _maxHealth;
     public float MaxHealth => _maxHealth;
     public float Value => _value;
@@ -65,6 +65,15 @@ public class Health : MonoBehaviour, IHealth
     }
     public void Increase(float value)
     {
+        
+        if ((_value + value) >= _maxHealth)
+        {
+            _value = _maxHealth;
+            Changed?.Invoke(_value);
+            return;
+        }
+        if(_healEffect != null)
+            _healEffect.gameObject.SetActive(true);
         _value += value;
         Changed?.Invoke(_value);
     }

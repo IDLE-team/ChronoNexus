@@ -8,7 +8,9 @@ using Zenject;
 
 public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITargetable, ITimeAffected, ISeeker
 {
+    [SerializeField] private BuffLoot _buffLoot;
     [HideInInspector] public Attacker _Attacker;
+    [SerializeField] private SkinnedMeshRenderer _renderer;
     public event Action OnTargetInvalid;
     public event Action OnTimeAffectedDestroy;
     public bool isTimeStopped { get; set; }
@@ -16,6 +18,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     public bool isTimeSlowed { get; set; }
     public bool isTimeRewinded { get; set; }
 
+    private bool _isFinisherKill;
     public Equiper Equiper => _equiper;
     public WeaponController WeaponController => _weaponController;
 
@@ -191,10 +194,16 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected virtual void Die()
     {
 
+        if (_isFinisherKill)
+            _buffLoot.DropBuff();
+        
         OnTargetInvalid?.Invoke();
         OnFinisherEnded?.Invoke();
         OnTimeAffectedDestroy?.Invoke();
         OnFinisherInvalid?.Invoke();
+        
+        
+        
         _isFinisherReady = false;
         _isValid = false;
         _isAlive = false;
@@ -228,6 +237,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _loot.DropItems();
         OnDie?.Invoke();
         enemyList.Remove(gameObject);
+        StartCoroutine(StartDissolveWithDelay());
+        WeaponController.ClearWeapon();
         Destroy(gameObject, 3f);
     }
 
@@ -373,6 +384,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     public virtual void StartFinisher(int id)
     {
+        _isFinisherKill = true;
         _animator.Finisher(id);
         _stateMachine.ChangeState(DummyState);
         _finisherReady.SetActive(false);
@@ -385,6 +397,17 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _rigidbody.velocity = Vector3.zero;
     }
 
+    public void Dissolve()
+    {
+        if(_renderer)
+            _renderer.material.DOFloat(1, "_DissolveAmount", 1f);
+    }
+
+    IEnumerator StartDissolveWithDelay()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Dissolve();
+    }
     public bool GetFinisherableStatus()
     {
         if (!_isAlive)

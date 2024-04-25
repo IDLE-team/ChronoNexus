@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,9 +8,11 @@ using UnityEngine.Rendering;
 using UnityEngine.UI;
 using Zenject;
 
-public class TimeManager : MonoBehaviour
+public class TimeManager : MonoBehaviour, ICoolDownable
 {
 
+    [SerializeField] private float _stoptimeCooldown;
+    
     static public TimeManager instance;
 
     public AudioSource audioSource;
@@ -120,7 +123,7 @@ public class TimeManager : MonoBehaviour
         postProcessVolume.profile = timeStopVolumeProfile;
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.3f;
-        
+        OnCoolDown?.Invoke(_stoptimeCooldown);
         StartCoroutine(ResumeTimeWithDelay());
     }
     public void StopTimeForAllExcept(List<ITimeBody> nonStopTimeBody, float durationTime)
@@ -206,4 +209,6 @@ public class TimeManager : MonoBehaviour
         yield return new WaitForSeconds(resumeDelay);
         ContinueTime();
     }
+
+    public event Action<float> OnCoolDown;
 }
