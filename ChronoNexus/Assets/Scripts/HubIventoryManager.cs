@@ -30,6 +30,13 @@ public class HubIventoryManager : InventoryItemManager
 
         _cellsShelterInventory = _gridLayoutShelterInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
         _cellsShelterStorage = _gridLayoutShelterStorage.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
+        
+        var savedData = PlayerPrefs.GetInt("gun", -1);
+        if (savedData == -1)
+        {
+            PlayerPrefs.SetInt("gun", 2);
+            savedData =PlayerPrefs.GetInt("gun", 2);
+        };
     }
 
     private void Update()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EntityLoot : MonoBehaviour
 {
+    public Transform spawnPosition;
     public GameObject ItemPrefab;
     public List<ItemData> items;
     public List<float> dropChances = new List<float> { 0.2f, 0.3f, 0.4f };
@@ -20,16 +21,22 @@ public class EntityLoot : MonoBehaviour
         }
         for (int i = 0; i < amountToDrop; i++)
         {
+            Debug.Log("Amount: " + amountToDrop);
+            Debug.Log("i " + i);
             ItemData itemToDrop = GetRandomItem();
             
             if (itemToDrop != null)
             {
                 itemToDrop.rarity = GetRandomQuality();
-                GameObject itemObj = Instantiate(ItemPrefab,transform.position,transform.rotation);
-                itemObj.transform.SetParent(null);
+                GameObject itemObj = Instantiate(ItemPrefab,spawnPosition.position,Quaternion.identity);
+                //itemObj.transform.SetParent(null);
                 ItemDataContainer _itemDataContainer = itemObj.GetComponent<ItemDataContainer>();
                 _itemDataContainer._itemData = itemToDrop;
                 _itemDataContainer._itemDataColorSet.SetColor(itemToDrop.rarity);
+                
+                Rigidbody rb = itemObj.GetComponent<Rigidbody>();
+                Vector3 forceDir = Random.insideUnitSphere.normalized;
+                rb.AddForce(forceDir * 30f, ForceMode.Impulse);
             }
         }
     }

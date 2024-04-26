@@ -263,6 +263,7 @@ public class InventoryItemManager : MonoBehaviour
 
     public void LoadGun() // call on inventory open
     {
+        Debug.Log("LoadGun");
         var savedData = PlayerPrefs.GetInt("gun", -1);
 
         if (savedData == -1)

@@ -34,7 +34,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         _maxDelay = _movableSoldierEntity.SoldierAttacker.MaxDelayTokenRange;
         _shootingAgentSpeed = _movableSoldierEntity.SoldierAttacker.RangeAttackAgentSpeed;
 
-        _movableSoldierEntity.Equiper.EquipWeapon(_movableSoldierEntity.SoldierAttacker.RangeWeaponData);
+        //_movableSoldierEntity.Equiper.EquipWeapon(_movableSoldierEntity.SoldierAttacker.RangeWeaponData);
 
         if (_movableSoldierEntity.WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
         {

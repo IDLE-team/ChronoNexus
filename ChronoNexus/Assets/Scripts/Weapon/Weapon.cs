@@ -18,6 +18,7 @@ public abstract class Weapon : MonoBehaviour
     public WeaponAnimation WeaponAnimation;
     
     public TextMeshProUGUI WeaponUI;
+    public GameObject ReloadUI;
     
     public float Damage;
     public float FireRate;
@@ -56,9 +57,10 @@ public abstract class Weapon : MonoBehaviour
         SetAudioSource();
     }
 
-    public void SetWeaponUI(TextMeshProUGUI WeaponUI)
+    public void SetWeaponUI(TextMeshProUGUI WeaponUI, GameObject ReloadUI)
     {
         this.WeaponUI = WeaponUI;
+        this.ReloadUI = ReloadUI;
     }
     
     public void SetAudioSource()

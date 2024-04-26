@@ -5,6 +5,7 @@ public class PlayerFollow : MonoBehaviour
     [SerializeField] private GameObject _player;
     private void Update()
     {
-        transform.position = _player.transform.position;
+        if(_player) 
+            transform.position = _player.transform.position;
     }
 }

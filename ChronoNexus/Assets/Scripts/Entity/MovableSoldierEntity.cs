@@ -48,7 +48,9 @@ public class MovableSoldierEntity : MovableMeleeEntity
     }
     protected override void InitializeIndividualParam()
     {
+        
          _soldierAttacker = GetComponent<MovableEntitySoldierAttacker>();
+         Equiper.EquipWeapon(SoldierAttacker.RangeWeaponData);
     }
     public override void TargetChaseDistanceSwitch()
     {

@@ -116,14 +116,16 @@ public class MovableEntity : Entity
 
     public override void RealTimeAction()
     {
-        base.RealTimeAction();
+        
         if (gameObject != null)
             if (_isAlive)
             {
                 _navMeshAgent.isStopped = false;
                 _navMeshAgent.speed = _lastNavSpeed;
                 _navMeshAgent.angularSpeed = _lastNavAngularSpeed;
+                //_navMeshAgent.velocity = Vector3.forward;
             }
+        base.RealTimeAction();
     }
 
     public override void StopTimeAction()
@@ -131,6 +133,7 @@ public class MovableEntity : Entity
 
         if (gameObject != null)
         {
+            SetLastNavMeshValues();
             _navMeshAgent.isStopped = true;
             _navMeshAgent.speed = 0;
             _navMeshAgent.angularSpeed = 0;

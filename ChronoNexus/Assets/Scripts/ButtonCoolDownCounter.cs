@@ -31,13 +31,15 @@ public class ButtonCoolDownCounter : MonoBehaviour
 
     public void StartCoolDown(float time)
     {
+        Debug.Log("CoolDown");
         StartCoroutine(CoolDown(time));
     }
 
     IEnumerator CoolDown(float time)
     {
         _button.enabled = false;
-        _buttonIcon.SetActive(false);
+        if(_buttonIcon!=null)
+            _buttonIcon.SetActive(false);
         _counter.gameObject.SetActive(true);
         _imageFill.gameObject.SetActive(true);
         _imageFill.fillAmount = 1;
@@ -49,7 +51,8 @@ public class ButtonCoolDownCounter : MonoBehaviour
             time--;
             _counter.text = time.ToString();
         }
-        _buttonIcon.SetActive(true);
+        if(_buttonIcon!=null)
+            _buttonIcon.SetActive(true);
         _counter.gameObject.SetActive(false);
         _imageFill.gameObject.SetActive(false);
         _button.enabled = true;

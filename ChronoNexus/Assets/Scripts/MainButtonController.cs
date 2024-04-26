@@ -48,9 +48,12 @@ public class MainButtonController : MonoBehaviour
     
     public void SetShootButton()
     {
-        if(_shootButton != null && _currentButton == _shootButton)
+        Debug.Log("SetShoot");
+        _currentButton.SetActive(true);
+        if(_shootButton == null || _currentButton == _shootButton)
             return;
-        _currentButton.SetActive(false);
+        if (_currentButton != null) 
+            _currentButton.SetActive(false);
         _currentButton = _shootButton;
         _currentButton.SetActive(true);
 
@@ -58,21 +61,26 @@ public class MainButtonController : MonoBehaviour
 
     public void SetFinisherButton()
     {
-        if(_finisherButton != null && _currentButton == _finisherButton)
+        if(_finisherButton == null || _currentButton == _finisherButton)
             return;
-        _currentButton.SetActive(false);
+        if (_currentButton != null) 
+            _currentButton.SetActive(false);
         _currentButton = _finisherButton;
         _currentButton.SetActive(true);
+        _currentButton.GetComponent<OnScreenButton>().enabled = true;
 
     }
 
     public void SetInteractButton()
     {
-        if(_interactButton != null && _currentButton == _interactButton)
+        if(_interactButton == null || _currentButton == _interactButton)
             return;
-        _currentButton.SetActive(false);
+        if (_currentButton != null) 
+            _currentButton.SetActive(false);
         _currentButton = _interactButton;
         _currentButton.SetActive(true);
+        _currentButton.GetComponent<OnScreenButton>().enabled = true;
+
     }
     public void HideInteractButton()
     {
@@ -83,7 +91,7 @@ public class MainButtonController : MonoBehaviour
     {
         for (int i = 0; i < _additionalButtons.Count; i++)
         {
-            //_additionalButtons[i].GetComponent<OnScreenButton>().enabled = false;
+            _additionalButtons[i].GetComponent<OnScreenButton>().enabled = false;
                // SetActive(false);
         }
     }
@@ -91,7 +99,7 @@ public class MainButtonController : MonoBehaviour
     {
         for (int i = 0; i < _additionalButtons.Count; i++)
         {
-           // _additionalButtons[i].GetComponent<OnScreenButton>().enabled = true;
+            _additionalButtons[i].GetComponent<OnScreenButton>().enabled = true;
         }
     }
 }

@@ -30882,6 +30882,37 @@ MonoBehaviour:
       x: 1
       y: 1
       z: 1
+--- !u!1 &4219860132136472998
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9179428429006649712}
+  m_Layer: 0
+  m_Name: BuffSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9179428429006649712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4219860132136472998}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.643, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8673351744503633821}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4242036502941794315
 GameObject:
   m_ObjectHideFlags: 0
@@ -36113,6 +36144,7 @@ GameObject:
   - component: {fileID: 6710461202360632871}
   - component: {fileID: 2823115750333918857}
   - component: {fileID: 8574170601485495782}
+  - component: {fileID: 5042203749440304736}
   m_Layer: 0
   m_Name: JuggernautEntity
   m_TagString: Enemy
@@ -36142,6 +36174,7 @@ Transform:
   - {fileID: 4182390128409946156}
   - {fileID: 4037466941888124007}
   - {fileID: 1904909677737023828}
+  - {fileID: 9179428429006649712}
   m_Father: {fileID: 3634384590912591403}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6647929303583876840
@@ -36308,8 +36341,8 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 64
-  _viewAngle: 120
-  _viewRadius: 12
+  _viewAngle: 152
+  _viewRadius: 15
   _findDelay: 0.1
   canSeeTarget: 0
   _foundEffect: {fileID: 374669041912140440}
@@ -36327,6 +36360,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _value: 99
   _healthSetter: {fileID: 0}
+  _healEffect: {fileID: 0}
 --- !u!195 &1300335658014300276
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -36449,7 +36483,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afe452be2004045a02a5ce00362332b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _buffLoot: {fileID: 5042203749440304736}
   _Attacker: {fileID: 0}
+  _renderer: {fileID: 1658822663053185229}
   _selection: {fileID: 55753581228446040}
   _selfAimTargetTransform: {fileID: 1374818969107039847}
   _hitClip: {fileID: 8300000, guid: 2c4b4be36545b8241ba9ac14147378e6, type: 3}
@@ -36458,7 +36494,7 @@ MonoBehaviour:
   _equiper: {fileID: 5104186551358338895}
   _weaponController: {fileID: 2104976164811866898}
   _finisherReady: {fileID: 6992725788763822977}
-  _finisherHPTreshold: 30
+  _finisherHPTreshold: 20
   state: 1
   _collider: {fileID: 569941604727073085}
   _isCanTurn: 0
@@ -36531,6 +36567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigController: {fileID: 5668942452820764287}
   _weaponUI: {fileID: 0}
+  _reloadUI: {fileID: 0}
 --- !u!114 &4610247723645035650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36583,6 +36620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96253a8f4c94843479e0709a07c8e508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPosition: {fileID: 9179428429006649712}
   ItemPrefab: {fileID: 6769639272446497629, guid: f1174b4377549b548be48276dbf047c1,
     type: 3}
   items:
@@ -36611,6 +36649,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 280ed2bbe532bd043ad981b6c982533c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5042203749440304736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4925516858154687356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9a8e3420e794045b9758b3cd5aa983, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _healBuff: {fileID: 4482583849910502609, guid: 9e48df2e52853ed4eb919becc79e66a3,
+    type: 3}
+  _buffSpawnTransform: {fileID: 9179428429006649712}
+  _maxBuffDropCount: 5
+  force: 50
 --- !u!1 &4931340065345568947
 GameObject:
   m_ObjectHideFlags: 0
