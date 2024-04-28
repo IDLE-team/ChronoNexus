@@ -61,8 +61,8 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         _isAttack = false;
 
         _movableMeleeEntity.IsTargetFound = false;
-        _movableMeleeEntity.TargetFinder.ResetTarget();
-        _movableMeleeEntity.NavMeshAgent.speed = 1.5f;
+        //_movableMeleeEntity.TargetFinder.ResetTarget();
+        //_movableMeleeEntity.NavMeshAgent.speed = 1.5f;
         // _movableMeleeEntity.EndMoveAnimation();
 
         base.Exit();
@@ -100,11 +100,11 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
 
         if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _retreatPosition) > 0.2f)
         {
-            _movableMeleeEntity.EntityAnimator.SetMoveAnimation(true);
+            //_movableMeleeEntity.EntityAnimator.SetMoveAnimation(true);
         }
         else
         {
-            _movableMeleeEntity.EntityAnimator.SetMoveAnimation(false);
+            //_movableMeleeEntity.EntityAnimator.SetMoveAnimation(false);
         }
 
         if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer > 0)
@@ -138,7 +138,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
     protected override async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableMeleeEntity.isTimeSlowed && !_movableMeleeEntity.isTimeStopped);
-        _movableMeleeEntity.NavMeshAgent.speed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
+        //_movableMeleeEntity.NavMeshAgent.speed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
     }
 
     private async UniTask MeleeAttackAndRetreat(CancellationToken cancellationToken)
@@ -172,7 +172,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                 if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _retreatPosition) > 0.2f)
                 {
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);
-                    _movableMeleeEntity.NavMeshAgent.speed = _attackingAgentSpeed;
+                    //_movableMeleeEntity.NavMeshAgent.speed = _attackingAgentSpeed;
                 }
                 else
                 {
@@ -197,7 +197,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                 if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _retreatPosition) > 0.2f)
                 {
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);
-                    _movableMeleeEntity.NavMeshAgent.speed = _attackingAgentSpeed;
+                    //_movableMeleeEntity.NavMeshAgent.speed = _attackingAgentSpeed;
                 }
                 else
                 {

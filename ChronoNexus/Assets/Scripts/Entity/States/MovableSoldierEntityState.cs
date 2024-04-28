@@ -39,6 +39,6 @@ public abstract class MovableSoldierEntityState : IState
     protected virtual async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableSoldierEntity.isTimeSlowed && !_movableSoldierEntity.isTimeStopped);
-        _movableSoldierEntity.NavMeshAgent.speed = 1.5f;
+        //_movableSoldierEntity.NavMeshAgent.speed = 1.5f;
     }
 }

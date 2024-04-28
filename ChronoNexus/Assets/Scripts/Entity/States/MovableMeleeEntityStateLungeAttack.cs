@@ -44,7 +44,7 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
         _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
 
         _isAttack = true;
-        _movableMeleeEntity.TargetFinder.SetWeight(1);
+        //_movableMeleeEntity.TargetFinder.SetWeight(1);
         _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.transform.position);
         //cancellationTokenSource = new CancellationTokenSource();
         //MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
@@ -55,10 +55,10 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
     public override void Exit()
     {
         _isAttack = false;
-        _movableMeleeEntity.NavMeshAgent.isStopped = false;
+        //_movableMeleeEntity.NavMeshAgent.isStopped = false;
         _movableMeleeEntity.IsTargetFound = false;
-        _movableMeleeEntity.NavMeshAgent.speed = 1.5f;
-        _movableMeleeEntity.EntityAnimator.SetMoveAnimation(false);
+        //_movableMeleeEntity.NavMeshAgent.speed = 1.5f;
+        //_movableMeleeEntity.EntityAnimator.SetMoveAnimation(false);
 
         base.Exit();
     }
@@ -116,7 +116,7 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
 
         if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer <= 0 || !_inSlash)
         {
-            _movableMeleeEntity.EntityAnimator.SetMoveAnimation(true);
+            //_movableMeleeEntity.EntityAnimator.SetMoveAnimation(true);
             _movableMeleeEntity.MeleeAttacker.ResetAttackTimer();
             _movableMeleeEntity.StartAttackAnimation();
             //bottom anim
@@ -153,7 +153,7 @@ public class MovableMeleeEntityStateLungeAttack : MovableMeleeEntityState
     protected override async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableMeleeEntity.isTimeSlowed && !_movableMeleeEntity.isTimeStopped);
-        _movableMeleeEntity.NavMeshAgent.speed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
+        //_movableMeleeEntity.NavMeshAgent.speed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
     }
 
     private async UniTask MeleeAttackAndRetreat(CancellationToken cancellationToken)

@@ -20,7 +20,7 @@ public  class MovableEntityStateRandomMove : MovableEntityState
         _distance = _movableEntity.RandomMoveMaxDistance;
             
         _movableEntity.StartSeek();
-        _movableEntity.EntityAnimator.SetMoveAnimation(true);
+        //_movableEntity.EntityAnimator.SetMoveAnimation(true);
         
         _destination = GetRandomDirection();
         
@@ -31,7 +31,7 @@ public  class MovableEntityStateRandomMove : MovableEntityState
 
     public override void Exit()
     {
-        _movableEntity.EntityAnimator.SetMoveAnimation(false);
+        //_movableEntity.EntityAnimator.SetMoveAnimation(false);
         _movableEntity.StopSeek();
         
         base.Exit();
@@ -55,7 +55,7 @@ public  class MovableEntityStateRandomMove : MovableEntityState
     protected override async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
-        _movableEntity.NavMeshAgent.speed = _movableEntity.RandomMoveSpeed;
+        //_movableEntity.NavMeshAgent.speed = _movableEntity.RandomMoveSpeed;
         //Default speed
     }
     

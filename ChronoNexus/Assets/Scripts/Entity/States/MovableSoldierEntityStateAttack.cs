@@ -109,11 +109,11 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
 
         if (Vector3.Distance(_movableSoldierEntity.SelfAim.position, _retreatPosition)<0.2f)
         {
-            _movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
+            //_movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
         }
         else
         {
-            _movableSoldierEntity.EntityAnimator.SetMoveAnimation(true);
+            //_movableSoldierEntity.EntityAnimator.SetMoveAnimation(true);
         }
         _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
         base.LogicUpdate();
@@ -132,7 +132,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     private void ReloadingLogicEnter()
     {
         _retreatPosition = _movableSoldierEntity.SelfAim.position;
-        _movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
+        //_movableSoldierEntity.EntityAnimator.SetMoveAnimation(false);
         _movableSoldierEntity.EntityAnimator.SetReloadAnimation(true);
         _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.transform.position);
         _movableSoldierEntity.TargetFinder.SetWeight(0);
@@ -142,7 +142,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     {
         _movableSoldierEntity.EntityAnimator.SetReloadAnimation(false);
         _movableSoldierEntity.TargetFinder.SetWeight(1);
-        _movableSoldierEntity.EntityAnimator.SetMoveAnimation(true);
+        //_movableSoldierEntity.EntityAnimator.SetMoveAnimation(true);
     }
 
     public override void PhysicsUpdate()
@@ -160,7 +160,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     protected override async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableSoldierEntity.isTimeSlowed && !_movableSoldierEntity.isTimeStopped);
-        _movableSoldierEntity.NavMeshAgent.speed = _shootingAgentSpeed;
+        //_movableSoldierEntity.NavMeshAgent.speed = _shootingAgentSpeed;
 
     }
 
@@ -199,9 +199,8 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
                 {
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_retreatPosition);
                     if (_movableSoldierEntity.isTimeSlowed) _movableSoldierEntity.NavMeshAgent.speed = 0.1f;
-                    else
-                        _movableSoldierEntity.NavMeshAgent.speed =
-                            _movableSoldierEntity.SoldierAttacker.DefaultAgentSpeed;
+                    else{}
+                        //_movableSoldierEntity.NavMeshAgent.speed =_movableSoldierEntity.SoldierAttacker.DefaultAgentSpeed;
                     
                 }
                 else
@@ -231,8 +230,10 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
                     if (_movableSoldierEntity.isTimeStopped) return;
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_retreatPosition);
                     if (_movableSoldierEntity.isTimeSlowed) _movableSoldierEntity.NavMeshAgent.speed = 0.2f;
-                    else _movableSoldierEntity.NavMeshAgent.speed = _shootingAgentSpeed;
-                    
+                    else
+                    {
+                    } //_movableSoldierEntity.NavMeshAgent.speed = _shootingAgentSpeed;
+
                 }
                 else
                 {

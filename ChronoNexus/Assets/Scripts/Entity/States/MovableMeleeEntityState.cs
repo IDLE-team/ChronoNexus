@@ -39,6 +39,6 @@ public abstract class MovableMeleeEntityState : IState
     protected virtual async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableMeleeEntity.isTimeSlowed && !_movableMeleeEntity.isTimeStopped);
-        _movableMeleeEntity.NavMeshAgent.speed = 1.5f;
+        //_movableMeleeEntity.NavMeshAgent.speed = 1.5f;
     }
 }

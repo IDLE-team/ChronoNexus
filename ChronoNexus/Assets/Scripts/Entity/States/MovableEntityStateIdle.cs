@@ -13,7 +13,7 @@ public class MovableEntityStateIdle : MovableEntityState
 
     public override void Enter()
     {
-        _movableEntity.EntityAnimator.SetMoveAnimation(false);
+        //_movableEntity.EntityAnimator.SetMoveAnimation(false);
         _movableEntity.StartSeek();
         base.Enter();
     }
@@ -33,7 +33,7 @@ public class MovableEntityStateIdle : MovableEntityState
     protected override async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
-        _movableEntity.NavMeshAgent.speed = _movableEntity.ChaseSpeed;
+        //_movableEntity.NavMeshAgent.speed = _movableEntity.ChaseSpeed;
     }
     public override void PhysicsUpdate()
     {

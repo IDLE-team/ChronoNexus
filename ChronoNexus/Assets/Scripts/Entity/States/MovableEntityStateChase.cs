@@ -16,7 +16,7 @@ public class MovableEntityStateChase : MovableEntityState
     public override void Enter()
     {
         _movableEntity.StopSeek();
-        _movableEntity.EntityAnimator.SetMoveAnimation(true);
+        //_movableEntity.EntityAnimator.SetMoveAnimation(true);
 
         base.Enter();
     }
@@ -25,7 +25,7 @@ public class MovableEntityStateChase : MovableEntityState
     {
         
         _movableEntity.IsTargetFound = false;
-        _movableEntity.TargetFinder.ResetTarget();
+        //_movableEntity.TargetFinder.ResetTarget();
     }
 
     public override void LogicUpdate()
@@ -51,6 +51,6 @@ public class MovableEntityStateChase : MovableEntityState
     protected override async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
-        _movableEntity.NavMeshAgent.speed = _movableEntity.ChaseSpeed;
+        //_movableEntity.NavMeshAgent.speed = _movableEntity.ChaseSpeed;
     }
 }

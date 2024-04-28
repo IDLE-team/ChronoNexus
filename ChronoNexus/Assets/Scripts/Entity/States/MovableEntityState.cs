@@ -49,7 +49,7 @@ public abstract class MovableEntityState : IState
     protected virtual async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
-        _movableEntity.NavMeshAgent.speed = 1.5f;
+        //_movableEntity.NavMeshAgent.speed = 1.5f;
         //Default speed
     }
 }
