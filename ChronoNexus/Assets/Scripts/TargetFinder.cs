@@ -29,7 +29,7 @@ public class TargetFinder : MonoBehaviour
     private CancellationTokenSource cancellationTokenSource;
     private CancellationToken cancellationToken;
     public event Action<ITargetable> OnTargetFinded;
-    private bool _isSeeking;
+    private bool _isSeeking = true;
 
     private void Awake()
     {
@@ -62,6 +62,7 @@ public class TargetFinder : MonoBehaviour
     private void StartSeeking()
     {
         _isSeeking = true;
+        Target = null;
         cancellationTokenSource = new CancellationTokenSource();
         cancellationToken = cancellationTokenSource.Token;
         FindTargetsWithDelay(_findDelay, cancellationToken).Forget();
@@ -116,18 +117,12 @@ public class TargetFinder : MonoBehaviour
             var dstToTarget = Vector3.Distance(transform.position, _target.position);
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;
-            Debug.Log(target+" TARGETFINDER");
             SetTarget(target);
             
 
             
 
         }
-    }
-
-    public void ResetTarget()
-    {
-        Target = null;
     }
 
     public void SetTarget(ITargetable target)

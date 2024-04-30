@@ -111,6 +111,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
 
         IsTargetFound = false;
+        
+        _targetFinder.OnTargetFinded += TargetFoundReaction;
 
         DummyState = new EntityStateDummy(this, _stateMachine);
 
@@ -270,13 +272,13 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         OnSeekEnd?.Invoke();
     }
 
-    protected void OnEnable()
+    protected virtual void OnEnable()
     {
         _health.Died += Die;
         _stateMachine.OnStateChanged += UpdateUI;
     }
 
-    protected void OnDisable()
+    protected virtual void OnDisable()
     {
         StopSeek();
         _health.Died -= Die;
@@ -363,9 +365,18 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         Die();
     }
 
-    public virtual void TargetFoundReaction()
+    public virtual void TargetFoundReaction(ITargetable target)
     {
+        IsTargetFound = true;
+        Target = target;
+        StopSeek();
 
+    }
+    public virtual void TargetLossReaction()
+    {
+        IsTargetFound = false;
+        Target = null;
+        StartSeek();
     }
 
     public enum State

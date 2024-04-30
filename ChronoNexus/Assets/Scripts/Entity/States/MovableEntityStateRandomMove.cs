@@ -18,9 +18,6 @@ public  class MovableEntityStateRandomMove : MovableEntityState
     public override void Enter()
     {
         _distance = _movableEntity.RandomMoveMaxDistance;
-            
-        _movableEntity.StartSeek();
-        //_movableEntity.EntityAnimator.SetMoveAnimation(true);
         
         _destination = GetRandomDirection();
         
@@ -31,15 +28,11 @@ public  class MovableEntityStateRandomMove : MovableEntityState
 
     public override void Exit()
     {
-        //_movableEntity.EntityAnimator.SetMoveAnimation(false);
-        _movableEntity.StopSeek();
-        
         base.Exit();
     }
 
     public override void LogicUpdate()
     {
-        CheckTarget();
         base.LogicUpdate();
     }
 

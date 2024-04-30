@@ -169,9 +169,15 @@ public class MovableEntity : Entity
         _lastNavAngularSpeed = _navMeshAgent.angularSpeed;
     }
 
-    public override void TargetFoundReaction()
+    public override void TargetFoundReaction(ITargetable target)
     {
+        base.TargetFoundReaction(target);
         _stateMachine.ChangeState(ChaseState);
+    }
+    public override void TargetLossReaction()
+    {
+        base.TargetLossReaction();
+        _stateMachine.ChangeState(_startState);
     }
 
     public virtual void AgentDestinationSet()

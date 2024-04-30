@@ -40,7 +40,7 @@ public class MovableEntityStateChase : MovableEntityState
     {
         if (_movableEntity.Target == null)
         {
-            _stateMachine.ChangeState(_movableEntity.DummyState);
+            _movableEntity.TargetLossReaction();
             return;
         }
 

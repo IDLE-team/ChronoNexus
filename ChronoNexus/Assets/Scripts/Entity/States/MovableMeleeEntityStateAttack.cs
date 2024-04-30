@@ -25,8 +25,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
 
     }
 
-    public override void
-        Enter() //если расстояние начинает увеличиваться, когда удар уже начат, враг начнет движение в сторону цели
+    public override void Enter() 
     {
         _maxDistanceBetweenTarget = _movableMeleeEntity.MeleeAttacker.MaxMeleeAttackDistance;
         _minDistanceBetweenTarget = _movableMeleeEntity.MeleeAttacker.MinMeleeDistanceToTarget;
@@ -38,19 +37,11 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
 
         _isAttack = true;
-        //_movableMeleeEntity.TargetFinder.SetWeight(1);
 
         cancellationTokenSource = new CancellationTokenSource();
         MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
         _minDelay = _movableMeleeEntity.MeleeAttacker.MinDelayTokenMelee;
         _maxDelay = _movableMeleeEntity.MeleeAttacker.MaxDelayTokenMelee;
-        /*_retreatPosition = _movableMeleeEntity.SelfAim.transform.position +
-                           (_movableMeleeEntity.SelfAim.position - _targetPosition).normalized *
-                           (_minDistanceBetweenTarget );
-        _retreatPosition =
-            new Vector3(_retreatPosition.x, _movableMeleeEntity.transform.position.y, _retreatPosition.z);
-
-        _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);*/
 
 
         base.Enter();
@@ -59,11 +50,6 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
     public override void Exit()
     {
         _isAttack = false;
-
-        _movableMeleeEntity.IsTargetFound = false;
-        //_movableMeleeEntity.TargetFinder.ResetTarget();
-        //_movableMeleeEntity.NavMeshAgent.speed = 1.5f;
-        // _movableMeleeEntity.EndMoveAnimation();
 
         base.Exit();
     }

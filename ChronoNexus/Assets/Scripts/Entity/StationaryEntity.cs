@@ -15,6 +15,23 @@ public class StationaryEntity : Entity
     public StationaryEntityStateIdle IdleState { get; private set; }
 
     public StationaryEntityStateRangeAttack RangeAttackState { get; private set; }
+    
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        
+    }
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        _targetFinder.OnTargetFinded -= TargetFoundReaction;
+        StopSeek();
+    }
+    
+    
+    
+    
+    
     protected override void InitializeStartState()
     {
         switch (state)
@@ -33,6 +50,8 @@ public class StationaryEntity : Entity
                 break;
         }
     }
+    
+    
 
     protected override void Die()
     {
@@ -46,16 +65,24 @@ public class StationaryEntity : Entity
         base.InitializeParam();
         RangeAttackState = new StationaryEntityStateRangeAttack(this, _stateMachine);
         IdleState = new StationaryEntityStateIdle(this, _stateMachine);
+        
+        
+        StartSeek();
     }
 
     protected override void InitializeIndividualParam()
     {
         _attacker = GetComponent<StationaryEntityAttacker>();
     }
-    public override void TargetFoundReaction()
+    public override void TargetFoundReaction(ITargetable target)
     {
-        Debug.Log("TargetFounded");
+        base.TargetFoundReaction(target);
         _stateMachine.ChangeState(RangeAttackState);
-        base.TargetFoundReaction();
+    }
+
+    public override void TargetLossReaction()
+    {
+        base.TargetLossReaction();
+        _stateMachine.ChangeState(IdleState);
     }
 }

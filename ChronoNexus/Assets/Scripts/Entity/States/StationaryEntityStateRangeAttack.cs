@@ -43,7 +43,6 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
 
     public override void Enter()
     {
-        Debug.Log("RangeStatEnterState");
         
         _setTargetOnAimTemp = _setTargetOnAim;
         shootingInterval = _stationaryEntity.TurretAttacker.RangedAttackInterval;
@@ -63,7 +62,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         */
 
         _target = _stationaryEntity.Target.GetTransform();
-        _targetPosition = _target.localPosition;
+        _targetPosition = _target.position;
 
         _isAttack = true;
         _cancellationTokenSource = new CancellationTokenSource();
@@ -74,11 +73,6 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
     public override void Exit()
     {
         _isAttack = false;
-        _stationaryEntity.TargetFinder.ResetTarget();
-        _stationaryEntity.Target = null;
-        _stationaryEntity.IsTargetFound = false;
-        //ВНИМАНИЕ ЭТО СДЕЛАНО ДЛЯ ФИКСА ПРОВЕРКИ УСТАНОВКИ ДЛЯ ГРУПП В ТАРГЕТ ФАЙНДЕРЕ
-        
         _stationaryEntity.OnDie -= CancelCancelationToken;
         base.Exit();
     }
@@ -88,12 +82,13 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
         if (_stationaryEntity.Target == null)
         {
             _cancellationTokenSource.Cancel();
-            _stateMachine.ChangeState(_stationaryEntity.IdleState);
+            _stationaryEntity.TargetLossReaction();
             return;
         }
 
         Vector3 selfPos = new Vector3(_stationaryEntity.transform.position.x, _targetPosition.y, _stationaryEntity.transform.position.z);
         _toRotation = Quaternion.LookRotation(_targetPosition - selfPos, Vector3.up);
+        
         if (_stationaryEntity.isTimeSlowed)
         {
             _stationaryEntity.transform.rotation = Quaternion.Slerp(_stationaryEntity.transform.rotation, _toRotation, 6f * 0.2f * Time.deltaTime);
@@ -112,7 +107,7 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
 
         if (Vector3.Distance(_stationaryEntity.SelfAim.transform.position, _targetPosition) > _maxAttackDistance)
         {
-            _stateMachine.ChangeState(_stationaryEntity.IdleState);
+            _stationaryEntity.TargetLossReaction();
         }
 
         //_firearmWeapon.Fire(_stationaryEntity.Target, _stationaryEntity.transform);
