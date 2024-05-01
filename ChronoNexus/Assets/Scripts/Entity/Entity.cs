@@ -9,7 +9,6 @@ using Zenject;
 public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITargetable, ITimeAffected, ISeeker
 {
     [SerializeField] private BuffLoot _buffLoot;
-    [HideInInspector] public Attacker _Attacker;
     [SerializeField] private SkinnedMeshRenderer _renderer;
     public event Action OnTargetInvalid;
     public event Action OnTimeAffectedDestroy;
@@ -33,10 +32,15 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     [SerializeField] protected AudioClip _hitClip;
     [SerializeField] protected ParticleSystem _hitEffect;
     [SerializeField] protected DebugEnemySpawner _enemySpawner;
-    [SerializeField] protected Equiper _equiper;
+    protected Equiper _equiper;
     [SerializeField] protected WeaponController _weaponController;
     [SerializeField] protected GameObject _finisherReady;
     [SerializeField] protected float _finisherHPTreshold;
+    
+    
+    
+    
+    
     public State state = new State();
     protected EntityState _startState;
 
@@ -104,15 +108,19 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _audioSource = GetComponent<AudioSource>();
         _loot = GetComponent<EntityLoot>();
         _rigidbody = GetComponent<Rigidbody>();
+        _equiper = GetComponent<Equiper>();
+        
         if (_collider == null)
         {
             _collider = GetComponent<Collider>();
         }
 
-
-        IsTargetFound = false;
         
         _targetFinder.OnTargetFinded += TargetFoundReaction;
+        
+        
+        
+        
 
         DummyState = new EntityStateDummy(this, _stateMachine);
 
@@ -153,6 +161,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     {
         _isAlive = true;
         InitializeStartState();
+        StartSeek();
     }
 
     protected void Update()
@@ -178,7 +187,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         if (Target == null && CurrentState != DummyState && !_isRotating)
         {
             transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f) * transform.rotation, 1f);
-            //_targetFinder.SetTarget();
         }
 
         _health.Decrease(damage, isCritical);
@@ -197,7 +205,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     {
         if(!_isAlive)
             return;
-        Debug.Log("Death");
+        
         if (_isFinisherKill)
             _buffLoot.DropBuff();
         
@@ -265,6 +273,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     public void StartSeek()
     {
         OnSeekStart?.Invoke();
+        Debug.Log("FGDGFLGF:LG:FLG:FLGF:GL");
     }
 
     public void StopSeek()
@@ -367,15 +376,15 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     public virtual void TargetFoundReaction(ITargetable target)
     {
-        IsTargetFound = true;
         Target = target;
+        IsTargetFound = true;
         StopSeek();
 
     }
     public virtual void TargetLossReaction()
     {
-        IsTargetFound = false;
         Target = null;
+        IsTargetFound = false;
         StartSeek();
     }
 

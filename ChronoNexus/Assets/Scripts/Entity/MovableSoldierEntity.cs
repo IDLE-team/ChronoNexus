@@ -48,17 +48,17 @@ public class MovableSoldierEntity : MovableMeleeEntity
     }
     protected override void InitializeIndividualParam()
     {
-        
-         _soldierAttacker = GetComponent<MovableEntitySoldierAttacker>();
+        _soldierAttacker = GetComponent<MovableEntitySoldierAttacker>();
          Equiper.EquipWeapon(SoldierAttacker.RangeWeaponData);
     }
     public override void TargetChaseDistanceSwitch()
     {
-        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > 12f) //view distance or check last point
+        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > _maxChaseDistance) //view distance or check last point
         {
-            _stateMachine.ChangeState(RandomMoveState);
+            //_stateMachine.ChangeState(RandomMoveState);
+            TargetLossReaction();
         }
-        else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= 8f) // or attack range
+        else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= _soldierAttacker.MaxRangeAttackDistance) // or attack range
         {
             _stateMachine.ChangeState(RangeAttackState);
         }
@@ -85,19 +85,6 @@ public class MovableSoldierEntity : MovableMeleeEntity
         }
         base.StopTimeAction();
     }
-
-    public override void SlowTimeAction()
-    {
-        if (gameObject != null)
-        {
-            if (WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
-            {
-                //FirearmWeapon _firearmWeapon = (FirearmWeapon) WeaponController.CurrentWeapon;
-
-            }
-        }
-        base.SlowTimeAction();
-    }
     protected override void Die()
     {
         if (WeaponController.CurrentWeapon != null)
@@ -111,12 +98,6 @@ public class MovableSoldierEntity : MovableMeleeEntity
         }
 
         base.Die();
-    }
-    public override void TakeDamage(float damage, bool isCritical)
-    {
-        
-
-        base.TakeDamage(damage, isCritical);
     }
     public override void StartFinisher(int id)
     {

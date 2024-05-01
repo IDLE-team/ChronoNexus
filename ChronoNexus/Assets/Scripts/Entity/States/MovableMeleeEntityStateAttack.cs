@@ -58,8 +58,9 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
     {
         if (_movableMeleeEntity.Target == null)
         {
+            _movableMeleeEntity.TargetLossReaction();
             cancellationTokenSource.Cancel();
-            _stateMachine.ChangeState(_movableMeleeEntity.RandomMoveState);
+            
             return;
         }
 
@@ -77,20 +78,11 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                 toRotation, 6f * Time.deltaTime);
 
 
-        if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _targetPosition) >
-            _maxDistanceBetweenTarget)
+        if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _targetPosition) > _maxDistanceBetweenTarget)
         {
             _stateMachine.ChangeState(_movableMeleeEntity.ChaseState);
+            //_movableMeleeEntity.TargetLossReaction();
             return;
-        }
-
-        if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _retreatPosition) > 0.2f)
-        {
-            //_movableMeleeEntity.EntityAnimator.SetMoveAnimation(true);
-        }
-        else
-        {
-            //_movableMeleeEntity.EntityAnimator.SetMoveAnimation(false);
         }
 
         if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer > 0)

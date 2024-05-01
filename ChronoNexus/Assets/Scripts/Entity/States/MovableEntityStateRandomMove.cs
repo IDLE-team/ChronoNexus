@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,6 +11,7 @@ public  class MovableEntityStateRandomMove : MovableEntityState
     private Vector3 _destination;
     private float _remainingDistance = 1f;
     private float _distance;
+    private CancellationTokenSource _cancellationTokenSource;
     
     public MovableEntityStateRandomMove(MovableEntity movableEntity, StateMachine stateMachine):base(movableEntity, stateMachine)
     {
@@ -22,6 +24,8 @@ public  class MovableEntityStateRandomMove : MovableEntityState
         _destination = GetRandomDirection();
         
         _navMeshAgent.SetDestination(_destination);
+        
+        
         
         base.Enter();
     }

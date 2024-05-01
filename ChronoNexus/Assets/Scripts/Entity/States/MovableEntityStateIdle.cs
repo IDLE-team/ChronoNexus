@@ -14,19 +14,19 @@ public class MovableEntityStateIdle : MovableEntityState
     public override void Enter()
     {
         //_movableEntity.EntityAnimator.SetMoveAnimation(false);
-        _movableEntity.StartSeek();
+        //_movableEntity.StartSeek();
         base.Enter();
     }
 
     public override void Exit()
     {
-        _movableEntity.StopSeek();
+        //_movableEntity.StopSeek();
         base.Exit();
     }
 
     public override void LogicUpdate()
     {
-        CheckTarget();
+        //CheckTarget();
         
         base.LogicUpdate();
     }

@@ -15,16 +15,16 @@ public class MovableEntityStateChase : MovableEntityState
 
     public override void Enter()
     {
-        _movableEntity.StopSeek();
+        //_movableEntity.StopSeek();
         //_movableEntity.EntityAnimator.SetMoveAnimation(true);
-
+        //_navMeshAgent.SetDestination(_movableEntity.Target.GetTransform().position);
         base.Enter();
     }
 
     public override void Exit()
     {
         
-        _movableEntity.IsTargetFound = false;
+        //_movableEntity.IsTargetFound = false;
         //_movableEntity.TargetFinder.ResetTarget();
     }
 
@@ -38,11 +38,6 @@ public class MovableEntityStateChase : MovableEntityState
 
     public override void PhysicsUpdate()
     {
-        if (_movableEntity.Target == null)
-        {
-            _movableEntity.TargetLossReaction();
-            return;
-        }
 
         _movableEntity.AgentDestinationSet();
 

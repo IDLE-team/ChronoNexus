@@ -177,7 +177,7 @@ public class MovableEntity : Entity
     public override void TargetLossReaction()
     {
         base.TargetLossReaction();
-        _stateMachine.ChangeState(_startState);
+        _stateMachine.ChangeState(IdleState);
     }
 
     public virtual void AgentDestinationSet()
@@ -194,17 +194,9 @@ public class MovableEntity : Entity
 
     public virtual void TargetChaseDistanceSwitch()
     {
-        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) >
-            MaxChaseDistance) //view distance or check last point
+        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > MaxChaseDistance) 
         {
-            if (_isPatrol && _patrolPoints.Length != 0)
-            {
-                _stateMachine.ChangeState(PatrolState);
-            }
-            else
-            {
-                _stateMachine.ChangeState(RandomMoveState);
-            }
+            TargetLossReaction();
         }
 
     }

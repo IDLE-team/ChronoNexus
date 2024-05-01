@@ -72,7 +72,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         if (_movableSoldierEntity.Target == null)
         {
             _cancellationTokenSource.Cancel();
-            _stateMachine.ChangeState(_movableSoldierEntity.RandomMoveState);
+            _movableSoldierEntity.TargetLossReaction();
             return;
         }
 
@@ -95,10 +95,11 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             }
         }
 
-        if (Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _targetPosition) >
-            _maxDistanceBetweenTarget)
+        if (Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _targetPosition) > _maxDistanceBetweenTarget)
         {
             _stateMachine.ChangeState(_movableSoldierEntity.ChaseState);
+            _firearmWeapon.StopFire();
+            _movableSoldierEntity.TargetFinder.SetWeight(0);
             return;
         }
 

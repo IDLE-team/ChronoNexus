@@ -28,8 +28,10 @@ public class TargetFinder : MonoBehaviour
 
     private CancellationTokenSource cancellationTokenSource;
     private CancellationToken cancellationToken;
+    
+    
     public event Action<ITargetable> OnTargetFinded;
-    private bool _isSeeking = true;
+    private bool _isSeeking = false;
 
     private void Awake()
     {
@@ -47,6 +49,7 @@ public class TargetFinder : MonoBehaviour
         // Debug.Log(cancellationToken.IsCancellationRequested);
     }
 
+
     private void OnEnable()
     {
         _seeker.OnSeekStart += StartSeeking;
@@ -61,8 +64,10 @@ public class TargetFinder : MonoBehaviour
 
     private void StartSeeking()
     {
+        Debug.Log(gameObject+" I CAN FIND TARGET");
         _isSeeking = true;
         Target = null;
+        _seeker.Target = null;
         cancellationTokenSource = new CancellationTokenSource();
         cancellationToken = cancellationTokenSource.Token;
         FindTargetsWithDelay(_findDelay, cancellationToken).Forget();
@@ -91,7 +96,7 @@ public class TargetFinder : MonoBehaviour
 
     private void FindVisibleTargets()
     {
-        if (_isSeeking == false)
+        if (!_isSeeking)
             return;
         if(this == null)
             return;
@@ -99,7 +104,7 @@ public class TargetFinder : MonoBehaviour
         var size = Physics.OverlapSphereNonAlloc(transform.position, ViewRadius, results, _targetMask);
         for (var i = 0; i < size; i++)
         {
-            if (_isSeeking == false)
+            if (!_isSeeking)
                 break;
             if (results[i].gameObject == gameObject)
                 continue;
@@ -117,6 +122,7 @@ public class TargetFinder : MonoBehaviour
             var dstToTarget = Vector3.Distance(transform.position, _target.position);
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;
+            
             SetTarget(target);
             
 
@@ -127,7 +133,7 @@ public class TargetFinder : MonoBehaviour
 
     public void SetTarget(ITargetable target)
     {
-        if (target == Target)
+        if (target == _seeker.Target)
         {
             return;
         }
@@ -138,6 +144,8 @@ public class TargetFinder : MonoBehaviour
         _entityTargeting.SetTargetParent(Target.GetTransform());
         _seeker.IsTargetFound = true;
         _foundEffect.SetActive(true);
+        Debug.Log("Invoke");
+        
         if (target != null)
             OnTargetFinded?.Invoke(target);
     }

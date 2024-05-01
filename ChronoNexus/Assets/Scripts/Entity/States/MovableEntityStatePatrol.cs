@@ -33,7 +33,7 @@ public class MovableEntityStatePatrol : MovableEntityState
     public override void Exit()
     {
        // _movableEntity.EntityAnimator.SetMoveAnimation(false);
-        _movableEntity.StopSeek();
+        //_movableEntity.StopSeek();
 
         base.Exit();
     }

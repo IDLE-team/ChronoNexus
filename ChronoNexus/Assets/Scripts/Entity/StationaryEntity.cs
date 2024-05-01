@@ -67,7 +67,7 @@ public class StationaryEntity : Entity
         IdleState = new StationaryEntityStateIdle(this, _stateMachine);
         
         
-        StartSeek();
+        
     }
 
     protected override void InitializeIndividualParam()
