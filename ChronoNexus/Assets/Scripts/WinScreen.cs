@@ -31,26 +31,19 @@ public class WinScreen : MonoBehaviour
     {
         _buttonLoadMenu.onClick.AddListener(LoadScene);
         transform.localScale = Vector3.zero;
-        for (int i = 0; i < 10; i++)
-        {
-            print(GetExpToNextLevel(i));
-        }
+
+        startXp = PlayerPrefs.GetFloat("xp", 0);
+        lvl = PlayerPrefs.GetFloat("lvl", 1);
+        xpToNextLvl = GetExpToNextLevel(lvl);
     }
 
     public void SetScreen(LevelStatTracker tracker, SceneLoader loader)
     {
-        startXp = PlayerPrefs.GetFloat("xp", 0);
-        lvl = PlayerPrefs.GetFloat("lvl", 1);
-
-        xpToNextLvl = GetExpToNextLevel(lvl);
-
-        
-
         transform.DOScale(1, 0.4f);
 
         float earnedMoney = 0, earnedXp = 0;
 
-        earnedMoney = tracker.GetKilledEnemyAmount() * Random.Range(20, 30) ;
+        earnedMoney = tracker.GetKilledEnemyAmount() * Random.Range(20, 30);
         _moneyGainText.text = earnedMoney.ToString();
 
         earnedXp = tracker.GetKilledEnemyAmount() * Random.Range(30, 50) / 10;
@@ -64,8 +57,7 @@ public class WinScreen : MonoBehaviour
         _levelCurrentText.text = lvl.ToString();
         _levelNextText.text = (lvl + 1).ToString();
 
-        
-        print(xpToNextLvl);
+
         _levelSlider.maxValue = xpToNextLvl;
         _levelSliderShadow.maxValue = xpToNextLvl;
 
@@ -84,7 +76,7 @@ public class WinScreen : MonoBehaviour
             _levelSlider.DOValue(startXp + earnedXp, 1f).SetDelay(1f);
             _xpText.text = (earnedXp + startXp).ToString() + "/" + xpToNextLvl.ToString();
 
-            PlayerPrefs.SetFloat("xp", PlayerPrefs.GetFloat("xp", 0) + earnedXp);
+            PlayerPrefs.SetFloat("xp", startXp + earnedXp);
             PlayerPrefs.SetFloat("money", PlayerPrefs.GetFloat("money", 0) + earnedMoney);
         }
 
@@ -110,12 +102,12 @@ public class WinScreen : MonoBehaviour
         _levelSlider.value = 0;
         _levelSliderShadow.value = 0;
 
-        _levelSliderShadow.DOValue(xp , 1f);
+        _levelSliderShadow.DOValue(xp, 1f);
         _levelSlider.DOValue(xp, 1f).SetDelay(1f);
 
         _xpText.text = (xp).ToString() + "/" + xpToNextLevel.ToString();
 
-        PlayerPrefs.SetFloat("xp",xp);
+        PlayerPrefs.SetFloat("xp", xp);
         PlayerPrefs.SetFloat("money", PlayerPrefs.GetFloat("money", 0) + earnedMoney);
 
         if (xp >= xpToNextLvl)
@@ -127,7 +119,7 @@ public class WinScreen : MonoBehaviour
         }
     }
 
-        private float GetExpToNextLevel(float lvl)
+    private float GetExpToNextLevel(float lvl)
     {
         return Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl;
     }
