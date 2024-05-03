@@ -64,7 +64,7 @@ public class TargetFinder : MonoBehaviour
 
     private void StartSeeking()
     {
-        Debug.Log(gameObject+" I CAN FIND TARGET");
+        
         _isSeeking = true;
         Target = null;
         _seeker.Target = null;
