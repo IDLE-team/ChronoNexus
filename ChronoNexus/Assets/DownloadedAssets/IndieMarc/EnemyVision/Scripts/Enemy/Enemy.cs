@@ -147,7 +147,7 @@ namespace IndieMarc.EnemyVision
                 nav_agent.enabled = true;
                 nav_agent.speed = current_speed;
                 nav_agent.SetDestination(move_target);
-                rigid.velocity = Vector3.zero;
+                rigid.linearVelocity = Vector3.zero;
             }
             else
             {
@@ -160,7 +160,7 @@ namespace IndieMarc.EnemyVision
                     nav_agent.enabled = false;
 
                 current_move = Vector3.MoveTowards(current_move, move_vect, move_speed * 10f * Time.fixedDeltaTime);
-                rigid.velocity = current_move;
+                rigid.linearVelocity = current_move;
             }
         }
 
@@ -413,7 +413,7 @@ namespace IndieMarc.EnemyVision
             using_navmesh = false;
             move_target = rigid.position;
             current_move = Vector3.zero;
-            rigid.velocity = Vector3.zero;
+            rigid.linearVelocity = Vector3.zero;
             if (nav_agent && nav_agent.enabled)
                 nav_agent.ResetPath(); //Cancel previous path
         }

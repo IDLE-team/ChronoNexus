@@ -102,7 +102,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         if (inputDirection == Vector2.zero) _targetSpeed = 0.0f;
 
         _speedOffset = 0.1f;
-        var velocity = _character.Rigidbody.velocity;
+        var velocity = _character.Rigidbody.linearVelocity;
         _currentHorizontalSpeed = new Vector3(velocity.x, 0.0f, velocity.z).magnitude;
 
         _inputMagnitude = inputDirection.magnitude;
@@ -136,7 +136,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         _targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
 
             // _character.Rigidbody.velocity = _targetDirection.normalized * _speed;
-        _character.Rigidbody.velocity = new Vector3(_targetDirection.normalized.x * _speed, _character.Rigidbody.velocity.y, _targetDirection.normalized.z * _speed);
+        _character.Rigidbody.linearVelocity = new Vector3(_targetDirection.normalized.x * _speed, _character.Rigidbody.linearVelocity.y, _targetDirection.normalized.z * _speed);
         _character.Animator.StrafeZ(_animationBlend);
 
         if (_inputMagnitude > 0.1f)
@@ -162,7 +162,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
     public void LockMove()
     {
         _canMove = false;
-        _character.Rigidbody.velocity = Vector3.zero;
+        _character.Rigidbody.linearVelocity = Vector3.zero;
     }
 
     public void UnlockMove()

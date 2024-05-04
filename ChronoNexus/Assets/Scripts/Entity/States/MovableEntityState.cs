@@ -38,11 +38,7 @@ public abstract class MovableEntityState : IState
 
     protected virtual void CheckTarget()
     {
-        /*if (_movableEntity.IsTargetFound)
-        {
-            _movableEntity.TargetFoundReaction();
-            return;
-        }*/
+        
     }
 
     

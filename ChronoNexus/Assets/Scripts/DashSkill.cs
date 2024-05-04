@@ -59,7 +59,7 @@ public class DashSkill : MonoBehaviour, ICoolDownable
         }
         while (Time.time < startTime + _dashTime)
         {
-            rb.velocity = transform.forward * _dashSpeed;
+            rb.linearVelocity = transform.forward * _dashSpeed;
             yield return null;
         }
         _meshRenderer.enabled = true;
@@ -71,7 +71,7 @@ public class DashSkill : MonoBehaviour, ICoolDownable
 
         Instantiate(_dashVFX.gameObject, _dashSpawnPoint.position, Quaternion.identity);   
 
-        rb.velocity = Vector3.zero;
+        rb.linearVelocity = Vector3.zero;
     }
 }
 

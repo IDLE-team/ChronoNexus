@@ -45,7 +45,7 @@ public class VelocityRecorder : Recorder<VelocityValues>
     }
 
     protected override VelocityValues GetRecordValue()
-        =>  new VelocityValues(_rigidbody.velocity, _rigidbody.angularVelocity);
+        =>  new VelocityValues(_rigidbody.linearVelocity, _rigidbody.angularVelocity);
 
     protected override void RestoreValue(VelocityValues currentValue, VelocityValues targetValue, float progress)
     {
@@ -55,18 +55,18 @@ public class VelocityRecorder : Recorder<VelocityValues>
     }
 
     protected override bool IsDataValuesChanged(VelocityValues lastValue)
-        => lastValue.Velocity != _rigidbody.velocity || lastValue.AngularVelocity != _rigidbody.angularVelocity;
+        => lastValue.Velocity != _rigidbody.linearVelocity || lastValue.AngularVelocity != _rigidbody.angularVelocity;
 
     private void RememberCurrentValues()
     {
-        _storedVelocity = _rigidbody.velocity;
+        _storedVelocity = _rigidbody.linearVelocity;
         _storedAngularVelocity = _rigidbody.angularVelocity;
     }
 
     private void RestoreStoredValues()
     {
         Debug.Log("VelocityRestoreStoredValues");
-        _rigidbody.velocity = _storedVelocity;
+        _rigidbody.linearVelocity = _storedVelocity;
         _rigidbody.angularVelocity = _storedAngularVelocity;
     }
 }

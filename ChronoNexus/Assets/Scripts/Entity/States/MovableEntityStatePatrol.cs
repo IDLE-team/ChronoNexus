@@ -12,19 +12,14 @@ public class MovableEntityStatePatrol : MovableEntityState
     private Vector3[] _patrolPoints;
     private int _nextPointIndex = 0;
 
-    public MovableEntityStatePatrol(MovableEntity movableEntity, StateMachine stateMachine) : base(movableEntity,
-        stateMachine)
+    public MovableEntityStatePatrol(MovableEntity movableEntity, StateMachine stateMachine) : base(movableEntity, stateMachine)
     {
-        //_remainingDistance = _entity.EntityLogic.RemainingDistanceToRandomPosisiton
+        
     }
 
     public override void Enter()
     {
-        _movableEntity.StartSeek();
-        //_movableEntity.EntityAnimator.SetMoveAnimation(true);
-
         _destination = _patrolPoints[0];
-
         _navMeshAgent.SetDestination(_destination);
 
         base.Enter();
@@ -32,15 +27,11 @@ public class MovableEntityStatePatrol : MovableEntityState
 
     public override void Exit()
     {
-       // _movableEntity.EntityAnimator.SetMoveAnimation(false);
-        //_movableEntity.StopSeek();
-
         base.Exit();
     }
 
     public override void LogicUpdate()
     {
-        CheckTarget();
         base.LogicUpdate();
     }
 

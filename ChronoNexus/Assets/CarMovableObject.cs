@@ -60,11 +60,11 @@ public class CarMovableObject : MonoBehaviour, ITimeAffected
         }
         else if (CanBeAffected && TimeManager.instance.IsTimeSlowed && !isTimeSlowed)
         {
-            _rigidbody.velocity = (_positionToEnd * _speed / 100) * 0.1f;
+            _rigidbody.linearVelocity = (_positionToEnd * _speed / 100) * 0.1f;
             _timer += Time.deltaTime * 0.1f;
             return;
         }
-        _rigidbody.velocity = _positionToEnd * _speed / 100;
+        _rigidbody.linearVelocity = _positionToEnd * _speed / 100;
         _timer += Time.deltaTime;
 
     }
@@ -81,7 +81,7 @@ public class CarMovableObject : MonoBehaviour, ITimeAffected
     {
         _collider.isTrigger = false;
         isTimeStopped = true;
-        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.linearVelocity = Vector3.zero;
     }
 
     public void SlowTimeAction()

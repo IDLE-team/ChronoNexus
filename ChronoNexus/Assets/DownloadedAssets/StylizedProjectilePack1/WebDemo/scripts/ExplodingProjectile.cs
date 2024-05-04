@@ -98,7 +98,7 @@ public class ExplodingProjectile : MonoBehaviour
             {
                 thisCollider.enabled = false;
                 particleKillGroup.SetActive(false);
-                thisRigidbody.velocity = Vector3.zero;
+                thisRigidbody.linearVelocity = Vector3.zero;
                 Destroy(gameObject, 5);
             }
 
@@ -126,7 +126,7 @@ public class ExplodingProjectile : MonoBehaviour
 
                 thisCollider.enabled = false;
                 particleKillGroup.SetActive(false);
-                thisRigidbody.velocity = Vector3.zero;
+                thisRigidbody.linearVelocity = Vector3.zero;
 
                 Destroy(gameObject, 5);
 

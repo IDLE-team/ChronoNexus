@@ -148,8 +148,6 @@ public class StationaryEntityStateRangeAttack : StationaryEntityState
                 _isReloading = true;
             }
         }
-
-        
     }
 
     private void ReloadLogic()
