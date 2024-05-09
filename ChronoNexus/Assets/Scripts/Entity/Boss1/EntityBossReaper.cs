@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class EntityBossReaper : Entity
 {
-    private EntityBossReaperAttacker _bossReaperAttacker;
-    public EntityBossReaperAttacker BossReaperAttacker => _bossReaperAttacker;
-    
+
     public BossReaperEntityStateFire BossReaperEntityStateFire;
     public BossReaperEntityStateIdle BossReaperEntityStateIdle;
 
@@ -25,7 +23,7 @@ public class EntityBossReaper : Entity
     }
     protected override void InitializeStartState()
     {
-        _stateMachine.Initialize(BossReaperEntityStateFire);
+        _stateMachine.Initialize(DummyState);
     }
 
     public override void TargetFoundReaction(ITargetable target)

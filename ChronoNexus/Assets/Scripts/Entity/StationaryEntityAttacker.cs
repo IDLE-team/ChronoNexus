@@ -20,8 +20,8 @@ public class StationaryEntityAttacker : Attacker
 
     private Bullet _bullet;
     private Vector3 _bulletDirection;
-    [SerializeField] private AudioClip _shootClip;
-    [SerializeField]private AudioSource _source;
+    public AudioClip shootClip;
+    public AudioSource Source;
     
     
     public float RangedAttackInterval => _rangeAttackInterval;
@@ -35,7 +35,7 @@ public class StationaryEntityAttacker : Attacker
     {
         _bulletDirection = (target - _bulletStartPosition.position).normalized;
         _bullet = Instantiate(_prefabBullet,_bulletStartPosition.transform.position, Quaternion.LookRotation(_bulletDirection));
-        _bullet.Initialize(_bulletDirection, 10, 13f);
-        _source.PlayOneShot(_shootClip);
+        _bullet.Initialize(_bulletDirection, 10, 20f);
+        Source.PlayOneShot(shootClip);
     }
 }
