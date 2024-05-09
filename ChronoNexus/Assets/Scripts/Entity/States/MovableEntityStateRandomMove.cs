@@ -15,7 +15,7 @@ public  class MovableEntityStateRandomMove : MovableEntityState
     
     public MovableEntityStateRandomMove(MovableEntity movableEntity, StateMachine stateMachine):base(movableEntity, stateMachine)
     {
-        
+        //_remainingDistance = _entity.EntityLogic.RemainingDistanceToRandomPosisiton
     }
     public override void Enter()
     {

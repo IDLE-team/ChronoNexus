@@ -62,11 +62,11 @@ namespace IndieMarc.EnemyVision
             //Move
             move_dir = move_dir.normalized * Mathf.Min(move_dir.magnitude, 1f);
             current_move = Vector3.MoveTowards(current_move, move_dir, move_accel * Time.fixedDeltaTime);
-            rigid.linearVelocity = current_move * move_speed;
+            rigid.velocity = current_move * move_speed;
 
             bool grounded = CheckIfGrounded();
             if (!grounded)
-                rigid.linearVelocity += Vector3.down * gravity;
+                rigid.velocity += Vector3.down * gravity;
 
             if (current_move.magnitude > 0.1f)
                 current_face = new Vector3(current_move.x, 0f, current_move.z).normalized;

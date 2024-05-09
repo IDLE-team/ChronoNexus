@@ -229,7 +229,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
         _collider.enabled = false;
 
-        _rigidbody.linearVelocity = Vector3.zero;
+        _rigidbody.velocity = Vector3.zero;
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 
         if (isTimeStopped)
@@ -273,6 +273,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     public void StartSeek()
     {
         OnSeekStart?.Invoke();
+        Debug.Log("FGDGFLGF:LG:FLG:FLGF:GL");
     }
 
     public void StopSeek()
@@ -415,7 +416,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         dir.y = 0;
         transform.rotation = Quaternion.LookRotation(-dir);
         _rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-        _rigidbody.linearVelocity = Vector3.zero;
+        _rigidbody.velocity = Vector3.zero;
     }
 
     public void Dissolve()

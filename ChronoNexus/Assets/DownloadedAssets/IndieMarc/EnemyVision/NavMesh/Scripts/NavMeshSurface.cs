@@ -312,12 +312,12 @@ namespace UnityEngine.AI
             {
                 if (m_CollectObjects == CollectObjects.All)
                 {
-                    UnityEditor.AI.NavMeshEditorHelpers.CollectSourcesInStage(
+                    UnityEditor.AI.NavMeshBuilder.CollectSourcesInStage(
                         null, m_LayerMask, m_UseGeometry, m_DefaultArea, markups, gameObject.scene, sources);
                 }
                 else if (m_CollectObjects == CollectObjects.Children)
                 {
-                    UnityEditor.AI.NavMeshEditorHelpers.CollectSourcesInStage(
+                    UnityEditor.AI.NavMeshBuilder.CollectSourcesInStage(
                         transform, m_LayerMask, m_UseGeometry, m_DefaultArea, markups, gameObject.scene, sources);
                 }
                 else if (m_CollectObjects == CollectObjects.Volume)
@@ -325,7 +325,7 @@ namespace UnityEngine.AI
                     Matrix4x4 localToWorld = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
                     var worldBounds = GetWorldBounds(localToWorld, new Bounds(m_Center, m_Size));
 
-                    UnityEditor.AI.NavMeshEditorHelpers.CollectSourcesInStage(
+                    UnityEditor.AI.NavMeshBuilder.CollectSourcesInStage(
                         worldBounds, m_LayerMask, m_UseGeometry, m_DefaultArea, markups, gameObject.scene, sources);
                 }
             }
