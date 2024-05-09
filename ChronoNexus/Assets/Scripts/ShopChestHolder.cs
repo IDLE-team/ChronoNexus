@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,9 +13,9 @@ public class ShopChestHolder : MonoBehaviour
     [SerializeField] private float _itemCost;
     [SerializeField] private Button _purchaseButton;
 
-    
+
     // Часть под сундуки
-    [Header ("Доступные предметы в сундуке")]
+    [Header("Доступные предметы в сундуке")]
 
     [SerializeField] bool _isGun = true;
     [SerializeField] bool _isKnife;
