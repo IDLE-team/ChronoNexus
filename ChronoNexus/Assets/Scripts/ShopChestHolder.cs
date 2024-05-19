@@ -19,8 +19,8 @@ public class ShopChestHolder : MonoBehaviour
 
     [SerializeField] bool _isGun = true;
     [SerializeField] bool _isKnife;
-    [SerializeField] bool _isGranade = true;
-    [SerializeField] bool _isArmor = true;
+    [SerializeField] bool _isWeaponMat = true;
+    [SerializeField] bool _isDenary = true;
     [SerializeField] bool _isMoney;
 
     [SerializeField] private GameObject _itemGrid;
@@ -58,12 +58,12 @@ public class ShopChestHolder : MonoBehaviour
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
             g.GetComponent<Image>().sprite = IconsToBuy[1];
         }
-        if (_isGranade)
+        if (_isDenary)
         {
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
             g.GetComponent<Image>().sprite = IconsToBuy[2];
         }
-        if (_isArmor)
+        if (_isWeaponMat)
         {
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
             g.GetComponent<Image>().sprite = IconsToBuy[3];

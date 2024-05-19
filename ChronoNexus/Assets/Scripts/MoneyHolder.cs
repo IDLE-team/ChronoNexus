@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -9,19 +10,19 @@ public class MoneyHolder : MonoBehaviour
 
     private void Start()
     {
-        _moneyValue = PlayerPrefs.GetFloat("money",0);
+        _moneyValue = PlayerPrefs.GetFloat("money", 0);
         _moneyText = GetComponent<TextMeshProUGUI>();
-        PlayerProfileManager.profile.moneyChanged += OnMoneyChange;
-        PlayerProfileManager.profile.moneyChanged += SaveMoney;
-        OnMoneyChange();
+        PlayerProfileManager.profile.valuesChanged += OnValueChanged;
+        PlayerProfileManager.profile.valuesChanged += SaveValue;
+        OnValueChanged();
     }
 
-    public void OnMoneyChange()
+    public void OnValueChanged()
     {
         _moneyText.text = _moneyValue.ToString();
     }
 
-    private void SaveMoney()
+    private void SaveValue()
     {
         PlayerPrefs.SetFloat("money", _moneyValue);
     }
@@ -34,14 +35,14 @@ public class MoneyHolder : MonoBehaviour
     public void DecreaseMoneyValue(float cost)
     {
         _moneyValue -= cost;
-        PlayerProfileManager.profile.moneyChanged();
+        PlayerProfileManager.profile.valuesChanged();
     }
 
 
     private void OnDestroy()
     {
-        PlayerProfileManager.profile.moneyChanged -= OnMoneyChange;
-        PlayerProfileManager.profile.moneyChanged -= SaveMoney;
-        SaveMoney();
+        PlayerProfileManager.profile.valuesChanged -= OnValueChanged;
+        PlayerProfileManager.profile.valuesChanged -= SaveValue;
+        SaveValue();
     }
 }

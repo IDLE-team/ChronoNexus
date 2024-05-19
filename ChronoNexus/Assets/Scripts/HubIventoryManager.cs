@@ -1,3 +1,4 @@
+using Language.Lua;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,10 @@ using UnityEngine.UI;
 public class HubIventoryManager : InventoryItemManager
 {
     public static HubIventoryManager manager;
+
+    [Header("Персонажи")]
+    [SerializeField]
+    protected List<CharacterData> _heroList = new List<CharacterData>();
 
     [SerializeField] private GameObject _gridLayoutShelterInventory;
     [SerializeField] private GameObject _gridLayoutShelterStorage;
@@ -37,6 +42,8 @@ public class HubIventoryManager : InventoryItemManager
             PlayerPrefs.SetInt("gun", 2);
             savedData =PlayerPrefs.GetInt("gun", 2);
         };
+
+        
     }
 
     private void Update()
@@ -134,6 +141,16 @@ public class HubIventoryManager : InventoryItemManager
         _isShelterOpened = false;
         DeleteInventory(_gridLayoutShelterInventory);
         DeleteInventory(_gridLayoutShelterStorage);
+    }
+
+    public CharacterData SelectedHeroData(int id)
+    {
+        return _heroList[id];
+    }
+
+    public int GetHeroIdByData(CharacterData hero)
+    {
+        return _heroList.IndexOf(hero);
     }
 
     private void OnDisable()

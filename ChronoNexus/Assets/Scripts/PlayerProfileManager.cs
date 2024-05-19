@@ -4,12 +4,14 @@ using UnityEngine.Events;
 public class PlayerProfileManager : MonoBehaviour
 {
     public static PlayerProfileManager profile;
-    [SerializeField] private float _money;
+    [SerializeField] private int _money;
+    [SerializeField] private float _weaponMaterials;
+    [SerializeField] private int _denaries;
     [SerializeField] private float _lvl;
     [SerializeField] private float _exp;
+    [SerializeField] private int _character = 0; //0 is default hero
 
-    public UnityAction moneyChanged;
-    public UnityAction expChanged;
+    public UnityAction valuesChanged;
 
     private void OnEnable()
     {
@@ -22,43 +24,107 @@ public class PlayerProfileManager : MonoBehaviour
             Destroy(this);
         }
 
-        if (!PlayerPrefs.HasKey("money"))
+        #region Check Keys
+        if (!PlayerPrefs.HasKey("charID"))
         {
-            PlayerPrefs.SetFloat("money", _money);
+            PlayerPrefs.SetInt("charID", _character);
         }
         else
         {
-            PlayerPrefs.GetFloat("money");
+            _character = PlayerPrefs.GetInt("charID", 0);
         }
+
+        if (!PlayerPrefs.HasKey("money"))
+        {
+            PlayerPrefs.SetInt("money", _money);
+        }
+        else
+        {
+            _money = PlayerPrefs.GetInt("money");
+        }
+
+        if (!PlayerPrefs.HasKey("denary"))
+        {
+            PlayerPrefs.SetInt("denary", _denaries);
+        }
+        else
+        {
+            _denaries = PlayerPrefs.GetInt("denary");
+        }
+
+        if (!PlayerPrefs.HasKey("weaponMaterials"))
+        {
+            PlayerPrefs.SetFloat("weaponMaterials", _weaponMaterials);
+        }
+        else
+        {
+            _weaponMaterials = PlayerPrefs.GetFloat("weaponMaterials");
+        }
+
+
         if (!PlayerPrefs.HasKey("lvl"))
         {
             PlayerPrefs.SetFloat("lvl", _lvl);
         }
         else
         {
-            PlayerPrefs.GetFloat("lvl", _lvl);
+            _lvl = PlayerPrefs.GetFloat("lvl", _lvl);
         }
+
+
         if (!PlayerPrefs.HasKey("exp"))
         {
             PlayerPrefs.SetFloat("exp", _exp);
         }
         else
         {
-            PlayerPrefs.GetFloat("exp");
+            _exp = PlayerPrefs.GetFloat("exp");
         }
+
 
         if (!PlayerPrefs.HasKey("inventoryMain"))
         {
             PlayerPrefs.SetString("inventoryMain", "");
         }
+        #endregion
     }
 
-    public void OnMoneyChange()
+    public void OnValuesChanged()
     {
-        moneyChanged();
+        valuesChanged();
     }
-    public void OnExpChange()
+
+
+    public string GetSaveKeyName(Keys keyName)
     {
-        expChanged();
+        switch (keyName)
+        {
+            case Keys.money:
+                return "money";
+
+            case Keys.denary:
+                return "denary";
+
+            case Keys.weaponMats:
+                return "weaponMaterials";
+
+            case Keys.exp:
+                return "exp";
+
+            case Keys.lvl:
+                return "lvl";
+
+            case Keys.inventoryString:
+                return "inventoryMain";
+
+            default:
+                return "";
+        }
     }
+
+}
+
+public enum Keys
+{
+    money, denary, weaponMats, exp, lvl, inventoryString
 }

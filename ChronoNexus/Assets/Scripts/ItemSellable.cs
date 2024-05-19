@@ -33,13 +33,17 @@ public class ItemSellable : MonoBehaviour
         _purchaseButton.onClick.AddListener(Purchase);
 
         manager = GetComponentInParent<InventoryItemManager>();// поиск менеджера, удалить когда функция констракт будет где-то использоваться
+        
+    }
+
+    private void Start()
+    {
         SetSellableItem();
     }
 
     private void Purchase()
     {
-       manager.BuyItem(_itemData.itemCost);
-       manager.MakeItemFromShop(_itemData);
+        if (manager.BuyItem(_itemData.itemCost)) manager.MakeItemFromShop(_itemData);
        
        gameObject.SetActive(false);
     }
