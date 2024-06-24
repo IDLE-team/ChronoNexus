@@ -130,7 +130,6 @@ public class MovableEntity : Entity
 
     public override void StopTimeAction()
     {
-
         if (gameObject != null)
         {
             SetLastNavMeshValues();
@@ -139,7 +138,6 @@ public class MovableEntity : Entity
             _navMeshAgent.angularSpeed = 0;
             _navMeshAgent.velocity = Vector3.zero;
         }
-
         base.StopTimeAction();
     }
 
@@ -182,7 +180,8 @@ public class MovableEntity : Entity
 
     public virtual void AgentDestinationSet()
     {
-        if (Vector3.Distance(SelfAim.transform.position, Target.GetTransform().position) <= 1.5f)
+        if (Vector3.Distance(SelfAim.transform.position,
+                Target.GetTransform().position) <= 1.5f)
         {
             _navMeshAgent.SetDestination(SelfAim.transform.position);
         }
@@ -194,10 +193,10 @@ public class MovableEntity : Entity
 
     public virtual void TargetChaseDistanceSwitch()
     {
-        if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > MaxChaseDistance) 
+        if (Vector3.Distance(SelfAim.position, 
+                Target.GetTransform().position) > MaxChaseDistance) 
         {
             TargetLossReaction();
         }
-
     }
 }

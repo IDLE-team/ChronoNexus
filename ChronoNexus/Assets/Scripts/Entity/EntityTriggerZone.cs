@@ -7,8 +7,6 @@ using UnityEngine;
 public class EntityTriggerZone : MonoBehaviour
 {
     [SerializeField] private Entity _entity;
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (!_entity.IsAlive || _entity.CurrentState == _entity.DummyState)
@@ -20,17 +18,13 @@ public class EntityTriggerZone : MonoBehaviour
         {
             return;
         }
-        
         if (other.CompareTag("Player") && _entity.Target != other.GetComponent<ITargetable>())  
         {
-            _entity.//TargetFinder.SetTarget(other.GetComponent<ITargetable>());
-                RotateTo(other.transform);
-            //сразу сменяем state
+            _entity.RotateTo(other.transform);
         }
         else if (other.CompareTag("Bullet") && _entity.Target == null)
         {
             _entity.RotateTo(other.transform);
-            Debug.Log(_entity + " ТРИГГЕР ЗОНА У ЭНТИТИ");
         }
     }
 }

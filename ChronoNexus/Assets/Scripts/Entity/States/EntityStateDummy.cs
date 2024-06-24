@@ -5,7 +5,6 @@ using UnityEngine.TextCore.Text;
 
 public class EntityStateDummy : EntityState
 {
-
     public EntityStateDummy(Entity entity, StateMachine stateMachine):base(entity, stateMachine)
     {
         

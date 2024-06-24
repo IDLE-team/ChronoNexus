@@ -186,13 +186,12 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
             return;
         if (Target == null && CurrentState != DummyState && !_isRotating)
         {
-            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f) * transform.rotation, 1f);
+            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f) 
+                                         * transform.rotation, 1f);
         }
-
         _health.Decrease(damage, isCritical);
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
-
         if (_health.Value <= _finisherHPTreshold && !_isFinisherReady && _isAlive)
         {
             _isFinisherReady = true;
@@ -273,7 +272,6 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     public void StartSeek()
     {
         OnSeekStart?.Invoke();
-        Debug.Log("FGDGFLGF:LG:FLG:FLGF:GL");
     }
 
     public void StopSeek()

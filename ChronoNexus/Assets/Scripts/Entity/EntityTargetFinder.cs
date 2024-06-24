@@ -89,7 +89,8 @@ public class EntityTargetFinder : MonoBehaviour
         if(this == null)
             return;
         var results = new Collider[30];
-        var size = Physics.OverlapSphereNonAlloc(transform.position, ViewRadius, results, _targetMask);
+        var size = Physics.OverlapSphereNonAlloc (transform.position, 
+                                           ViewRadius, results, _targetMask);
         for (var i = 0; i < size; i++)
         {
             if (_isSeeking == false)
@@ -100,56 +101,40 @@ public class EntityTargetFinder : MonoBehaviour
             {
                 continue;
             }
-
             _target = results[i].GetComponent<ITargetable>().GetTransform();
-
             var dirToTarget = (_target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) >= ViewAngle / 2)
                 continue;
-
             var dstToTarget = Vector3.Distance(transform.position, _target.position);
-            if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
+            if (Physics.Raycast(transform.position, dirToTarget, dstToTarget,
+                    _obstacleMask))
                 continue;
-            
-            
             SetTarget(target);
             break;
-            
-
-
-
         }
     }
-
-    public void ResetTarget()
-    {
-        Target = null;
-    }
-
     public void SetTarget(ITargetable target)
     {
         if (Target == target)
             return;
         if (!_isSeeking)
             return;
-        
         _seeker.Target = target;
         Target = target;
         _entityTargeting.SetTargetParent(Target.GetTransform());
-        
         _seeker.IsTargetFound = true;
-        
         _foundEffect.SetActive(true);
-        
         if (target != null)
             OnTargetFinded?.Invoke(target);
     }
-
+    public void ResetTarget()
+    {
+        Target = null;
+    }
     private void OnDestroy()
     {
         //cancellationTokenSource.Cancel();
     }
-
     public void SetWeight(int value)
     {
         //_aimRigController.SetSmoothWeight(value);
@@ -157,12 +142,8 @@ public class EntityTargetFinder : MonoBehaviour
         {
             _aimRigController.SetWeight(value);
         }
-
     }
-
-
 #if UNITY_EDITOR
-
     public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
@@ -172,6 +153,5 @@ public class EntityTargetFinder : MonoBehaviour
 
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
-
 #endif
 }

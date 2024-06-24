@@ -7,30 +7,17 @@ using UnityEngine;
 public class StationaryEntity : Entity
 {
     [SerializeField]private GameObject smokeVFX;
-   // [SerializeField]private GameObject fireVFX;
-    
     private StationaryEntityAttacker _attacker;
     public StationaryEntityAttacker TurretAttacker => _attacker;
-
     public StationaryEntityStateIdle IdleState { get; private set; }
-
     public StationaryEntityStateRangeAttack RangeAttackState { get; private set; }
     
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        
-    }
     protected override void OnDisable()
     {
         base.OnDisable();
         _targetFinder.OnTargetFinded -= TargetFoundReaction;
         StopSeek();
     }
-    
-    
-    
-    
     
     protected override void InitializeStartState()
     {
@@ -56,7 +43,6 @@ public class StationaryEntity : Entity
     protected override void Die()
     {
         smokeVFX.SetActive(true);
-    //    fireVFX.SetActive(true);
         base.Die();
     }
 

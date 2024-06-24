@@ -6,5 +6,4 @@ public interface ITimeBody
     public void SetSlowTime();
     public void SetRewindTime();
     public void SetAcceleratedTime();
-
 }

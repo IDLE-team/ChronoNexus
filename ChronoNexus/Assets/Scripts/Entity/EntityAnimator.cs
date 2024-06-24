@@ -27,7 +27,6 @@ public class EntityAnimator : MonoBehaviour
 
     public bool GetAnimationParamStatus(string param)
     {
-       // Debug.Log(param);
         return _animator.GetBool(FinisherHash);
     }
     
@@ -35,10 +34,12 @@ public class EntityAnimator : MonoBehaviour
     {
         _animator.SetBool(Moving, value);
     }
+    
     public void PlayLurgeAnimation()
     {
         _animator.SetTrigger(Lurge);
     }
+    
     public void SetReloadAnimation(bool value)
     {
         _animator.SetBool(ReloadHash, value);

@@ -10,7 +10,10 @@ public class EntityLoot : MonoBehaviour
     public List<float> dropChances = new List<float> { 0.2f, 0.3f, 0.4f };
     public int amountToDrop = 1;
 
-    public List<InventoryItemManager.itemRarity> possibleQualities = new List<InventoryItemManager.itemRarity> { InventoryItemManager.itemRarity.gray, InventoryItemManager.itemRarity.green, InventoryItemManager.itemRarity.purple };
+    public List<InventoryItemManager.itemRarity> possibleQualities = new List<InventoryItemManager.itemRarity>
+    {
+        InventoryItemManager.itemRarity.gray, InventoryItemManager.itemRarity.green, InventoryItemManager.itemRarity.purple
+    };
     public List<float> qualityChances = new List<float> { 0.8f, 0.15f, 0.5f }; 
 
     public void DropItems()

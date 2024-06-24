@@ -15,16 +15,12 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
     private float _attackingAgentSpeed;
     private Vector3 _randomDirection;
     private Vector3 _retreatPosition;
-
     private Quaternion toRotation;
     private CancellationTokenSource cancellationTokenSource;
-
     public MovableMeleeEntityStateAttack(MovableMeleeEntity movableEntity, StateMachine stateMachine) : base(
         movableEntity, stateMachine)
     {
-
     }
-
     public override void Enter() 
     {
         _maxDistanceBetweenTarget = _movableMeleeEntity.MeleeAttacker.MaxMeleeAttackDistance;
@@ -33,58 +29,42 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
         _attackingAgentSpeed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
         _minDelay = 0.1f;
         _maxDelay = 0.1f;
-
         _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
-
         _isAttack = true;
-
         cancellationTokenSource = new CancellationTokenSource();
         MeleeAttackAndRetreat(cancellationTokenSource.Token).Forget();
         _minDelay = _movableMeleeEntity.MeleeAttacker.MinDelayTokenMelee;
         _maxDelay = _movableMeleeEntity.MeleeAttacker.MaxDelayTokenMelee;
-
-
         base.Enter();
     }
-
     public override void Exit()
     {
         _isAttack = false;
-
         base.Exit();
     }
-
     public override void LogicUpdate()
     {
         if (_movableMeleeEntity.Target == null)
         {
             _movableMeleeEntity.TargetLossReaction();
             cancellationTokenSource.Cancel();
-            
             return;
         }
-
-        
         toRotation =
             Quaternion.LookRotation(
                 new Vector3(_targetPosition.x, _movableMeleeEntity.transform.position.y, _targetPosition.z) -
                 _movableMeleeEntity.transform.position, Vector3.up);
-
         if (_movableMeleeEntity.isTimeSlowed)
             _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
                 toRotation, 6f * 0.2f * Time.deltaTime);
         else
             _movableMeleeEntity.transform.rotation = Quaternion.Slerp(_movableMeleeEntity.transform.rotation,
                 toRotation, 6f * Time.deltaTime);
-
-
         if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _targetPosition) > _maxDistanceBetweenTarget)
         {
             _stateMachine.ChangeState(_movableMeleeEntity.ChaseState);
-            //_movableMeleeEntity.TargetLossReaction();
             return;
         }
-
         if (_movableMeleeEntity.MeleeAttacker.MeleeAttackTimer > 0)
         {
             if (_movableMeleeEntity.isTimeSlowed)
@@ -100,7 +80,6 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
 
         base.LogicUpdate();
     }
-
     public override void PhysicsUpdate()
     {
         if (_movableMeleeEntity.Target == null)
@@ -108,17 +87,13 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
             cancellationTokenSource.Cancel();
             return;
         }
-
         _targetPosition = _movableMeleeEntity.Target.GetTransform().position;
         base.PhysicsUpdate();
     }
-
     protected override async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableMeleeEntity.isTimeSlowed && !_movableMeleeEntity.isTimeStopped);
-        //_movableMeleeEntity.NavMeshAgent.speed = _movableMeleeEntity.MeleeAttacker.MeleeAttackAgentSpeed;
     }
-
     private async UniTask MeleeAttackAndRetreat(CancellationToken cancellationToken)
     {
         while (_isAttack && !cancellationToken.IsCancellationRequested)
@@ -175,13 +150,11 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                 if (Vector3.Distance(_movableMeleeEntity.SelfAim.transform.position, _retreatPosition) > 0.2f)
                 {
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_retreatPosition);
-                    //_movableMeleeEntity.NavMeshAgent.speed = _attackingAgentSpeed;
                 }
                 else
                 {
                     _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.SelfAim.transform.position);
                 }
-
                 await UniTask.Yield();
             }
             else if (!cancellationToken.IsCancellationRequested)
@@ -189,9 +162,7 @@ public class MovableMeleeEntityStateAttack : MovableMeleeEntityState
                 _movableMeleeEntity.NavMeshAgent.SetDestination(_movableMeleeEntity.SelfAim.transform.position);
                 await UniTask.Yield();
             }
-
         }
-
         await UniTask.Yield();
     }
 }

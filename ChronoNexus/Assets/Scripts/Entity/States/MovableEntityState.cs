@@ -10,7 +10,6 @@ public abstract class MovableEntityState : IState
     protected MovableEntity _movableEntity;
     protected StateMachine _stateMachine;
     protected NavMeshAgent _navMeshAgent;
-
     protected MovableEntityState(MovableEntity movableEntity, StateMachine stateMachine)
     {
         _movableEntity = movableEntity;
@@ -21,35 +20,20 @@ public abstract class MovableEntityState : IState
     {
         TimeWaiter().Forget();
     }
-
     public virtual void Exit()
     {
-        
     }
-
     public virtual void LogicUpdate()
     {
     }
-
     public virtual void PhysicsUpdate()
     {
-        
     }
-
     protected virtual void CheckTarget()
     {
-        /*if (_movableEntity.IsTargetFound)
-        {
-            _movableEntity.TargetFoundReaction();
-            return;
-        }*/
     }
-
-    
     protected virtual async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
-        //_movableEntity.NavMeshAgent.speed = 1.5f;
-        //Default speed
     }
 }

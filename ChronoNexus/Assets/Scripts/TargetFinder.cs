@@ -114,11 +114,9 @@ public class TargetFinder : MonoBehaviour
             }
 
             _target = results[i].GetComponent<ITargetable>().GetTransform();
-
             var dirToTarget = (_target.position - transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) >= ViewAngle / 2)
                 continue;
-
             var dstToTarget = Vector3.Distance(transform.position, _target.position);
             if (Physics.Raycast(transform.position, dirToTarget, dstToTarget, _obstacleMask))
                 continue;

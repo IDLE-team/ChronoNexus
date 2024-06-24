@@ -6,24 +6,16 @@ using UnityEngine.TextCore.Text;
 
 public class StationaryEntityStateIdle : StationaryEntityState
 {
-
     public StationaryEntityStateIdle(StationaryEntity stationaryEntity, StateMachine stateMachine):base(stationaryEntity, stateMachine)
     {
-        
     }
-
     public override void Enter()
     {
         _stationaryEntity.StartSeek();
         base.Enter();
     }
-
     public override void LogicUpdate()
     {
-        /*if (_stationaryEntity.IsTargetFound)
-        {
-            _stationaryEntity.TargetFoundReaction();
-        }*/
         base.LogicUpdate();
     }
 
@@ -31,7 +23,6 @@ public class StationaryEntityStateIdle : StationaryEntityState
     {
         base.PhysicsUpdate();
     }
-
     public override void Exit()
     {
         _stationaryEntity.StopSeek();

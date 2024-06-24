@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-
 public class EntityGroupManager : MonoBehaviour
 {
     [SerializeField] private List<Group> _movableEntitiesGroups;
@@ -38,12 +37,9 @@ public class EntityGroupManager : MonoBehaviour
                     TargetGroupSet(target);
                     break;
                 }
-
-                //_movableEntity.TargetFinder.SetTarget(target);
             }
         }
     }
-
     public void TargetGroupSet(ITargetable target)
     {
         foreach (Entity _movableEntity in _group._movableEntities)
@@ -52,7 +48,6 @@ public class EntityGroupManager : MonoBehaviour
             {
                 continue;
             }
-
             if (_movableEntity.TargetFinder.Target == target)
             {
                 continue;
