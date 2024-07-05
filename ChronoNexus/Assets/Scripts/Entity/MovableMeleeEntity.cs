@@ -10,6 +10,7 @@ public class MovableMeleeEntity : MovableEntity
     private MovableMeleeEntityAttacker _attacker;
     public MovableMeleeEntityAttacker MeleeAttacker => _attacker;
     public MovableMeleeEntityStateAttack MeleeAttackState { get; private set; }
+    private EntityMovement _entityMovement;
 
     protected override void InitializeStartState()
     {
@@ -38,17 +39,33 @@ public class MovableMeleeEntity : MovableEntity
                 break;
         }
     }
+
+    protected override void Update()
+    {
+        if (!isTimeStopped)
+        {
+            _stateMachine.CurrentState.LogicUpdate();
+            _entityMovement.SynchronizeAnimatorAndAgent();
+        }
+    }
+    protected override void FixedUpdate()
+    {
+        if (!isTimeStopped)
+        {
+            _stateMachine.CurrentState.PhysicsUpdate();
+            
+        }
+    }
     protected override void InitializeParam()
     {
         base.InitializeParam();
+        _entityMovement = GetComponent<EntityMovement>();
         MeleeAttackState = new MovableMeleeEntityStateAttack(this, _stateMachine);
     }
-
     protected override void InitializeIndividualParam()
     {
         _attacker = GetComponent<MovableMeleeEntityAttacker>();
     }
-    
     public void StartAttackAnimation()
     {
         _animator.PlayAttackAnimation();
@@ -57,13 +74,10 @@ public class MovableMeleeEntity : MovableEntity
     {
         if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > 12f) //view distance or check last point
         {
-            //_stateMachine.ChangeState(RandomMoveState);
             TargetLossReaction();
-            
         }
         else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= MeleeAttacker.MaxMeleeAttackDistance) // or attack range
         {
-
             _stateMachine.ChangeState(MeleeAttackState);
         }
     }
@@ -74,12 +88,4 @@ public class MovableMeleeEntity : MovableEntity
             _navMeshAgent.SetDestination(Target.GetTransform().position);
         }
     }
-
-    
-    
-    public void MeleeAttack()
-    {
-        
-    }
-    
 }

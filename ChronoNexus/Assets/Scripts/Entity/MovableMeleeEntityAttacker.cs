@@ -3,16 +3,15 @@ using UnityEngine.VFX;
 
 public class MovableMeleeEntityAttacker : Attacker
 {
-    [Header("Melee Attack")]
-    //protected float _attackTimer;
-    [SerializeField] private WeaponData _meleeWeaponData;
+    [Header("Melee Attack")] [SerializeField]
+    private WeaponData _meleeWeaponData;
 
     [SerializeField] private AttackZone _attackZone;
     public AttackZone AttackZone => _attackZone;
-    
+
     [SerializeField] private VisualEffect _visualHitEffect;
     [SerializeField] private float _meleeDamage = 10f;
-    
+
     [SerializeField] protected float _meleeAttackInterval = 1f;
 
     [SerializeField] protected float _minDelayTokenMelee = 0.3f;
@@ -26,7 +25,7 @@ public class MovableMeleeEntityAttacker : Attacker
     protected float _maxMeleeLungeDistance = 4f;
     protected float _meleeAttackTimer = 0f;
 
-     public float MeleeAttackTimer => _meleeAttackTimer;
+    public float MeleeAttackTimer => _meleeAttackTimer;
     public float MaxMeleeLungeDistance => _maxMeleeLungeDistance;
     public float MeleeAttackInterval => _meleeAttackInterval;
     public float MinDelayTokenMelee => _minDelayTokenMelee;
@@ -46,8 +45,9 @@ public class MovableMeleeEntityAttacker : Attacker
     public void ResetAttackTimer()
     {
         _meleeAttackTimer = _meleeAttackInterval;
-        
+
     }
+
     [UsedInAnimator]
     public void Hit()
     {

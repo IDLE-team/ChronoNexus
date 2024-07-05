@@ -36,11 +36,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     [SerializeField] protected WeaponController _weaponController;
     [SerializeField] protected GameObject _finisherReady;
     [SerializeField] protected float _finisherHPTreshold;
-    
-    
-    
-    
-    
+
+
     public State state = new State();
     protected EntityState _startState;
 
@@ -97,7 +94,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void InitializeParam()
     {
-        InitializeIndividualParam();
+        
 
         enemyList.Add(gameObject);
 
@@ -109,18 +106,15 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _loot = GetComponent<EntityLoot>();
         _rigidbody = GetComponent<Rigidbody>();
         _equiper = GetComponent<Equiper>();
-        
+
         if (_collider == null)
         {
             _collider = GetComponent<Collider>();
         }
+        InitializeIndividualParam();
 
-        
         _targetFinder.OnTargetFinded += TargetFoundReaction;
-        
-        
-        
-        
+
 
         DummyState = new EntityStateDummy(this, _stateMachine);
 
@@ -148,7 +142,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         if (_isRotating)
         {
             return;
-            
+
         }
 
         _isRotating = true;
@@ -164,7 +158,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         StartSeek();
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (!isTimeStopped)
         {
@@ -172,7 +166,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         }
     }
 
-    protected void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (!isTimeStopped)
         {
@@ -186,9 +180,10 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
             return;
         if (Target == null && CurrentState != DummyState && !_isRotating)
         {
-            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f) 
+            transform.DORotateQuaternion(Quaternion.Euler(new Vector3(0, 1, 0) * 180f)
                                          * transform.rotation, 1f);
         }
+
         _health.Decrease(damage, isCritical);
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
@@ -202,19 +197,18 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void Die()
     {
-        if(!_isAlive)
+        if (!_isAlive)
             return;
-        
+
         if (_isFinisherKill)
             _buffLoot.DropBuff();
-        
+
         OnTargetInvalid?.Invoke();
         OnFinisherEnded?.Invoke();
         OnTimeAffectedDestroy?.Invoke();
         OnFinisherInvalid?.Invoke();
-        
-        
-        
+
+
         _isFinisherReady = false;
         _isValid = false;
         _isAlive = false;
@@ -310,6 +304,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
             {
                 StartSeek();
             }
+
             isTimeStopped = false;
             isTimeSlowed = false;
 
@@ -379,6 +374,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         StopSeek();
 
     }
+
     public virtual void TargetLossReaction()
     {
         Target = null;
@@ -419,7 +415,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     public void Dissolve()
     {
-        if(_renderer)
+        if (_renderer)
             _renderer.material.DOFloat(1, "_DissolveAmount", 1f);
     }
 
@@ -428,6 +424,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         yield return new WaitForSeconds(1.5f);
         Dissolve();
     }
+
     public bool GetFinisherableStatus()
     {
         if (!_isAlive)
