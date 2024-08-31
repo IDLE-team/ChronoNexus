@@ -31,6 +31,7 @@ public class EntityLoot : MonoBehaviour
             if (itemToDrop != null)
             {
                 itemToDrop.rarity = GetRandomQuality();
+                Debug.Log("Rarity: " + itemToDrop.rarity); 
                 GameObject itemObj = Instantiate(ItemPrefab,spawnPosition.position,Quaternion.identity);
                 //itemObj.transform.SetParent(null);
                 ItemDataContainer _itemDataContainer = itemObj.GetComponent<ItemDataContainer>();
