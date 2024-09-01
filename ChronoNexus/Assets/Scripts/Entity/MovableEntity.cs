@@ -16,9 +16,9 @@ public class MovableEntity : Entity
 
     public float PatrolSpeed => _patrolSpeed;
 
-    [SerializeField] protected Vector3[] _patrolPoints;
+    [SerializeField] protected Transform[] _patrolPoints;
 
-    public Vector3[] PatrolPoints => _patrolPoints;
+    public Transform[] PatrolPoints => _patrolPoints;
 
     [Header("Random Move parameters")] [SerializeField]
     protected float _randomMoveMaxDistance;

@@ -28,10 +28,7 @@ public abstract class MovableEntityState : IState
     }
     public virtual void PhysicsUpdate()
     {
-    }
-    protected virtual void CheckTarget()
-    {
-    }
+    } 
     protected virtual async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableEntity.isTimeSlowed && !_movableEntity.isTimeStopped);
