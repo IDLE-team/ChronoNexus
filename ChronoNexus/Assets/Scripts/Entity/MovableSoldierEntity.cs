@@ -48,17 +48,14 @@ public class MovableSoldierEntity : MovableMeleeEntity
     }
     protected override void InitializeIndividualParam()
     {
-        _soldierAttacker = GetComponent<MovableEntitySoldierAttacker>();
-        Debug.Log("Equiper! "+_equiper);
-        Debug.Log("SoldierAttacker.RangeWeaponData! "+ SoldierAttacker.RangeWeaponData);
+        _soldierAttacker = GetComponent<MovableEntitySoldierAttacker>(); 
          Equiper.EquipWeapon(SoldierAttacker.RangeWeaponData);
     }
     public override void TargetChaseDistanceSwitch()
     {
         if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > _maxChaseDistance) //view distance or check last point
-        {
-            //_stateMachine.ChangeState(RandomMoveState);
-            TargetLossReaction();
+        { 
+            //TargetLossReaction();
         }
         else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= _soldierAttacker.MaxRangeAttackDistance) // or attack range
         {

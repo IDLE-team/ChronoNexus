@@ -23,17 +23,14 @@ public class EntityLoot : MonoBehaviour
             return;
         }
         for (int i = 0; i < amountToDrop; i++)
-        {
-            Debug.Log("Amount: " + amountToDrop);
-            Debug.Log("i " + i);
+        { 
             ItemData itemToDrop = GetRandomItem();
             
             if (itemToDrop != null)
             {
-                itemToDrop.rarity = GetRandomQuality();
-                Debug.Log("Rarity: " + itemToDrop.rarity); 
+                itemToDrop.rarity = GetRandomQuality(); 
                 GameObject itemObj = Instantiate(ItemPrefab,spawnPosition.position,Quaternion.identity);
-                //itemObj.transform.SetParent(null);
+                 
                 ItemDataContainer _itemDataContainer = itemObj.GetComponent<ItemDataContainer>();
                 _itemDataContainer._itemData = itemToDrop;
                 _itemDataContainer._itemDataColorSet.SetColor(itemToDrop.rarity);
@@ -51,10 +48,8 @@ public class EntityLoot : MonoBehaviour
         foreach (float chance in dropChances)
         {
             totalChance += chance;
-        }
-        //Debug.Log(totalChance);
-        float randomPoint = Random.Range(0,100) * totalChance;
-       // Debug.Log(randomPoint);
+        } 
+        float randomPoint = Random.Range(0,100) * totalChance; 
         if (randomPoint == 0)
         {
             return null;
@@ -69,8 +64,7 @@ public class EntityLoot : MonoBehaviour
             {
                 randomPoint -= dropChances[i];
             }
-        }
-        Debug.Log("RETURN NULL");
+        } 
         return null;
     }
 

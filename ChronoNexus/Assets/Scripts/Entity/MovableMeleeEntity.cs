@@ -74,7 +74,7 @@ public class MovableMeleeEntity : MovableEntity
     {
         if (Vector3.Distance(SelfAim.position, Target.GetTransform().position) > 12f) //view distance or check last point
         {
-            TargetLossReaction();
+            //TargetLossReaction();
         }
         else if(Vector3.Distance(SelfAim.position, Target.GetTransform().position) <= MeleeAttacker.MaxMeleeAttackDistance) // or attack range
         {

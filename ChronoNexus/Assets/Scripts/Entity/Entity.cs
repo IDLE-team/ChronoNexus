@@ -52,6 +52,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     public bool IsRotating => _isRotating;
     public TargetFinder TargetFinder => _targetFinder;
     protected Health _health;
+    public Health Health => _health;
     protected StateMachine _stateMachine;
 
     public bool IsAlive => _isAlive;
