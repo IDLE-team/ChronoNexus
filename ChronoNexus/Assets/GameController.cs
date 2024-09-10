@@ -55,6 +55,8 @@ public class GameController : MonoBehaviour
         Rewards rewards = new Rewards();
         int money = 0;
         int xp = 0;
+
+        int materials = 0; // nol' materialov
         
         for (int i = 0; i < _levelStatTracker.GetKilledEnemyAmount(); i++)
         {
@@ -65,7 +67,10 @@ public class GameController : MonoBehaviour
         Debug.Log("ExpForKills: " + xp);
         rewards.Money = money;
         rewards.Experience = xp;
+
+        rewards.Material = materials; // ne gotovo, dodelat
         return rewards;
+
     }
 
     public void ApplyReward(Rewards rewards)

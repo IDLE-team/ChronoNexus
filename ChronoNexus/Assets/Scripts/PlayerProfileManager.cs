@@ -5,11 +5,13 @@ public class PlayerProfileManager : MonoBehaviour
 {
     public static PlayerProfileManager profile;
     [SerializeField] private float _money;
+    [SerializeField] private float _materials;
     [SerializeField] private float _lvl;
     [SerializeField] private float _exp;
 
     public UnityAction moneyChanged;
     public UnityAction expChanged;
+    public UnityAction materialChanged;
 
     private void OnEnable()
     {
@@ -30,6 +32,16 @@ public class PlayerProfileManager : MonoBehaviour
         {
             PlayerPrefs.GetFloat("money");
         }
+
+        if (!PlayerPrefs.HasKey("material"))
+        {
+            PlayerPrefs.SetFloat("material", _materials);
+        }
+        else
+        {
+            PlayerPrefs.GetFloat("material");
+        }
+
         if (!PlayerPrefs.HasKey("lvl"))
         {
             PlayerPrefs.SetFloat("lvl", _lvl);
@@ -38,6 +50,7 @@ public class PlayerProfileManager : MonoBehaviour
         {
             PlayerPrefs.GetFloat("lvl", _lvl);
         }
+
         if (!PlayerPrefs.HasKey("exp"))
         {
             PlayerPrefs.SetFloat("exp", _exp);
