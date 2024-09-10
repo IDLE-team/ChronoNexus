@@ -48,6 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainButtonController: {fileID: 0}
   _inventoryItemManager: {fileID: 16171709855586956}
+  _winScreen: {fileID: 6268751336547448408}
+  _deathScreen: {fileID: 677996274543775272}
 --- !u!114 &2103246290183813794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,6 +1325,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WinScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 6197245471533195007, guid: 26f28a77dc176cb419ae34d65838a5f7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6350157807767564446, guid: 26f28a77dc176cb419ae34d65838a5f7,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1669,6 +1676,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: DeathScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 6141378280257312281, guid: 40cfe00f709766f4b98a7888d12899c0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7927870554283066830, guid: 40cfe00f709766f4b98a7888d12899c0,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1734,6 +1746,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40cfe00f709766f4b98a7888d12899c0, type: 3}
+--- !u!114 &677996274543775272 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8776273973465692772, guid: 40cfe00f709766f4b98a7888d12899c0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8116380065879946316}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa0e063f38392644f8f798062be4dc09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6330345994537803643 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2844802231309167415, guid: 40cfe00f709766f4b98a7888d12899c0,

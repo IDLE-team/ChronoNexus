@@ -14,8 +14,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     [SerializeField] private Transform _aimTarget;
 
     [SerializeField] private Slider _hpBar;
-
-    [SerializeField] private LevelController _levelController;
+    
 
     private IOutfitter _outfitter;
 
@@ -110,6 +109,7 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
     {
         Destroy(gameObject);
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
+        GameController.Instance.Death();
         await UniTask.Yield();
     }
 

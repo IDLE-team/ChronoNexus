@@ -17,7 +17,7 @@ public class LevelStatTracker : MonoBehaviour
     {
         _startTime = Time.realtimeSinceStartup;
         _startEnemyAmount = Entity.enemyList.Count;
-
+    Debug.Log("StartEnAm: " + _startEnemyAmount);
     }
 
     public float GetLevelWalkthroughTime()
@@ -27,6 +27,7 @@ public class LevelStatTracker : MonoBehaviour
     
     public int GetKilledEnemyAmount()
     {
+        Debug.Log("StartEn: " + _startEnemyAmount + " - " + "Now: " + Entity.enemyList.Count);
         return _startEnemyAmount - Entity.enemyList.Count;
     }
 }

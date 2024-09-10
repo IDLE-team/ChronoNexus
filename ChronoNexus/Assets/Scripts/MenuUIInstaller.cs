@@ -12,6 +12,8 @@ public class MenuUIInstaller : MonoInstaller
         //GameObject ui = Container.InstantiatePrefab(_menuUi);
         
         Container.Bind<InventoryItemManager>().FromInstance(_menuUi.GetComponent<UIPrefabData>().InventoryItemManager).AsSingle().NonLazy();
+        Container.Bind<WinScreen>().FromInstance(_menuUi.GetComponent<UIPrefabData>().WinScreen).AsSingle().NonLazy();
+        Container.Bind<DeathScreen>().FromInstance(_menuUi.GetComponent<UIPrefabData>().DeathScreen).AsSingle().NonLazy();
 
     }
 }

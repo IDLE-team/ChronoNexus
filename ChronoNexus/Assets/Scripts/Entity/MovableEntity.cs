@@ -169,6 +169,8 @@ public class MovableEntity : Entity
 
     public override void TargetFoundReaction(ITargetable target)
     {
+        if(_stateMachine.CurrentState == DummyState)
+            return;
         base.TargetFoundReaction(target);
         _stateMachine.ChangeState(ChaseState);
     }

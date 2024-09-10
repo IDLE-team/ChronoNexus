@@ -95,10 +95,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void InitializeParam()
     {
-        
-
+        Debug.Log("InitParam");
         enemyList.Add(gameObject);
-
         _stateMachine = new StateMachine();
         _targetFinder = GetComponent<TargetFinder>();
         _health = GetComponent<Health>();
@@ -161,6 +159,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void Update()
     {
+        Debug.Log(_stateMachine.CurrentState);
         if (!isTimeStopped)
         {
             _stateMachine.CurrentState.LogicUpdate();

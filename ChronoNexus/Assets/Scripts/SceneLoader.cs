@@ -19,7 +19,6 @@ public class SceneLoader : MonoBehaviour
     {
         _currentLevelName = SceneManager.GetActiveScene().name;
         _levelStatTracker = gameObject.GetComponent<LevelStatTracker>();
-        _winScreen = FindFirstObjectByType<WinScreen>();
     }
 
     public void SetScene(string scene)
@@ -34,9 +33,6 @@ public class SceneLoader : MonoBehaviour
             
             //PlayerPrefs.SetInt(_currentLevelName, 1);
             SaveLevelData();
-            if (_winScreen != null)
-                _winScreen.SetScreen(_levelStatTracker,this);
-
         }
     }
     public void SaveLevelData()
