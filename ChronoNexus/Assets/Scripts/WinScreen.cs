@@ -60,7 +60,7 @@ public class WinScreen : MonoBehaviour
         {
             _materialText.text = rewards.Material.ToString();
         }
-        
+
         _levelCurrentText.text = lvl.ToString();
         _levelNextText.text = (lvl + 1).ToString();
 
@@ -118,6 +118,7 @@ public class WinScreen : MonoBehaviour
             startExp = 0;
             exp -= xpToNextLevel;
             lvl++;
+            PlayerPrefs.SetInt("point", PlayerPrefs.GetInt("point", 0) + 1);
         }
         else
         {

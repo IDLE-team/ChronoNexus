@@ -8,9 +8,11 @@ public class PlayerProfileManager : MonoBehaviour
     [SerializeField] private float _materials;
     [SerializeField] private float _lvl;
     [SerializeField] private float _exp;
+    [SerializeField] private float _point;
 
     public UnityAction moneyChanged;
     public UnityAction expChanged;
+    public UnityAction lvlChanged;
     public UnityAction materialChanged;
 
     private void OnEnable()
@@ -51,6 +53,15 @@ public class PlayerProfileManager : MonoBehaviour
             PlayerPrefs.GetFloat("lvl", _lvl);
         }
 
+        if (!PlayerPrefs.HasKey("point"))
+        {
+            PlayerPrefs.SetFloat("point", _point);
+        }
+        else
+        {
+            PlayerPrefs.GetFloat("point", _point);
+        }
+
         if (!PlayerPrefs.HasKey("exp"))
         {
             PlayerPrefs.SetFloat("exp", _exp);
@@ -73,5 +84,10 @@ public class PlayerProfileManager : MonoBehaviour
     public void OnExpChange()
     {
         expChanged();
+    }
+
+    public void OnLvlChange()
+    {
+        lvlChanged();
     }
 }
