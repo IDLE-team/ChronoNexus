@@ -22,7 +22,7 @@ public class SkillHolder : MonoBehaviour
         _skillIconBack.color = _skillColorScheme;
 
         _textSkillDescription.text = _skill.skillDescription; // + _skill.levelDescription[_skill.currentLvl] ;
-        _textSkillName.text = _skill.name;
+        _textSkillName.text = _skill.skillName;
         _textSkillLvl.text = _skill.currentLvl.ToString() + "/" + _skill.maxLvl.ToString();
         _skillIcon.sprite = _skill.skillIconImage;
         _skillIcon.color = Color.white;
