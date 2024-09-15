@@ -10,6 +10,7 @@ public class WinScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _moneyGainText;
     [SerializeField] private TextMeshProUGUI _xpGainText;
     [SerializeField] private TextMeshProUGUI _materialText;
+    [SerializeField] private TextMeshProUGUI _skillPointText;
     [SerializeField] private TextMeshProUGUI _levelCurrentText;
     [SerializeField] private TextMeshProUGUI _levelNextText;
     [SerializeField] private TextMeshProUGUI _xpText;
@@ -17,6 +18,8 @@ public class WinScreen : MonoBehaviour
     [SerializeField] private Slider _levelSliderShadow;
 
     [SerializeField] private Button _buttonLoadMenu;
+
+    private int _pointsAcquired = 0;
 
     private void OnEnable()
     {
@@ -70,19 +73,13 @@ public class WinScreen : MonoBehaviour
 
         if (rewards.Experience + startExp >= xpToNextLvl)
         {
-            // _levelSliderShadow.DOValue(startExp + rewards.Experience, 1f);
-            //  _levelSlider.DOValue(startExp + rewards.Experience, 1f).SetDelay(1f);
-            // _levelSlider.value = startExp;
-            //  _levelSliderShadow.value = startExp;
-
-            // _levelSliderShadow.DOValue(xpToNextLvl, 1f);
-            // _levelSlider.DOValue(xpToNextLvl, 1f).SetDelay(1f);
-            //  StartCoroutine(LevelUp(2f, lvl,
-            //   Mathf.Abs(rewards.Experience + startExp - xpToNextLvl)));
             StartCoroutine(LevelUp(2f, lvl, startExp, rewards.Experience + startExp));
+            _skillPointText.GetComponentInParent<Image>().gameObject.SetActive(true);
         }
         else
         {
+            _skillPointText.GetComponentInParent<Image>().gameObject.SetActive(false);
+
             _levelSlider.value = startExp;
             _levelSliderShadow.value = startExp;
             _levelSliderShadow.DOValue(startExp + rewards.Experience, 1f);
@@ -118,6 +115,9 @@ public class WinScreen : MonoBehaviour
             startExp = 0;
             exp -= xpToNextLevel;
             lvl++;
+
+            _pointsAcquired++;
+            _skillPointText.text = _pointsAcquired.ToString();
             PlayerPrefs.SetInt("point", PlayerPrefs.GetInt("point", 0) + 1);
         }
         else

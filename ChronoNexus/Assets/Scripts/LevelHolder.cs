@@ -6,6 +6,7 @@ public class LevelHolder : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private Slider _slider;
+    [SerializeField] private GameObject _iconSkillPoint;
 
     [Header("Для значений из таблицы баланса уровней")]
     [SerializeField] private float _xpMeanLvl = 50;
