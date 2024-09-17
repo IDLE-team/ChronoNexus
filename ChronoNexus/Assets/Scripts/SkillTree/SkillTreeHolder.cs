@@ -14,7 +14,7 @@ public class SkillTreeHolder : MonoBehaviour
         for (int i = 0; i < _skills.Count; i++)
         {
             var skill = Instantiate(_skillHolder, transform);
-            skill.GetComponent<SkillHolder>().InitializeSkillVisual(_skills[i]);
+            skill.GetComponent<SkillHolder>().InitializeSkill(_skills[i]);
         }
     }
 
