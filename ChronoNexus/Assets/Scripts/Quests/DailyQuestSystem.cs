@@ -143,8 +143,8 @@ public class DailyQuestSystem : MonoBehaviour
             {
                 case QuestData.RewardType.Currency:
                     Debug.Log("Reward Currency: " + questData.currencyReward);
-                    var startCur = PlayerPrefs.GetFloat("money");
-                    PlayerPrefs.SetFloat("money", startCur + questData.currencyReward);
+                    var startCur = PlayerPrefs.GetInt("money");
+                    PlayerPrefs.SetInt("money", startCur + questData.currencyReward);
                     
                     break;
                 case QuestData.RewardType.Experience:
