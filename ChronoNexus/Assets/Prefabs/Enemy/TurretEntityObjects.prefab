@@ -35432,6 +35432,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5381594504466883369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6075436419031682228}
+  m_Layer: 7
+  m_Name: BuffSpawnPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6075436419031682228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381594504466883369}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.81, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7537753733628713262}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5853224962253710509
 GameObject:
   m_ObjectHideFlags: 0
@@ -35457,6 +35488,7 @@ GameObject:
   - component: {fileID: 6217848336399726656}
   - component: {fileID: 319960613360797489}
   - component: {fileID: 1348647751811899955}
+  - component: {fileID: 221124861104243391}
   m_Layer: 7
   m_Name: Turret
   m_TagString: Enemy
@@ -35477,6 +35509,7 @@ Transform:
   m_LocalScale: {x: 0.8585801, y: 0.85858, z: 0.8585801}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6075436419031682228}
   - {fileID: 4917776325263320617}
   - {fileID: 4469333680078874055}
   - {fileID: 3656957262155720275}
@@ -35866,6 +35899,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f05465b79affb64ba43ea8481435dc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &221124861104243391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5853224962253710509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff62bb7f1f46874e8d04d245e132bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropPrefab: {fileID: 6991306091545080346, guid: e51dbb8468bf3dd4ba947f0acbfdd709,
+    type: 3}
+  _dropSpawnTransform: {fileID: 6075436419031682228}
+  _maxDropCount: 5
+  force: 50
 --- !u!1 &6407452438167766310
 GameObject:
   m_ObjectHideFlags: 0
