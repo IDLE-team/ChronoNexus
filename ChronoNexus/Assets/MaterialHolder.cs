@@ -23,7 +23,7 @@ public class MaterialHolder : MonoBehaviour
 
     private void SaveMaterial()
     {
-        PlayerPrefs.SetFloat("money", _materialValue);
+        PlayerPrefs.SetFloat("material", _materialValue);
     }
 
     public float GetMaterialValue()

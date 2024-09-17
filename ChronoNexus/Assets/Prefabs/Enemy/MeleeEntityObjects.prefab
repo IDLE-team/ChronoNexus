@@ -46186,6 +46186,7 @@ GameObject:
   - component: {fileID: 427037557265400710}
   - component: {fileID: 7741051738703322100}
   - component: {fileID: 4729305801414714371}
+  - component: {fileID: 1847559106145774291}
   m_Layer: 7
   m_Name: MeleeEntity
   m_TagString: Enemy
@@ -46749,6 +46750,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ae24deedb40b240b333dd0ddb13d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1847559106145774291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5542510540675009054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff62bb7f1f46874e8d04d245e132bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropPrefab: {fileID: 6991306091545080346, guid: e51dbb8468bf3dd4ba947f0acbfdd709,
+    type: 3}
+  _dropSpawnTransform: {fileID: 2406001243241724801}
+  _maxDropCount: 5
+  force: 50
 --- !u!1 &5543399698908649129
 GameObject:
   m_ObjectHideFlags: 0

@@ -36146,6 +36146,7 @@ GameObject:
   - component: {fileID: 8574170601485495782}
   - component: {fileID: 5042203749440304736}
   - component: {fileID: 1125643934957016956}
+  - component: {fileID: 2770337540125998518}
   m_Layer: 0
   m_Name: JuggernautEntity
   m_TagString: Enemy
@@ -36677,6 +36678,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ae24deedb40b240b333dd0ddb13d3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2770337540125998518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4925516858154687356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff62bb7f1f46874e8d04d245e132bac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropPrefab: {fileID: 6991306091545080346, guid: e51dbb8468bf3dd4ba947f0acbfdd709,
+    type: 3}
+  _dropSpawnTransform: {fileID: 9179428429006649712}
+  _maxDropCount: 15
+  force: 50
 --- !u!1 &4931340065345568947
 GameObject:
   m_ObjectHideFlags: 0
