@@ -35,7 +35,7 @@ public class WinScreen : MonoBehaviour
         _buttonLoadMenu.onClick.AddListener(LoadScene);
     }
 
-    public void SetScreen(Rewards rewards, float startExp, float lvl)
+    public void SetScreen(Rewards rewards, int startExp, int lvl)
     {
         if (rewards.Money == 0)
         {

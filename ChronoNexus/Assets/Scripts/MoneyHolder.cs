@@ -5,11 +5,11 @@ public class MoneyHolder : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _moneyText;
 
-    private float _moneyValue;
+    private int _moneyValue;
 
     private void Start()
     {
-        _moneyValue = PlayerPrefs.GetFloat("money",0);
+        _moneyValue = PlayerPrefs.GetInt("money", 0);
         _moneyText = GetComponent<TextMeshProUGUI>();
         PlayerProfileManager.profile.moneyChanged += OnMoneyChange;
         PlayerProfileManager.profile.moneyChanged += SaveMoney;
@@ -19,22 +19,43 @@ public class MoneyHolder : MonoBehaviour
     public void OnMoneyChange()
     {
         _moneyText.text = _moneyValue.ToString();
+        PlayerPrefs.SetInt("money", _moneyValue);
     }
 
     private void SaveMoney()
     {
-        PlayerPrefs.SetFloat("money", _moneyValue);
+        PlayerPrefs.SetInt("money", _moneyValue);
     }
 
-    public float GetMoneyValue()
+    public int GetMoneyValue()
     {
         return _moneyValue;
     }
-
-    public void DecreaseMoneyValue(float cost)
+    public bool DecreaseMoneyValue(int ValueToDecrease)
     {
-        _moneyValue -= cost;
-        PlayerProfileManager.profile.moneyChanged();
+        if (_moneyValue - ValueToDecrease >= 0 && ValueToDecrease > 0)
+        {
+            PlayerProfileManager.profile.moneyChanged();
+            _moneyValue -= ValueToDecrease;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IncreaseMoney(int ValueToIncrease)
+    {
+        if (ValueToIncrease >= 0)
+        {
+            _moneyValue += ValueToIncrease;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

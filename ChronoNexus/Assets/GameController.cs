@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
     {
         Rewards rewards = CalculateLevelReward();
         _winScreen.gameObject.SetActive(true);
-        _winScreen.SetScreen(rewards, PlayerPrefs.GetFloat("xp", 1), PlayerPrefs.GetFloat("lvl", 1));
+        _winScreen.SetScreen(rewards, PlayerPrefs.GetInt("xp", 1), PlayerPrefs.GetInt("lvl", 1));
         _character.SetInvincible(true);
         ApplyReward(rewards);
     }
@@ -75,25 +75,25 @@ public class GameController : MonoBehaviour
 
     public void ApplyReward(Rewards rewards)
     {
-        float currentExp = PlayerPrefs.GetFloat("xp", 0);
-        float currentLvl = PlayerPrefs.GetFloat("lvl", 0);
-        float currentMoney = PlayerPrefs.GetFloat("money", 0);
-        float newExp = 0;
+        int currentExp = PlayerPrefs.GetInt("xp", 0);
+        int currentLvl = PlayerPrefs.GetInt("lvl", 0);
+        int currentMoney = PlayerPrefs.GetInt("money", 0);
+        int newExp = 0;
 
-        PlayerPrefs.SetFloat("money", currentMoney + rewards.Money);
+        PlayerPrefs.SetInt("money", currentMoney + rewards.Money);
         newExp = currentExp + rewards.Experience;
         while (newExp >= GetExpToNextLevel())
         {
-            newExp = Mathf.Abs( newExp - GetExpToNextLevel());
-            PlayerPrefs.SetFloat("lvl", PlayerPrefs.GetFloat("lvl",0) + 1 );
+            newExp = (int)Mathf.Abs( newExp - GetExpToNextLevel());
+            PlayerPrefs.SetInt("lvl", PlayerPrefs.GetInt("lvl",0) + 1 );
         }
-        PlayerPrefs.SetFloat("xp", newExp);
+        PlayerPrefs.SetInt("xp", newExp);
         
     }
 
     public float GetExpToNextLevel()
     {
-        float lvl = PlayerPrefs.GetFloat("lvl", 0);
+        float lvl = PlayerPrefs.GetInt("lvl", 0);
         return Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl;
     }
     public float GetExpToLevel(float lvl)

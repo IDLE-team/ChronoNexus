@@ -8,11 +8,9 @@ using UnityEngine.UI;
 
 public class ShopChestHolder : MonoBehaviour
 {
-    public List<Sprite> IconsToBuy = new List<Sprite>();
-
     [Header("Кнопка продажи и цена")]
     [SerializeField] private TextMeshProUGUI _costText;
-    [SerializeField] private float _itemCost;
+    [SerializeField] private int _itemCost;
     [SerializeField] private Button _purchaseButton;
 
     
@@ -20,41 +18,38 @@ public class ShopChestHolder : MonoBehaviour
     [Header ("Доступные предметы в сундуке")]
 
     [SerializeField] bool _isGun = true;
-    [SerializeField] bool _isKnife;
-    [SerializeField] bool _isGranade = true;
-    [SerializeField] bool _isArmor = true;
     [SerializeField] bool _isMoney;
+    [SerializeField] bool _isMaterial;
+    [SerializeField] bool _isXp;
 
     [SerializeField] private GameObject _itemGrid;
     [SerializeField] private GameObject _itemBlank;
 
-    private List<Image> _items = new List<Image>();
+    [SerializeField] private Sprite _itemGun;
+    [SerializeField] private Sprite _itemMoney;
+    [SerializeField] private Sprite _itemMaterial;
+    [SerializeField] private Sprite _itemXp;
+
     // конец части под сундуки
 
     private void OnDrawGizmos()
     {
-        if (!_costText)
-        {
-            _costText = GetComponentInChildren<TextMeshProUGUI>();
-        }
         _costText.text = _itemCost.ToString();
 
         _itemGrid = GetComponentInChildren<GridLayoutGroup>().gameObject;
+
+       
     }
 
     private void Start()
     {
-        _items = _itemGrid.GetComponentsInChildren<Image>().ToList();
-        foreach (Image item in _items)
-        {
-            Destroy(item.gameObject);
-        }
         #region SetItemBysIcon
         if (_isGun)
         {
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
-            g.GetComponent<Image>().sprite = IconsToBuy[0];
+            g.GetComponent<Image>().sprite = _itemGun;
         }
+        /*
         if (_isKnife)
         {
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
@@ -70,12 +65,63 @@ public class ShopChestHolder : MonoBehaviour
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
             g.GetComponent<Image>().sprite = IconsToBuy[3];
         }
+        */
         if (_isMoney)
         {
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
-            g.GetComponent<Image>().sprite = IconsToBuy[4];
+            g.GetComponent<Image>().sprite = _itemMoney;
+        }
+        if (_isMaterial)
+        {
+            GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
+            g.GetComponent<Image>().sprite = _itemMaterial;
+        }
+        if (_isXp)
+        {
+            GameObject g = Instantiate(_itemBlank, _itemGrid.transform);
+            g.GetComponent<Image>().sprite = _itemXp;
         }
         #endregion
+        _costText.text = _itemCost.ToString();
+
+        PlayerProfileManager.profile.moneyChanged += PurchaseButtonActive;
+
+        _purchaseButton.onClick.AddListener(PurchaseChest);
+        if (HubIventoryManager.manager.GetMoneyValue() >= _itemCost)
+        {
+            _purchaseButton.interactable = true;
+        }
+        else
+        {
+            _purchaseButton.interactable = false;
+        }
+    }
+
+    private void PurchaseButtonActive()
+    {
+        if (HubIventoryManager.manager.GetMoneyValue() >= _itemCost)
+        {
+            _purchaseButton.interactable = true;
+        }
+        else
+        {
+            _purchaseButton.interactable = false;
+        }
+    }
+
+    private void PurchaseChest()
+    {
+        if (HubIventoryManager.manager.BuyItem(_itemCost))
+        {
+            HubIventoryManager.manager.GetChestOpenUI().SetActive(true);
+            print("Купил");
+            PlayerProfileManager.profile.OnMoneyChange();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        PlayerProfileManager.profile.moneyChanged -= PurchaseButtonActive;
     }
 
 }

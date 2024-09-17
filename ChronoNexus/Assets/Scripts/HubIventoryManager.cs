@@ -11,6 +11,8 @@ public class HubIventoryManager : InventoryItemManager
     [SerializeField] private GameObject _gridLayoutShelterInventory;
     [SerializeField] private GameObject _gridLayoutShelterStorage;
 
+    [SerializeField] private GameObject _chestOpenUI;
+
     private List<HorizontalLayoutGroup> _cellsShelterInventory = new List<HorizontalLayoutGroup>();
     private List<HorizontalLayoutGroup> _cellsShelterStorage = new List<HorizontalLayoutGroup>();
 
@@ -97,6 +99,11 @@ public class HubIventoryManager : InventoryItemManager
         PlayerPrefs.SetString("inventoryMain", saveString);
 
         SaveGun();
+    }
+
+    public GameObject GetChestOpenUI()
+    {
+        return _chestOpenUI;
     }
 
     public void MoveToShelter(ItemData item, GameObject itemGameObject)

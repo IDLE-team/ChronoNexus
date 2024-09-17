@@ -5,11 +5,11 @@ public class MaterialHolder : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _materialText;
 
-    private float _materialValue;
+    private int _materialValue;
 
     private void Start()
     {
-        _materialValue = PlayerPrefs.GetFloat("material", 0);
+        _materialValue = PlayerPrefs.GetInt("material", 0);
         _materialText = GetComponent<TextMeshProUGUI>();
         PlayerProfileManager.profile.materialChanged += OnMaterialChange;
         PlayerProfileManager.profile.materialChanged += SaveMaterial;
@@ -23,7 +23,7 @@ public class MaterialHolder : MonoBehaviour
 
     private void SaveMaterial()
     {
-        PlayerPrefs.SetFloat("money", _materialValue);
+        PlayerPrefs.SetInt("material", _materialValue);
     }
 
     public float GetMaterialValue()
@@ -31,7 +31,7 @@ public class MaterialHolder : MonoBehaviour
         return _materialValue;
     }
 
-    public void DecreaseMoneyValue(float cost)
+    public void DecreaseMoneyValue(int cost)
     {
         _materialValue -= cost;
         PlayerProfileManager.profile.moneyChanged();

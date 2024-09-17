@@ -49,7 +49,7 @@ public class UserInterfaceManager : MonoBehaviour
 
     public void BackTab()
     {
-        OpenTab(_previousTab,_isGame);
+        OpenTab(_startTab,_isGame);
     }
 
     public IEnumerator OpenTabCor(GameObject tabToOpen)

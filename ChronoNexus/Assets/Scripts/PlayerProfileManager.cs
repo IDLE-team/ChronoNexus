@@ -4,11 +4,11 @@ using UnityEngine.Events;
 public class PlayerProfileManager : MonoBehaviour
 {
     public static PlayerProfileManager profile;
-    [SerializeField] private float _money;
-    [SerializeField] private float _materials;
-    [SerializeField] private float _lvl;
-    [SerializeField] private float _exp;
-    [SerializeField] private float _point;
+    [SerializeField] private int _money;
+    [SerializeField] private int _materials;
+    [SerializeField] private int _lvl;
+    [SerializeField] private int _exp;
+    [SerializeField] private int _point;
 
     public UnityAction moneyChanged;
     public UnityAction expChanged;
@@ -28,20 +28,20 @@ public class PlayerProfileManager : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("money"))
         {
-            PlayerPrefs.SetFloat("money", _money);
+            PlayerPrefs.SetInt("money", _money);
         }
         else
         {
-            PlayerPrefs.GetFloat("money");
+            PlayerPrefs.GetInt("money");
         }
 
         if (!PlayerPrefs.HasKey("material"))
         {
-            PlayerPrefs.SetFloat("material", _materials);
+            PlayerPrefs.SetInt("material", _materials);
         }
         else
         {
-            PlayerPrefs.GetFloat("material");
+            PlayerPrefs.GetInt("material");
         }
 
         if (!PlayerPrefs.HasKey("lvl"))
@@ -76,6 +76,7 @@ public class PlayerProfileManager : MonoBehaviour
             PlayerPrefs.SetString("inventoryMain", "");
         }
     }
+
 
     public void OnMoneyChange()
     {

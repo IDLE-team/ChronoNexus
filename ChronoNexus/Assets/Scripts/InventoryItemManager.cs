@@ -388,7 +388,7 @@ public class InventoryItemManager : MonoBehaviour
         }
     }
 
-    public bool BuyItem(float itemCost)
+    public bool BuyItem(int itemCost)
     {
         if (_moneyHolder.GetMoneyValue() - itemCost >= 0)
         {
@@ -400,6 +400,12 @@ public class InventoryItemManager : MonoBehaviour
             return false;
         }
     }
+
+    public int GetMoneyValue()
+    {
+        return _moneyHolder.GetMoneyValue();
+    }
+
 
     public enum itemType
     {
