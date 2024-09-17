@@ -48,20 +48,20 @@ public class PlayerProfileManager : MonoBehaviour
 
         if (!PlayerPrefs.HasKey("lvl"))
         {
-            PlayerPrefs.SetFloat("lvl", _lvl);
+            PlayerPrefs.SetInt("lvl", _lvl);
         }
         else
         {
-            PlayerPrefs.GetFloat("lvl", _lvl);
+            PlayerPrefs.GetInt("lvl", _lvl);
         }
 
         if (!PlayerPrefs.HasKey("point"))
         {
-            PlayerPrefs.SetFloat("point", _point);
+            PlayerPrefs.SetInt("point", _point);
         }
         else
         {
-            PlayerPrefs.GetFloat("point", _point);
+            PlayerPrefs.GetInt("point", _point);
         }
 
             
@@ -70,11 +70,11 @@ public class PlayerProfileManager : MonoBehaviour
             
         if (!PlayerPrefs.HasKey("exp"))
         {
-            PlayerPrefs.SetFloat("exp", _exp);
+            PlayerPrefs.SetInt("exp", _exp);
         }
         else
         {
-            PlayerPrefs.GetFloat("exp");
+            PlayerPrefs.GetInt("exp");
         }
 
         if (!PlayerPrefs.HasKey("inventoryMain"))

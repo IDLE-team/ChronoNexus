@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour
     {
         Rewards rewards = CalculateLevelReward();
         _winScreen.gameObject.SetActive(true);
-        _winScreen.SetScreen(rewards, PlayerPrefs.GetInt("xp", 1), PlayerPrefs.GetInt("lvl", 1));
+        _winScreen.SetScreen(rewards, PlayerPrefs.GetInt("exp", 1), PlayerPrefs.GetInt("lvl", 1));
         _character.SetInvincible(true);
         ApplyReward(rewards);
     }
@@ -71,31 +71,31 @@ public class GameController : MonoBehaviour
 
     public void ApplyReward(Rewards rewards)
     {
-        int currentExp = PlayerPrefs.GetInt("xp", 0);
+        int currentExp = PlayerPrefs.GetInt("exp", 0);
         int currentLvl = PlayerPrefs.GetInt("lvl", 0);
         int currentMoney = PlayerPrefs.GetInt("money", 0);
         int currentMaterials = PlayerPrefs.GetInt("material", 0);
         int newExp = 0;
 
-        PlayerPrefs.SetFloat("money", currentMoney + rewards.Money);
+        PlayerPrefs.SetInt("money", currentMoney + rewards.Money);
         newExp = currentExp + rewards.Experience;
         while (newExp >= GetExpToNextLevel())
         {
             newExp = (int)Mathf.Abs(newExp - GetExpToNextLevel());
-            PlayerPrefs.GetInt("lvl", PlayerPrefs.GetInt("lvl", 0) + 1);
+            PlayerPrefs.SetInt("lvl", PlayerPrefs.GetInt("lvl", 0) + 1);
         }
-        PlayerPrefs.GetInt("xp", newExp);
-        PlayerPrefs.GetInt("material", currentMaterials + rewards.Material);
+        PlayerPrefs.SetInt("exp", newExp);
+        PlayerPrefs.SetInt("material", currentMaterials + rewards.Material);
     }
 
-    public float GetExpToNextLevel()
+    public int GetExpToNextLevel()
     {
-        float lvl = PlayerPrefs.GetFloat("lvl", 0);
-        return Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl;
+        int lvl = PlayerPrefs.GetInt("lvl", 0);
+        return (int)(Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl);
     }
-    public float GetExpToLevel(float lvl)
+    public int GetExpToLevel(int lvl)
     {
-        return Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl;
+        return (int)(Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl);
     }
 
     public void AddMaterials(int count)

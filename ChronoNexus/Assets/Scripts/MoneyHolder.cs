@@ -19,7 +19,7 @@ public class MoneyHolder : MonoBehaviour
     public void OnMoneyChange()
     {
         _moneyText.text = _moneyValue.ToString();
-        PlayerPrefs.SetInt("money", _moneyValue);
+        SaveMoney();
     }
 
     private void SaveMoney()

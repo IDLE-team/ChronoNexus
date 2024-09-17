@@ -73,7 +73,7 @@ public class WinScreen : MonoBehaviour
 
         if (rewards.Experience + startExp >= xpToNextLvl)
         {
-            StartCoroutine(LevelUp(2f, lvl, startExp, rewards.Experience + startExp));
+            StartCoroutine(LevelUp(2, lvl, startExp, rewards.Experience + startExp));
             _skillPointText.GetComponentInParent<Image>().gameObject.SetActive(true);
         }
         else
@@ -93,11 +93,11 @@ public class WinScreen : MonoBehaviour
         LevelController.instance.LoadSceneWithTransition(_sceneToLoad);
     }
 
-    private IEnumerator LevelUp(float delay, float lvl, float startExp, float exp)
+    private IEnumerator LevelUp(int delay, int lvl, int startExp, int exp)
     {
 
         Debug.Log("LevelUP сработал");
-        var xpToNextLevel = GameController.Instance.GetExpToLevel(lvl);
+        int xpToNextLevel = GameController.Instance.GetExpToLevel(lvl);
         _xpText.text = exp + "/" + xpToNextLevel;
         _levelCurrentText.text = lvl.ToString();
         _levelNextText.text = (lvl + 1).ToString();

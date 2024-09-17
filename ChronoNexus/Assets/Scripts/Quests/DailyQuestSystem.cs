@@ -149,8 +149,8 @@ public class DailyQuestSystem : MonoBehaviour
                     break;
                 case QuestData.RewardType.Experience:
                     Debug.Log("Reward Experience: " + questData.experienceReward);
-                    var startXp = PlayerPrefs.GetFloat("xp");
-                    PlayerPrefs.SetFloat("xp", startXp + questData.experienceReward);
+                    var startXp = PlayerPrefs.GetInt("exp");
+                    PlayerPrefs.SetInt("exp", startXp + questData.experienceReward);
                     break;
                 case QuestData.RewardType.Item:
                     Debug.Log("Reward Item: " + questData.itemReward);
