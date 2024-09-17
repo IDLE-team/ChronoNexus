@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,8 +9,17 @@ public class Health : MonoBehaviour, IHealth
     [SerializeField] private float _value;
     [SerializeField] private TMP_InputField _healthSetter;
     [SerializeField] private ParticleSystem _healEffect;
+
+    public IEnumerator DebugMax()
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log(MaxHealth);
+    }
+
+[SerializeField]
     private float _maxHealth;
-    public float MaxHealth => _maxHealth;
+
+    public float MaxHealth => GetMaxHealth();
     public float Value => _value;
 
     public event Action Died;
@@ -19,13 +29,17 @@ public class Health : MonoBehaviour, IHealth
     private bool _isInvinsible;
 
     public bool IsInvincible => _isInvinsible;
-    
+
+    public float GetMaxHealth()
+    {
+        return _maxHealth + UpgradeData.Instance.MaxHPUpgradeValue;
+    }
     private void OnEnable()
     {
-        _maxHealth = _value;
-
+        _value = GetMaxHealth();
         if (_healthSetter != null)
             _healthSetter.onEndEdit.AddListener(SetHealth);
+        StartCoroutine(DebugMax());
     }
 
     private void OnDisable()
@@ -67,9 +81,9 @@ public class Health : MonoBehaviour, IHealth
     public void Increase(float value)
     {
         
-        if ((_value + value) >= _maxHealth)
+        if ((_value + value) >= GetMaxHealth())
         {
-            _value = _maxHealth;
+            _value = GetMaxHealth();
             Changed?.Invoke(_value);
             return;
         }

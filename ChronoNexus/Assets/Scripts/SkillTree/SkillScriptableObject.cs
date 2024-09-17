@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -6,10 +7,12 @@ public class SkillScriptableObject : ScriptableObject
 {
 
     public SkillTreeType type;
+    public UpgradeType upgradeType;
     public string skillName;
     public string skillDescription; // base skill description
     public int currentLvl = 0;
     public int maxLvl = 3;
+    public List<int> upgradeValuePerLevel = new List<int>();
     public string[] levelDescription; // level parameters with colored parts
     public Sprite skillIconImage;
 
@@ -38,5 +41,12 @@ public class SkillScriptableObject : ScriptableObject
         }
         ColorUtility.TryParseHtmlString(hex, out newCol);
         return newCol;
+    }
+
+    public int GetUpgradeValue()
+    {
+        Debug.Log("Upgr: " + upgradeValuePerLevel.Count);
+        Debug.Log("CurLvl: " + currentLvl);
+        return upgradeValuePerLevel[currentLvl-1];
     }
 }

@@ -10,6 +10,8 @@ public class PlayerProfileManager : MonoBehaviour
     [SerializeField] private float _exp;
     [SerializeField] private float _point;
 
+    public float Point => _point;
+    
     public UnityAction moneyChanged;
     public UnityAction expChanged;
     public UnityAction lvlChanged;
@@ -62,6 +64,10 @@ public class PlayerProfileManager : MonoBehaviour
             PlayerPrefs.GetFloat("point", _point);
         }
 
+            
+            
+            
+            
         if (!PlayerPrefs.HasKey("exp"))
         {
             PlayerPrefs.SetFloat("exp", _exp);
