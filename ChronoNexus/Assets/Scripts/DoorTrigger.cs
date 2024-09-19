@@ -16,18 +16,18 @@ public class DoorTrigger : MonoBehaviour
 
     private void Start()
     {
-        _doorClosedPosition = _door.transform.position;
+        _doorClosedPosition = _door.transform.localPosition;
         _doorOpenedPosition = new Vector3(_doorClosedPosition.x + _doorOpenDirection.x, _doorClosedPosition.y + _doorOpenDirection.y, _doorClosedPosition.z + _doorOpenDirection.z);
     }
 
     public void OpenDoor()
     {
-        _door.DOMove(_doorOpenedPosition, 1f);
+        _door.DOLocalMove(_doorOpenedPosition, 1f);
     }
 
     public void CloseDoor()
     {
-        _door.DOMove(_doorClosedPosition, 1f);
+        _door.DOLocalMove(_doorClosedPosition, 1f);
     }
 
     public void LockDoor()
@@ -52,6 +52,8 @@ public class DoorTrigger : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player") && !other.CompareTag("Enemy"))
+            return;
+        if (_isLocked)
             return;
         CloseDoor();
     }

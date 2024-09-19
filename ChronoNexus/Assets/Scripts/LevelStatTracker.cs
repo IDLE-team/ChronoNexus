@@ -32,6 +32,7 @@ public class LevelStatTracker : MonoBehaviour
         Debug.Log("StartEn: " + _startEnemyAmount + " - " + "Now: " + Entity.enemyList.Count);
         return _startEnemyAmount - Entity.enemyList.Count;
     }
+    
 
     public void AddMaterials(int count)
     {
