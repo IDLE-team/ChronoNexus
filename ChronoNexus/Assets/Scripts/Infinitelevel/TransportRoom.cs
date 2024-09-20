@@ -7,7 +7,8 @@ public class TransportRoom : MonoBehaviour
 {
     [SerializeField] private bool _isExit;
     [SerializeField] private DoorTrigger _door;
-    
+    [SerializeField] private Transform _connector;
+    public Transform Connector => _connector;
     public event Action OnPlayerInTransporter;
     
     private void Start()

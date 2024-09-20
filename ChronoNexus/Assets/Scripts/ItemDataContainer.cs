@@ -13,7 +13,11 @@ public class ItemDataContainer : MonoBehaviour
     }
     public ItemData _itemData;
     public ItemDataColorSet _itemDataColorSet;
-    
+
+    private void OnEnable()
+    {
+        Destroy(gameObject,10f);
+    }
 
     private void OnTriggerEnter(Collider other)
     {

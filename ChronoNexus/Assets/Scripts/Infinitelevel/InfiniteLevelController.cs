@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
@@ -11,11 +12,16 @@ using Random = UnityEngine.Random;
 
 public class InfiniteLevelController : MonoBehaviour
 { 
-    
     [SerializeField] private Transform _playerTransform;
-    [SerializeField] private GameObject[] _startRoom;
-    [SerializeField] private GameObject[] _exitRoom;
+    [Header("Lift parameters")]
+    [SerializeField] private GameObject[] _lift;
+    [SerializeField] private float _moveTime = 7f;
+    [SerializeField] private float _moveY = 10f;
+    [Header("Rooms parameters")]
     [SerializeField] private GameObject[] _room;
+    
+    
+    [Header("Entity parameters")]
     [SerializeField] private List<GameObject> _entityList;
     [SerializeField] private int _entityInRoomCount = 3;
     [SerializeField] private NavMeshSurface _navMesh;
@@ -31,16 +37,16 @@ public class InfiniteLevelController : MonoBehaviour
     private void Awake()
     {
         GenerateLevel();
-        _transportRoomTemp1.OnPlayerInTransporter += RegenerateLevel;
-        _transportRoomTemp2.OnPlayerInTransporter += RegenerateLevel;
+        _transportRoomTemp1.OnPlayerInTransporter += StartLoadProcess;
+        _transportRoomTemp2.OnPlayerInTransporter += StartLoadProcess;
         _roomTemp.OnPlayerInRoom += StartFight;
 
     }
 
     private void OnDisable()
     {
-        _transportRoomTemp1.OnPlayerInTransporter -= RegenerateLevel;
-        _transportRoomTemp2.OnPlayerInTransporter -= RegenerateLevel;
+        _transportRoomTemp1.OnPlayerInTransporter -= StartLoadProcess;
+        _transportRoomTemp2.OnPlayerInTransporter -= StartLoadProcess;
         _roomTemp.OnPlayerInRoom -= StartFight;
     }
 
@@ -98,67 +104,109 @@ public class InfiniteLevelController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            StartLoadProcess();
+        }
+    }
+
     private void GenerateLevel()
     {
-        _transportRoomTemp1 = Instantiate(_startRoom[Random.Range(0,_startRoom.Length)]).GetComponent<TransportRoom>();
-        _transportRoomTemp2 = Instantiate(_exitRoom[Random.Range(0,_startRoom.Length)]).GetComponent<TransportRoom>();
-        _roomTemp = Instantiate(_room[Random.Range(0,_startRoom.Length-1)]).GetComponent<Room>();
         
-        _transportRoomTemp1.transform.Rotate(new Vector3(0,-45f,0));
-        _transportRoomTemp2.transform.Rotate(new Vector3(0,-45f,0));
-        _roomTemp.transform.Rotate(new Vector3(0,-45f,0));
+        _transportRoomTemp1 = Instantiate(_lift[Random.Range(0,_lift.Length)]).GetComponent<TransportRoom>();
+        _transportRoomTemp2 = Instantiate(_lift[Random.Range(0,_lift.Length)]).GetComponent<TransportRoom>();
+        _roomTemp = Instantiate(_room[Random.Range(0,_room.Length)]).GetComponent<Room>();
+
+        _roomTemp.transform.rotation = _transportRoomTemp1.Connector.rotation * Quaternion.Inverse(_roomTemp.Connectors[0].localRotation);
+        _roomTemp.transform.position = _transportRoomTemp1.Connector.localPosition -_roomTemp.Connectors[0].position;
+
+        _transportRoomTemp2.transform.rotation = _roomTemp.Connectors[1].rotation * Quaternion.Inverse(_transportRoomTemp2.transform.localRotation);
+        _transportRoomTemp2.transform.position =  _roomTemp.Connectors[1].position - ( _transportRoomTemp2.Connector.position - _transportRoomTemp2.transform.position);
+        
+        _transportRoomTemp2.SetIsExit(true);
+        _navMesh.RemoveData();
         _navMesh.BuildNavMesh();
         _playerTransform.position = Vector3.up + _transportRoomTemp1.transform.position;
 
         SpawnEntity();
     }
+
+    private void StartLoadProcess()
+    {
+        _navMesh.RemoveData();
+        if (_transporter)
+        {
+            _transportRoomTemp2.transform.DOMoveY(_transportRoomTemp2.transform.position.y + _moveY, _moveTime).OnComplete(() =>
+            {
+                RegenerateLevel();
+            });
+        }
+        else
+        {
+            _transportRoomTemp1.transform.DOMoveY(_transportRoomTemp1.transform.position.y + _moveY, _moveTime).OnComplete(() =>
+            {
+                RegenerateLevel();
+            });
+        }
+        
+    }
     
     private void RegenerateLevel()
     {
-        _transportRoomTemp1.OnPlayerInTransporter -= RegenerateLevel;
-        _transportRoomTemp2.OnPlayerInTransporter -= RegenerateLevel;
+        _transportRoomTemp1.OnPlayerInTransporter -= StartLoadProcess;
+        _transportRoomTemp2.OnPlayerInTransporter -= StartLoadProcess;
         _roomTemp.OnPlayerInRoom -= StartFight;
         
         if (_transporter)
         {
             // room & first transporter
-            Destroy(_roomTemp);
+            Destroy(_roomTemp.gameObject);
             Destroy(_transportRoomTemp1.gameObject);
             
-            _roomTemp = Instantiate(_room[Random.Range(0,_startRoom.Length)]).GetComponent<Room>();
-            _transportRoomTemp1 = Instantiate(_startRoom[Random.Range(0,_startRoom.Length)]).GetComponent<TransportRoom>();
+            _roomTemp = Instantiate(_room[Random.Range(0,_room.Length)]).GetComponent<Room>();
+            _transportRoomTemp1 = Instantiate(_lift[Random.Range(0,_lift.Length)]).GetComponent<TransportRoom>();
+
+            _roomTemp.transform.rotation = _transportRoomTemp2.Connector.rotation * Quaternion.Inverse(_roomTemp.Connectors[1].localRotation);
+            _roomTemp.transform.position = _transportRoomTemp2.Connector.position - (_roomTemp.Connectors[1].position - _roomTemp.transform.position) ;
+
+            _transportRoomTemp1.transform.rotation = _roomTemp.Connectors[0].rotation * Quaternion.Inverse(_transportRoomTemp1.transform.localRotation);
+            _transportRoomTemp1.transform.position =_roomTemp.Connectors[0].position - ( _transportRoomTemp1.Connector.position - _transportRoomTemp1.transform.position); ;
             
-            _transportRoomTemp1.transform.Rotate(new Vector3(0,-45f,0));
-            _roomTemp.transform.Rotate(new Vector3(0,-45f,0));
 
             _transportRoomTemp1.SetIsExit(true);
             _transportRoomTemp2.SetIsExit(false);
-            
+            _playerTransform.position = Vector3.up + _transportRoomTemp2.transform.position;
         }
         else
         {
             // room & second transporter
-            Destroy(_roomTemp);
+            Destroy(_roomTemp.gameObject);
             Destroy(_transportRoomTemp2.gameObject);
             
-            _roomTemp = Instantiate(_room[Random.Range(0,_startRoom.Length)]).GetComponent<Room>();
-            _transportRoomTemp2 = Instantiate(_exitRoom[Random.Range(0,_startRoom.Length)]).GetComponent<TransportRoom>();
-            
-            _transportRoomTemp2.transform.Rotate(new Vector3(0,-45f,0));
-            _roomTemp.transform.Rotate(new Vector3(0,-45f,0));
+            _roomTemp = Instantiate(_room[Random.Range(0,_room.Length)]).GetComponent<Room>();
+            _transportRoomTemp2 = Instantiate(_lift[Random.Range(0,_lift.Length)]).GetComponent<TransportRoom>();
+
+            _roomTemp.transform.rotation = _transportRoomTemp1.Connector.rotation * Quaternion.Inverse(_roomTemp.Connectors[0].localRotation);
+            _roomTemp.transform.position = _transportRoomTemp1.Connector.position - (_roomTemp.Connectors[0].position-_roomTemp.transform.position);
+
+            _transportRoomTemp2.transform.rotation = _roomTemp.Connectors[1].rotation * Quaternion.Inverse(_transportRoomTemp2.transform.localRotation);
+            _transportRoomTemp2.transform.position =  _roomTemp.Connectors[1].position - ( _transportRoomTemp2.Connector.position - _transportRoomTemp2.transform.position);
             
             _transportRoomTemp1.SetIsExit(false);
             _transportRoomTemp2.SetIsExit(true);
+            _playerTransform.position = Vector3.up + _transportRoomTemp1.transform.position;
         }
         
-        _transportRoomTemp1.OnPlayerInTransporter += RegenerateLevel;
-        _transportRoomTemp2.OnPlayerInTransporter += RegenerateLevel;
+        _transportRoomTemp1.OnPlayerInTransporter += StartLoadProcess;
+        _transportRoomTemp2.OnPlayerInTransporter += StartLoadProcess;
         _roomTemp.OnPlayerInRoom += StartFight;
         
         _transporter = !_transporter;
         
-        SpawnEntity();
-        
+        _navMesh.BuildNavMesh();
+        SpawnEntity(); 
         _transportRoomTemp1.UnlockDoor();
         _transportRoomTemp2.UnlockDoor();
     }
