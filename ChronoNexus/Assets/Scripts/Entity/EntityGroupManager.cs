@@ -18,6 +18,36 @@ public class EntityGroupManager : MonoBehaviour
 
     Group _group;
 
+
+    public Group CreateGroup(List<Entity> _entities)
+    {
+        Debug.Log("Entity: "+_entities[0]);
+        foreach (Group _movableEntitiesGroup in _movableEntitiesGroups)
+        {
+            foreach (Entity _movableEntity in _movableEntitiesGroup._movableEntities)
+            {
+                if (_movableEntity == null)
+                {
+                    continue;
+                }
+                _movableEntity.TargetFinder.OnTargetFinded -= CallTargetSetToGroup;
+            }
+        }
+        _movableEntitiesGroups = new List<Group>();
+        Group _newGroup = new Group();
+        _movableEntitiesGroups.Add(_newGroup);
+        _newGroup._movableEntities = new List<Entity>();
+        foreach (Entity _entity in _entities)
+        {
+            _newGroup._movableEntities.Add(_entity);
+            Debug.Log("Entity: "+_entity);
+            Debug.Log("TargetFinder: "+_entity.TargetFinder);
+            
+            _entity.TargetFinder.OnTargetFinded += CallTargetSetToGroup;
+        }
+
+        return _newGroup;
+    }
     public void CallTargetSetToGroup(ITargetable target)
     {
         foreach (Group _movableEntitiesGroup in _movableEntitiesGroups)

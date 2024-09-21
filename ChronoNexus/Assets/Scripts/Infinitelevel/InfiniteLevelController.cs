@@ -24,14 +24,16 @@ public class InfiniteLevelController : MonoBehaviour
     [Header("Entity parameters")]
     [SerializeField] private List<GameObject> _entityList;
     [SerializeField] private int _entityInRoomCount = 3;
+    [SerializeField] private float _entitySpawnRadius = 2f;
     [SerializeField] private NavMeshSurface _navMesh;
+    [SerializeField] private EntityGroupManager _entityGroupManager;
     
     private TransportRoom _transportRoomTemp1;
     private TransportRoom _transportRoomTemp2;
     private Room _roomTemp;
     private int _entityInRoomCountTemp;
     
-    private List<GameObject> _entityListTemp;
+    [SerializeField]private List<Entity> _entityListTemp;
 
     private bool _transporter = true;
     private void Awake()
@@ -41,6 +43,11 @@ public class InfiniteLevelController : MonoBehaviour
         _transportRoomTemp2.OnPlayerInTransporter += StartLoadProcess;
         _roomTemp.OnPlayerInRoom += StartFight;
 
+    }
+
+    private void Start()
+    {
+        
     }
 
     private void OnDisable()
@@ -86,17 +93,21 @@ public class InfiniteLevelController : MonoBehaviour
         }
 
         _entityInRoomCountTemp = 0;
-        _entityListTemp = new List<GameObject>();
+        _entityListTemp = new List<Entity>();
         
+
         for (int _i = 0; _i < _entityInRoomCount; _i++)
         {
+            Vector3 randomVector = new Vector3(Random.Range(-_entitySpawnRadius,_entitySpawnRadius),0,Random.Range(-_entitySpawnRadius,_entitySpawnRadius));
             GameObject _tempObject = Instantiate(_entityList[Random.Range(0 , _entityListTemp.Count)]
-                ,_roomTemp.EntitySpawnPoints[Random.Range(0,_roomTemp.EntitySpawnPoints.Count)].position+Vector3.up,quaternion.identity);
+                ,_roomTemp.EntitySpawnPoints[Random.Range(0,_roomTemp.EntitySpawnPoints.Count)].position+Vector3.up+randomVector,quaternion.identity);
 
             _entityInRoomCountTemp++;
             
-            _entityListTemp.Add(_tempObject);
+            _entityListTemp.Add(_tempObject.GetComponentInChildren<Entity>());
         }
+
+        _entityGroupManager.CreateGroup(_entityListTemp);
 
         foreach (var _enemy in Entity.enemyList)
         {

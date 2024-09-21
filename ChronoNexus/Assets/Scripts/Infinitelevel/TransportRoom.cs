@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class TransportRoom : MonoBehaviour
@@ -21,14 +22,14 @@ public class TransportRoom : MonoBehaviour
         _isExit = value;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private async void OnTriggerEnter(Collider other)
     {
         if (_isExit)
         {
             if (other.CompareTag("Player"))
             {
                 _door.LockDoor();
-                _door.CloseDoor();
+                await _door.CloseDoor();
                 OnPlayerInTransporter?.Invoke();
             }
         }
@@ -37,7 +38,6 @@ public class TransportRoom : MonoBehaviour
     public void LockDoor()
     {
         _door.LockDoor();
-        _door.CloseDoor();
     }
     
     public void UnlockDoor()
