@@ -15,8 +15,12 @@ public class SkillHolder : MonoBehaviour
     private SkillScriptableObject _skill;
     private Color _skillColorScheme;
 
+    private SkillPointHolder _skillPointHolder;
+
     public void InitializeSkill(SkillScriptableObject skill)
     {
+        _skillPointHolder = GetComponentInParent<UserInterfaceComponent>().GetComponentInChildren<SkillPointHolder>();
+
         _skill = skill;
 
         _skillColorScheme = _skill.ReturnColorByType(_skill.type);
@@ -28,6 +32,7 @@ public class SkillHolder : MonoBehaviour
         _textSkillLvl.text = _skill.currentLvl + "/" + _skill.maxLvl.ToString();
         _skillIcon.sprite = _skill.skillIconImage;
         _skillIcon.color = Color.white;
+
         _button.onClick.AddListener(TryUpgrade);
     }
 
@@ -35,12 +40,15 @@ public class SkillHolder : MonoBehaviour
     {
         if (_skill.currentLvl >= _skill.maxLvl)
             return;
-        if(PlayerProfileManager.profile.Point < 1)
+        if (PlayerPrefs.GetInt("point", 0) == 0)
             return;
+
+        _skillPointHolder.DecreasePoint();
+
         _skill.currentLvl++;
-        _textSkillLvl.text = _skill.currentLvl+ "/" + _skill.maxLvl;
+        _textSkillLvl.text = _skill.currentLvl + "/" + _skill.maxLvl;
 
         UpgradeData.Instance.SetStat(_skill.upgradeType, _skill.GetUpgradeValue());
-        
+
     }
 }

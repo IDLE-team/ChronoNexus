@@ -13,6 +13,7 @@ public class PlayerProfileManager : MonoBehaviour
     public float Point => _point;
     
     public UnityAction moneyChanged;
+    public UnityAction pointChanged;
     public UnityAction expChanged;
     public UnityAction lvlChanged;
     public UnityAction materialChanged;
@@ -88,11 +89,14 @@ public class PlayerProfileManager : MonoBehaviour
     {
         moneyChanged();
     }
+    public void OnPointChanged()
+    {
+        pointChanged();
+    }
     public void OnExpChange()
     {
         expChanged();
     }
-
     public void OnLvlChange()
     {
         lvlChanged();
