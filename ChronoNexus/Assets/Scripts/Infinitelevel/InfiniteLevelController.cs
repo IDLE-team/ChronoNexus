@@ -147,11 +147,13 @@ public class InfiniteLevelController : MonoBehaviour
     private void StartLoadProcess()
     {
         _navMesh.RemoveData();
+        LevelController.instance.LoadProcessWithTransition(2f,true);
         if (_transporter)
         {
             _transportRoomTemp2.transform.DOMoveY(_transportRoomTemp2.transform.position.y + _moveY, _moveTime).OnComplete(() =>
             {
                 RegenerateLevel();
+                LevelController.instance.LoadProcessWithTransition(2f,false);
             });
         }
         else
@@ -159,6 +161,7 @@ public class InfiniteLevelController : MonoBehaviour
             _transportRoomTemp1.transform.DOMoveY(_transportRoomTemp1.transform.position.y + _moveY, _moveTime).OnComplete(() =>
             {
                 RegenerateLevel();
+                LevelController.instance.LoadProcessWithTransition(2f,false);
             });
         }
         
