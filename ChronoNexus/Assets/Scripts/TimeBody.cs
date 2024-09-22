@@ -62,6 +62,10 @@ public class TimeBody : MonoBehaviour, ITimeBody
         TimeManager.instance.AddTimeBody(this);
         if(TimeManager.instance.IsTimeStopped)
             SetStopTime();
+        if (TimeManager.instance.IsTimeSlowed)
+        {
+            SetSlowTime();
+        }
     }
     public void RemoveFromTimeManager()
     {

@@ -76,12 +76,12 @@ public class EntityAnimator : MonoBehaviour
     public void SlowAnimation()
     {
         _lastSpeed = _animator.speed;
-        _animator.speed = 0.3f;
+        float slowedSpeed = _lastSpeed - _lastSpeed * UpgradeData.Instance.SlowTimePercentAfterFinisherUpgradeValue / 100;
+        _animator.speed = slowedSpeed;
     }
     public void ContinueAnimation()
     {
         _animator.speed = 1;
-
     }
 
     public void PlayAttackAnimation()

@@ -187,7 +187,8 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         _health.Decrease(damage, isCritical);
         DamageEffect();
         _animator.PlayTakeDamageAnimation();
-        if (_health.Value <= _finisherHPTreshold && !_isFinisherReady && _isAlive)
+        Debug.Log("MaxHealth " + _health.MaxHealth + " Value: " + _health.Value + " Percent: " + UpgradeData.Instance.FinisherMinHealthPercentUpgradeValue);
+        if (_health.Value <= _health.MaxHealth * UpgradeData.Instance.FinisherMinHealthPercentUpgradeValue/100 && !_isFinisherReady && _isAlive)
         {
             _isFinisherReady = true;
             OnFinisherReady?.Invoke();

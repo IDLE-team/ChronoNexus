@@ -19,7 +19,7 @@ public abstract class Weapon : MonoBehaviour
     
     public TextMeshProUGUI WeaponUI;
     public GameObject ReloadUI;
-    
+
     public float Damage;
     public float FireRate;
     public float _lastFireTime;
@@ -43,14 +43,19 @@ public abstract class Weapon : MonoBehaviour
         isFire = false;
     }
 
-    public virtual void SetData(WeaponData data, Transform parent)
+    public virtual void SetData(WeaponData data, Transform parent, bool isPlayerWeapon)
     {
         this.data = data;
         WeaponName = data.WeaponName;
         WeaponType = data.WeaponType;
         WeaponSubType = data.WeaponSubType;
         WeaponSound = data.WeaponSound;
-        Damage = data.Damage;
+        if(isPlayerWeapon)
+            Damage = data.Damage + UpgradeData.Instance.FirearmDamageUpgradeValue;
+        else
+        {
+            Damage = data.Damage;
+        }
         FireRate = data.FireRate;
         WeaponAnimation = data.WeaponAnimation;
         WeaponPrefab = Instantiate(data.WeaponPrefab, parent.transform);

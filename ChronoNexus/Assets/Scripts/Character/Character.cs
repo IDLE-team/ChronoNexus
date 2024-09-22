@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -105,6 +106,13 @@ public class Character : MonoBehaviour, IDamagable, ITargetable
         Death().Forget();
     }
 
+    public IEnumerator SetInvincibleWithDuration(float duration)
+    {
+        SetInvincible(true);
+        yield return new WaitForSeconds(duration);
+        SetInvincible(false);
+
+    }
     private async UniTaskVoid Death()
     {
         Destroy(gameObject);
