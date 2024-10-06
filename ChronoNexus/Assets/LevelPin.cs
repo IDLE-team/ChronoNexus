@@ -7,14 +7,22 @@ public class LevelPin : MonoBehaviour
     [SerializeField] private Image _levelIcon;
     [SerializeField] private LevelDescriptionHolder _levelDescriptionHolder;
 
+    private Toggle _levelToggle;
+
     private void Start()
     {
         _levelIcon.sprite = _level.levelSprite;
+
+        _levelToggle = gameObject.GetComponent<Toggle>();
+
     }
 
     public void SetDisplay()
     {
-        _levelDescriptionHolder.DisplayData(_level);
+        if (_levelToggle)
+        {
+           if (_levelToggle.isOn)  _levelDescriptionHolder.DisplayData(_level);
+        }
     }
 
     public void SetLevelData(LevelData level)
