@@ -2,9 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using DG.Tweening;
-using Unity.VisualScripting;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -30,7 +27,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            
+
             //PlayerPrefs.SetInt(_currentLevelName, 1);
             SaveLevelData();
         }
@@ -50,7 +47,7 @@ public class SceneLoader : MonoBehaviour
     public IEnumerator Load()
     {
         _transition.SetTrigger("Start");
-        
+
         yield return new WaitForSeconds(_transitionTime);
 
         LoadScene();
@@ -59,7 +56,7 @@ public class SceneLoader : MonoBehaviour
 
     private void LoadScene()
     {
-        if(_sceneToLoad != null &&  _sceneToLoad != "" && _sceneToLoad != " " )
+        if (_sceneToLoad != null && _sceneToLoad != "" && _sceneToLoad != " ")
             SceneManager.LoadSceneAsync(_sceneToLoad);
     }
 }
