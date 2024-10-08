@@ -22,9 +22,9 @@ public class InventoryItemManager : MonoBehaviour
 
     [Header("Точки Экипировки")]
     [SerializeField] protected GameObject _gunInUse;
-    [SerializeField] protected GameObject _knifeInUse;
-    [SerializeField] protected GameObject _granadeInUse;
-    [SerializeField] protected GameObject _armorInUse;
+   // [SerializeField] protected GameObject _knifeInUse;
+   // [SerializeField] protected GameObject _granadeInUse;
+   // [SerializeField] protected GameObject _armorInUse;
 
     protected Character _player;
     protected WeaponData _gunEquiped;
@@ -128,6 +128,7 @@ public class InventoryItemManager : MonoBehaviour
             case itemType.gun:
                 TradeParamentrs(_gunInUse, item);
                 return;
+                /*
             case itemType.knife:
                 TradeParamentrs(_knifeInUse, item);
                 return;
@@ -137,6 +138,7 @@ public class InventoryItemManager : MonoBehaviour
             case itemType.armor:
                 TradeParamentrs(_armorInUse, item);
                 return;
+                */
         }
     }
 
