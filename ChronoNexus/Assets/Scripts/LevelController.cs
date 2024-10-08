@@ -26,6 +26,11 @@ public class LevelController : MonoBehaviour
     {
         StartCoroutine(StartChangeSceneTransition(sceneToLoad));
     }
+
+    public void LoadProcessWithTransition(float _preLoadTime,bool _isStart)
+    {
+        StartCoroutine(SetTransition( _preLoadTime,_isStart));
+    }
     public void LoadScene(string sceneToLoad)
     {
         if(!string.IsNullOrEmpty(sceneToLoad))
@@ -38,6 +43,23 @@ public class LevelController : MonoBehaviour
         yield return new WaitForSeconds(_transitionTime);
 
         LoadScene(sceneToLoad);
+        yield return null;
+    }
+    private IEnumerator SetTransition(float _preLoadTime,bool _isStart)
+    {
+        yield return new WaitForSeconds(_preLoadTime);
+        if (_isStart)
+        {
+            _transition.SetTrigger("Start");
+        }
+        else
+        {
+            _transition.SetTrigger("End");
+        }
+        
+        
+        yield return new WaitForSeconds(_transitionTime);
+
         yield return null;
     }
 }

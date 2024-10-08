@@ -1,33 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using DG;
 using DG.Tweening;
 
 public class DoorTrigger : MonoBehaviour
 {
-    [SerializeField] private Transform _door;
-    [SerializeField] private Vector3 _doorOpenDirection;
+    [SerializeField] protected Transform _door;
+    [SerializeField] protected Vector3 _doorOpenDirection;
 
-    private Vector3 _doorClosedPosition;
-    private Vector3 _doorOpenedPosition;
+    protected Vector3 _doorClosedPosition;
+    protected Vector3 _doorOpenedPosition;
 
-    [SerializeField] private bool _isLocked;
+    [SerializeField] protected bool _isLocked;
 
-    private void Start()
+    protected virtual void Start()
     {
         _doorClosedPosition = _door.transform.localPosition;
         _doorOpenedPosition = new Vector3(_doorClosedPosition.x + _doorOpenDirection.x, _doorClosedPosition.y + _doorOpenDirection.y, _doorClosedPosition.z + _doorOpenDirection.z);
     }
 
-    public void OpenDoor()
+    public virtual async UniTask OpenDoor()
     {
-        _door.DOLocalMove(_doorOpenedPosition, 1f);
+        await _door.DOLocalMove(_doorOpenedPosition, 1f).AsyncWaitForCompletion();
     }
 
-    public void CloseDoor()
+    public virtual async UniTask CloseDoor()
     {
-        _door.DOLocalMove(_doorClosedPosition, 1f);
+        await _door.DOLocalMove(_doorClosedPosition, 1f).AsyncWaitForCompletion();
     }
 
     public void LockDoor()
@@ -35,12 +37,12 @@ public class DoorTrigger : MonoBehaviour
         _isLocked = true;
     }
 
-    public void UnlockDoor()
+    public  void UnlockDoor()
     {
         _isLocked = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player") && !other.CompareTag("Enemy"))
             return;
@@ -49,7 +51,7 @@ public class DoorTrigger : MonoBehaviour
         OpenDoor();
     }
 
-    private void OnTriggerExit(Collider other)
+    protected void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player") && !other.CompareTag("Enemy"))
             return;
