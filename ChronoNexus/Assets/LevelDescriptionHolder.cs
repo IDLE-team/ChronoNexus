@@ -42,7 +42,7 @@ public class LevelDescriptionHolder : MonoBehaviour
         DisplayText(_levelName.text, levelData.levelName, _levelName);
         DisplayText(_levelDescription.text, levelData.levelDescription, _levelDescription);
         
-        gameObject.transform.DOScale(Vector3.one, 1f);
+        gameObject.transform.DOScale(Vector3.one, 0.4f);
    
         _rewardsDisplay.SetRewards(levelData);
         switch (levelData.difficulty)

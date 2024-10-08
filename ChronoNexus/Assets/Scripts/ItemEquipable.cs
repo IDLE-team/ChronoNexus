@@ -145,23 +145,21 @@ public class ItemEquipable : MonoBehaviour
         {
             if (HubIventoryManager.manager) // если в хабе
             {
-                if (HubIventoryManager.manager.ShelterActiveSelf())
-                {
-                    if (!_isInShelter) //поставить в хранилище
-                    {
-                        HubIventoryManager.manager.MoveToShelter(_itemData, gameObject);
-                    }
-                    else //поставить в обратно в инвентарь
-                    {
-                        HubIventoryManager.manager.MoveBackFromShelter(_itemData, gameObject);
-                    }
-                }
+               // if (HubIventoryManager.manager.ShelterActiveSelf())
+               // {
+               //     if (!_isInShelter) //поставить в хранилище
+               //     {
+               //         HubIventoryManager.manager.MoveToShelter(_itemData, gameObject);
+               //     }
+               //     else //поставить в обратно в инвентарь
+               //     {
+               //         HubIventoryManager.manager.MoveBackFromShelter(_itemData, gameObject);
+               //     }
+               // }
 
-                else // на уровне
-                {
+
                     manager.EquipItem(GetTypeItem(), this);
                     manager.SetInventoryEquiped();
-                }
             }
             else // на уровне
             {

@@ -8,10 +8,17 @@ using UnityEngine.UI;
 
 public class ShopChestHolder : MonoBehaviour
 {
+
+    [SerializeField] private InventoryItemManager.itemRarity _itemRarity;
+    [SerializeField] private int _itemsAmount;
+    [SerializeField] private Sprite _chestSprite;
+
+
     [Header(" нопка продажи и цена")]
     [SerializeField] private TextMeshProUGUI _costText;
     [SerializeField] private int _itemCost;
     [SerializeField] private Button _purchaseButton;
+    [SerializeField] private ChestOpenTab _lootSetter;
 
     
     // „асть под сундуки
@@ -21,6 +28,8 @@ public class ShopChestHolder : MonoBehaviour
     [SerializeField] bool _isMoney;
     [SerializeField] bool _isMaterial;
     [SerializeField] bool _isXp;
+
+    
 
     [SerializeField] private GameObject _itemGrid;
     [SerializeField] private GameObject _itemBlank;
@@ -87,14 +96,8 @@ public class ShopChestHolder : MonoBehaviour
         PlayerProfileManager.profile.moneyChanged += PurchaseButtonActive;
 
         _purchaseButton.onClick.AddListener(PurchaseChest);
-        if (HubIventoryManager.manager.GetMoneyValue() >= _itemCost)
-        {
-            _purchaseButton.interactable = true;
-        }
-        else
-        {
-            _purchaseButton.interactable = false;
-        }
+
+        PurchaseButtonActive();
     }
 
     private void PurchaseButtonActive()
@@ -114,7 +117,9 @@ public class ShopChestHolder : MonoBehaviour
         if (HubIventoryManager.manager.BuyItem(_itemCost))
         {
             HubIventoryManager.manager.GetChestOpenUI().SetActive(true);
-            print(" упил");
+
+            _lootSetter.SetInfoChest(_itemRarity, _itemsAmount, _chestSprite);
+
             PlayerProfileManager.profile.OnMoneyChange();
         }
     }

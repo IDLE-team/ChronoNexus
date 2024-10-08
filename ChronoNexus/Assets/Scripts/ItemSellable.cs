@@ -22,7 +22,7 @@ public class ItemSellable : MonoBehaviour
     [SerializeField] private Button _purchaseButton;
     [SerializeField] private InventoryItemManager manager;
 
-        
+
     [Inject]
     private void Construct(InventoryItemManager inventoryItemManager)
     {
@@ -36,12 +36,35 @@ public class ItemSellable : MonoBehaviour
         SetSellableItem();
     }
 
+    private void Start()
+    {
+
+        PlayerProfileManager.profile.moneyChanged += PurchaseButtonActive;
+        PurchaseButtonActive();
+    }
+
+    private void PurchaseButtonActive()
+    {
+        if (HubIventoryManager.manager.GetMoneyValue() >= _itemData.itemCost)
+        {
+            _purchaseButton.interactable = true;
+        }
+        else
+        {
+            _purchaseButton.interactable = false;
+        }
+    }
+
     private void Purchase()
     {
-       manager.BuyItem(_itemData.itemCost);
-       manager.MakeItemFromShop(_itemData);
-       
-       gameObject.SetActive(false);
+        if (HubIventoryManager.manager.BuyItem(_itemData.itemCost))
+        {
+            HubIventoryManager.manager.GetChestOpenUI().SetActive(true);
+            PlayerProfileManager.profile.OnMoneyChange();
+
+            manager.MakeItemFromShop(_itemData);
+            gameObject.SetActive(false);
+        }
     }
 
     private void SetSellableItem()
@@ -50,10 +73,13 @@ public class ItemSellable : MonoBehaviour
         _LevelText.text = _itemData.itemLvl.ToString();
         _itemNameText.text = _itemData.itemName;
         _costText.text = _itemData.itemCost.ToString();
+
         _itemImage.sprite = _itemData.itemImageSprite;
-        _itemIconType.sprite =manager.GetSpriteByType(_itemData.itemType);
+        _itemIconType.sprite = manager.GetSpriteByType(_itemData.itemType);
         _itemRarityCircle.color = manager.GetColorByRarity(_itemData.rarity);
+
         _itemRarityText.text = manager.GetTextByRarity(_itemData.rarity);
+
         switch (_itemData.itemType)
         {
             case InventoryItemManager.itemType.gun:
@@ -62,14 +88,19 @@ public class ItemSellable : MonoBehaviour
                 _itemParam2.text = "Ск.Атаки  " + gun.FireRate.ToString();
                 _itemParam3.text = "Обойма  " + gun.MaxAmmo.ToString();
                 break;
-            case InventoryItemManager.itemType.armor:
-                break;
-            case InventoryItemManager.itemType.knife:
-                break;
-            case InventoryItemManager.itemType.granade:
-                break;
+                //  case InventoryItemManager.itemType.armor:
+                //      break;
+                //  case InventoryItemManager.itemType.knife:
+                //      break;
+                //  case InventoryItemManager.itemType.granade:
+                //      break;
 
         }
     }
 
+    private void OnDestroy()
+    {
+
+        PlayerProfileManager.profile.moneyChanged -= PurchaseButtonActive;
+    }
 }

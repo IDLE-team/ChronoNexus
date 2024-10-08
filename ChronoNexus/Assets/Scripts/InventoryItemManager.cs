@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class InventoryItemManager : MonoBehaviour
 {
-    //public static InventoryItemManager manager;
+    public static InventoryItemManager manager;
 
     [Header("Иконки типов предмета")]
     [SerializeField]
@@ -22,14 +21,15 @@ public class InventoryItemManager : MonoBehaviour
 
     [Header("Точки Экипировки")]
     [SerializeField] protected GameObject _gunInUse;
-   // [SerializeField] protected GameObject _knifeInUse;
-   // [SerializeField] protected GameObject _granadeInUse;
-   // [SerializeField] protected GameObject _armorInUse;
+    // [SerializeField] protected GameObject _knifeInUse;
+    // [SerializeField] protected GameObject _granadeInUse;
+    // [SerializeField] protected GameObject _armorInUse;
 
     protected Character _player;
     protected WeaponData _gunEquiped;
 
     [SerializeField] protected MoneyHolder _moneyHolder;
+    [SerializeField] protected MaterialHolder _materialHolder;
 
     public event Action<WeaponData> OnEquiped;
 
@@ -270,8 +270,8 @@ public class InventoryItemManager : MonoBehaviour
 
         if (savedData == -1)
         {
-              PlayerPrefs.SetInt("gun", 2);
-              savedData =PlayerPrefs.GetInt("gun", 2);
+            PlayerPrefs.SetInt("gun", 2);
+            savedData = PlayerPrefs.GetInt("gun", 2);
         };
 
         GameObject itemEmpty = Instantiate(_itemPrefab);
@@ -408,6 +408,16 @@ public class InventoryItemManager : MonoBehaviour
         return _moneyHolder.GetMoneyValue();
     }
 
+    public MoneyHolder GetMoneyHolder()
+    {
+        return _moneyHolder;
+    }
+
+    public MaterialHolder GetMaterialHolder()
+    {
+        return _materialHolder;
+    }
+
 
     public enum itemType
     {
@@ -417,5 +427,10 @@ public class InventoryItemManager : MonoBehaviour
     public enum itemRarity
     {
         gray, green, purple, gold
+    }
+
+    public enum lootType
+    {
+        gun, money, exp, material
     }
 }

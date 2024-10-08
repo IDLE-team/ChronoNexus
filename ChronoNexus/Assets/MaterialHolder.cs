@@ -31,10 +31,19 @@ public class MaterialHolder : MonoBehaviour
         return _materialValue;
     }
 
-    public void DecreaseMoneyValue(int cost)
+    public void DecreaseMaterialValue(int cost)
     {
         _materialValue -= cost;
-        PlayerProfileManager.profile.moneyChanged();
+        PlayerProfileManager.profile.materialChanged();
+    }
+
+    public void IncreaseMaterialValue(int cost)
+    {
+        if (cost > 0)
+        {
+            _materialValue+= cost;
+            PlayerProfileManager.profile.materialChanged();
+        }
     }
 
 

@@ -50,6 +50,7 @@ public class MoneyHolder : MonoBehaviour
         if (ValueToIncrease >= 0)
         {
             _moneyValue += ValueToIncrease;
+            PlayerProfileManager.profile.moneyChanged();
             return true;
         }
         else
