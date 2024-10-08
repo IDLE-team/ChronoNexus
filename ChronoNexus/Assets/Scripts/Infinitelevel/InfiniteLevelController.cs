@@ -13,6 +13,7 @@ using Random = UnityEngine.Random;
 public class InfiniteLevelController : MonoBehaviour
 { 
     [SerializeField] private Transform _playerTransform;
+    [SerializeField] private GameObject _winGameObject;
     [Header("Lift parameters")]
     [SerializeField] private GameObject[] _lift;
     [SerializeField] private float _moveTime = 7f;
@@ -32,6 +33,8 @@ public class InfiniteLevelController : MonoBehaviour
     private TransportRoom _transportRoomTemp2;
     private Room _roomTemp;
     private int _entityInRoomCountTemp;
+    private GameObject _winTemp;
+    private int _stageNumber = 0;
     
     [SerializeField]private List<Entity> _entityListTemp;
 
@@ -74,9 +77,14 @@ public class InfiniteLevelController : MonoBehaviour
         _entityInRoomCountTemp--;
         if (_entityInRoomCountTemp > 0)
         {
-            
             return;
         }
+
+        if (_winTemp!=null)
+        {
+            _winTemp.SetActive(true);
+        }
+        
         _transportRoomTemp1.UnlockDoor();
         _transportRoomTemp2.UnlockDoor();
     }
@@ -136,6 +144,9 @@ public class InfiniteLevelController : MonoBehaviour
         _transportRoomTemp2.transform.rotation = _roomTemp.Connectors[1].rotation * Quaternion.Inverse(_transportRoomTemp2.transform.localRotation);
         _transportRoomTemp2.transform.position =  _roomTemp.Connectors[1].position - ( _transportRoomTemp2.Connector.position - _transportRoomTemp2.transform.position);
         
+            _winTemp = Instantiate(_winGameObject, _roomTemp.WinGameTransform.position + Vector3.up,Quaternion.identity);
+            _winTemp.SetActive(false);
+        
         _transportRoomTemp2.SetIsExit(true);
         _navMesh.RemoveData();
         _navMesh.BuildNavMesh();
@@ -147,7 +158,11 @@ public class InfiniteLevelController : MonoBehaviour
     private void StartLoadProcess()
     {
         _navMesh.RemoveData();
+        
+        
         LevelController.instance.LoadProcessWithTransition(2f,true);
+        _stageNumber += 1;
+        
         if (_transporter)
         {
             _transportRoomTemp2.transform.DOMoveY(_transportRoomTemp2.transform.position.y + _moveY, _moveTime).OnComplete(() =>
@@ -211,6 +226,12 @@ public class InfiniteLevelController : MonoBehaviour
             _transportRoomTemp1.SetIsExit(false);
             _transportRoomTemp2.SetIsExit(true);
             _playerTransform.position = Vector3.up + _transportRoomTemp1.transform.position;
+        }
+
+        if (_stageNumber == 0 || _stageNumber %10 == 0)
+        {
+            _winTemp = Instantiate(_winGameObject, _roomTemp.WinGameTransform.position + Vector3.up,Quaternion.identity);
+            _winTemp.SetActive(false);
         }
         
         _transportRoomTemp1.OnPlayerInTransporter += StartLoadProcess;
