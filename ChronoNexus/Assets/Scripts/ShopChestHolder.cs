@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +8,7 @@ public class ShopChestHolder : MonoBehaviour
     [SerializeField] private InventoryItemManager.itemRarity _itemRarity;
     [SerializeField] private int _itemsAmount;
     [SerializeField] private Sprite _chestSprite;
+    [SerializeField] private Image _сhestImage;
 
 
     [Header("Кнопка продажи и цена")]
@@ -20,16 +17,16 @@ public class ShopChestHolder : MonoBehaviour
     [SerializeField] private Button _purchaseButton;
     [SerializeField] private ChestOpenTab _lootSetter;
 
-    
+
     // Часть под сундуки
-    [Header ("Доступные предметы в сундуке")]
+    [Header("Доступные предметы в сундуке")]
 
     [SerializeField] bool _isGun = true;
     [SerializeField] bool _isMoney;
     [SerializeField] bool _isMaterial;
     [SerializeField] bool _isXp;
 
-    
+
 
     [SerializeField] private GameObject _itemGrid;
     [SerializeField] private GameObject _itemBlank;
@@ -47,12 +44,14 @@ public class ShopChestHolder : MonoBehaviour
 
         _itemGrid = GetComponentInChildren<GridLayoutGroup>().gameObject;
 
-       
+
     }
 
     private void Start()
     {
         #region SetItemBysIcon
+
+        _сhestImage.sprite = _chestSprite;
         if (_isGun)
         {
             GameObject g = Instantiate(_itemBlank, _itemGrid.transform);

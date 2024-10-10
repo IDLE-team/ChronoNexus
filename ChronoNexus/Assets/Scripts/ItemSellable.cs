@@ -59,7 +59,6 @@ public class ItemSellable : MonoBehaviour
     {
         if (HubIventoryManager.manager.BuyItem(_itemData.itemCost))
         {
-            HubIventoryManager.manager.GetChestOpenUI().SetActive(true);
             PlayerProfileManager.profile.OnMoneyChange();
 
             manager.MakeItemFromShop(_itemData);

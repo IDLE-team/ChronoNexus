@@ -29,4 +29,14 @@ public class ItemDataManager : MonoBehaviour
     {
         return _allGameItems[index];
     }
+
+    public List<ItemData> GetAllGameItems()
+    {
+        return _allGameItems;
+    }
+
+    public int GetItemListCount()
+    {
+        return _allGameItems.Count;
+    }
 }

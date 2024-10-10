@@ -30,6 +30,7 @@ public class InventoryItemManager : MonoBehaviour
 
     [SerializeField] protected MoneyHolder _moneyHolder;
     [SerializeField] protected MaterialHolder _materialHolder;
+    [SerializeField] protected LevelHolder _levelHolder;
 
     public event Action<WeaponData> OnEquiped;
 
@@ -416,6 +417,11 @@ public class InventoryItemManager : MonoBehaviour
     public MaterialHolder GetMaterialHolder()
     {
         return _materialHolder;
+    }
+
+    public LevelHolder GetLevelHolder()
+    {
+        return _levelHolder;
     }
 
 
