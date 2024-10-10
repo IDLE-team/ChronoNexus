@@ -15318,8 +15318,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 695, y: -465}
-  m_SizeDelta: {x: 890, y: 430}
+  m_AnchoredPosition: {x: 695, y: -510}
+  m_SizeDelta: {x: 890, y: 520}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1199032910
 CanvasRenderer:
@@ -32109,36 +32109,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2822400142116728311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7598544712191611635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6d8a5b37fd08d944bb69ce9819fe1ca1, type: 3}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &2826008419599836441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39143,8 +39113,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1195, y: -465}
-  m_SizeDelta: {x: 1890, y: 930}
+  m_AnchoredPosition: {x: 1195, y: -510}
+  m_SizeDelta: {x: 1890, y: 1020}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6677403266291343432
 MonoBehaviour:
@@ -40808,7 +40778,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4727021630160053422}
   - component: {fileID: 8441377553452001125}
-  - component: {fileID: 2822400142116728311}
   - component: {fileID: 7481200951693719649}
   m_Layer: 0
   m_Name: EquipCell_Gun
@@ -43265,8 +43234,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4727021630160053422}
   - {fileID: 15313208820750891}
+  - {fileID: 4727021630160053422}
   m_Father: {fileID: 6677403266291343431}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -43876,7 +43845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf431bcd222ce4146ad3cd2784e99508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _money: 7500
+  _money: 20000
   _materials: 0
   _lvl: 1
   _exp: 0
