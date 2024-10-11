@@ -17,8 +17,9 @@ public class PlayerProfileManager : MonoBehaviour
     public UnityAction expChanged;
     public UnityAction lvlChanged;
     public UnityAction materialChanged;
+    public UnityAction itemChanged;
 
-    private void OnEnable()
+    private void Awake()
     {
         if (!profile)
         {
@@ -82,6 +83,8 @@ public class PlayerProfileManager : MonoBehaviour
         {
             PlayerPrefs.SetString("inventoryMain", "");
         }
+
+        itemChanged += OnItemChanged;
     }
 
 
@@ -100,5 +103,15 @@ public class PlayerProfileManager : MonoBehaviour
     public void OnLvlChange()
     {
         lvlChanged();
+    }
+
+    public void OnMaterialChanged()
+    {
+        materialChanged();
+    }
+
+    public void OnItemChanged()
+    {
+        // should be empty DO NOT TOUCH
     }
 }

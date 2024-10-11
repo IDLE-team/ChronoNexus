@@ -57,6 +57,7 @@ public class ItemEquipable : MonoBehaviour
         }
         _itemButton = GetComponent<Button>();
         _itemButton.onClick.AddListener(() => SetItem());
+        _itemButton.onClick.AddListener(() => Pressed());
     }
 
     private void Awake()
@@ -66,6 +67,11 @@ public class ItemEquipable : MonoBehaviour
         {
             SetItemBy(_itemData);
         }
+    }
+
+    private void Pressed()
+    {
+        PlayerProfileManager.profile.itemChanged();
     }
 
     public void SetGunItemBy(itemType type, itemRarity rarity, int Lvl, float mainParam, Sprite itemImage, ItemData Data)
@@ -145,21 +151,21 @@ public class ItemEquipable : MonoBehaviour
         {
             if (HubIventoryManager.manager) // если в хабе
             {
-               // if (HubIventoryManager.manager.ShelterActiveSelf())
-               // {
-               //     if (!_isInShelter) //поставить в хранилище
-               //     {
-               //         HubIventoryManager.manager.MoveToShelter(_itemData, gameObject);
-               //     }
-               //     else //поставить в обратно в инвентарь
-               //     {
-               //         HubIventoryManager.manager.MoveBackFromShelter(_itemData, gameObject);
-               //     }
-               // }
+                // if (HubIventoryManager.manager.ShelterActiveSelf())
+                // {
+                //     if (!_isInShelter) //поставить в хранилище
+                //     {
+                //         HubIventoryManager.manager.MoveToShelter(_itemData, gameObject);
+                //     }
+                //     else //поставить в обратно в инвентарь
+                //     {
+                //         HubIventoryManager.manager.MoveBackFromShelter(_itemData, gameObject);
+                //     }
+                // }
 
 
-                    manager.EquipItem(GetTypeItem(), this);
-                    manager.SetInventoryEquiped();
+                manager.EquipItem(GetTypeItem(), this);
+                manager.SetInventoryEquiped();
             }
             else // на уровне
             {
@@ -172,6 +178,7 @@ public class ItemEquipable : MonoBehaviour
             manager.TradeParametersToEmptyFromEquiped(this);
             manager.SetInventoryEquiped();
         }
+        
     }
 
     public void SetShelter() //устанавливать бул переменную на подгрузке хранилища, функция нужна только для одного дела

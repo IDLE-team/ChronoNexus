@@ -266,22 +266,17 @@ public class InventoryItemManager : MonoBehaviour
 
     public void LoadGun() // call on inventory open
     {
-        Debug.Log("LoadGun");
         var savedData = PlayerPrefs.GetInt("gun", -1);
 
-        if (savedData == -1)
+        if (savedData != -1)
         {
-            PlayerPrefs.SetInt("gun", 2);
-            savedData = PlayerPrefs.GetInt("gun", 2);
+            GameObject itemEmpty = Instantiate(_itemPrefab);
+            var item = itemEmpty.GetComponent<ItemEquipable>();
+            item.SetItemBy(ItemDataManager.itemManager.GetItemDataByIndex(savedData), this);
+            itemEmpty.transform.SetParent(_gunInUse.transform);
+            itemUse = item;
+            item.ChangeToEquiped();
         };
-
-        GameObject itemEmpty = Instantiate(_itemPrefab);
-        var item = itemEmpty.GetComponent<ItemEquipable>();
-        item.SetItemBy(ItemDataManager.itemManager.GetItemDataByIndex(savedData), this);
-        itemEmpty.transform.SetParent(_gunInUse.transform);
-        itemUse = item;
-        item.ChangeToEquiped();
-
     }
 
     public void SaveGun() // call on inventory close
