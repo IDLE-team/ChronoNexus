@@ -59,4 +59,24 @@ public class SceneLoader : MonoBehaviour
         if (_sceneToLoad != null && _sceneToLoad != "" && _sceneToLoad != " ")
             SceneManager.LoadSceneAsync(_sceneToLoad);
     }
+
+   public void LoadMenu()
+    {
+        StartCoroutine(MenuLoader());
+    }
+
+    public IEnumerator MenuLoader()
+    {
+        _transition.SetTrigger("Start");
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        LoadMenuScene();
+        yield return null;
+    }
+
+    private void  LoadMenuScene()
+    {
+        SceneManager.LoadSceneAsync(0);
+    }
 }

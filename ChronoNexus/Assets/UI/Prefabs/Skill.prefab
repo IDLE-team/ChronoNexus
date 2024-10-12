@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 97.575356, y: 25}
-  m_SizeDelta: {x: 364.4146, y: 50}
+  m_AnchoredPosition: {x: 97.96069, y: 25}
+  m_SizeDelta: {x: 307.7854, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6744746411274986478
 CanvasRenderer:
@@ -251,8 +251,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 617.9385, y: 218.655}
+  m_AnchoredPosition: {x: -26.92212, y: 0}
+  m_SizeDelta: {x: 564.0945, y: 218.655}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7839357687317734656
 CanvasRenderer:
@@ -388,8 +388,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 97.575356, y: -16.8}
-  m_SizeDelta: {x: 364.4146, y: 50}
+  m_AnchoredPosition: {x: 97.96069, y: -16.8}
+  m_SizeDelta: {x: 307.7854, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7908369720932869019
 CanvasRenderer:
@@ -664,7 +664,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -194, y: 0}
+  m_AnchoredPosition: {x: -165.3, y: 0}
   m_SizeDelta: {x: 170.6448, y: 170.6448}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7309267107491999904
@@ -717,6 +717,7 @@ GameObject:
   - component: {fileID: 6564799989606346048}
   - component: {fileID: 288713731600881878}
   - component: {fileID: 8689809833354434878}
+  - component: {fileID: 9005967930569138899}
   m_Layer: 0
   m_Name: SkillIconBack
   m_TagString: Untagged
@@ -795,10 +796,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 25
-    m_Right: 25
-    m_Top: 25
-    m_Bottom: 25
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
@@ -808,3 +809,17 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &9005967930569138899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7769814141495018977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding: {x: -50, y: 5.56, z: 0, w: -50}
+  m_Softness: {x: 121, y: 98}

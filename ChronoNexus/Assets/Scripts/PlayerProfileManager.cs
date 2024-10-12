@@ -9,6 +9,7 @@ public class PlayerProfileManager : MonoBehaviour
     [SerializeField] private int _lvl;
     [SerializeField] private int _exp;
     [SerializeField] private int _point;
+    [SerializeField] private int _hero = 0;
 
     public float Point => _point;
     
@@ -18,6 +19,7 @@ public class PlayerProfileManager : MonoBehaviour
     public UnityAction lvlChanged;
     public UnityAction materialChanged;
     public UnityAction itemChanged;
+    public UnityAction heroChanged;
 
     private void Awake()
     {
@@ -66,10 +68,17 @@ public class PlayerProfileManager : MonoBehaviour
             PlayerPrefs.GetInt("point", _point);
         }
 
-            
-            
-            
-            
+        if (!PlayerPrefs.HasKey("hero"))
+        {
+            PlayerPrefs.SetInt("hero", _hero);
+        }
+        else
+        {
+            PlayerPrefs.GetInt("hero", _hero);
+        }
+
+
+
         if (!PlayerPrefs.HasKey("exp"))
         {
             PlayerPrefs.SetInt("exp", _exp);
@@ -113,5 +122,10 @@ public class PlayerProfileManager : MonoBehaviour
     public void OnItemChanged()
     {
         // should be empty DO NOT TOUCH
+    }
+
+    public void OnHeroChanged()
+    {
+        heroChanged();
     }
 }

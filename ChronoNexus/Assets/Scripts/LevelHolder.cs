@@ -72,6 +72,8 @@ public class LevelHolder : MonoBehaviour
             lvl++;
 
             PlayerPrefs.SetInt("point", PlayerPrefs.GetInt("point", 0) + 1);
+            PlayerPrefs.SetInt("lvl", PlayerPrefs.GetInt("lvl", 0) + 1);
+            ExpChange();
         }
         else
         {

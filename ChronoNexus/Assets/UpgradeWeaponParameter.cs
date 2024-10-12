@@ -44,7 +44,7 @@ public class UpgradeWeaponParameter : MonoBehaviour
                 _parameterName.text = "Скорость атаки";
                 _paramCurrent.text = item.weaponData.FireRate.ToString() + "->";
 
-                _paramUpgrade.text = (item.weaponData.FireRate + step).ToString();
+                _paramUpgrade.text = (item.weaponData.FireRate * (1 - step)).ToString();
 
                 break;
 
