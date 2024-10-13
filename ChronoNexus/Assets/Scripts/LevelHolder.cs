@@ -9,6 +9,7 @@ public class LevelHolder : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _levelText;
     [SerializeField] private Slider _slider;
 
+    [SerializeField] private bool isOnGame = false;
     [SerializeField] private GameObject _iconSkillPoint;
 
     [Header("Для значений из таблицы баланса уровней")]
@@ -23,10 +24,13 @@ public class LevelHolder : MonoBehaviour
     private void Start()
     {
         ExpChange();
-        _iconSkillPoint.SetActive(false);
-        if (PlayerPrefs.GetInt("point", 0) > 0)
+        if (!isOnGame)
         {
-            _iconSkillPoint.SetActive(true);
+            _iconSkillPoint.SetActive(false);
+            if (PlayerPrefs.GetInt("point", 0) > 0)
+            {
+                _iconSkillPoint.SetActive(true);
+            }
         }
     }
 
