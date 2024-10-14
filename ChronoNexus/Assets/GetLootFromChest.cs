@@ -242,6 +242,7 @@ public class GetLootFromChest : MonoBehaviour
                 rarList.Add(item);
             }
         }
+        print(Random.Range(0, rarList.Count));
         return CreateCard(rarList[Random.Range(0, rarList.Count)]);
     }
 }

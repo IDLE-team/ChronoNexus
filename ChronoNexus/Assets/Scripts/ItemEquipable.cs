@@ -56,8 +56,11 @@ public class ItemEquipable : MonoBehaviour
             SetItem();
         }
         _itemButton = GetComponent<Button>();
-        _itemButton.onClick.AddListener(() => SetItem());
-        _itemButton.onClick.AddListener(() => Pressed());
+        if (_itemButton.interactable)
+        {
+            _itemButton.onClick.AddListener(() => SetItem());
+            _itemButton.onClick.AddListener(() => Pressed());
+        }
     }
 
     private void Awake()

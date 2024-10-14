@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class LootCard : MonoBehaviour
 {
+    [SerializeField] private Image _itemRarityGlow;
     [Header("Деньги")]
     [SerializeField] private GameObject _typeMoney;
     [SerializeField] private TextMeshProUGUI _moneyText;
@@ -16,7 +17,8 @@ public class LootCard : MonoBehaviour
     [Header("Оружие")]
     [SerializeField] private GameObject _typeGun;
     [SerializeField] private TextMeshProUGUI _mainParamText;
-    [SerializeField] private TextMeshProUGUI _LevelText;
+    [SerializeField] private TextMeshProUGUI _levelText;
+    [SerializeField] private TextMeshProUGUI _weaponName;
     [SerializeField] private Image _itemImage;
     [SerializeField] private Image _itemIconType;
     [SerializeField] private Image _itemRarityCircle;
@@ -32,11 +34,13 @@ public class LootCard : MonoBehaviour
         HubIventoryManager.manager.MakeItemFromShop(itemData);
 
         _mainParamText.text = itemData.weaponData.Damage.ToString();
-        _LevelText.text = itemData.itemLvl.ToString();
+        _levelText.text = itemData.itemLvl.ToString();
+        _weaponName.text = itemData.itemName;
 
         _itemImage.sprite = itemData.itemImageSprite;
         _itemIconType.sprite = HubIventoryManager.manager.GetSpriteByType(itemData.itemType);
         _itemRarityCircle.color = HubIventoryManager.manager.GetColorByRarity(itemData.rarity);
+        _itemRarityGlow.color = HubIventoryManager.manager.GetColorByRarity(itemData.rarity);
 
     }
 

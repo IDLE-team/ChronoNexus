@@ -17,14 +17,21 @@ public class SkinCell : MonoBehaviour
     [SerializeField] private Image _imageHero;
     [SerializeField] private Image _imageSkill;
 
+    [SerializeField] private bool isGift = false;
+    [SerializeField] private Image _rarityImage;
+
     private SkinData _data;
     private int _indexSkin;
 
     private void Start()
     {
-        PlayerProfileManager.profile.heroChanged += CheckSkinTaken;
-        _buttonTake.onClick.AddListener(TakeSkin);
-        _buttonBuy.onClick.AddListener(BuySkin);
+        if (!isGift)
+        {
+            PlayerProfileManager.profile.heroChanged += CheckSkinTaken;
+            _buttonTake.onClick.AddListener(TakeSkin);
+            _buttonBuy.onClick.AddListener(BuySkin);
+        }
+
     }
 
     public void SetSkinCell(SkinData skinData)
@@ -38,7 +45,44 @@ public class SkinCell : MonoBehaviour
         _imageHero.sprite = skinData.charSprite;
         _imageSkill.sprite = skinData.mainSkill;
 
+        _rarityImage.color = HubIventoryManager.manager.GetColorByRarity(_data.rarity);
         CheckSkinTaken();
+    }
+
+    public void SetSkinCellGift(SkinData skinData)
+    {
+        if (isGift)
+        {
+            _data = skinData;
+            _indexSkin = SkinDataManager.skinManager.GetIndexBySkinData(_data);
+
+            _textName.text = skinData.charName.ToString();
+            _textDescription.text = skinData.charDescription.ToString();
+
+            _imageHero.sprite = skinData.charSprite;
+
+            _buttonTake.onClick.AddListener(GetGiftSkin);
+            _buttonTaken.onClick.AddListener(TakeGiftSkin);
+
+            _rarityImage.color = HubIventoryManager.manager.GetColorByRarity(_data.rarity);
+        }
+    }
+
+    private void GetGiftSkin()
+    {
+        _data.isBought = true;
+        CloseWindowGift();
+    }
+    private void TakeGiftSkin()
+    {
+        PlayerPrefs.SetInt("hero", _indexSkin);
+        PlayerProfileManager.profile.OnHeroChanged();
+        CloseWindowGift();
+    }
+
+    private void CloseWindowGift()
+    {
+        gameObject.GetComponentInParent<GiftDropTab>().CloseWindow();
     }
 
     private void TakeSkin()
@@ -59,7 +103,11 @@ public class SkinCell : MonoBehaviour
         _buttonTake.gameObject.SetActive(true);
         _buttonTaken.gameObject.SetActive(false);
         _buttonBuy.gameObject.SetActive(false);
+
+        GiftDropTab.instance.SetGift(_data);
     }
+
+
 
     private void CheckSkinTaken()
     {

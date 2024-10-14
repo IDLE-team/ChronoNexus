@@ -1,4 +1,5 @@
 using UnityEngine;
+using static InventoryItemManager;
 
 
 [CreateAssetMenu(fileName = "SkinData", menuName = "SkinHolder")]
@@ -14,5 +15,6 @@ public class SkinData : ScriptableObject
     public int hpBase;
     public int speedBase;
     public int skillID;
+    public itemRarity rarity;
 }
 

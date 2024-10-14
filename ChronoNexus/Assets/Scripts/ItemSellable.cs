@@ -62,6 +62,7 @@ public class ItemSellable : MonoBehaviour
             PlayerProfileManager.profile.OnMoneyChange();
 
             manager.MakeItemFromShop(_itemData);
+            GiftDropTab.instance.SetGift(_itemData);
             gameObject.SetActive(false);
         }
     }
