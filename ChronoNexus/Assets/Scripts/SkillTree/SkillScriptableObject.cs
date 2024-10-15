@@ -9,7 +9,12 @@ public class SkillScriptableObject : ScriptableObject
     public SkillTreeType type;
     public UpgradeType upgradeType;
     public string skillName;
+    [TextArea]
     public string skillDescription; // base skill description
+
+    public string progressValueText;
+    public Color _progressValueTextColor;
+
     public int currentLvl = 0;
     public int maxLvl = 3;
     public List<int> upgradeValuePerLevel = new List<int>();
