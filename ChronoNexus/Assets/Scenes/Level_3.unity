@@ -10391,7 +10391,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.1
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: b4bbab53a89ddb64faa1ec26dd0b67bb, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: ba48a89c071a4c64b984b18996560ce7, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &373829807
 Transform:
@@ -14768,6 +14768,11 @@ PrefabInstance:
       propertyPath: _transition
       value: 
       objectReference: {fileID: 338780986}
+    - target: {fileID: 3587318432317777662, guid: c870d98aad14d4342b8441c727806dc3,
+        type: 3}
+      propertyPath: _levelStatTracker
+      value: 
+      objectReference: {fileID: 1344087850}
     - target: {fileID: 4250171966973067669, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -15023,6 +15028,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8565370878199321875, guid: c870d98aad14d4342b8441c727806dc3,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 585141933}
     - target: {fileID: 8787114825036755268, guid: c870d98aad14d4342b8441c727806dc3,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -16038,6 +16048,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e60b2a4658c0e3846beac4dec09c4761, type: 3}
+--- !u!1 &585141933 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8322621691101172394, guid: e60b2a4658c0e3846beac4dec09c4761,
+    type: 3}
+  m_PrefabInstance: {fileID: 585141932}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &593645024
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36999,6 +37015,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a28e449d1b2c7842b34cbc38a925795, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1344087850 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1948134429069725010, guid: 003a8933e24cf6442b2f92d4e1812334,
+    type: 3}
+  m_PrefabInstance: {fileID: 1344087848}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b507a7de6efed242a318f7cc0c9619a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1352991287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -39124,17 +39152,17 @@ PrefabInstance:
     - target: {fileID: 2274749472212776617, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.40650284
+      value: 0.40650287
       objectReference: {fileID: 0}
     - target: {fileID: 2274749472212776617, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.33422714
+      value: -0.33422717
       objectReference: {fileID: 0}
     - target: {fileID: 2274749472212776617, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.16279094
+      value: 0.16279097
       objectReference: {fileID: 0}
     - target: {fileID: 2338998395989406778, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
@@ -39169,17 +39197,17 @@ PrefabInstance:
     - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.000000029802322
-      objectReference: {fileID: 0}
-    - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
       value: 0.000000029802322
       objectReference: {fileID: 0}
     - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.000000029802322
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693148719756251888, guid: 3d578dd8c30284245acd916e56a6c82b,
+        type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000044703484
+      value: 0.000000074505806
       objectReference: {fileID: 0}
     - target: {fileID: 3991092519812462666, guid: 3d578dd8c30284245acd916e56a6c82b,
         type: 3}
