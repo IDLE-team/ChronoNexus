@@ -7,7 +7,6 @@ using UnityEngine;
 public class Equiper : MonoBehaviour
 {
     [SerializeField] private WeaponController _weaponController;
-    [SerializeField] private WeaponData _weaponData;
     [SerializeField] private Transform _holderTransform;
 
     public void EquipWeapon(WeaponData weapon)

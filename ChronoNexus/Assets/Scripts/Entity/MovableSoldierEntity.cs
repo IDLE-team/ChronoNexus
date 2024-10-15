@@ -7,7 +7,7 @@ using UnityEngine.AI;
 //[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class MovableSoldierEntity : MovableMeleeEntity
 {
-    private MovableEntitySoldierAttacker _soldierAttacker;
+    protected MovableEntitySoldierAttacker _soldierAttacker;
     public MovableEntitySoldierAttacker SoldierAttacker => _soldierAttacker;
     public MovableSoldierEntityStateAttack RangeAttackState { get; private set; }
     protected override void InitializeStartState()

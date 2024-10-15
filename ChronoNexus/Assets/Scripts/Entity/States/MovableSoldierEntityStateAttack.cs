@@ -12,36 +12,50 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
     private float _maxDelay;
     private float _maxDistanceBetweenTarget = 8f;
     private float _minDistanceBetweenTarget;
+    private float _preShootTime;
+
     private bool _isAttack = false;
     private Vector3 _randomDirection;
     private Vector3 _retreatPosition;
     private Quaternion _toRotation;
     private CancellationTokenSource _cancellationTokenSource;
+
     public MovableSoldierEntityStateAttack(MovableSoldierEntity movableSoldierEntity, StateMachine stateMachine) : base(
         movableSoldierEntity, stateMachine)
     {
     }
+
     public override void Enter()
     {
         _maxDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MaxRangeAttackDistance;
         _minDistanceBetweenTarget = _movableSoldierEntity.SoldierAttacker.MinRangeDistanceToTarget;
         _minDelay = _movableSoldierEntity.SoldierAttacker.MinDelayTokenRange;
         _maxDelay = _movableSoldierEntity.SoldierAttacker.MaxDelayTokenRange;
+        _preShootTime = _movableSoldierEntity.SoldierAttacker.PreShootTime;
+
         if (_movableSoldierEntity.WeaponController.CurrentWeapon.WeaponType == WeaponType.Firearm)
         {
             _firearmWeapon = (FirearmWeapon) _movableSoldierEntity.WeaponController.CurrentWeapon;
         }
+
         _target = _movableSoldierEntity.Target.GetTransform();
         _targetPosition = _target.localPosition;
         _firearmWeapon.OnReload += ReloadingLogicEnter;
         _firearmWeapon.OnReloadEnd += ReloadingLogicExit;
         _movableSoldierEntity.TargetFinder.SetWeight(1);
         _isAttack = true;
-        _movableSoldierEntity.OnDie += CancelCancelationToken;
-        _cancellationTokenSource = new CancellationTokenSource();
-        ShootAndRetreat(_cancellationTokenSource.Token).Forget();
+
+        if (_minDelay != 0 && _maxDelay != 0)
+        {
+            _movableSoldierEntity.OnDie += CancelCancelationToken;
+            _cancellationTokenSource = new CancellationTokenSource();
+            ShootAndRetreat(_cancellationTokenSource.Token).Forget();
+        }
+
+
         base.Enter();
     }
+
     public override void Exit()
     {
         _isAttack = false;
@@ -51,6 +65,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         _firearmWeapon.OnReloadEnd -= ReloadingLogicExit;
         base.Exit();
     }
+
     public override void LogicUpdate()
     {
         if (_movableSoldierEntity.Target == null)
@@ -59,6 +74,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             _movableSoldierEntity.TargetLossReaction();
             return;
         }
+
         if (_movableSoldierEntity.isTimeSlowed)
         {
             if (_firearmWeapon != null && !_firearmWeapon.IsReloading)
@@ -75,23 +91,39 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
                     CalculateRotation(), 6f * Time.deltaTime);
             }
         }
-        if (Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _targetPosition) > _maxDistanceBetweenTarget)
+
+        if (Vector3.Distance(_movableSoldierEntity.SelfAim.transform.position, _targetPosition) >
+            _maxDistanceBetweenTarget)
         {
             _stateMachine.ChangeState(_movableSoldierEntity.ChaseState);
             _firearmWeapon.StopFire();
             _movableSoldierEntity.TargetFinder.SetWeight(0);
             return;
         }
-        _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
+
+        if (_preShootTime >= 0)
+        {
+            _preShootTime -= Time.deltaTime;
+        }
+        else
+        {
+            _firearmWeapon.Fire(_movableSoldierEntity.Target, _movableSoldierEntity.transform);
+            _preShootTime = _movableSoldierEntity.SoldierAttacker.PreShootTime;
+        }
+
+
         base.LogicUpdate();
     }
+
     private Quaternion CalculateRotation()
     {
-        Quaternion toRotation = Quaternion.LookRotation(_targetPosition - _movableSoldierEntity.SelfAim.position, Vector3.up);
+        Quaternion toRotation =
+            Quaternion.LookRotation(_targetPosition - _movableSoldierEntity.SelfAim.position, Vector3.up);
         toRotation.x = 0f;
         toRotation.z = 0f;
         return toRotation;
     }
+
     private void ReloadingLogicEnter()
     {
         _retreatPosition = _movableSoldierEntity.SelfAim.position;
@@ -99,11 +131,13 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
         _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.transform.position);
         _movableSoldierEntity.TargetFinder.SetWeight(0);
     }
+
     private void ReloadingLogicExit()
     {
         _movableSoldierEntity.EntityAnimator.SetReloadAnimation(false);
         _movableSoldierEntity.TargetFinder.SetWeight(1);
     }
+
     public override void PhysicsUpdate()
     {
         if (_movableSoldierEntity.Target == null)
@@ -111,19 +145,22 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             _cancellationTokenSource.Cancel();
             return;
         }
+
         _targetPosition = _movableSoldierEntity.Target.GetTransform().position;
         base.PhysicsUpdate();
     }
+
     protected override async UniTask TimeWaiter()
     {
         await UniTask.WaitUntil(() => !_movableSoldierEntity.isTimeSlowed && !_movableSoldierEntity.isTimeStopped);
-
     }
+
     private void CancelCancelationToken()
     {
         _cancellationTokenSource.RegisterRaiseCancelOnDestroy(_movableSoldierEntity.gameObject);
         _cancellationTokenSource.Cancel();
     }
+
     private async UniTask ShootAndRetreat(CancellationToken cancellationToken)
     {
         while (_isAttack && !cancellationToken.IsCancellationRequested)
@@ -153,12 +190,10 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
                 {
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_retreatPosition);
                     if (_movableSoldierEntity.isTimeSlowed) _movableSoldierEntity.NavMeshAgent.speed = 0.1f;
-                    
                 }
                 else
                 {
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.SelfAim.transform.position);
-                    
                 }
 
                 _movableSoldierEntity.TargetFinder.SetWeight(1);
@@ -185,12 +220,10 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
                     else
                     {
                     } //_movableSoldierEntity.NavMeshAgent.speed = _shootingAgentSpeed;
-
                 }
                 else
                 {
                     _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.SelfAim.transform.position);
-                    
                 }
 
                 _movableSoldierEntity.TargetFinder.SetWeight(1);
@@ -200,7 +233,7 @@ public class MovableSoldierEntityStateAttack : MovableSoldierEntityState
             {
                 _movableSoldierEntity.NavMeshAgent.SetDestination(_movableSoldierEntity.SelfAim.transform.position);
                 _movableSoldierEntity.TargetFinder.SetWeight(0);
-                
+
                 await UniTask.Yield();
             }
         }
