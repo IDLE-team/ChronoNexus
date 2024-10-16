@@ -7,9 +7,9 @@ using UnityEngine;
     {
         public float Distance;
         
-        public override void SetData(WeaponData data, Transform parent)
+        public override void SetData(WeaponData data, Transform parent, bool isPlayerWeapon)
         {
-            base.SetData(data, parent);
+            base.SetData(data, parent, isPlayerWeapon);
             Distance = data.Distance;
         }
     }

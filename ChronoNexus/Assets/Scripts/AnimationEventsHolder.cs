@@ -96,10 +96,11 @@ public class AnimationEventsHolder : MonoBehaviour
       //  print(_character.InventoryItemManager.GetEquipedGun().WeaponName + "������ ���� ����� ��� �������");
       _character.CharacterEventsHolder.CallOnShowAdditionalEvent();
         _character.CharacterEventsHolder.CallOnShootInteractEvent();
-
-
         _character.Movement.UnlockMove();
-      //  _character.AimRigController.SetWeight(1);
+        TimeManager.instance.SlowTime();
+        _character.SetInvincibleWithDuration(UpgradeData.Instance.InvincibleTimeUpgradeValue);
+        
+        //  _character.AimRigController.SetWeight(1);
     }
     
     IEnumerator Smoother(float lastValue)

@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour, ITimeAffected
     private Vector3 _shootDir;
     
     private float _damage;
+    private float _baseMoveSpeed;
     private float _moveSpeed;
 
     public float Damage => _damage;
@@ -26,7 +27,11 @@ public class Bullet : MonoBehaviour, ITimeAffected
     {
         _damage = damage;
         _shootDir = shootDirection;
-        _moveSpeed = speed;
+        _baseMoveSpeed = speed;
+        if(!isTimeSlowed)
+            _moveSpeed = speed;
+        else
+            SlowSpeed();
     }
     
 
@@ -46,11 +51,7 @@ public class Bullet : MonoBehaviour, ITimeAffected
         {
             return;
         }
-        else if (CanBeAffected && TimeManager.instance.IsTimeSlowed && !isTimeSlowed)
-        {
-            transform.position += _shootDir * (_moveSpeed * 0.1f * Time.deltaTime);
-            return;
-        }
+        Debug.Log(_moveSpeed);
         transform.position += _shootDir * (_moveSpeed * Time.deltaTime);
     }
 
@@ -91,7 +92,7 @@ public class Bullet : MonoBehaviour, ITimeAffected
     public void RealTimeAction()
     {
         _collider.enabled = true;
-
+        _moveSpeed = _baseMoveSpeed;
         isTimeStopped = false;
         isTimeSlowed = false;
     }
@@ -106,6 +107,15 @@ public class Bullet : MonoBehaviour, ITimeAffected
     public void SlowTimeAction()
     {
         isTimeSlowed = true;
+        if(_baseMoveSpeed == 0)
+            return;
+        _moveSpeed = _baseMoveSpeed - _baseMoveSpeed * UpgradeData.Instance.SlowTimePercentAfterFinisherUpgradeValue / 100;
+    }
+
+    public void SlowSpeed()
+    {
+        _moveSpeed = _baseMoveSpeed - _baseMoveSpeed * UpgradeData.Instance.SlowTimePercentAfterFinisherUpgradeValue / 100;
+
     }
 
     public void RewindTimeAction()

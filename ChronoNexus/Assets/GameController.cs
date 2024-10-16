@@ -14,12 +14,12 @@ public class GameController : MonoBehaviour
     private DeathScreen _deathScreen;
 
     [SerializeField] private LevelStatTracker _levelStatTracker;
-
+    [SerializeField] private MissionProgressChecker _missionProgressChecker;
     [Header("Для значений из таблицы баланса уровней")]
     [SerializeField] private float _xpMeanLvl = 50;
     [SerializeField] private float _xpStepMean = 15;
     [SerializeField] private float _xpToNextBase = 150;
-
+    
 
 
 
@@ -38,6 +38,8 @@ public class GameController : MonoBehaviour
 
     public void Win()
     {
+        _levelStatTracker.SetLevelCleared();
+        _missionProgressChecker.CheckQuestProgress();
         Rewards rewards = CalculateLevelReward();
         _winScreen.gameObject.SetActive(true);
         _winScreen.SetScreen(rewards, PlayerPrefs.GetInt("exp", 1), PlayerPrefs.GetInt("lvl", 1));

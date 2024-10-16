@@ -148,8 +148,10 @@ public class MovableEntity : Entity
         {
             SetLastNavMeshValues();
 
-            _navMeshAgent.speed = 0.1f;
-            _navMeshAgent.angularSpeed = 0.1f;
+           // _navMeshAgent.speed = 0.1f;
+           // _navMeshAgent.angularSpeed = 0.1f;
+            _navMeshAgent.speed -=   _navMeshAgent.speed * UpgradeData.Instance.SlowTimePercentAfterFinisherUpgradeValue / 100;
+            _navMeshAgent.angularSpeed -= _navMeshAgent.angularSpeed * UpgradeData.Instance.SlowTimePercentAfterFinisherUpgradeValue / 100;
         }
 
         base.SlowTimeAction();

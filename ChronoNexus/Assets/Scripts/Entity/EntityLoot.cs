@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static InventoryItemManager;
 
 public class EntityLoot : MonoBehaviour
 {
@@ -10,10 +11,10 @@ public class EntityLoot : MonoBehaviour
     public List<float> dropChances = new List<float> { 0.2f, 0.3f, 0.4f };
     public int amountToDrop = 1;
 
-    public List<InventoryItemManager.itemRarity> possibleQualities = new List<InventoryItemManager.itemRarity>
-    {
-        InventoryItemManager.itemRarity.gray, InventoryItemManager.itemRarity.green, InventoryItemManager.itemRarity.purple
-    };
+   public List<InventoryItemManager.itemRarity> possibleQualities = new List<InventoryItemManager.itemRarity>
+   {
+       InventoryItemManager.itemRarity.gray, InventoryItemManager.itemRarity.green, InventoryItemManager.itemRarity.purple
+   };
     public List<float> qualityChances = new List<float> { 0.8f, 0.15f, 0.5f }; 
 
     public void DropItems()
@@ -24,11 +25,10 @@ public class EntityLoot : MonoBehaviour
         }
         for (int i = 0; i < amountToDrop; i++)
         { 
-            ItemData itemToDrop = GetRandomItem();
+            ItemData itemToDrop = GetRandomItem(GetRandomQuality());
             
             if (itemToDrop != null)
             {
-                itemToDrop.rarity = GetRandomQuality(); 
                 GameObject itemObj = Instantiate(ItemPrefab,spawnPosition.position,Quaternion.identity);
                  
                 ItemDataContainer _itemDataContainer = itemObj.GetComponent<ItemDataContainer>();
@@ -42,8 +42,19 @@ public class EntityLoot : MonoBehaviour
         }
     }
 
-    private ItemData GetRandomItem()
+    private ItemData GetRandomItem(itemRarity rarity)
     {
+
+        List<ItemData> rarItems = new List<ItemData>();
+
+        foreach (ItemData item in items)
+        {
+            if (item.rarity == rarity)
+            {
+                rarItems.Add(item);
+            }
+        }
+
         float totalChance = 0;
         foreach (float chance in dropChances)
         {
@@ -54,11 +65,11 @@ public class EntityLoot : MonoBehaviour
         {
             return null;
         }
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < rarItems.Count; i++)
         {
             if (randomPoint < dropChances[i]*100)
             {
-                return items[i];
+                return rarItems[i];
             }
             else
             {
@@ -78,7 +89,7 @@ public class EntityLoot : MonoBehaviour
 
         float randomPoint = Random.Range(0,100) * totalChance;
 
-        for (int i = 0; i < possibleQualities.Count; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (randomPoint < qualityChances[i]*100)
             {

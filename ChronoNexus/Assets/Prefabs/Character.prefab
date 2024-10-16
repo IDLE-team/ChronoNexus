@@ -9491,7 +9491,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _aimTarget: {fileID: 6216907693875526309}
   _hpBar: {fileID: 0}
-  _levelController: {fileID: 0}
   _health: {fileID: 0}
   _characterTargetingSystem: {fileID: 0}
   "_\u0441haracterEventsHolder": {fileID: 0}
@@ -9599,8 +9598,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899f3863515d4dec96d8e94c066a41e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _value: 9999
+  _value: 200
   _healthSetter: {fileID: 0}
+  _healEffect: {fileID: 0}
+  _isPlayer: 1
+  _maxHealth: 200
 --- !u!114 &7260000571242317050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9873,6 +9875,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigController: {fileID: 5337895074573650797}
   _weaponUI: {fileID: 0}
+  _reloadUI: {fileID: 0}
+  _isPlayer: 1
 --- !u!114 &3291128377994212656
 MonoBehaviour:
   m_ObjectHideFlags: 0

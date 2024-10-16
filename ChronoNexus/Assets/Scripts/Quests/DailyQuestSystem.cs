@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class DailyQuestSystem : MonoBehaviour
@@ -24,19 +26,52 @@ public class DailyQuestSystem : MonoBehaviour
     [Header("---------------------------------")]
     [SerializeField] private QuestUISetter _questUISetter;
     [SerializeField] private TextMeshProUGUI questText;
-
-    public List<QuestData> CurrentQuests => _currentQuests;
-
-    public Action OnGenerated;
     
+    public List<QuestData> CurrentQuests => _currentQuests;
+    public static DailyQuestSystem Instance;
+    public Action OnGenerated;
+    private bool _sceneLoaded = false;
     private int progress;
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        
         transform.SetParent(null);
+        if (Instance != null)
+            Debug.Log(Instance._currentQuests.Count);
+        //Instance._questUISetter = _questUISetter; 
+        //SetCurrentQuestsUI();
+
     }
 
+    [Inject]
+    public void Construct(QuestUISetter questUISetter)
+    {
+        _questUISetter = questUISetter;
+    }
+
+    public void SetCurrentQuestsUI()
+    {
+        if (Instance._currentQuests.Count <= 0)
+        {
+            return;
+        }
+
+        for (int i = 0; i <Instance._currentQuests.Count; i++)
+        {
+            Instance.OnGenerated?.Invoke();
+          //  Instance._questUISetter.SetQuestUI(_currentQuests[i]);
+        }
+    }
     void Start()
     {
         GenerateNewQuest();
@@ -46,12 +81,8 @@ public class DailyQuestSystem : MonoBehaviour
     {
         for (int i = 0; i < _maxQuestsPerDay; i++)
         {
-        //    Debug.Log("i: " + i);
-        //    Debug.Log("quests.Count: " + quests.Count);
-
             if (i > quests.Count-1)
             {
-         //       Debug.Log("Break");
                 break;
             }
 
@@ -81,7 +112,7 @@ public class DailyQuestSystem : MonoBehaviour
                 _currentQuests.Add(newQuest);
             }
             OnGenerated?.Invoke();
-            _questUISetter.SetQuestUI(_currentQuests[i]);
+           // _questUISetter.SetQuestUI(_currentQuests[i]);
         }
     }
 
@@ -130,8 +161,6 @@ public class DailyQuestSystem : MonoBehaviour
     
     public void UpdateProgress(int amount)
     {
-
-      //  GiveReward();
         GenerateNewQuest();
     }
 

@@ -19,7 +19,7 @@ public class SceneQuestManager : MonoBehaviour
    
    private void Start()
    {
-      _dailyQuestSystem = GameObject.Find("QuestController").GetComponent<DailyQuestSystem>();
+      _dailyQuestSystem = DailyQuestSystem.Instance;
       SetTrackers();
    }
 

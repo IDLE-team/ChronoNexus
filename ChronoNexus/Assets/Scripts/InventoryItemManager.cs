@@ -21,9 +21,6 @@ public class InventoryItemManager : MonoBehaviour
 
     [Header("Точки Экипировки")]
     [SerializeField] protected GameObject _gunInUse;
-    // [SerializeField] protected GameObject _knifeInUse;
-    // [SerializeField] protected GameObject _granadeInUse;
-    // [SerializeField] protected GameObject _armorInUse;
 
     protected Character _player;
     protected WeaponData _gunEquiped;
@@ -245,8 +242,6 @@ public class InventoryItemManager : MonoBehaviour
 
     }
 
-
-
     protected void LoadInventory(List<HorizontalLayoutGroup> cellGroup)
     {
         var savedData = PlayerPrefs.GetString("inventoryMain", "");
@@ -292,16 +287,16 @@ public class InventoryItemManager : MonoBehaviour
         }
     }
 
-    protected void LoadKnife()
-    {
-        var savedData = PlayerPrefs.GetInt("knife", -1);
-        if (savedData == -1) return;
-
-        GameObject itemEmpty = Instantiate(_itemPrefab);
-        itemEmpty.transform.SetParent(_gunInUse.transform);
-
-        SetInventoryEquiped();
-    }
+   // protected void LoadKnife()
+   // {
+   //     var savedData = PlayerPrefs.GetInt("knife", -1);
+   //     if (savedData == -1) return;
+   //
+   //     GameObject itemEmpty = Instantiate(_itemPrefab);
+   //     itemEmpty.transform.SetParent(_gunInUse.transform);
+   //
+   //     SetInventoryEquiped();
+   // }
 
 
     public void DeleteInventory(GameObject _inventoryLayoutGameObject) // literally deletes whole inventory, don't touch
@@ -311,7 +306,6 @@ public class InventoryItemManager : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-
     }
 
     public void SortInventory(List<HorizontalLayoutGroup> cells)
@@ -350,7 +344,6 @@ public class InventoryItemManager : MonoBehaviour
 
         ItemEquipable itemUseEmpty = itemEmpty.GetComponent<ItemEquipable>();
         return itemUseEmpty;
-
     }
 
     public void MakeItemFromShop(ItemData soldItem)
