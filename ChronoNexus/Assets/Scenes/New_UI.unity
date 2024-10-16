@@ -2982,6 +2982,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 199657902}
   m_CullTransparentMesh: 1
+--- !u!1 &204613265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 204613266}
+  - component: {fileID: 204613267}
+  m_Layer: 0
+  m_Name: PlayerProfileManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &204613266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204613265}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 363660599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &204613267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204613265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf431bcd222ce4146ad3cd2784e99508, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _money: 20000
+  _materials: 20000
+  _lvl: 1
+  _exp: 0
+  _point: 50
+  _hero: 0
 --- !u!1 &212699373
 GameObject:
   m_ObjectHideFlags: 0
@@ -5493,6 +5543,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1260586248}
+  - {fileID: 204613266}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &378077773
@@ -12256,9 +12307,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70aef7362bedf2040bcd09d34c2dd945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeStopDurationBase: 2
+  _finisherMinHealthPercentBase: 3
   _maxHPUpgradeValue: 0
   _invincibleTimeUpgradeValue: 0
-  _hpDropAmountUpgradeValue: 0
+  _hpDropPercentMultiplierUpgradeValue: 0
   _firearmDamageUpgradeValue: 0
   _finisherMinHealthPercentUpgradeValue: 0
   _slowTimePercentAfterFinisherUpgradeValue: 0
@@ -51287,7 +51340,6 @@ GameObject:
   - component: {fileID: 2674786519438439112}
   - component: {fileID: 3919393474915134237}
   - component: {fileID: 2072345488428566414}
-  - component: {fileID: 9192548797441793052}
   m_Layer: 0
   m_Name: Canvas And Manager
   m_TagString: Untagged
@@ -53789,24 +53841,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &9192548797441793052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8098230359144939706}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf431bcd222ce4146ad3cd2784e99508, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _money: 20000
-  _materials: 20000
-  _lvl: 1
-  _exp: 0
-  _point: 0
-  _hero: 0
 --- !u!114 &9192606410569997887
 MonoBehaviour:
   m_ObjectHideFlags: 0
