@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private float _xpMeanLvl = 50;
     [SerializeField] private float _xpStepMean = 15;
     [SerializeField] private float _xpToNextBase = 150;
-
+    
 
 
 
@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
 
     public void Win()
     {
+        _levelStatTracker.SetLevelCleared();
         _missionProgressChecker.CheckQuestProgress();
         Rewards rewards = CalculateLevelReward();
         _winScreen.gameObject.SetActive(true);

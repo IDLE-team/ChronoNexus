@@ -9,7 +9,7 @@ public class LevelStatTracker : MonoBehaviour
 
     [SerializeField] private int _kills;
     [SerializeField] private int _materialsCount;
-
+    [SerializeField] private bool _isLevelCleared;
     private void Start()
     {
         _startTime = Time.realtimeSinceStartup;
@@ -17,6 +17,14 @@ public class LevelStatTracker : MonoBehaviour
         Debug.Log("StartEnAm: " + _startEnemyAmount);
     }
 
+    public void SetLevelCleared()
+    {
+        _isLevelCleared = true;
+    }
+    public bool GetLevelCleared()
+    {
+        return _isLevelCleared;
+    }
     public int GetMaterialCount()
     {
         return _materialsCount;

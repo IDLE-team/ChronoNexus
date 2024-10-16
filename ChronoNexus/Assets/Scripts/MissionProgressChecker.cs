@@ -11,31 +11,55 @@ public class MissionProgressChecker : MonoBehaviour
 
     private void Start()
     {
-        _questSystem = DailyQuestSystem.Instance;
+       // _questSystem = DailyQuestSystem.Instance;
     }
 
     public void CheckQuestProgress()
     {
+        _questSystem = DailyQuestSystem.Instance;
+
+        Debug.Log("Count: " + _questSystem.CurrentQuests.Count);
         for (int i = 0; i < _questSystem.CurrentQuests.Count; i++)
         {
-            Debug.Log("PreSwitch: " + _questSystem.CurrentQuests[i].questType);
+            Debug.Log("CurrentQuestCheck: " + _questSystem.CurrentQuests[i].questType);
             switch (_questSystem.CurrentQuests[i].questType)
             {
                 case QuestData.QuestType.Kills:
-                    Debug.Log("InQuest");
+                    Debug.Log("KillsQuest");
                     _questSystem.CurrentQuests[i].questProgress += _levelStatTracker.GetKilledEnemyAmount();
-                    if (_questSystem.CurrentQuests[i].questProgress >= _questSystem.CurrentQuests[i].questRequirments)
+                    CheckCompleteQuest(i);
+                    Debug.Log("Зачли прогресс киллы: " + _questSystem.CurrentQuests[i].questProgress);
+                    break;
+
+                case QuestData.QuestType.MissionComplete:
+                    Debug.Log("MissonsCompleteQuest");
+                    if (!_levelStatTracker.GetLevelCleared())
                     {
-                        _questSystem.CurrentQuests[i].questProgress = _questSystem.CurrentQuests[i].questRequirments;
-                        _questSystem.GiveReward(_questSystem.CurrentQuests[i]);
-                        _questSystem.CurrentQuests[i].isComlete = true;
+                        Debug.Log("NoCleared: " + _levelStatTracker.GetLevelCleared());
+                        return;
                     }
-                    Debug.Log("Зачли прогресс: " +   _questSystem.CurrentQuests[i].questProgress );
+                    _questSystem.CurrentQuests[i].questProgress++;
+                    CheckCompleteQuest(i);
+                    Debug.Log("Зачли прогресс миссии: " + _questSystem.CurrentQuests[i].questProgress);
                     break;
                 default:
-                    Debug.Log("Default");
+                    break;
             }
-            
         }
+    }
+
+    public void CheckCompleteQuest(int questID)
+    {
+        if (_questSystem.CurrentQuests[questID].questProgress >= _questSystem.CurrentQuests[questID].questRequirments)
+        {
+            CompleteQuest(questID);
+        }
+    }
+
+    public void CompleteQuest(int questID)
+    {
+        _questSystem.CurrentQuests[questID].questProgress = _questSystem.CurrentQuests[questID].questRequirments;
+        _questSystem.GiveReward(_questSystem.CurrentQuests[questID]);
+        _questSystem.CurrentQuests[questID].isComlete = true;
     }
 }
