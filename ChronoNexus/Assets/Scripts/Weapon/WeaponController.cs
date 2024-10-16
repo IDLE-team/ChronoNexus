@@ -9,7 +9,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] private AimRigController _rigController;
     [SerializeField] private TextMeshProUGUI _weaponUI;
     [SerializeField] private GameObject _reloadUI;
-
+    [SerializeField] private bool _isPlayer;
     private Weapon _currentWeapon;
     public Weapon CurrentWeapon => _currentWeapon;
 
@@ -34,7 +34,7 @@ public class WeaponController : MonoBehaviour
             Destroy(_currentWeapon.gameObject);
         }
        // Debug.Log("WeaponFactory: " + _weaponFactory);
-        _currentWeapon = _weaponFactory.CreateWeapon(data, holder);
+        _currentWeapon = _weaponFactory.CreateWeapon(data, holder, _isPlayer);
         SetWeaponPlayerSettings();
     }
 

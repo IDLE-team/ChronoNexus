@@ -8,6 +8,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
 {
     //------------------------------------------------------------------------------------//
 
+    private float _baseMoveSpeed;
     [Header("Character")]
     [Tooltip("Move speed of the character")]
     [SerializeField] private float MoveSpeed = 2.0f;
@@ -75,7 +76,18 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         _input = input;
     }
 
-    private void OnEnable() => _input.Enable();
+    private void OnEnable()
+    {
+        _input.Enable();
+    }
+
+    private void OnDestroy()
+    {
+        TimeManager.instance.OnTimeContinue -= ReturnSpeed;
+        TimeManager.instance.OnTimeStop -= AddBonusSpeed;
+        TimeManager.instance.OnTimeSlow -= AddBonusSpeed;
+    }
+
     private void OnDisable() => _input.Disable();
 
     private Vector2 ReadMovementInput() => _input.Player.Movement.ReadValue<Vector2>();
@@ -84,6 +96,10 @@ public class CharacterMovement : MonoBehaviour, ITransformable
     private void Start()
     {
         _camera = Camera.main;
+        _baseMoveSpeed = MoveSpeed;
+        TimeManager.instance.OnTimeContinue += ReturnSpeed;
+        TimeManager.instance.OnTimeStop += AddBonusSpeed;
+        TimeManager.instance.OnTimeSlow += AddBonusSpeed;
     }
 
 
@@ -158,7 +174,19 @@ public class CharacterMovement : MonoBehaviour, ITransformable
         _character.Animator.StrafeZ(0);
     }
 
-    
+    public void AddSpeed(float value)
+    {
+        MoveSpeed += value;
+    }
+    public void AddBonusSpeed()
+    {
+        float speed = Mathf.Ceil(_baseMoveSpeed * UpgradeData.Instance.SpeedBonusUpgradeValue / 100);
+        AddSpeed(speed);
+    }
+    public void ReturnSpeed()
+    {
+        MoveSpeed = _baseMoveSpeed;
+    }
     public void LockMove()
     {
         _canMove = false;

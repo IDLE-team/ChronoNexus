@@ -21,9 +21,9 @@ using UnityEngine;
             UpdateUIWeaponValues();
         }
 
-        public override void SetData(WeaponData data, Transform parent)
+        public override void SetData(WeaponData data, Transform parent, bool isPlayerWeapon)
         {
-            base.SetData(data, parent);
+            base.SetData(data, parent, isPlayerWeapon);
             ReloadSpeed = data.ReloadSpeed;
             MaxAmmo = data.MaxAmmo;
             CurrentAmmo = MaxAmmo;

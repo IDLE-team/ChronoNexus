@@ -7,10 +7,14 @@ public class UpgradeData : MonoBehaviour
 {
     public static UpgradeData Instance;
 
+    [SerializeField] private int _timeStopDurationBase = 2;
+    [SerializeField] private int _finisherMinHealthPercentBase= 3;
+    
+    
     [SerializeField] private int _maxHPUpgradeValue;
     [SerializeField] private int _invincibleTimeUpgradeValue;
 
-    [SerializeField] private int _hpDropAmountUpgradeValue;
+    [SerializeField] private int _hpDropPercentMultiplierUpgradeValue;
 
     [SerializeField] private int _firearmDamageUpgradeValue;
 
@@ -33,7 +37,7 @@ public class UpgradeData : MonoBehaviour
     private string InversionUpgrade = "InversionUpgrade";
     public int MaxHPUpgradeValue => _maxHPUpgradeValue;
     public int InvincibleTimeUpgradeValue => _invincibleTimeUpgradeValue;
-    public int HpDropAmountUpgradeValue => _hpDropAmountUpgradeValue;
+    public int HpDropPercentMultiplierUpgradeValue => _hpDropPercentMultiplierUpgradeValue;
 
     public int FirearmDamageUpgradeValue => _firearmDamageUpgradeValue;
     public int FinisherMinHealthPercentUpgradeValue => _finisherMinHealthPercentUpgradeValue;
@@ -73,7 +77,7 @@ public class UpgradeData : MonoBehaviour
                     break;
 
                 case (UpgradeType.Pinata):
-                    _hpDropAmountUpgradeValue = PlayerPrefs.GetInt(HPDropAmount, 0);
+                    _hpDropPercentMultiplierUpgradeValue = PlayerPrefs.GetInt(HPDropAmount, 0);
                     break;
 
                 case (UpgradeType.Shooter):
@@ -81,7 +85,7 @@ public class UpgradeData : MonoBehaviour
                     break;
 
                 case (UpgradeType.Executor):
-                    _finisherMinHealthPercentUpgradeValue = PlayerPrefs.GetInt(FinisherMinHealthUpgrade, 0);
+                    _finisherMinHealthPercentUpgradeValue = PlayerPrefs.GetInt(FinisherMinHealthUpgrade, _finisherMinHealthPercentBase);
                     break;
 
                 case (UpgradeType.Rage):
@@ -89,7 +93,7 @@ public class UpgradeData : MonoBehaviour
                     break;
 
                 case (UpgradeType.TimeStop):
-                    _timeStopDurationUpgradeValue = PlayerPrefs.GetInt(TimeStopUpgrade, 0);
+                    _timeStopDurationUpgradeValue = PlayerPrefs.GetInt(TimeStopUpgrade, _timeStopDurationBase);
                     break;
 
                 case (UpgradeType.Glide):
@@ -118,8 +122,8 @@ public class UpgradeData : MonoBehaviour
                 break;
 
             case (UpgradeType.Pinata):
-                _hpDropAmountUpgradeValue = value;
-                PlayerPrefs.SetInt(HPDropAmount, _hpDropAmountUpgradeValue);
+                _hpDropPercentMultiplierUpgradeValue = value;
+                PlayerPrefs.SetInt(HPDropAmount, _hpDropPercentMultiplierUpgradeValue);
 
                 break;
 

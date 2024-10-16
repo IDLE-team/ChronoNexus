@@ -31,6 +31,11 @@ public class TimeManager : MonoBehaviour, ICoolDownable
     private float audioVolume;
 
     [SerializeField] private GameObject _timeManipulationCam;
+
+    public event Action OnTimeStop;
+    public event Action OnTimeSlow;
+    public event Action OnTimeContinue;
+    
     
     [Inject]
     private void Construct(PlayerInputActions input)
@@ -76,6 +81,14 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            SlowTime();
+        }
+    }
+
     private void Start()
     {
         audioVolume = audioSource.volume;
@@ -99,6 +112,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         _timeManipulationCam.SetActive(false);
 
         audioSource.volume = audioVolume;
+        OnTimeContinue?.Invoke();
     }
 
    public void ContinueTimeForSingle(ITimeBody timeBody)
@@ -124,6 +138,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.3f;
         OnCoolDown?.Invoke(_stoptimeCooldown);
+        OnTimeStop?.Invoke();
         StartCoroutine(ResumeTimeWithDelay());
     }
     public void StopTimeForAllExcept(List<ITimeBody> nonStopTimeBody, float durationTime)
@@ -135,6 +150,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         }
 
         IsTimeStopped = true;
+        
         List<ITimeBody> filteredTimeBodiesList = timeBodies.FindAll(i => !nonStopTimeBody.Contains(i));
         for (var i = 0; i < filteredTimeBodiesList.Count; i++)
         {
@@ -152,6 +168,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         audioSource.pitch = 0.3f;
         if(durationTime < 0)
             return;
+        OnTimeStop?.Invoke();
         StartCoroutine(ResumeTimeWithDelay(durationTime));
 
     }
@@ -175,9 +192,12 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.3f;
         audioSource.volume = 0;
+        OnTimeStop?.Invoke();
     }
     public void SlowTime()
     {
+        if(UpgradeData.Instance.SlowTimePercentAfterFinisherUpgradeValue <= 0)
+            return;
         IsTimeSlowed = true;
         for (var i = 0; i < timeBodies.Count; i++)
         {
@@ -192,6 +212,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         postProcessVolume.profile = timeStopVolumeProfile;
         basePitch = audioSource.pitch;
         audioSource.pitch = 0.5f;
+        OnTimeSlow?.Invoke();
         StartCoroutine(ResumeTimeWithDelay());
     }
     private void OnDebugSliderValueChanged(float value)
@@ -201,7 +222,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
     
     IEnumerator ResumeTimeWithDelay()
     {
-        yield return new WaitForSeconds(resumeTimeDelay);
+        yield return new WaitForSeconds(UpgradeData.Instance.TimeStopDurationUpgradeValue);
         ContinueTime();
     }
     IEnumerator ResumeTimeWithDelay(float resumeDelay)

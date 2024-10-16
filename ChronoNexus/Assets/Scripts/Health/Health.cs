@@ -9,7 +9,7 @@ public class Health : MonoBehaviour, IHealth
     [SerializeField] private float _value;
     [SerializeField] private TMP_InputField _healthSetter;
     [SerializeField] private ParticleSystem _healEffect;
-
+    [SerializeField] private bool _isPlayer;
     public IEnumerator DebugMax()
     {
         yield return new WaitForSeconds(1f);
@@ -32,7 +32,9 @@ public class Health : MonoBehaviour, IHealth
 
     public float GetMaxHealth()
     {
-        return _maxHealth + UpgradeData.Instance.MaxHPUpgradeValue;
+        if(_isPlayer)
+            return _maxHealth + UpgradeData.Instance.MaxHPUpgradeValue;
+        return _maxHealth;
     }
     private void OnEnable()
     {

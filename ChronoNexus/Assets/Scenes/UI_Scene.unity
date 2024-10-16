@@ -8276,13 +8276,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70aef7362bedf2040bcd09d34c2dd945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeStopDurationBase: 2
+  _finisherMinHealthPercentBase: 2
   _maxHPUpgradeValue: 0
   _invincibleTimeUpgradeValue: 0
-  _hpDropAmountUpgradeValue: 0
+  _hpDropPercentMultiplierUpgradeValue: 0
   _firearmDamageUpgradeValue: 0
-  _finisherMinHealthPercentUpgradeValue: 0
+  _finisherMinHealthPercentUpgradeValue: 3
   _slowTimePercentAfterFinisherUpgradeValue: 0
-  _timeStopDurationUpgradeValue: 0
+  _timeStopDurationUpgradeValue: 2
   _speedBonusUpgradeValue: 0
   _inversionDurationUpgradeValue: 0
 --- !u!1 &744603128
@@ -10366,7 +10368,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40650287, y: -0.3342272, z: 0.16279095, w: 0.8345938}
+  m_LocalRotation: {x: 0.40650284, y: -0.33422714, z: 0.16279094, w: 0.8345938}
   m_LocalPosition: {x: 4.14, y: 9.094, z: -4.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -53447,7 +53449,7 @@ MonoBehaviour:
   _materials: 0
   _lvl: 1
   _exp: 0
-  _point: 0
+  _point: 50
 --- !u!114 &9192606410569997887
 MonoBehaviour:
   m_ObjectHideFlags: 0
