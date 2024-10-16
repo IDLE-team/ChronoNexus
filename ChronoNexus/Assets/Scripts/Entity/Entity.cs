@@ -86,6 +86,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     protected virtual void Awake()
     {
         InitializeParam();
+         
     }
 
     protected virtual void InitializeStartState()
@@ -94,17 +95,17 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
     }
 
     protected virtual void InitializeParam()
-    {
-        Debug.Log("InitParam");
+    { 
         enemyList.Add(gameObject);
         _stateMachine = new StateMachine();
         _targetFinder = GetComponent<TargetFinder>();
+        _equiper = GetComponent<Equiper>();
         _health = GetComponent<Health>();
         _animator = GetComponent<EntityAnimator>();
         _audioSource = GetComponent<AudioSource>();
         _loot = GetComponent<EntityLoot>();
         _rigidbody = GetComponent<Rigidbody>();
-        _equiper = GetComponent<Equiper>();
+        
 
         if (_collider == null)
         {
@@ -116,7 +117,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
 
         DummyState = new EntityStateDummy(this, _stateMachine);
-
+        
     }
 
     protected virtual void InitializeIndividualParam()
@@ -276,6 +277,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 
     protected virtual void OnEnable()
     {
+        
         _health.Died += Die;
         _stateMachine.OnStateChanged += UpdateUI;
     }

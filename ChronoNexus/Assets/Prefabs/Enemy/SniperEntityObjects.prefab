@@ -12175,6 +12175,7 @@ GameObject:
   - component: {fileID: 7611765775489336602}
   - component: {fileID: 3561307231099069812}
   - component: {fileID: 8489993867092754531}
+  - component: {fileID: 6019800230825474348}
   m_Layer: 7
   m_Name: RangedEntity
   m_TagString: Enemy
@@ -12205,6 +12206,7 @@ Transform:
   - {fileID: 3814870452435378807}
   - {fileID: 2629896158734128837}
   - {fileID: 5718759715139126268}
+  - {fileID: 3536729017414307994}
   m_Father: {fileID: 2632424997641021656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4191701391642832638
@@ -12414,8 +12416,8 @@ MonoBehaviour:
   _targetMask:
     serializedVersion: 2
     m_Bits: 64
-  _viewAngle: 120
-  _viewRadius: 15
+  _viewAngle: 150
+  _viewRadius: 45
   _findDelay: 0.1
   canSeeTarget: 0
   _foundEffect: {fileID: 5453744749056325747}
@@ -12434,6 +12436,7 @@ MonoBehaviour:
   _value: 100
   _healthSetter: {fileID: 0}
   _healEffect: {fileID: 0}
+  _isPlayer: 0
   _maxHealth: 100
 --- !u!114 &5257207350018987123
 MonoBehaviour:
@@ -12547,6 +12550,7 @@ MonoBehaviour:
   _rigController: {fileID: 230096502224694563}
   _weaponUI: {fileID: 0}
   _reloadUI: {fileID: 0}
+  _isPlayer: 0
 --- !u!114 &8466405410772458642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12560,7 +12564,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponController: {fileID: 5242746698684480226}
-  _weaponData: {fileID: 11400000, guid: 144ac6c942272fc47b14472bd05edac2, type: 2}
   _holderTransform: {fileID: 8175864592714160465}
 --- !u!114 &6725615505822447679
 MonoBehaviour:
@@ -12715,13 +12718,14 @@ MonoBehaviour:
   _minMeleeDistanceToTarget: 1
   _meleeAttackAgentSpeed: 4
   _defaultAgentSpeed: 1.5
-  _rangeWeaponData: {fileID: 11400000, guid: d7d5c0837b02cc34cabb9652b6e3658d, type: 2}
+  _rangeWeaponData: {fileID: 11400000, guid: dbf478b34f9ec2b4d9b7e85aebbd846b, type: 2}
   _rangeAttackInterval: 1
-  _minDelayTokenRange: 0.5
-  _maxDelayTokenRange: 2
+  _minDelayTokenRange: 0
+  _maxDelayTokenRange: 0
   _minRangeDistanceToTarget: 5
-  _maxRangeAttackDistance: 8
+  _maxRangeAttackDistance: 50
   _rangeAttackAgentSpeed: 2
+  _preShootTime: 7
 --- !u!114 &8489993867092754531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12754,6 +12758,20 @@ MonoBehaviour:
   _randomMoveSpeed: 8
   _maxChaseDistance: 15
   _chaseSpeed: 10
+--- !u!114 &6019800230825474348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5480347515052960884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15147891148e53547a26395237323ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _laserRenderer: {fileID: 7788178983110870928}
+  _laserOrigin: {fileID: 1579869061357171009}
 --- !u!1 &5580927050217190102
 GameObject:
   m_ObjectHideFlags: 0
@@ -13738,6 +13756,144 @@ Transform:
   - {fileID: 8508075751058383442}
   m_Father: {fileID: 6666895858701783565}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7480705427703567140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3536729017414307994}
+  - component: {fileID: 7788178983110870928}
+  m_Layer: 7
+  m_Name: Laser
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3536729017414307994
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7480705427703567140}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.54, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4309687081565324994}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!120 &7788178983110870928
+LineRenderer:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7480705427703567140}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 1}
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 1
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0.07317352
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 1, g: 0, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 0
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 65535
+      atime2: 0
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 2
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 0
+    textureScale: {x: 1, y: 1}
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_MaskInteraction: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
+  m_ApplyActiveColorSpace: 1
 --- !u!1 &7635490416813980006
 GameObject:
   m_ObjectHideFlags: 0

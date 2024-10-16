@@ -8,6 +8,7 @@ public class Room : MonoBehaviour
     [SerializeField] private List<Transform> _entitySpawnPoints;
     [SerializeField] private List<Transform> _connectors;
     [SerializeField] private Transform _winGameTransform;
+    private bool _fightStarted = false;
     public event Action OnPlayerInRoom;
 
     public List<Transform> EntitySpawnPoints => _entitySpawnPoints;
@@ -15,9 +16,10 @@ public class Room : MonoBehaviour
     public Transform WinGameTransform => _winGameTransform;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !_fightStarted)
         {
             OnPlayerInRoom?.Invoke();
+            _fightStarted = true;
         }
     }
 }

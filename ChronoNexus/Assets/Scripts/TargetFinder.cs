@@ -141,8 +141,7 @@ public class TargetFinder : MonoBehaviour
         Target = target;
         _entityTargeting.SetTargetParent(Target.GetTransform());
         _seeker.IsTargetFound = true;
-        _foundEffect.SetActive(true);
-        Debug.Log("Invoke");
+        _foundEffect.SetActive(true); 
         
         if (target != null)
             OnTargetFinded?.Invoke(target);

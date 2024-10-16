@@ -48,11 +48,6 @@ public class InfiniteLevelController : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        
-    }
-
     private void OnDisable()
     {
         _transportRoomTemp1.OnPlayerInTransporter -= StartLoadProcess;
@@ -62,20 +57,17 @@ public class InfiniteLevelController : MonoBehaviour
 
     private void StartFight()
     {
-        if (_entityInRoomCountTemp > 0 || _entityListTemp != null)
-        {
-            return;
-        }
-        //spawnEnemy && closeDoors
+        
         _transportRoomTemp1.LockDoor();
         _transportRoomTemp2.LockDoor();
+        EnableEntity();
 
-        
+
     }
     private void EndFight()
     { 
         _entityInRoomCountTemp--;
-        if (_entityInRoomCountTemp > 0)
+        if (_entityInRoomCountTemp != 0)
         {
             return;
         }
@@ -89,15 +81,22 @@ public class InfiniteLevelController : MonoBehaviour
         _transportRoomTemp2.UnlockDoor();
     }
 
+    private void EnableEntity()
+    {
+        foreach (var _enemy in Entity.enemyList)
+        {
+            _enemy.SetActive(true);
+        }
+    }
+
     private void SpawnEntity()
     {
-        if (_entityListTemp!=null)
+        if (_entityListTemp != null)
         {
             foreach (var _gameObject in _entityListTemp)
             {
-                Destroy(_gameObject);
+                Destroy(_gameObject.transform.parent.gameObject,0.1f);
             }
-            _entityListTemp.Clear();
         }
 
         _entityInRoomCountTemp = 0;
@@ -107,19 +106,21 @@ public class InfiniteLevelController : MonoBehaviour
         for (int _i = 0; _i < _entityInRoomCount; _i++)
         {
             Vector3 randomVector = new Vector3(Random.Range(-_entitySpawnRadius,_entitySpawnRadius),0,Random.Range(-_entitySpawnRadius,_entitySpawnRadius));
-            GameObject _tempObject = Instantiate(_entityList[Random.Range(0 , _entityListTemp.Count)]
+            GameObject _tempObject = Instantiate(_entityList[Random.Range(0 , _entityList.Count)]
                 ,_roomTemp.EntitySpawnPoints[Random.Range(0,_roomTemp.EntitySpawnPoints.Count)].position+Vector3.up+randomVector,quaternion.identity);
 
             _entityInRoomCountTemp++;
             
             _entityListTemp.Add(_tempObject.GetComponentInChildren<Entity>());
+            
         }
 
         _entityGroupManager.CreateGroup(_entityListTemp);
 
         foreach (var _enemy in Entity.enemyList)
         {
-            _enemy.GetComponent<Entity>().OnDie += EndFight; // переделать
+            _enemy.GetComponent<Entity>().OnDie += EndFight;
+            _enemy.SetActive(false);
         }
     }
 
@@ -139,7 +140,7 @@ public class InfiniteLevelController : MonoBehaviour
         _roomTemp = Instantiate(_room[Random.Range(0,_room.Length)]).GetComponent<Room>();
 
         _roomTemp.transform.rotation = _transportRoomTemp1.Connector.rotation * Quaternion.Inverse(_roomTemp.Connectors[0].localRotation);
-        _roomTemp.transform.position = _transportRoomTemp1.Connector.localPosition -_roomTemp.Connectors[0].position;
+        _roomTemp.transform.position = _transportRoomTemp1.Connector.position - (_roomTemp.Connectors[0].position-_roomTemp.transform.position);
 
         _transportRoomTemp2.transform.rotation = _roomTemp.Connectors[1].rotation * Quaternion.Inverse(_transportRoomTemp2.transform.localRotation);
         _transportRoomTemp2.transform.position =  _roomTemp.Connectors[1].position - ( _transportRoomTemp2.Connector.position - _transportRoomTemp2.transform.position);

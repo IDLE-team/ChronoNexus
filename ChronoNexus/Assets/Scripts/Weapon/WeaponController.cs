@@ -33,7 +33,9 @@ public class WeaponController : MonoBehaviour
                 return;
             Destroy(_currentWeapon.gameObject);
         }
-       // Debug.Log("WeaponFactory: " + _weaponFactory);
+        //Debug.Log("WeaponFactory: " + _weaponFactory);
+        //Debug.Log("WeaponFactory: " + data);
+        //Debug.Log("WeaponFactory: " + holder);
         _currentWeapon = _weaponFactory.CreateWeapon(data, holder, _isPlayer);
         SetWeaponPlayerSettings();
     }

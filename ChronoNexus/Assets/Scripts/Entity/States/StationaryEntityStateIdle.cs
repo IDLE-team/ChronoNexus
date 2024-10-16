@@ -11,7 +11,7 @@ public class StationaryEntityStateIdle : StationaryEntityState
     }
     public override void Enter()
     {
-        _stationaryEntity.StartSeek();
+        //_stationaryEntity.StartSeek();
         base.Enter();
     }
     public override void LogicUpdate()
@@ -25,7 +25,7 @@ public class StationaryEntityStateIdle : StationaryEntityState
     }
     public override void Exit()
     {
-        _stationaryEntity.StopSeek();
+        //_stationaryEntity.StopSeek();
         base.Exit();
     }
 }

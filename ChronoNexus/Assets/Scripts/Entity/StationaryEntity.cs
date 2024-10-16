@@ -11,7 +11,13 @@ public class StationaryEntity : Entity
     public StationaryEntityAttacker TurretAttacker => _attacker;
     public StationaryEntityStateIdle IdleState { get; private set; }
     public StationaryEntityStateRangeAttack RangeAttackState { get; private set; }
-    
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _targetFinder.OnTargetFinded += TargetFoundReaction;
+        StartSeek();
+    }
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -62,6 +68,7 @@ public class StationaryEntity : Entity
     }
     public override void TargetFoundReaction(ITargetable target)
     {
+        Debug.Log("1");
         base.TargetFoundReaction(target);
         _stateMachine.ChangeState(RangeAttackState);
     }
