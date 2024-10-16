@@ -11,24 +11,18 @@ public class MissionProgressChecker : MonoBehaviour
 
     private void Start()
     {
-        _questSystem = GameObject.Find("QuestController").GetComponent<DailyQuestSystem>();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            CheckQuestProgress();
-        }
+        _questSystem = DailyQuestSystem.Instance;
     }
 
     public void CheckQuestProgress()
     {
         for (int i = 0; i < _questSystem.CurrentQuests.Count; i++)
         {
+            Debug.Log("PreSwitch: " + _questSystem.CurrentQuests[i].questType);
             switch (_questSystem.CurrentQuests[i].questType)
             {
                 case QuestData.QuestType.Kills:
+                    Debug.Log("InQuest");
                     _questSystem.CurrentQuests[i].questProgress += _levelStatTracker.GetKilledEnemyAmount();
                     if (_questSystem.CurrentQuests[i].questProgress >= _questSystem.CurrentQuests[i].questRequirments)
                     {
@@ -38,6 +32,8 @@ public class MissionProgressChecker : MonoBehaviour
                     }
                     Debug.Log("Зачли прогресс: " +   _questSystem.CurrentQuests[i].questProgress );
                     break;
+                default:
+                    Debug.Log("Default");
             }
             
         }

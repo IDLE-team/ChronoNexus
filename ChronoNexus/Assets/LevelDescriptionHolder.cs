@@ -67,7 +67,6 @@ public class LevelDescriptionHolder : MonoBehaviour
         _sceneLoader.SetScene(levelData.sceneStringName);
 
     }
-
     private void OnDisable()
     {
         gameObject.transform.DOScale(Vector3.zero, 0.3f);
