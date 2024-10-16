@@ -41,7 +41,7 @@ public class EntityGroupManager : MonoBehaviour
         {
             _newGroup._movableEntities.Add(_entity);
             Debug.Log("Entity: "+_entity);
-            Debug.Log("TargetFinder: "+_entity.TargetFinder);
+            //Debug.Log("TargetFinder: "+_entity.TargetFinder);
             
             _entity.TargetFinder.OnTargetFinded += CallTargetSetToGroup;
         }

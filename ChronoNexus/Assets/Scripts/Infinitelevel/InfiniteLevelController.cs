@@ -7,6 +7,7 @@ using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 using NavMeshSurface = Unity.AI.Navigation.NavMeshSurface;
 using Random = UnityEngine.Random;
 
@@ -23,7 +24,7 @@ public class InfiniteLevelController : MonoBehaviour
     
     
     [Header("Entity parameters")]
-    [SerializeField] private List<GameObject> _entityList;
+    [SerializeField] private List<GameObject> _entityList = new List<GameObject>();
     [SerializeField] private int _entityInRoomCount = 3;
     [SerializeField] private float _entitySpawnRadius = 2f;
     [SerializeField] private NavMeshSurface _navMesh;
@@ -37,8 +38,11 @@ public class InfiniteLevelController : MonoBehaviour
     private int _stageNumber = 0;
     
     [SerializeField]private List<Entity> _entityListTemp;
-
+    [Inject] DiContainer _diContainer; 
     private bool _transporter = true;
+   // [Inject]
+    //private Entity.Factory _entityFactory;
+    
     private void Awake()
     {
         GenerateLevel();
@@ -106,11 +110,10 @@ public class InfiniteLevelController : MonoBehaviour
         for (int _i = 0; _i < _entityInRoomCount; _i++)
         {
             Vector3 randomVector = new Vector3(Random.Range(-_entitySpawnRadius,_entitySpawnRadius),0,Random.Range(-_entitySpawnRadius,_entitySpawnRadius));
-            GameObject _tempObject = Instantiate(_entityList[Random.Range(0 , _entityList.Count)]
-                ,_roomTemp.EntitySpawnPoints[Random.Range(0,_roomTemp.EntitySpawnPoints.Count)].position+Vector3.up+randomVector,quaternion.identity);
+            GameObject _tempObject = _diContainer.InstantiatePrefab(_entityList[Random.Range(0 , _entityList.Count)]
+                ,_roomTemp.EntitySpawnPoints[Random.Range(0,_roomTemp.EntitySpawnPoints.Count)].position+Vector3.up+randomVector,quaternion.identity, null);
 
             _entityInRoomCountTemp++;
-            
             _entityListTemp.Add(_tempObject.GetComponentInChildren<Entity>());
             
         }

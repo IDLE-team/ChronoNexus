@@ -1,9 +1,10 @@
+using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
 using Zenject;
 public class WeaponController : MonoBehaviour
 {
-    //[SerializeField]
+    [SerializeField]
     private WeaponFactory _weaponFactory;
 
     [SerializeField] private AimRigController _rigController;
@@ -17,9 +18,13 @@ public class WeaponController : MonoBehaviour
     private void Construct(WeaponFactory weaponFactory)
     {
         //Debug.Log("WeaponConstruct: " + weaponFactory + "\nName: " + gameObject.name);
-        _weaponFactory = weaponFactory;
+        SetWeaponFactory(weaponFactory);
     }
 
+   public void SetWeaponFactory(WeaponFactory weaponFactory)
+    {
+        _weaponFactory = weaponFactory;
+    }
     public void ClearWeapon()
     {
         if(_currentWeapon != null)
@@ -33,9 +38,9 @@ public class WeaponController : MonoBehaviour
                 return;
             Destroy(_currentWeapon.gameObject);
         }
-        //Debug.Log("WeaponFactory: " + _weaponFactory);
-        //Debug.Log("WeaponFactory: " + data);
-        //Debug.Log("WeaponFactory: " + holder);
+        Debug.Log("WeaponFactory Factory: " + _weaponFactory);
+        Debug.Log("WeaponFactory Data: " + data);
+        Debug.Log("WeaponFactory Holder: " + holder);
         _currentWeapon = _weaponFactory.CreateWeapon(data, holder, _isPlayer);
         SetWeaponPlayerSettings();
     }

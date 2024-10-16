@@ -10,6 +10,7 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
 {
     [SerializeField] private BuffLoot _buffLoot;
     [SerializeField] private SkinnedMeshRenderer _renderer;
+    
     public event Action OnTargetInvalid;
     public event Action OnTimeAffectedDestroy;
     public bool isTimeStopped { get; set; }
@@ -88,7 +89,11 @@ public abstract class Entity : MonoBehaviour, IDamagable, IFinisherable, ITarget
         InitializeParam();
          
     }
-
+    [Inject]
+    public void Construct(WeaponFactory weaponFactory)
+    {
+        _weaponController.SetWeaponFactory(weaponFactory);
+    }
     protected virtual void InitializeStartState()
     {
         _stateMachine.Initialize(DummyState);
