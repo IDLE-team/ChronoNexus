@@ -32,7 +32,7 @@ public class Health : MonoBehaviour, IHealth
 
     public float GetMaxHealth()
     {
-        if(_isPlayer)
+        if(_isPlayer && UpgradeData.Instance)
             return _maxHealth + UpgradeData.Instance.MaxHPUpgradeValue;
         return _maxHealth;
     }
