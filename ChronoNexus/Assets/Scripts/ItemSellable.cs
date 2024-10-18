@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
 public class ItemSellable : MonoBehaviour
 {
@@ -16,35 +15,42 @@ public class ItemSellable : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _itemParam1;
     [SerializeField] private TextMeshProUGUI _itemParam2;
     [SerializeField] private TextMeshProUGUI _itemParam3;
+
     [SerializeField] private Image _itemIconType;
     [SerializeField] private Image _itemRarityCircle;
     [SerializeField] private Image _itemImage;
     [SerializeField] private Button _purchaseButton;
-    [SerializeField] private InventoryItemManager manager;
+
+    [SerializeField] private GameObject _taken;
+
+    private HubIventoryManager _manager;
 
 
-    [Inject]
-    private void Construct(InventoryItemManager inventoryItemManager)
-    {
-        manager = inventoryItemManager;
-    }
     private void Awake()
     {
         _purchaseButton.onClick.AddListener(Purchase);
 
-        manager = GetComponentInParent<InventoryItemManager>();// поиск менеджера, удалить когда функция констракт будет где-то использоваться
+        _manager = HubIventoryManager.manager;
         SetSellableItem();
     }
 
     private void Start()
     {
-
         PlayerProfileManager.profile.moneyChanged += PurchaseButtonActive;
+        PlayerProfileManager.profile.itemChanged += PurchaseButtonActive;
         PurchaseButtonActive();
     }
 
     private void PurchaseButtonActive()
     {
+        var item = ItemDataManager.itemManager.GetIndexByItemData(_itemData);
+        if (_manager.ContainsIndex(PlayerPrefs.GetString("inventoryMain", ""), item) && PlayerPrefs.GetInt("gun") == item)
+        {
+            _taken.SetActive(true);
+            _purchaseButton.gameObject.SetActive(false);
+            return;
+        }
+
         if (HubIventoryManager.manager.GetMoneyValue() >= _itemData.itemCost)
         {
             _purchaseButton.interactable = true;
@@ -74,17 +80,17 @@ public class ItemSellable : MonoBehaviour
         _costText.text = _itemData.itemCost.ToString();
 
         _itemImage.sprite = _itemData.itemImageSprite;
-        _itemIconType.sprite = manager.GetSpriteByType(_itemData.itemType);
-        _itemRarityCircle.color = manager.GetColorByRarity(_itemData.rarity);
+        _itemIconType.sprite = _manager.GetSpriteByType(_itemData.itemType);
+        _itemRarityCircle.color = _manager.GetColorByRarity(_itemData.rarity);
 
-        _itemRarityText.text = manager.GetTextByRarity(_itemData.rarity);
+        _itemRarityText.text = _manager.GetTextByRarity(_itemData.rarity);
 
         switch (_itemData.itemType)
         {
             case InventoryItemManager.itemType.gun:
                 var gun = _itemData.weaponData;
-                _itemParam1.text = "Урон  " + gun.Damage.ToString();
-                _itemParam2.text = "Ск.Атаки  " + gun.FireRate.ToString();
+                _itemParam1.text = "Сила атаки  " + gun.Damage.ToString();
+                _itemParam2.text = "Скорость Атаки  " + gun.FireRate.ToString();
                 _itemParam3.text = "Обойма  " + gun.MaxAmmo.ToString();
                 break;
                 //  case InventoryItemManager.itemType.armor:
@@ -101,5 +107,6 @@ public class ItemSellable : MonoBehaviour
     {
 
         PlayerProfileManager.profile.moneyChanged -= PurchaseButtonActive;
+        PlayerProfileManager.profile.itemChanged -= PurchaseButtonActive;
     }
 }

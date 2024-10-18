@@ -62,10 +62,10 @@ public class SkillHolder : MonoBehaviour
     {
         if (_skill.currentLvl >= _skill.maxLvl)
             return;
-        //if (PlayerPrefs.GetInt("point", 0) == 0)
-            //return;
-            if(PlayerProfileManager.profile.Point <= 0)
-                return;
+        if (PlayerPrefs.GetInt("point", 0) == 0)
+            return;
+        if (PlayerProfileManager.profile.Point <= 0)
+            return;
 
         _skillPointHolder.DecreasePoint();
 

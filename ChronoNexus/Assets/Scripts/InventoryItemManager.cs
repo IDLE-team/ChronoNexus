@@ -33,6 +33,8 @@ public class InventoryItemManager : MonoBehaviour
 
     protected ItemEquipable itemUse;
 
+    private int _inventoryCount = 0;
+
     private void Start()
     {
         _cellsInventory = _gridLayoutTabInventory.GetComponentsInChildren<HorizontalLayoutGroup>().ToList();
@@ -143,12 +145,16 @@ public class InventoryItemManager : MonoBehaviour
 
     public void TradeParamentrs(GameObject itemInUse, ItemEquipable next)
     {
-        if (itemUse)
+        if (itemInUse.GetComponentInChildren<ItemEquipable>())
         {
-            itemUse.ChangeToUnequiped();
-            MoveToGeneralInventory();
-            next.transform.parent = itemInUse.transform;
-            next.ChangeToEquiped();
+            // itemUse = itemInUse.GetComponentInChildren<ItemEquipable>();
+            // itemUse.ChangeToUnequiped();
+            // MoveToGeneralInventory();
+            // next.transform.parent = itemInUse.transform;
+            // next.ChangeToEquiped();
+            // itemUse = next;
+
+            TradeParamentrs(itemInUse.GetComponentInChildren<ItemEquipable>(), next);
             itemUse = next;
         }
         else //при установке первого предмета
@@ -160,10 +166,15 @@ public class InventoryItemManager : MonoBehaviour
         SaveGun();
     }
 
-    public void TradeParamentrsSort(ItemEquipable first, ItemEquipable next)
+    public void TradeParamentrs(ItemEquipable first, ItemEquipable next)
     {
-        var item = first;
+        ItemData item = new ItemData();
+        item = first.GetItemData();
+
+        first.SetItemData(next.GetItemData());
         first.SetItemBy(next);
+
+        next.SetItemData(item);
         next.SetItemBy(item);
     }
     public void TradeParamentrsSort(Transform place, GameObject itemEquipable)
@@ -181,14 +192,13 @@ public class InventoryItemManager : MonoBehaviour
         DeleteInventory(_gridLayoutTabInventory);
     }
 
-    public void MoveToGeneralInventory()
+    public void MoveToGeneralInventory(ItemEquipable item)
     {
         for (int i = 0; i < _cellsInventory.Count; i++)
         {
-
             if (!_cellsInventory[i].GetComponentInChildren<ItemEquipable>())
             {
-                itemUse.transform.SetParent(_cellsInventory[i].transform);
+                item.transform.SetParent(_cellsInventory[i].transform);
                 break;
             }
         }
@@ -209,19 +219,8 @@ public class InventoryItemManager : MonoBehaviour
 
     public void TradeParametersToEmptyFromEquiped(ItemEquipable next)
     {
-
-        itemUse.ChangeToUnequiped();
-        MoveToGeneralInventory();
-
-        if (next != itemUse)
-        {
-            next.transform.parent = _gunInUse.transform;
-            next.ChangeToEquiped();
-        }
-        else
-        {
-            itemUse = null;
-        }
+        next.ChangeToUnequiped();
+        MoveToGeneralInventory(next);
     }
 
     public void SaveInventory()
@@ -246,18 +245,36 @@ public class InventoryItemManager : MonoBehaviour
     {
         var savedData = PlayerPrefs.GetString("inventoryMain", "");
         if (savedData.Length == 0) return;
-        var listOfItems = savedData.Split(' ');
+
+        var listOfItems = savedData.Split(' ', StringSplitOptions.RemoveEmptyEntries); // Удаляем пустые строки
         List<int> items = new List<int>();
+
+        print("saved data: " + savedData);
         for (int i = 0; i < listOfItems.Length; i++)
         {
-            items.Add(Convert.ToInt32(listOfItems[i]));
+            print(listOfItems[i] + " " + i);
+
+            // Проверяем, может ли строка быть преобразована в целое число
+            if (int.TryParse(listOfItems[i], out int result))
+            {
+                items.Add(result);
+            }
+            else
+            {
+                print("Invalid item: " + listOfItems[i]); // Сообщаем об ошибке
+            }
         }
+
+        print(listOfItems.Length + " list of items Length string");
         for (int i = 0; i < items.Count; i++)
         {
             var data = ItemDataManager.itemManager.GetItemDataByIndex(items[i]);
             AddItem(data, cellGroup);
         }
+
+        print(items.Count + " items int count");
     }
+
 
     public void LoadGun() // call on inventory open
     {
@@ -287,16 +304,16 @@ public class InventoryItemManager : MonoBehaviour
         }
     }
 
-   // protected void LoadKnife()
-   // {
-   //     var savedData = PlayerPrefs.GetInt("knife", -1);
-   //     if (savedData == -1) return;
-   //
-   //     GameObject itemEmpty = Instantiate(_itemPrefab);
-   //     itemEmpty.transform.SetParent(_gunInUse.transform);
-   //
-   //     SetInventoryEquiped();
-   // }
+    // protected void LoadKnife()
+    // {
+    //     var savedData = PlayerPrefs.GetInt("knife", -1);
+    //     if (savedData == -1) return;
+    //
+    //     GameObject itemEmpty = Instantiate(_itemPrefab);
+    //     itemEmpty.transform.SetParent(_gunInUse.transform);
+    //
+    //     SetInventoryEquiped();
+    // }
 
 
     public void DeleteInventory(GameObject _inventoryLayoutGameObject) // literally deletes whole inventory, don't touch
@@ -346,11 +363,18 @@ public class InventoryItemManager : MonoBehaviour
         return itemUseEmpty;
     }
 
-    public void MakeItemFromShop(ItemData soldItem)
+    public bool MakeItemFromShop(ItemData soldItem)
     {
         var line = PlayerPrefs.GetString("inventoryMain", "");
-        line += line.Length == 0 ? ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString() : " " + ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString();
-        PlayerPrefs.SetString("inventoryMain", line);
+        var item = ItemDataManager.itemManager.GetIndexByItemData(soldItem);
+        if (_inventoryCount < 8 && !ContainsIndex(line, item) && PlayerPrefs.GetInt("gun") != item)
+        {
+            line += line.Length == 0 ? ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString() : " " + ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString();
+            PlayerPrefs.SetString("inventoryMain", line);
+            _inventoryCount++;
+            return true;
+        }
+        else { return false; }
     }
 
     public ItemEquipable AddItem(ItemData ItemData, List<HorizontalLayoutGroup> cellGroup)
@@ -412,6 +436,16 @@ public class InventoryItemManager : MonoBehaviour
         return _levelHolder;
     }
 
+    public HorizontalLayoutGroup GetInventoryCell(int index)
+    {
+        return _cellsInventory[index];
+    }
+
+    public HorizontalLayoutGroup GetGunCell()
+    {
+        return _gunInUse.GetComponent<HorizontalLayoutGroup>();
+    }
+
 
     public enum itemType
     {
@@ -426,5 +460,21 @@ public class InventoryItemManager : MonoBehaviour
     public enum lootType
     {
         gun, money, exp, material
+    }
+
+
+    public bool ContainsIndex(string line, int index)
+    {
+        string[] indices = line.Split(' ');
+
+        foreach (var i in indices)
+        {
+            if (i == index.ToString())
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

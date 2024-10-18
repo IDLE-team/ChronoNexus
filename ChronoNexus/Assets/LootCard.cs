@@ -23,6 +23,12 @@ public class LootCard : MonoBehaviour
     [SerializeField] private Image _itemIconType;
     [SerializeField] private Image _itemRarityCircle;
 
+    [Header("Дубликат оружия")]
+    [SerializeField] private GameObject _duplicateItem;
+    [SerializeField] private TextMeshProUGUI _textDuplicate;
+    [SerializeField] private TextMeshProUGUI _duplicateCost;
+    [SerializeField] private Image _duplicateBorder;
+
     private void Start()
     {
         gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(450, 750);
@@ -31,8 +37,7 @@ public class LootCard : MonoBehaviour
     public void DisplayLootData(ItemData itemData) // weaponOnly
     {
         _typeGun.SetActive(true);
-        HubIventoryManager.manager.MakeItemFromShop(itemData);
-
+        bool addToInventory = HubIventoryManager.manager.MakeItemFromShop(itemData);
         _mainParamText.text = itemData.weaponData.Damage.ToString();
         _levelText.text = itemData.itemLvl.ToString();
         _weaponName.text = itemData.itemName;
@@ -40,7 +45,22 @@ public class LootCard : MonoBehaviour
         _itemImage.sprite = itemData.itemImageSprite;
         _itemIconType.sprite = HubIventoryManager.manager.GetSpriteByType(itemData.itemType);
         _itemRarityCircle.color = HubIventoryManager.manager.GetColorByRarity(itemData.rarity);
-        _itemRarityGlow.color = HubIventoryManager.manager.GetColorByRarity(itemData.rarity);
+        _itemRarityGlow.color = _itemRarityCircle.color;
+
+        if (addToInventory)
+        {
+            _duplicateItem.SetActive(false);
+            _duplicateBorder.gameObject.SetActive(true);
+            _duplicateBorder.color = _itemRarityCircle.color;
+        }
+        else
+        {
+            _duplicateItem.SetActive(true);
+            HubIventoryManager.manager.GetMoneyHolder().IncreaseMoney(itemData.itemCost / 2);
+            _duplicateBorder.gameObject.SetActive(true);
+            _duplicateBorder.color = Color.gray;
+            _duplicateCost.text = (itemData.itemCost / 2).ToString();
+        }
 
     }
 

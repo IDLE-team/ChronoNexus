@@ -36,20 +36,18 @@ public class LevelHolder : MonoBehaviour
 
     public void ExpChange()
     {
-        _level = PlayerPrefs.GetInt("lvl", 1) + 1;
-        _slider.maxValue = Mathf.Round((_xpMeanLvl + _level * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + _level * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl;
-        _slider.DOValue(PlayerPrefs.GetInt("exp", 0), 1f);
-        _levelText.text = (_level - 1).ToString();
+        _level = PlayerPrefs.GetInt("lvl", 1);
+        StartCoroutine(LevelUp(0, _level, 0, PlayerPrefs.GetInt("exp", 0)));
+        _levelText.text = _level.ToString();
     }
 
     public float AddExp(float minAmountShare, float maxAmountShare)
     {
         float expAdd = _slider.maxValue * Random.Range(minAmountShare, maxAmountShare);
-        print("droppedExp" + _slider.maxValue * Random.Range(minAmountShare, maxAmountShare)); 
 
         if (expAdd + _slider.value >= _slider.maxValue)
         {
-            StartCoroutine(LevelUp(2, _level, (int)_slider.value, (int)expAdd));
+            StartCoroutine(LevelUp(0, _level, (int)_slider.value, (int)expAdd));
         }
         else
         {
@@ -63,12 +61,12 @@ public class LevelHolder : MonoBehaviour
     {
 
         _levelText.text = lvl.ToString();
-        int xpToNextLevel = GameController.Instance.GetExpToLevel(lvl);
+        int xpToNextLevel = GetExpToLevel(lvl+1);
         _slider.maxValue = xpToNextLevel;
 
         _slider.value = startExp;
 
-        if (exp >= xpToNextLevel)
+        if (exp + startExp >= xpToNextLevel)
         {
             _slider.DOValue(xpToNextLevel, 1f).SetDelay(1f);
             startExp = 0;
@@ -76,8 +74,7 @@ public class LevelHolder : MonoBehaviour
             lvl++;
 
             PlayerPrefs.SetInt("point", PlayerPrefs.GetInt("point", 0) + 1);
-            PlayerPrefs.SetInt("lvl", PlayerPrefs.GetInt("lvl", 0) + 1);
-            ExpChange();
+            PlayerPrefs.SetInt("lvl", lvl);
         }
         else
         {
@@ -85,8 +82,20 @@ public class LevelHolder : MonoBehaviour
             yield return null;
             yield break;
         }
-        yield return new WaitForSeconds(delay);
-        StartCoroutine(LevelUp(2, lvl, startExp, exp));
+        yield return new WaitForSeconds(0);
+        StartCoroutine(LevelUp(0, lvl, startExp, exp));
 
+    }
+
+
+
+    private int GetExpToNextLevel()
+    {
+        int lvl = PlayerPrefs.GetInt("lvl", 0);
+        return (int)(Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl);
+    }
+    private int GetExpToLevel(int lvl)
+    {
+        return (int)(Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) - Mathf.Round((_xpMeanLvl + lvl * _xpStepMean) * 2 + _xpToNextBase * 1.1f) % _xpMeanLvl);
     }
 }
