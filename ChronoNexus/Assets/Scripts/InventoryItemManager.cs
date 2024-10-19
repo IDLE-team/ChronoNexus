@@ -367,11 +367,10 @@ public class InventoryItemManager : MonoBehaviour
     {
         var line = PlayerPrefs.GetString("inventoryMain", "");
         var item = ItemDataManager.itemManager.GetIndexByItemData(soldItem);
-        if (_inventoryCount < 8 && !ContainsIndex(line, item) && PlayerPrefs.GetInt("gun") != item)
+        if (PlayerPrefs.GetString("inventoryMain", "").Split(' ').Length < 8 && !ContainsIndex(line, item) && PlayerPrefs.GetInt("gun") != item)
         {
             line += line.Length == 0 ? ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString() : " " + ItemDataManager.itemManager.GetIndexByItemData(soldItem).ToString();
             PlayerPrefs.SetString("inventoryMain", line);
-            _inventoryCount++;
             return true;
         }
         else { return false; }
@@ -415,6 +414,9 @@ public class InventoryItemManager : MonoBehaviour
             return false;
         }
     }
+
+
+    public int CountItems() => _cellsInventory.Count(item => item.GetComponentInParent<ItemEquipable>());
 
     public int GetMoneyValue()
     {

@@ -234,7 +234,6 @@ public class GetLootFromChest : MonoBehaviour
     private GameObject MakeGun(int rarityMin, int rarityMax)
     {
         var rar = (HubIventoryManager.itemRarity)Random.Range(rarityMin, rarityMax + 1);
-        print(rar);
         List<ItemData> rarList = new List<ItemData>();
         foreach (var item in ItemDataManager.itemManager.GetAllGameItems())
         {
@@ -243,7 +242,6 @@ public class GetLootFromChest : MonoBehaviour
                 rarList.Add(item);
             }
         }
-        print(Random.Range(0, rarList.Count));
         return CreateCard(rarList[Random.Range(0, rarList.Count)]);
     }
 }
