@@ -12,6 +12,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
 {
 
     [SerializeField] private float _stoptimeCooldown;
+    [SerializeField] private float _rewindStopTimeDuration = 2.5f;
     
     static public TimeManager instance;
 
@@ -252,7 +253,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
      //  audioSource.pitch = 0.3f;
      //  audioSource.volume = 0;
        OnTimeRewind?.Invoke(); 
-       StartCoroutine(ResumeTimeWithDelay(2.5f));
+       StartCoroutine(ResumeTimeWithDelay(_rewindStopTimeDuration));
 
     }
     private void OnDebugSliderValueChanged(float value)
