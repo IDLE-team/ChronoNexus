@@ -186,10 +186,19 @@ MonoBehaviour:
   _obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 16640
+  _currentTargetLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   _targetLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  _invertTargetLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   _collider: {fileID: 643650584383905918}
+  _colorChanger: {fileID: 2496870128809618336}
+  _isPlayerBullet: 0
+  rewindDuration: 50
   TimeBeforeAffectedTimer: 0.05
 --- !u!114 &3136817586732907426
 MonoBehaviour:
@@ -592,6 +601,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1913208768874218783}
   m_SourcePrefab: {fileID: 100100000, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
+--- !u!114 &2496870128809618336 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114950535843143764, guid: 3b952465a137ae4459f7be070b8ebfa8,
+    type: 3}
+  m_PrefabInstance: {fileID: 2539687967015881716}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2538533174026396016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0937d8b31b6b2647971c24f4d8f0ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2535498202079206566 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4836675779974994, guid: 3b952465a137ae4459f7be070b8ebfa8,

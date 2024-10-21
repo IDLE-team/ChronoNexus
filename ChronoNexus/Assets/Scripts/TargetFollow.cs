@@ -55,7 +55,7 @@ public class TargetFollow : MonoBehaviour, ITimeAffected
 
     public void RewindTimeAction()
     {
-        throw new NotImplementedException();
+        //        throw new NotImplementedException();
     }
 
     public void AcceleratedTimeAction()

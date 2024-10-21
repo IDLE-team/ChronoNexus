@@ -24,6 +24,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
     private float basePitch;
     public bool IsTimeStopped;
     public bool IsTimeSlowed;
+    public bool IsTimeRewinding;
 
     public float resumeTimeDelay;
 
@@ -35,6 +36,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
     public event Action OnTimeStop;
     public event Action OnTimeSlow;
     public event Action OnTimeContinue;
+    public event Action OnTimeRewind;
     
     
     [Inject]
@@ -43,6 +45,7 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         _input = input;
         _input.Player.TimeStop.performed += OnStopTimePerformed;
         _input.Player.TimeSlow.performed += OnSlowTimePerformed;
+        _input.Player.RewindProps.performed += OnRewindPerformed;
     }
 
     private List<ITimeBody> timeBodies = new List<ITimeBody>();
@@ -61,6 +64,14 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         SlowTime();
     }
 
+    private void OnRewindPerformed(InputAction.CallbackContext obj)
+    {
+        Debug.Log("OnRewindPerformed");
+        if(IsTimeRewinding)
+            return;
+
+        RewindProps();
+    }
     public void AddTimeBody(ITimeBody body)
     {
         timeBodies.Add(body);
@@ -97,6 +108,8 @@ public class TimeManager : MonoBehaviour, ICoolDownable
     {
         IsTimeStopped = false;
         IsTimeSlowed = false;
+        IsTimeRewinding = false;
+
         for (var i = 0; i < timeBodies.Count; i++)
         {
             if (timeBodies[i] == null)
@@ -214,6 +227,33 @@ public class TimeManager : MonoBehaviour, ICoolDownable
         audioSource.pitch = 0.5f;
         OnTimeSlow?.Invoke();
         StartCoroutine(ResumeTimeWithDelay());
+    }
+
+    public void RewindProps()
+    {
+        if(IsTimeRewinding)
+           return;
+        IsTimeRewinding = true;
+        StopTimeInfinite();
+
+       for (var i = 0; i < timeBodies.Count; i++)
+       {
+           if (timeBodies[i] == null)
+           {
+               timeBodies.RemoveAt(i);
+               continue;
+           }
+           timeBodies[i].SetRewindTime();
+       }
+     //  _timeManipulationCam.SetActive(true);
+
+      // postProcessVolume.profile = timeStopVolumeProfile;
+     //  basePitch = audioSource.pitch;
+     //  audioSource.pitch = 0.3f;
+     //  audioSource.volume = 0;
+       OnTimeRewind?.Invoke(); 
+       StartCoroutine(ResumeTimeWithDelay(2.5f));
+
     }
     private void OnDebugSliderValueChanged(float value)
     {

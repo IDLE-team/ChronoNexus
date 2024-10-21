@@ -12,6 +12,7 @@ public class TimeBody : MonoBehaviour, ITimeBody
 
         if (TimeManager.instance != null)
         {
+            Debug.Log("AddToManager: " + name);
             AddToTimeManager();
         }
         else
@@ -47,7 +48,6 @@ public class TimeBody : MonoBehaviour, ITimeBody
     public void SetRewindTime()
     {
         _timeAffectedBody.RewindTimeAction();
-
     }
     public void SetSlowTime()
     {

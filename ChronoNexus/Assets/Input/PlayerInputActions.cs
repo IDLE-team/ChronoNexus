@@ -125,6 +125,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RewindProps"",
+                    ""type"": ""Button"",
+                    ""id"": ""b31321a7-a8d3-419e-8a9f-4ad1554a4c95"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -358,6 +367,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9449e8fb-9d07-4e89-bc7c-663bd679658d"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""RewindProps"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -444,6 +464,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_RewindCancel = m_Player.FindAction("RewindCancel", throwIfNotFound: true);
         m_Player_RewindApply = m_Player.FindAction("RewindApply", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+        m_Player_RewindProps = m_Player.FindAction("RewindProps", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_TargetLockActivator = m_UI.FindAction("TargetLockActivator", throwIfNotFound: true);
@@ -519,6 +540,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_RewindCancel;
     private readonly InputAction m_Player_RewindApply;
     private readonly InputAction m_Player_Dash;
+    private readonly InputAction m_Player_RewindProps;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -534,6 +556,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @RewindCancel => m_Wrapper.m_Player_RewindCancel;
         public InputAction @RewindApply => m_Wrapper.m_Player_RewindApply;
         public InputAction @Dash => m_Wrapper.m_Player_Dash;
+        public InputAction @RewindProps => m_Wrapper.m_Player_RewindProps;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -576,6 +599,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
+            @RewindProps.started += instance.OnRewindProps;
+            @RewindProps.performed += instance.OnRewindProps;
+            @RewindProps.canceled += instance.OnRewindProps;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -613,6 +639,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
+            @RewindProps.started -= instance.OnRewindProps;
+            @RewindProps.performed -= instance.OnRewindProps;
+            @RewindProps.canceled -= instance.OnRewindProps;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -716,6 +745,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRewindCancel(InputAction.CallbackContext context);
         void OnRewindApply(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnRewindProps(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

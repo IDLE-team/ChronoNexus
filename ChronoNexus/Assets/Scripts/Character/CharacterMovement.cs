@@ -180,7 +180,7 @@ public class CharacterMovement : MonoBehaviour, ITransformable
     }
     public void AddBonusSpeed()
     {
-        float speed = Mathf.Ceil(_baseMoveSpeed * UpgradeData.Instance.SpeedBonusUpgradeValue / 100);
+        float speed = Mathf.Ceil(_baseMoveSpeed * UpgradeData.Instance.SpeedBonusUpgradeValue/ 100);
         AddSpeed(speed);
     }
     public void ReturnSpeed()

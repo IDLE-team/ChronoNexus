@@ -1,17 +1,26 @@
 using System;
+using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 public class Bullet : MonoBehaviour, ITimeAffected
 {
     [SerializeField] private LayerMask _obstacleLayerMask;
+    [SerializeField] private LayerMask _currentTargetLayerMask;
     [SerializeField] private LayerMask _targetLayerMask;
+    [SerializeField] private LayerMask _invertTargetLayerMask;
     [SerializeField]  private Collider _collider;
+    [SerializeField] private particleColorChanger _colorChanger;
+    [SerializeField] private bool _isRewindable = true;
     private Vector3 _shootDir;
     
     private float _damage;
     private float _baseMoveSpeed;
     private float _moveSpeed;
 
+    private Vector3 _startPosition;
+   [SerializeField] private float inverseDuration = 10f;
+    private bool isRewinding = false; 
     public float Damage => _damage;
     
     public float TimeBeforeAffectedTimer;
@@ -25,10 +34,11 @@ public class Bullet : MonoBehaviour, ITimeAffected
 
     public void Initialize( Vector3 shootDirection, float damage, float speed)
     {
+        _currentTargetLayerMask = _targetLayerMask;
         _damage = damage;
         _shootDir = shootDirection;
         _baseMoveSpeed = speed;
-        if(!isTimeSlowed)
+        if(!isTimeSlowed || isRewinding)
             _moveSpeed = speed;
         else
             SlowSpeed();
@@ -37,22 +47,26 @@ public class Bullet : MonoBehaviour, ITimeAffected
 
     private void Start()
     {
+        _startPosition = transform.position;
         Destroy(gameObject, 20);
     }
 
     private void FixedUpdate()
     {
-        TimeBeforeAffectedTimer -= Time.deltaTime;
-        if (TimeBeforeAffectedTimer <= 0f)
+        if (!isRewinding)
         {
-            CanBeAffected = true;
+            TimeBeforeAffectedTimer -= Time.deltaTime;
+            if (TimeBeforeAffectedTimer <= 0f)
+            {
+                CanBeAffected = true;
+            }
+
+            if (CanBeAffected && isTimeStopped)
+            {
+                return;
+            }
+            transform.position += _shootDir * (_moveSpeed * Time.deltaTime);
         }
-        if (CanBeAffected && isTimeStopped)
-        {
-            return;
-        }
-        Debug.Log(_moveSpeed);
-        transform.position += _shootDir * (_moveSpeed * Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -62,21 +76,24 @@ public class Bullet : MonoBehaviour, ITimeAffected
         //    Destroy(gameObject);
         //   return;
         //}
-        if(isTimeStopped)
-            return;
+        //if(isTimeStopped && !isTimeRewinded)
+          //  return;
         if ((_obstacleLayerMask.value & (1 << other.gameObject.layer)) > 0)
         {
             Destroy(gameObject);
             return;
         }
-        if (!((_targetLayerMask.value & (1 << other.gameObject.layer)) > 0))
+        if (!((_currentTargetLayerMask.value & (1 << other.gameObject.layer)) > 0))
         {
             return;
         }
         if (!other.TryGetComponent<IDamagable>(out var target))
+        {
             return;
+        }
         var prevDamage = _damage;
-        _damage = _damage + Random.Range(-2, 3);
+        if(_damage > 0)
+            _damage = _damage + Random.Range(0, 3);
         if (_damage - prevDamage > 1)
         {
             target.TakeDamage(_damage, true);
@@ -99,7 +116,6 @@ public class Bullet : MonoBehaviour, ITimeAffected
 
     public void StopTimeAction()
     {
-        Debug.Log("StopTime");
         _collider.enabled = false;
         isTimeStopped = true;
     }
@@ -120,9 +136,31 @@ public class Bullet : MonoBehaviour, ITimeAffected
 
     public void RewindTimeAction()
     {
-        throw new System.NotImplementedException();
+        if(!_isRewindable)
+            return;
+        isRewinding = true;
+        _currentTargetLayerMask = _invertTargetLayerMask;
+        _collider.enabled = true;
+        _colorChanger.applyChanges = true;
+        StartCoroutine(InverseSpeed(inverseDuration));
     }
+    IEnumerator InverseSpeed(float inverseDuration)
+    {
+        float elapsedTime = 0f;
+        float startSpeed = _moveSpeed;
 
+        while (elapsedTime < inverseDuration)
+        {
+            _moveSpeed = Mathf.Lerp(_moveSpeed, -startSpeed, elapsedTime / inverseDuration);
+
+            transform.position += _shootDir * (_moveSpeed * Time.deltaTime);
+
+            elapsedTime += Time.deltaTime;
+
+            yield return new WaitForSeconds(0.01f);
+        }
+
+    }
     public void AcceleratedTimeAction()
     {
         throw new System.NotImplementedException();
