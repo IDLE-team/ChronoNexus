@@ -98,6 +98,7 @@ MonoBehaviour:
   _startEnemyAmount: 0
   _kills: 0
   _materialsCount: 0
+  _isLevelCleared: 0
 --- !u!1 &4059918023499597543
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,6 +128,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7613006506999111163}
   - {fileID: 7179836555368192849}
   - {fileID: 578655756927567514}
   - {fileID: 6144773122902093012}
@@ -181,6 +183,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelStatTracker: {fileID: 2680549237822740080}
+--- !u!1 &5241245919123999580
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7613006506999111163}
+  - component: {fileID: 563313166766055706}
+  m_Layer: 0
+  m_Name: UpgradeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7613006506999111163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241245919123999580}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1077.0295, y: 523.19275, z: 11.87114}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1967716738800934572}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &563313166766055706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241245919123999580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70aef7362bedf2040bcd09d34c2dd945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeStopDurationBase: 2
+  _finisherMinHealthPercentBase: 3
+  _maxHPUpgradeValue: 0
+  _invincibleTimeUpgradeValue: 0
+  _hpDropPercentMultiplierUpgradeValue: 0
+  _firearmDamageUpgradeValue: 0
+  _finisherMinHealthPercentUpgradeValue: 0
+  _slowTimePercentAfterFinisherUpgradeValue: 0
+  _timeStopDurationUpgradeValue: 0
+  _speedBonusUpgradeValue: 0
+  _inversionDurationUpgradeValue: 0
 --- !u!1 &8253056859074045025
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stoptimeCooldown: 10
+  _rewindStopTimeDuration: 2.5
   audioSource: {fileID: 0}
   postProcessVolume: {fileID: 0}
   realTimeVolumeProfile: {fileID: 11400000, guid: 040b6ac900af03841bf2897bec3521e4,
@@ -234,6 +292,7 @@ MonoBehaviour:
     type: 2}
   IsTimeStopped: 0
   IsTimeSlowed: 0
+  IsTimeRewinding: 0
   resumeTimeDelay: 5
   _timeManipulationCam: {fileID: 0}
 --- !u!1 &9050464412627209511
