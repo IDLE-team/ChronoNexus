@@ -456,7 +456,7 @@ public class InventoryItemManager : MonoBehaviour
 
     public enum itemRarity
     {
-        gray, green, purple, gold
+        gray, green, purple, gold, red
     }
 
     public enum lootType
