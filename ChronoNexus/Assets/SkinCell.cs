@@ -18,7 +18,7 @@ public class SkinCell : MonoBehaviour
     [SerializeField] private Image _imageSkill;
 
     [SerializeField] private bool isGift = false;
-    [SerializeField] private Image _rarityImage;
+    [SerializeField] private SetCardGlow _rarityImage;
 
     private SkinData _data;
     private int _indexSkin;
@@ -45,7 +45,7 @@ public class SkinCell : MonoBehaviour
         _imageHero.sprite = skinData.charSprite;
         _imageSkill.sprite = skinData.mainSkill;
 
-        _rarityImage.color = HubIventoryManager.manager.GetColorByRarity(_data.rarity);
+        _rarityImage.SetGlowColor(skinData.rarity);
         CheckSkinTaken();
     }
 
@@ -64,7 +64,7 @@ public class SkinCell : MonoBehaviour
             _buttonTake.onClick.AddListener(GetGiftSkin);
             _buttonTaken.onClick.AddListener(TakeGiftSkin);
 
-            _rarityImage.color = HubIventoryManager.manager.GetColorByRarity(_data.rarity);
+            _rarityImage.SetGlowColor(skinData.rarity);
         }
     }
 

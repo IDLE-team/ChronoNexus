@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 4848862759887093021}
   - component: {fileID: 8105320727837425749}
   - component: {fileID: 177480372424316019}
+  - component: {fileID: 5256135765342943156}
   m_Layer: 0
   m_Name: Fx
   m_TagString: Untagged
@@ -121,17 +122,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874956279871004406}
-  m_LocalRotation: {x: -0, y: -0, z: 0.9845014, w: -0.17537655}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.15, y: 1.54, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2531713041731588638}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 200.201}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.0000038146973, y: 0}
+  m_SizeDelta: {x: 293.5972, y: 513.7952}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8105320727837425749
 CanvasRenderer:
@@ -153,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.46666667}
-  m_RaycastTarget: 1
+  m_Material: {fileID: 2100000, guid: 6788560af67b81e49bf8150108b7008c, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -171,6 +172,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5256135765342943156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874956279871004406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90dd858d34636b848a34e8b53d64ae30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gray: {fileID: 2100000, guid: 6788560af67b81e49bf8150108b7008c, type: 2}
+  _green: {fileID: 2100000, guid: 2db567a2b7e2cf444b07ae1e950a3657, type: 2}
+  _purple: {fileID: 2100000, guid: 5c144a684ac1f5d4bba7a5e2cbc68c09, type: 2}
+  _gold: {fileID: 2100000, guid: bc543b8706094414d9688eabd9d07e03, type: 2}
+  _red: {fileID: 2100000, guid: 4dc3fdb71a3281f48afa2ccb5517b1e4, type: 2}
+  _image: {fileID: 177480372424316019}
 --- !u!1 &1101509578827651635
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,7 +1455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15eef4aa5ab57a34d81bc770aa4e4daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemRarityGlow: {fileID: 177480372424316019}
+  _itemRarityGlow: {fileID: 5256135765342943156}
   _typeMoney: {fileID: 8101503977894600571}
   _moneyText: {fileID: 5125155937905317260}
   _typeMaterial: {fileID: 5114991070135228416}
@@ -1525,6 +1544,7 @@ MonoBehaviour:
   _textItemLvl: {fileID: 8658125908994938836}
   _loadFromScene: 0
   _itemData: {fileID: 0}
+  _isEquiped: 0
   _isEquipedOnStart: 0
 --- !u!114 &2716468012838405498
 MonoBehaviour:

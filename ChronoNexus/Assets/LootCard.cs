@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class LootCard : MonoBehaviour
 {
-    [SerializeField] private Image _itemRarityGlow;
+    [SerializeField] private SetCardGlow _itemRarityGlow;
     [Header("Δενόγθ")]
     [SerializeField] private GameObject _typeMoney;
     [SerializeField] private TextMeshProUGUI _moneyText;
@@ -45,7 +45,7 @@ public class LootCard : MonoBehaviour
         _itemImage.sprite = itemData.itemImageSprite;
         _itemIconType.sprite = HubIventoryManager.manager.GetSpriteByType(itemData.itemType);
         _itemRarityCircle.color = HubIventoryManager.manager.GetColorByRarity(itemData.rarity);
-        _itemRarityGlow.color = _itemRarityCircle.color;
+        _itemRarityGlow.SetGlowColor(itemData.rarity);
 
         if (addToInventory)
         {
