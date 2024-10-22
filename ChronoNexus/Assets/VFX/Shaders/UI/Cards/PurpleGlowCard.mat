@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GrayGlow
+  m_Name: PurpleGlowCard
   m_Shader: {fileID: -6465566751694194690, guid: 81f87354ab7dd0b4eabd9d58dca5a7cc,
     type: 3}
   m_Parent: {fileID: 0}
@@ -24,8 +24,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BackgroundTexture:
+        m_Texture: {fileID: 2800000, guid: 7e5356b489550514980e11ded6801729, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NoiseMap:
+        m_Texture: {fileID: 2800000, guid: e199ee8112362864f831425463b09fda, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Sample_Texture:
@@ -33,6 +41,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Sample_Texture_2:
+        m_Texture: {fileID: 2800000, guid: 947fe6f544d82394db98003a81460397, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ShineTexture:
         m_Texture: {fileID: 2800000, guid: 947fe6f544d82394db98003a81460397, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -50,12 +62,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaPower: 1.7
+    - _AlphaPower: 1.39
+    - _BackgroundPower: 1.58
     - _ColorMask: 15
     - _Power: 1.5
-    - _Power_2: 13.5
-    - _RotateSpeed: -0.4
-    - _ShineScale: 6.06
+    - _Power_2: -0.51
+    - _RotateSpeed: -0.2
+    - _ShinePower: 1.72
+    - _ShineScale: 7.66
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -65,8 +79,9 @@ Material:
     - _UIMaskSoftnessY: 1
     m_Colors:
     - _ClipRect: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _NoiseSpeed: {r: 0.1, g: 0, b: 0, a: 0}
+    - _Color: {r: 0.40350217, g: 0.32164457, b: 0.8742138, a: 1}
+    - _NoiseSpeed: {r: 0, g: -0.1, b: 0, a: 0}
+    - _Noise_Tiling: {r: 2, g: 2, b: 0, a: 0}
     - _ShineTiling: {r: 0.9, g: 0.9, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
