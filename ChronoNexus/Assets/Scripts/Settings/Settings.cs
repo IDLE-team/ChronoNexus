@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +9,16 @@ public class Settings : MonoBehaviour
     [SerializeField][Min(0)] private int _vSyncCount = 0;
     [SerializeField] private TMP_Dropdown _dropdown;
 
+    [SerializeField] private bool _isLocked;
     private void Start()
     {
+        if(!_isLocked)
+            return;
+        _frameRate =  PlayerPrefs.GetInt("fps", 60);
+        Debug.Log("FrameRate: " + _frameRate);
         Application.targetFrameRate = _frameRate;
         QualitySettings.vSyncCount = _vSyncCount;
+        Debug.Log("TargetFPS: " +   Application.targetFrameRate);
 
         // Application.targetFrameRate = Screen.currentResolution.refreshRate;
     }
@@ -40,7 +47,8 @@ public class Settings : MonoBehaviour
                 _frameRate = 60;
                 break;
         }
-
+        PlayerPrefs.SetInt("fps", _frameRate);
+        Debug.Log("PlayerPrefs setted: " + PlayerPrefs.GetInt("fps"));
         Application.targetFrameRate = _frameRate;
     }
 }

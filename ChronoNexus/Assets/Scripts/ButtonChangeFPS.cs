@@ -15,6 +15,7 @@ public class ButtonChangeFPS : MonoBehaviour
     }
     public void Clicked()
     {
+        PlayerPrefs.SetInt("fps", fpsNumber);
         Application.targetFrameRate = fpsNumber;
         _buttonSet.Clicked();
     }

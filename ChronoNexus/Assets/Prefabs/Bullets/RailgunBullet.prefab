@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 0
 --- !u!4 &5734645210874101528
 Transform:
@@ -104,7 +104,7 @@ GameObject:
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &1692587226037001989
 Transform:
@@ -197,8 +197,8 @@ MonoBehaviour:
     m_Bits: 0
   _collider: {fileID: 643650584383905918}
   _colorChanger: {fileID: 2496870128809618336}
-  _isPlayerBullet: 0
-  rewindDuration: 50
+  _isRewindable: 1
+  inverseDuration: 10
   TimeBeforeAffectedTimer: 0.05
 --- !u!114 &3136817586732907426
 MonoBehaviour:
@@ -228,17 +228,33 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 1238843893459588, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 1540588367011230, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540588367011230, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 1700654917114306, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 1700654917114306, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
+      objectReference: {fileID: 0}
     - target: {fileID: 1809025296285686, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_Layer
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1809025296285686, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4749193282715014, guid: 3b952465a137ae4459f7be070b8ebfa8, type: 3}
       propertyPath: m_LocalPosition.z
